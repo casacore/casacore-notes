@@ -11,7 +11,7 @@
 \title{NOTE 199 --
 Table Query Language}
 \author {Ger van Diepen, ASTRON Dwingeloo}
-\date {2006 December 20}
+\date {2008 August 12}
 \maketitle
 \begin{abstract}
 The Table Query Language (TaQL) is an SQL-like high level language to
@@ -27,7 +27,7 @@ matching of two sky catalogues.
 \end{abstract}
 %%---------------------------------------------------------------------------
 \begin{htmlonly}
-\htmladdnormallink{A (gzipped) postscript version of this note is available (145kB).}{../199.ps.gz}
+\htmladdnormallink{A (gzipped) postscript version of this note is available (160kB).}{../199.ps.gz}
 \end{htmlonly}
 
 \tableofcontents 

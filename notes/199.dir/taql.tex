@@ -32,7 +32,8 @@ Many reduction functions can be applied to arrays.
 (i.e. spatial searching with a search radius).
 \item An advanced way of specifying intervals.
 \item No support of indices, thus always a linear search is done.
-This is, however, very fast, even for very large tables.
+Because data are stored column-wise, a linear search is usually very
+ fast, even for very large tables.
 \item Joins are not supported yet.
 \item In the SELECT command GROUPBY and HAVING are not supported yet.
 \item The CALC command exists to
@@ -224,7 +225,7 @@ as well.
 Columns to be selected can be given as
 a comma-separated list with names of columns that have to be
 selected from the primary table in the table\_list (see below).
-If * or no column\_list is given, all columns will be selected.
+If no column\_list is given, all columns will be selected.
 It results in a so-called reference table. Optionally a
 selected column can be given another name in the reference
 table using \texttt{AS name} (where AS is optional).
@@ -242,7 +243,38 @@ For example:
   select MODEL_DATA AS DATA FCOMPLEX from 3C343.MS
 \end{verbatim}
 
-It is possible to use expressions in the column list to create
+Apart from giving exact column names, it is also possible to use
+wildcards by means of a UNIX filename-like pattern (like \texttt{p/pattern/})
+or a regular expression (like \texttt{f/regex/} for a full match or
+\texttt{m/regex/} for a partial match). They can be suffixed with an
+\texttt{i} indicating case-insensitive matching.
+See \htmlref{below}{TAQL:CONSTANTS} for a discussion of these constants.
+The operator \verb+~+ needs to be given before the pattern or regex
+to indicate that columns have to be included. Thereafter operator
+\verb+!~+ can be used with another pattern or regex to remove columns.
+Such an excluding pattern or regex only removes columns from the
+wildcarded columns before it until the latest non-wildcarded column.
+\\A special pattern is * (which is the same as \texttt{~p/*/}).
+ For example:
+\begin{verbatim}
+  select *, !~p/*_DATA/ from 3C343.MS
+\end{verbatim}
+selects all columns except the ones ending in \texttt{\_DATA}.
+\begin{verbatim}
+  select ~m/DATA/, !~p/*_DATA/ from 3C343.MS
+\end{verbatim}
+selects columns with a name containing \texttt{DATA} except the ones
+ending in \texttt{\_DATA}.
+\begin{verbatim}
+  select CORRECTED_DATA *, !~p/*_DATA/ from 3C343.MS
+or
+  select *, !~p/*_DATA/ CORRECTED_DATA from 3C343.MS
+\end{verbatim}
+does select the \texttt{CORRECTED\_DATA} column.
+\\Note it is not possible to change the name or data type of
+wildcarded columns.
+
+It is also possible to use expressions in the column list to create
 new columns based on the contents of other columns. When doing this,
 the resulting table is a plain table (because a reference table
 cannot contain expressions). The new column can be given a name
@@ -648,7 +680,8 @@ Scalar constants of the various data types can be formed as follows
               and \verb+!~+.
               Instead of a slash, the characters \% and \# can also be used as
               delimiter, as long as the same delimiter is used on both sides.
-              The delimiter can not be part of the pattern itself.
+              The delimiter can not be part of the pattern itself
+              (not even escaped with a backslash).
               \\Function \texttt{pattern} can be used after operator = and !=.
               \\A pattern uses the special character ? for a single
               arbitrary character
@@ -699,7 +732,9 @@ Scalar constants of the various data types can be formed as follows
               lower(name) = regex('[a-z][a-z0-9]*.*')
               \end{verbatim}
         \end{itemize}
-	See \htmlref{below}{TAQL:REGEX} for a further discussion of
+        A pattern or regex constant can be followed by an \texttt{i} to
+        indicate case-insensitive matching (e.g. \texttt{p/data*/i}.
+	\\See \htmlref{below}{TAQL:REGEX} for a further discussion of
 	regex comparisons.
   \item A DateTime constant can be formed in 2 ways:
        \begin{enumerate}
@@ -789,15 +824,20 @@ precedence) for scalars:
   \item Unary \textbf{!} (or \textbf{NOT})
        \\Logical NOT operator.
        Can only be used with Bool operands.
-  \item Binary \verb+^+, *, /, \%, +, and \textbf{-}
+  \item Binary \verb+^+, **, *, /, //, \%, +, and \textbf{-}
        \\\% is the modulo operator.
        E.g. \texttt{3\%1.4} results in \texttt{0.2} and
        \texttt{-10\%3} results in \texttt{-1}.
-       \\\verb+^+ is the power operator.
+       \\\verb+^+ is the power operator. The Python operator ** can
+       also be used.
        Note that because of the precedence rules
        \texttt{-3}\verb+^+\texttt{2} results in \texttt{-9}.
        \\All operators are left-associative, except \verb+^+ which is
-       right-associative; thus \texttt{2}\verb+^+\texttt{1}\verb+^+\texttt{2} results in \texttt{2}.
+       right-associative; thus
+       \texttt{2}\verb+^+\texttt{1}\verb+^+\texttt{2} results in
+       \texttt{2}.
+       \\// is the same as its Python counterpart. It does downward
+       truncation, thus \texttt{a//b} is equivalent to \texttt{floor(a/b)}.
        \\Operator \% can only be used for double operands, while the others
        can be used for double and complex operands.
        Operator + can also be used for:
@@ -931,8 +971,8 @@ thus they can be used with any string expression.
 function \texttt{upcase} or \texttt{downcase} on the string to test to
 make it case insensitive. 
 \item Usually a regex/pattern must match the full string, thus not part of
-it. However, one can use the \texttt{m//} regex constant to do partly
-matching. Thus something like \texttt{m/xx/} matches strings
+it. However, one can use the \texttt{m//} regex constant to do partial
+matching. Thus something like \texttt{m/xx/} matches all strings
 containing \texttt{xx}. Of course, \texttt{regex('.*xx.*')} can also be used.
 In this way the \texttt{m//} regex works the same as in languages like
 Perl and Glish. 
