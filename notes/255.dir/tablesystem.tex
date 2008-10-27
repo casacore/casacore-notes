@@ -9,7 +9,7 @@ See the old AIPS++
 for a description of the very first version of the Table System.
 Since then the system has been changed and enhanced considerably.
 The description of the
-\htmladdnormallink{Tables}{../../aips/implement/Tables.html}
+\href{../html/group__Tables__module.html}{Tables}
 module gives a good overview of the current capabilities.
 
 The Table System is used throughout the AIPS++ project to offer
@@ -61,7 +61,7 @@ multiple platforms possible. Boolean values are stored as bits.
 \item
 Concurrent access is fully supported. However, only table locks are
 available, thus no fine-grained page or row locking is possible.
-See \htmladdnormallink{note 256}{../256/256.html} for more
+See \htmladdnormallink{note 256}{256.html} for more
 information about locking in the Table System.
 \item The Table System uses large files where possible, so there is
 no 2 Gb file limit. On the rare systems not supporting large files
@@ -73,7 +73,7 @@ Addition, change, retrieval, and removal of columns, rows, and
 keywords can be done at will. 
 \item
 A powerful query language (see note 199 on
-\htmladdnormallink{TaQL}{../199/199.html}) makes it possible to
+\href{199.html}{TaQL}) makes it possible to
 select arbitrary subsets of a table. TaQL resembles SQL, but lacks joins.
 However, it supports subqueries and moreover all its functions
 work on arrays as well.
@@ -88,16 +88,16 @@ This is used in the ACSIS system to make a selection from a set of
 \texttt{Record} objects.
 
 \item
-The \htmladdnormallink{TableMeasures}{../../aips/implement/TableMeasures.html}
+The \href{../html/group__TableMeasures__module.html}{TableMeasures}
 module makes it possible to store and retrieve
-\htmladdnormallink{Measures }{../../aips/implement/Measures.html}
+\href{../html/group__Measures__module.html}{Measures}
 transparantly in and from a table.
 \end{itemize}
 
 \section{Where are Tables used}
 As said above the Table System is the main AIPS++ storage mechanism.
 \subsection{MeasurementSet}
-The \htmladdnormallink{MeasurementSet}{../229/229.html} uses tables to
+The \href{229.html}{MeasurementSet} uses tables to
 its full extent. It consists of a main table containing the main data.
 Several subtables contains additional information like the description
 of antennas, feeds, sources, etc..
@@ -119,7 +119,7 @@ image information (like coordinates) is stored as keywords.
 
 Images are using the so-called lattices which are memory-based or
 disk-based arrays. Lattices can easily be traversed in any order.
-The \htmladdnormallink{Lattice Expression Language}{../223/223.html}
+The \href{223.html}{Lattice Expression Language}
 makes it possible to define expressions from lattices.
 Lattices are commonly used in AIPS++. For instance, the autoflagger
 uses lattices to assemble statistical information for automatically
@@ -293,7 +293,7 @@ should in principle be possible to enhance it with other forms of
 I/O like parallel and networked I/O. However, other high
 performance data I/O libraries
 exist and it should be studied if it is better to use such a library.
-\htmladdnormallink{HDF5}{http://hdf.ncsa.uiuc.edu/HDF5} is such a
+\href{http://hdf.ncsa.uiuc.edu/HDF5}{HDF5} is such a
 library. It has an C++ and Java interface and a viewer written in
 Java. It supports array tiling (chunking in their terminology).
 

@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
 \include{aips2defs}
-\usepackage{html,epsf}
+\usepackage{hyperref,epsf}
 %%-----------------------------------------------------------------------------
 
 \begin{document}
@@ -14,12 +14,10 @@
 
 \maketitle
 %%---------------------------------------------------------------------------
-\begin{htmlonly}
-\htmladdnormallink{A postscript version of this note is available 
-(220kB).}{../233.ps.gz}
-\end{htmlonly}
+\href{233.pdf}{A pdf version of this note is available.}
+
 
 \tableofcontents
       
-\input{mguide.latex}
+\input{233.dir/mguide.latex}
 \end{document}

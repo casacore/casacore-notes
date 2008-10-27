@@ -1,5 +1,5 @@
 \section{Introduction}
-The \htmladdnormallink{AIPS++ Table System}{../255/255.html}
+The \href{../255.html}{AIPS++ Table System}
 is used to store all data in the AIPS++ environment.
 The Table System supports concurrent access by means of table locking.
 The user can control how the table locking is used which may have
@@ -286,18 +286,18 @@ A brief overview is given. For detailed information the relevant
 documentation should be examined.
 
 \subsection{class \htmladdnormallink{TableLock}
-{../../aips/implement/Tables/TableLock.h}}
+{../html/classcasa_1_1TableLock.html}}
 This class defines the locking mode which can be given to the \texttt{Table}
 constructor. For AutoLocking mode a few parameters can be set.
 
 \subsection{class \htmladdnormallink{TableLocker}
-{../../aips/implement/Tables/TableLocker.h}}
+{../html/classcasa_1_1TableLocker.html}}
 This class can be used to acquire and release a lock, especially in
 UserLocking mode. As described above, it is particularly useful to ensure
 that a lock is released in case of an exception.
 
 \subsection{\htmladdnormallink{Table}
-{../../aips/implement/Tables/Table.h} functions}
+{../html/classcasa_1_1Table.html} functions}
 \begin{itemize}
 \item \texttt{Table} constructor accepts a \texttt{TableLock} argument.
 \item \texttt{lock} tries to acquire a read or write lock and resync-s..

@@ -1,5 +1,4 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\newcommand{\thisdocURL}{http://aips2.nrao.edu/aips++/docs/notes/224/224.html}
 \newcommand{\meqref}[1]{(\ref{#1})}
 \newcommand{\textref}[2]{#1 (\ref{#2})}
 \newcommand{\LSQ}{{\em LSQ}}
@@ -24,17 +23,6 @@
 \newcommand{\Logic}{{\sc logical}}
 \newcommand{\Mn}{{\vspace{-0.5em}}}
 %%\renewcommand{\mathbf}[1]{\mbox{$\boldmath #1$}}
-
-% Add home page navigation button
-%
-
-\htmladdtonavigation{\htmladdnormallink
-  {\htmladdimg{../../gif/home.gif}}{{../../html/aips++.html}}}
-
-%%\section{Least Squares background}
-%%\\
-%%{\it Contributed by W.N. Brouw, October, 1998 --- Version 4}
-%%\tableofcontents
 
 
 \section{Introduction}

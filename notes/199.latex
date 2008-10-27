@@ -1,7 +1,8 @@
 %% TaQL
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{html}
+\usepackage{hyperref}
+
 %%-----------------------------------------------------------------------------
 %% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
 %% for these and other variables which override style settings.
@@ -26,11 +27,11 @@ matching of two sky catalogues.
 \\A binding in C++, Python, and Glish is available.
 \end{abstract}
 %%---------------------------------------------------------------------------
-\begin{htmlonly}
-\htmladdnormallink{A (gzipped) postscript version of this note is available (160kB).}{../199.ps.gz}
-\end{htmlonly}
+%%\begin{htmlonly}
+\href{../199.pdf}{A pdf version of this note is available.}
+%%\end{htmlonly}
 
 \tableofcontents 
 \newpage
-\input{taql}
+\input{199.dir/taql.tex}
 \end{document}

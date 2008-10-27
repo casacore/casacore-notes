@@ -1,6 +1,6 @@
 \documentclass{article}
 \include{aips2defs}
-\usepackage{html,epsf}
+\usepackage{hyperref,epsf}
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
@@ -39,16 +39,13 @@
 \date{January 21, 2000}
 \maketitle
 
-\begin{htmlonly}
-\htmladdnormallink{A postscript version of this note is available 
-(364kB).}{../229.ps.gz}
-\end{htmlonly}
+\href{229.pdf}{A pdf version of this note is available.}
 
 \tableofcontents 
 \section{Summary} 
 
 This note describes a revised MeasurementSet definition which extends
-that previously given in \aipspp Note 191 (Wieringa and Cornwell
+that previously given in aips++ Note 191 (Wieringa and Cornwell
 1996).  The new definition is designed to support changes in the
 synthesis calibration system, provide support for VLBI processing,
 enhance single-dish capabilities and also incorporate more general
@@ -59,12 +56,12 @@ complete form of the revised definition is presented.
 \section{Introduction}
 
 The MeasurementSet (MS) defines the format in which visibility and
-single-dish data are stored in \aipspp (Wieringa and Cornwell
+single-dish data are stored in aips++ (Wieringa and Cornwell
 1996). The format has been chosen to accommodate synthesis and
 single-dish data from a variety of instruments in as broad a framework
 as possible. In addition, it has been designed to be compatible with
 the requirements of the measurement equation formalism (Noordam 1996),
-which has been adopted to model instrumental errors in the \aipspp
+which has been adopted to model instrumental errors in the aips++
 calibration system.
 
 The original definition will be referred to as version 1.0 in what
@@ -252,7 +249,7 @@ the MS v2.0 format.}
 \end{itemize}
 
 Suggestions regarding this revision of the MS definition have been
-contributed broadly from within the \aipspp project. No specific
+contributed broadly from within the aips++ project. No specific
 attribution is given for each change but the accompanying text
 reflects the rationale behind the modification and includes relevant
 points that were raised in public discussion.
@@ -2558,9 +2555,9 @@ SPECTRAL\_WINDOW sub-table description.}
 
 \noindent Flatters, C., 1998, AIPS Memo. 102.
 
-\noindent Noordam, J., 1996, \aipspp Note 185.
+\noindent Noordam, J., 1996, aips++ Note 185.
 
-\noindent Wieringa, M.H., and Cornwell, T., 1996, \aipspp Note 191.
+\noindent Wieringa, M.H., and Cornwell, T., 1996, aips++ Note 191.
 
 \end{document}
 

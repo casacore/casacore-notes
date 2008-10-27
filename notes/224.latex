@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{html,epsf}
+\usepackage{hyperref,epsf}
 %%-----------------------------------------------------------------------------
 
 \begin{document}
@@ -13,12 +13,10 @@
 
 \maketitle
 %%---------------------------------------------------------------------------
-\begin{htmlonly}
-\htmladdnormallink{A postscript version of this note is available 
-(124kB).}{../224.ps.gz}
-\end{htmlonly}
+\href{224.pdf}{A pdf version of this note is available.}
+
 
 \tableofcontents
       
-\input{lsq.latex}
+\input{224.dir/lsq.latex}
 \end{document}

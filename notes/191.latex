@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
-\usepackage{html}
+\usepackage{hyperref}
+
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
@@ -36,9 +37,8 @@
 \maketitle
 
 
-\begin{htmlonly}
-\htmladdnormallink{A postscript version of this note is available.}{../191.ps.gz}
-\end{htmlonly}
+\href{191.pdf}{A pdf version of this note is available.}
+
 
 \tableofcontents
 \section{Summary}

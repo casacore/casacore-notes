@@ -1,7 +1,8 @@
 %% Table System Revisited
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{html}
+\usepackage{hyperref}
+
 %%-----------------------------------------------------------------------------
 %% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
 %% for these and other variables which override style settings.
@@ -14,8 +15,6 @@ AIPS++ Table System Revisited}
 \date {2003 February 3}
 \maketitle
 %%---------------------------------------------------------------------------
-\begin{htmlonly}
-\htmladdnormallink{A (gzipped) postscript version of this note is available (40kB).}{../255.ps.gz}
-\end{htmlonly}
-\input{tablesystem}
+\href{255.pdf}{A pdf version of this note is available.}
+\input{255.dir/tablesystem}
 \end{document}

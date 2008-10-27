@@ -10,8 +10,6 @@
 % Add home page navigation button
 %
 
-\htmladdtonavigation{\htmladdnormallink
-  {\htmladdimg{../../gif/home.gif}}{{../../html/aips++.html}}}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \newpage
@@ -20,12 +18,8 @@
 
 This guide gives a short overview of the background and use of the
 \mess\ module in C++. Detailed information can be found in the 
-\begin{latexonly}
-\mess\ module
-\end{latexonly}
-\begin{htmlonly}
-\htmladdnormallink{\mess\ module}{../../aips/implement/Measures.html}
-\end{htmlonly}
+
+\href{../html/group__Measures__module.html}{\mess\ module}
  description, and in the individual header files of the
 classes in this module.
 
@@ -486,12 +480,7 @@ Example:
 \subsection{Specifying execution details}
 
 The precision of a \mes\ conversion can be influenced by the use of
-{\em aipsrc} variables. The relevant variables can be found in the
-{\em aipsrcdata} section of the standard {\em User Reference
-Manual}.
-\begin{htmlonly}
-\htmladdnormallink{(see here)}{../../user/Refman/Refman.html}.
-\end{htmlonly}
+{\em aipsrc} variables. 
 Changing the precision will influence the efficiency of the
 \mess\ conversion.
 
@@ -537,13 +526,8 @@ frequency.
 Constructors of \mess\ have often specializations (like one with a
 longitude and latitude for a direction), but they all have also
 standard ones. The standard ones are described in the
-\begin{latexonly}
-Measure.h class description.
-\end{latexonly}
-\begin{htmlonly}
-\htmladdnormallink{Measures.h}{../../aips/implement/Measures/Measure.html}
-class description.
-\end{htmlonly}
+
+\href{../html/classcasa_1_1Measure.html}{Measures.h}
 
 \subsection{Getting values from a Measure}
 
@@ -675,26 +659,14 @@ P.K. Seidelman {\em et al.}, University Science Books, $1992$
 \item {\em The Astronomical Almanac for the year yyyy}, London: The
 Stationary Office; Washington: U.S. Government Printing Office
 \item the ``International Celestial Reference System'' 
-\begin{latexonly}
-($ICRS$) \\({\em 
-http://hpiers.obspm.fr/webiers/general/syframes/icrsf/ICRS.html})
-\end{latexonly}
-\begin{htmlonly}
-\htmladdnormallink{($ICRS$)}
-{http://hpiers.obspm.fr/webiers/general/syframes/icrsf/ICRS.html}
-\end{htmlonly}
+\href{http://hpiers.obspm.fr/webiers/general/syframes/icrsf/ICRS.html}{($ICRS$)}
 \end{itemize}
 
 \noindent
 {\bf Positions}
 \begin{itemize}
 \item the $IERS$ 
-\begin{latexonly}
-website \\({\em http://hpiers.obspm.fr/})
-\end{latexonly}
-\begin{htmlonly}
-\htmladdnormallink{website}{http://hpiers.obspm.fr/}
-\end{htmlonly}
+\href{http://hpiers.obspm.fr/}{website}
 \end{itemize}
 
 \noindent
@@ -707,12 +679,7 @@ website \\({\em http://hpiers.obspm.fr/})
 {\bf Magnetic field}
 \begin{itemize}
 \item the $IAGA$ 
-\begin{latexonly}
-website \\({\em http://www.ngdc.noaa.gov/IAGA/wg8/})
-\end{latexonly}
-\begin{htmlonly}
-\htmladdnormallink{website}{http://www.ngdc.noaa.gov/IAGA/wg8/}
-\end{htmlonly}
+\href{http://www.ngdc.noaa.gov/IAGA/wg8/}{website}
 \end{itemize}
 
 \noindent

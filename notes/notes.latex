@@ -1,13 +1,12 @@
 \documentclass[11pt]{article}
-\usepackage{html}
-\externallabels{../215}{../215/labels.pl}
+\usepackage{hyperref}
 
 \begin{document}
 \label{Top}
-\title{AIPS++ Notes Series}
-\author{\htmlref{Note to Authors}{215:addnotes}}
+\title{casacore Notes Series}
+\author{\href{215:addnotes}{Note to Authors}}
 \maketitle
 
-\input{nindex}
+\input{notes.dir/nindex}
 
 \end{document}

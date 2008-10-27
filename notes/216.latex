@@ -1,7 +1,8 @@
 %% LEL
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{html}
+\usepackage{hyperref}
+
 %%-----------------------------------------------------------------------------
 %% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
 %% for these and other variables which override style settings.
@@ -22,10 +23,8 @@ Lattice Expression Language Implementation}
 \date {1998 January 20}
 \maketitle
 %%---------------------------------------------------------------------------
-\begin{htmlonly}
-\htmladdnormallink{A postscript version of this note is available (116kB).}{../216.ps.gz}
-\end{htmlonly}
+\href{216.pdf}{A pdf version of this note is available.}
 
-\input{LEL}
+\input{216.dir/LEL}
 \end{document}
 
