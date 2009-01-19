@@ -711,7 +711,7 @@ Scalar constants of the various data types can be formed as follows
               \\Function \texttt{regex} can be used after operator = and !=.
               It uses many special characters. See class
               \htmladdnormallink{Regex}
-              {../../casa/implement/Utilities/Regex.html}
+              {../html/classcasa_1_1Regex.html}
               for a full description.
               \begin{verbatim}
               name ~ f/[a-zA-Z][a-zA-Z0-9]*/
@@ -941,7 +941,7 @@ These functions can be used on a scalar or an array argument.
 Apart from the regex/pattern constants, it is possible to use
 functions to form a regex or pattern.
 The syntax for forming a regex and pattern are explained in class
-\htmladdnormallink{Regex}{../../casa/implement/Utilities/Regex.html}.
+\htmladdnormallink{Regex}{../html/classcasa_1_1Regex.html}.
 These functions can only be used on a scalar argument.
 
 \begin{description}
@@ -984,7 +984,7 @@ These functions can be used on a scalar or an array argument.
   \item[] \texttt{DateTime DATETIME(string),  DateTime CTOD(string)}\\
        Parse the string and convert it to a date/time. The syntax of
        date/time is explained in class
-       \htmladdnormallink{MVTime}{../../casa/implement/Quanta/MVTime.html}.
+       \htmladdnormallink{MVTime}{../html/classcasa_1_1MVTime.html}.
   \item[] \texttt{DateTime MJDTODATE(double)}\\
        The double value, which has to be a MJD (ModifiedJulianDate), is
        converted to a DateTime.
@@ -1632,7 +1632,7 @@ operands to operators like addition, will be converted as needed.
 An exception is thrown if a unit conversion is not possible.
 
 All units supported by module
-\htmladdnormallink{Quanta}{../../casa/implement/Quanta.html}
+\htmladdnormallink{Quanta}{../html/group__Quanta__module.html}
 can be used. Note that the
 units are case sensitive. Most common units use lowercase characters.
 A unit can be preceeded by a scaling prefix (like \texttt{k} for kilo).
@@ -2508,12 +2508,11 @@ and classes form the programmer interface.
   statement. The \texttt{style} argument can be used
   to choose another style.
 \item
-  The Python interface is formed by the \texttt{pycasatable} or
-  \texttt{casapy} package. It looks the same as the Glish interface.
-  By default, \texttt{pycasatable} will use the Python style for a TaQL
-  statement. The \texttt{style} argument can be used
-  to choose another style. \texttt{casapy} has no such provisions and
-  will always use the Glish style.
+  The Python interface is formed by the
+  \htmladdnormallink{pyrap.tables}{../../../pyrap/docs/pyrap\_tables.html}
+  package. It looks the same as the Glish interface.
+  By default, \texttt{pyrap.tables} will use the Python style for a TaQL
+  statement.
   For example:
   \begin{verbatim}
     from pycasatable import *
@@ -2525,7 +2524,7 @@ and classes form the programmer interface.
                              name='result.tab')
     t = tablecommand('select from GER.MS where ANTENNA1==1',
                      style='');    # use default (glish) style
-    med := t.calc ('median(DATA)')
+    med = t.calc ('median(DATA)')
   \end{verbatim}
 
 \item
@@ -2534,9 +2533,9 @@ and classes form the programmer interface.
   \item
     The function \texttt{tableCommand} in
     \htmladdnormallink{TableParse.h}
-    {../../tables/implement/Tables/TableParse.html}
+    {../html/classcasa_1_1TableParse.html}
     can be used to execute a TaQL command. The result is a
-    \htmladdnormallink{Table}{../../tables/implement/Tables/Table.html}
+    \htmladdnormallink{Table}{../html/classcasa_1_1Table.html}
     object. E.g.
 \begin{verbatim}
   Table seltab1 = tableCommand
@@ -2556,10 +2555,10 @@ and classes form the programmer interface.
   \item
     The other interface is a true C++ interface having the
     advantage that C++ variables can be used. Class
-    \htmladdnormallink{Table}{../../tables/implement/Tables/Table.html}
+    \htmladdnormallink{Table}{../html/classcasa_1_1Table.html}
     contains functions to sort a table or to select columns or rows.
     When selecting rows class \htmladdnormallink{TableExprNode}
-    {../../tables/implement/Tables/ExprNode.html} (in ExprNode.h)
+    {../html/classcasa_1_1TableExprNode.html} (in ExprNode.h)
     has to be used to
     build a WHERE expression which can be executed by the overloaded
     function operator in class \texttt{Table}. E.g.
@@ -2570,11 +2569,11 @@ and classes form the programmer interface.
 \end{verbatim}
     does the same as the first example shown above.
     See classes \htmladdnormallink{Table}
-    {../../tables/implement/Tables/Table.html},
+    {../html/classcasa_1_1Table.html},
     \htmladdnormallink{TableExprNode}
-    {../../tables/implement/Tables/ExprNode.html}, and
+    {../html/classcasa_1_1TableExprNode.html}, and
     \htmladdnormallink{TableExprNodeSet}
-    {../../tables/implement/Tables/ExprNodeSet.html} for more
+    {../html/classcasa_1_1TableExprNodeSet.html} for more
     information on how to construct a WHERE expression.
   \end{enumerate}
   
