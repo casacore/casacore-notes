@@ -4,7 +4,6 @@
 \begin{document}
 \label{Top}
 \title{casacore Notes Series}
-\author{\href{215:addnotes}{Note to Authors}}
 \maketitle
 
 \input{notes.dir/nindex}
