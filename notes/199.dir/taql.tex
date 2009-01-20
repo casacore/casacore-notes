@@ -47,8 +47,8 @@ language style to be used.
 \end{itemize}
 
 The first sections of this document explain the syntax and show the options.
-The last sections show the interface to TaQL using Glish or C++.
-The Glish interface makes it possible to embed Glish
+The last sections show the interface to TaQL using Python or C++.
+The Python interface makes it possible to embed Python
 variables and expressions in a TaQL command.
 
 \section{TaQL Commands}
@@ -460,7 +460,7 @@ to be able to use the temporary table in the subqueries.
 Normally only persistent tables (i.e. tables on disk) can
 be used. However, it is also possible to use transient tables
 in a TaQL command given in
-\htmlref{Glish, Python, or C++}{TAQL:GLISHPC}.
+\htmlref{Python, Glish, or C++}{TAQL:GLISHPC}.
 This is done by passing one or more table objects to the
 function executing the TaQL command. In the TaQL command a
 \$-sign followed by a sequence number has to be given to
@@ -623,7 +623,7 @@ The possible types and values are:
 
 \subsection{\label{TAQL:CONSTANTS}Constants}
 Scalar constants of the various data types can be formed as follows
-(which is very similar to Glish):
+(which is very similar to Python and Glish):
 \begin{itemize}
   \item A Bool constant is the value \texttt{T} or \texttt{F} (both in
   uppercase) or the value \texttt{true} or \texttt{false} (any case).
@@ -653,11 +653,11 @@ Scalar constants of the various data types can be formed as follows
 	as 2000 meter (note that 2d3 is a double precision number).
 	Use \texttt{2.d3m} or \texttt{2d3 m} to indicate the meters case.
   \item The imaginary part of a Complex constant is formed by a Double
-       constant immediately followed by a lowercase \textbf{i}. A full Complex
-       constant is formed by adding another Double constant as the
-       real part. E.g.
+       constant immediately followed by a lowercase \textbf{i} or
+       \textbf{j}. A full Complex constant is formed by adding another
+       Double constant as the real part. E.g.
        \begin{verbatim}
-       1.5 + 2i
+       1.5 + 2j
        2i+1.5            is identical
        \end{verbatim}
        Note that a full Complex constant has to be enclosed
@@ -802,7 +802,7 @@ the same function in glish. E.g.
      array([1:10],10,4)
 \end{verbatim}
 creates an array with shape [10,4] containing the values
-1..10.
+1..10 in each line.
 
 Similar to glish the value array is wrapped if the created
 array has more elements. Unlike glish the shape does not need to be
@@ -910,7 +910,7 @@ All these operators can be used in the same way for arrays
 (also a mix of scalar and array).
 
 \subsection{\label{TAQL:FUNCTIONS}Functions}
-Some functions have 2 names. One name is the AIPS++/Glish name, while the
+Some functions have 2 names. One name is the CASA/Glish name, while the
 other is the name as used in SQL.
 In the following tables the function names are shown in uppercase,
 while the result and argument types are shown in lowercase.
@@ -975,7 +975,7 @@ it. However, one can use the \texttt{m//} regex constant to do partial
 matching. Thus something like \texttt{m/xx/} matches all strings
 containing \texttt{xx}. Of course, \texttt{regex('.*xx.*')} can also be used.
 In this way the \texttt{m//} regex works the same as in languages like
-Perl and Glish. 
+Perl, Python, and Glish. 
 \end{enumerate}
 
 \subsubsection{Date/time functions}
@@ -1481,7 +1481,7 @@ It is possible to take a subsection or a
 single element from an array column, keyword or expression
 using the index operator
 \texttt{[index1,index2,...]}. The rules for this
-are similar to those used in Glish.
+are similar to those used in Python or Glish.
 Taking a single element can be done as:
 \begin{verbatim}
   array[1]
@@ -1505,7 +1505,6 @@ The examples show that an index can be a simple constant (as it will
 usually be). It can also be an expression which can be as complex
 as one likes. The expression has to result in a positive double value
 which will be truncated to an integer length.
-\textbf{Note} that as in Glish, array indices start at 1.
 \\For fixed shaped arrays checking if array bounds are exceeded
 is done at parse time.
 For variable shaped arrays
@@ -2107,7 +2106,7 @@ have to be used.
 The \texttt{dataman} part makes it possible for the expert user to
 define the data managers to be used by columns. It is a comma separated
 list of data manager specifications looking like the output of the
-\texttt{table.getdminfo} command in glish.
+\texttt{table.getdminfo} command in Python or Glish.
 Each specification has to be enclosed in square brackets.
 For example:
 \begin{verbatim}
@@ -2329,12 +2328,10 @@ used in the nested query which has a FROM clause itself.
 \end{description}
 
 \subsubsection{\label{TAQL:RUNEXAMPLES}Applying running median to an image}
-The following piece of glish code shows how a running median can 
+The following piece of Python code shows how a running median can 
 be applied to an AIPS++ image.
 \begin{verbatim}
-  im := imagecalc('my.imgd', 'my.img')
-  im.close()
-  t1 := tablecommand ('update my.imgd set map =
+  t1 = tablecommand ('update my.imgd set map =
                          map - runningmedian(map,25,25)')
 \end{verbatim}
 First the image is copied and thereafter the running medians are
@@ -2344,7 +2341,7 @@ of 25x25, thus the full window is 51x51.
 line cube the image is not too large, otherwise it won't fit in
 memory. If too large, it should be done in chunks like:
 \begin{verbatim}
-  t1 := tablecommand ('update my.imgd set map[,,sc:ec,] =
+  t1 = tablecommand ('update my.imgd set map[,,sc:ec,] =
                          map[,,sc:ec,] -
                          runningmedian(map[,,sc:ec,],25,25)')
 \end{verbatim}
@@ -2422,23 +2419,24 @@ great advantage that it also works on FITS and Miriad images.
 
 \section{\label{TAQL:GLISHPC}Interface to TaQL}
 There exists a user and a programmer interface to TaQL.
-Glish and Python functions form the user interface, while C++ functions
+Python and Glish functions form the user interface, while C++ functions
 and classes form the programmer interface.
 \begin{itemize}
 \item
-  The main TaQL interface in Glish is formed by the
-  \htmlref{\texttt{query}}{table:query} function in module
-  \htmlref{\texttt{table}}{table} (in script \texttt{table.g}).
+  The main TaQL interface in Python is formed by the
+  \htmladdnormallink{\texttt{query}}
+  {../../../pyrap/docs/pyrap_tables\#pyrap.tables.table.query} function in module
+  \htmladdnormallink{\texttt{table}}{../../../pyrap/docs/pyrap_tables.html}.
   The function can be used
   to compose and execute a TaQL command using the various (optional)
   arguments given to the \texttt{query} function. E.g.
   \begin{verbatim}
-    tab := table('mytable')
-    seltab1 := tab.query ('column1 > 0')
-    seltab2 := seltab1.query (query='column2>5',
-                              sortlist='time',
-                              columns='column1,column2',
-                              name='result.tab')
+    tab = table('mytable')
+    seltab1 = tab.query ('column1 > 0')
+    seltab2 = seltab1.query (query='column2>5',
+                             sortlist='time',
+                             columns='column1,column2',
+                             name='result.tab')
   \end{verbatim}
   The first command opens the table \texttt{mytable}.
   The second command does a simple query resulting in a temporary
@@ -2456,75 +2454,55 @@ and classes form the programmer interface.
   in a variable. For example, the following returns a vector containing
   the median of the \texttt{DATA} column in each table row:
   /begin{verbatim}
-    med := t.calc ('median(DATA)')
+    med = t.calc ('median(DATA)')
   /end{verbatim}
 
-  It is possible to embed glish variables and expressions in a TaQL
+  It is possible to embed Python variables and expressions in a TaQL
   command using the syntax \texttt{\$variable} and
   \texttt{\$(expression)}. A variable can be a standard numeric or
   string scalar or vector. It can also be a table tool.
   An expression has to result in a numeric or string scalar or vector.
   E.g
   \begin{verbatim}
-    tab := table('mytable')
-    coldata := tab.getcol ('col');
-    colmean := sum(coldata) / len(coldata);
-    seltab1 := tab.query ('col > $colmean')
-    seltab2 := tab.query ('col > $(sum(coldata)/len(coldata))')
-    seltab3 := tab.query ('col > mean([SELECT col from $tab])')
+    from pyrap.tables import *
+    tab = table('mytable')
+    coldata = tab.getcol ('col');
+    colmean = sum(coldata) / len(coldata);
+    seltab1 = tab.query ('col > $colmean')
+    seltab2 = tab.query ('col > $(sum(coldata)/len(coldata))')
+    seltab3 = tab.query ('col > mean([SELECT col from $tab])')
   \end{verbatim}
   These three queries give the same result.
-  \\The substitution mechanism is described in more detail in the
-  \htmlref{\texttt{substitute}}{misc:substitute}
-  functions of module
-  \htmlref{\texttt{utility}}{misc} of the
-  \htmladdnormallink{User Reference
-  Manual}{../../user/Refman/Refman.html}.
-  \\The substitution mechanism uses the \texttt{eval} function in glish.
-  Alas \texttt{eval} only looks at global variables. This means
-  that in a function one needs to create a global variable (with
-  a unique name) if the variable is to be used in a TaQL command.
-  The global variable should be deleted at the end of the function.
-  The name can be made unique by using the function name as a suffix.
-  E.g.:
-  \begin{verbatim}
-    myfunc := function() {
-      tab := table('mytable')
-      global coldata_in_myfunc;
-      coldata_in_myfunc := tab.getcol ('col');
-      seltab := tab.query ('col > $(sum(coldata)/len(coldata))')
-      symbol_delete ('coldata_in_myfunc');
-    }
-  \end{verbatim}
+  \\The substitution mechanism is described in more detail in
+  \htmladdnormallink{pyrap.util}{../../../pyrap/docs/pyrap_util.html}.
 
-  The other function that can be used is \texttt{tablecommand}. The
+  The other function that can be used is \texttt{taql} (or
+  \texttt{tablecommand}). The
   full TaQL command has to be given to that command. The result is
-  a table tool. E.g.
+  a table object. E.g.
   \begin{verbatim}
-    t := tablecommand('select from GER.MS where ANTENNA1==1');
+    t = taql('select from GER.MS where ANTENNA1==1');
   \end{verbatim}  
 
-  By default, \texttt{table.g} will use the Glish style for a TaQL
+  By default, these commands will use the Python style for a TaQL
   statement. The \texttt{style} argument can be used
   to choose another style.
 \item
-  The Python interface is formed by the
-  \htmladdnormallink{pyrap.tables}{../../../pyrap/docs/pyrap\_tables.html}
-  package. It looks the same as the Glish interface.
-  By default, \texttt{pyrap.tables} will use the Python style for a TaQL
+  The Glish interface is formed by script \texttt{table.g}.
+  By default, it will use the Glish style for a TaQL
   statement.
   For example:
   \begin{verbatim}
-    from pycasatable import *
-    tab = table('mytable')
-    seltab1 = tab.query ('column1 > 0')
-    seltab2 = seltab1.query (query='column2>5',
+    include 'table.g'
+    tab := table('mytable')
+    seltab1 := tab.query ('column1 > 0')
+    seltab2 := seltab1.query (query='column2>5',
                              sortlist='time',
                              columns='column1,column2',
                              name='result.tab')
-    t = tablecommand('select from GER.MS where ANTENNA1==1',
+    t := tablecommand('select from GER.MS where ANTENNA1==1',
                      style='');    # use default (glish) style
-    med = t.calc ('median(DATA)')
+    med := t.calc ('median(DATA)')
   \end{verbatim}
 
 \item

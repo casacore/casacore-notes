@@ -18,12 +18,12 @@ To summarize, the following functionality is supported:
 \item \htmlref{Masking}{LEL:CONDITIONS} using boolean expressions.
 \item Handling of \htmlref{masks}{LEL:HANDMASKS} in an expression.
 \item Support of image \htmlref{regions}{LEL:REGIONS}.
-\item Interface from both Glish and C++.
+\item Interface from both C++ and Python (and Glish).
 \end{itemize}
 
 The first section explains the syntax.  The last sections show the
-interface to LEL using Glish or C++.  The Glish interface makes it
-possible to embed Glish variables and expressions in a LEL command. 
+interface to LEL using Python or C++.  The Python interface makes it
+possible to embed Python variables and expressions in a LEL command. 
 At the end some \htmlref{examples}{LEL:EXAMPLES} are given.  If 
 you like, you can go straight to the examples and hopefully immediately
 be able to do some basic things.
@@ -37,10 +37,10 @@ This is similar to reading only the requested chunk of data from a disk
 file. 
 
 \medskip\noindent LEL is quite efficient and can therefore be used well
-in C++ and glish code.  Note however, that it can never be as efficient as
+in C++ and Python code.  Note however, that it can never be as efficient as
 carefully constructed C++ code. 
 
-\medskip\noindent \htmladdnormallink{Note 216}{../216/216.html} gives a
+\medskip\noindent \htmladdnormallink{Note 216}{216.html} gives a
 detailed description how LEL is implemented using various C++ classes. 
 
 
@@ -71,7 +71,7 @@ will be used when calculating the mean.
 
 \medskip\noindent In general the result of a LEL expression is a lattice,
 but it can be a scalar too. If is is a scalar, it will be handled correctly
-by C++ and glish functions using it as the source in, say, an
+by C++ and Python functions using it as the source in, say, an
 assignment to another lattice.
 
 \medskip\noindent LEL fully supports masks. In most cases the mask of a
@@ -105,7 +105,7 @@ operator \texttt{[]}.
 
 \subsection{\label{LEL:CONSTANTS}Constants}
 Scalar constants of the various data types can be formed as follows
-(which is similar to Glish):
+(which is similar to Python):
 \begin{itemize}
   \item A Bool constant can be given as T or F
         (meaning true and false respectively).
@@ -124,17 +124,17 @@ Scalar constants of the various data types can be formed as follows
     \end{verbatim}
   \item The imaginary part of a Complex or DComplex constant is formed
     by a Float or Double constant immediately followed by a lowercase
-    \textbf{i}. A full complex
+    \textbf{i} or \textbf{j}. A full complex
     constant is formed by adding another constant as the
     real part. E.g.
     \begin{verbatim}
-    1.5 + 2i
+    1.5 + 2j
     2i+1.5            is identical
     \end{verbatim}
     Note that a full complex constant has to be enclosed
     in parentheses when, say, a multiplication is performed on it. E.g.
     \begin{verbatim}
-    2 * (1.5+2i)
+    2 * (1.5+2j)
     \end{verbatim}
 \end{itemize}
 The functions \texttt{pi()} and \texttt{e()} should be
@@ -474,10 +474,11 @@ enclosing the string in single or double quotes.  E.g.
   '~/myimage.data-old'
 \end{verbatim}
 
-\medskip\noindent Note that when LEL is used from Glish, it is also possible to use
-a Glish image variable as a lattice operand (e.g. \texttt{\$im}).
+\medskip\noindent Note that when LEL is used from Python, it is also
+possible to use
+a Python image variable as a lattice operand (e.g. \texttt{\$im}).
 This is explained in the section describing the
-\htmlref{Glish binding}{LEL:GLISHC}. It means that in Glish a
+\htmlref{Python binding}{LEL:PYTHONC}. It means that in Python a
 name starting with a \texttt{\$} should be escaped too.
 
 
@@ -492,7 +493,7 @@ finding the mean of the image).
 
 \medskip\noindent An image can have zero (all pixels are good) or more masks.  One mask
 can be designated as the default mask.  By default it will be applied to
-the image (from Glish, designation of the default mask is handled by the
+the image (from Python, designation of the default mask is handled by the
 \htmlref{maskhandler}{images:image.maskhandler.function} function
 of the \htmlref{Image}{images:image} tool).
 
@@ -716,7 +717,7 @@ polygon.
 the user, a mask is really a special kind of region; they are implemented
 with the same underlying code.
 
-\medskip\noindent Like masks, regions can be persistently stored in image.  From Glish,
+\medskip\noindent Like masks, regions can be persistently stored in image.  From Python,
 regions are generated, manipulated and stored with the
 \htmlref{Regionmanager}{images:regionmanager} tool.
 
@@ -740,18 +741,18 @@ has a mask, they are and-ed to form the result's mask.
 \item masks
 \end{itemize}
 The documentation in the classes
- \htmladdnormallink{LCRegion}{../../lattices/implement/Lattices/LCRegion.html},
- \htmladdnormallink{LCSlicer}{../../lattices/implement/Lattices/LCSlicer.html}, and
- \htmladdnormallink{WCRegion}{../../images/implement/Images/WCRegion.html})
+ \htmladdnormallink{LCRegion}{../html/classcasa_1_1LCRegion.html},
+ \htmladdnormallink{LCSlicer}{../html/classcasa_1_1LCSlicer.html}, and
+ \htmladdnormallink{WCRegion}{../html/classcasa_1_1WCRegion.html})
 gives you more information about the various regions.
 
 \medskip\noindent At this moment a region can not be defined in LEL itself. It is
 only possible to use regions predefined in an image or another table.
 
-\medskip\noindent When using Glish (as will normally be done), it is also possible to use
-a region defined in Glish using the \$-notation.  This is explained in
+\medskip\noindent When using Python (as will normally be done), it is also possible to use
+a region defined in Python using the \$-notation.  This is explained in
 more detail in the section discussing the \htmlref{interface to
-LEL}{LEL:GLISHC}. 
+LEL}{LEL:PYTHONC}. 
 
 \medskip\noindent A predefined region can be used by specifying its name.
 There are three ways to specify a region name:
@@ -808,7 +809,7 @@ applies the mask from one image to another.  Apart from copying the
 mask, this is the only way to do this. 
 
 \medskip\noindent Unions, intersections, differences and complements of regions can be
-generated and stored (in C++ and Glish).  However, it is also possible
+generated and stored (in C++ and Python).  However, it is also possible
 to form a union, etc.  in LEL itself.  However, that can only be done if
 the regions have the same type (i.e.  both in world or in pixel
 coordinates). 
@@ -933,7 +934,7 @@ lattice data which already reside in memory. All LEL operators and
 functions try to reference the data of their latter operands instead
 of making a copy.
 \\In general this optimization does not apply to LEL expression.
-However, when using the true \htmlref{C++ interface}{LEL:GLISHC}
+However, when using the true \htmlref{C++ interface}{LEL:PYTHONC}
 to classes like \texttt{LatticeExprNode}, one can easily use
 memory-based lattices. In that case it can be advantageous to pay
 attention to this optimization.
@@ -949,116 +950,57 @@ function you are invoking with LEL writes out the result, then both the
 mask and result will be stored.  On the other hand, it is possible to
 just use LEL expressions but never write out the results to disk.  In
 this case, no data or mask is written to disk.   You can read
-more about this in the \htmlref{interface}{LEL:GLISHC} section.
+more about this in the \htmlref{interface}{LEL:PYTHONC} section.
 
 
-\section{\label{LEL:GLISHC}Interface to LEL}
+\section{\label{LEL:PYTHONC}Interface to LEL}
 
-There are two interfaces to LEL.  One is from Glish and the
+There are two interfaces to LEL.  One is from Python and the
 other from C++.   It depends upon your needs which one
-you access.  Most high level users of AIPS++ will access
-LEL only via the Glish interface.
+to use.  Most high level users of AIPS++ will access
+LEL only via the Python interface.
 
-\subsection {Glish Interface}
+\subsection {Python Interface}
 
-The LEL interface in Glish is provided by the
-\htmlref{Image}{images:image} tool (loaded with the script
-\texttt{image.g}) \htmlref{imagecalc}{images:image.imagecalc.constructor} 
-constructor, and through
-the \htmlref{calc}{images:image.calc.function} tool function. 
-These can be used to compose and/or execute a LEL expression.
-
-\subsubsection {Simple String Expressions}
-
-\medskip\noindent The \texttt{imagecalc} constructor evaluates the
-expression and stores the result and mask in an output image.  If you
-specify the output image name, it is written to a disk file of that
-name.  If you don't give it, the output image is never written out; it
-is evaluated every time an action (like
-\htmlref{statistics}{images:image.statistics}) is requested. 
+The LEL interface in Python is provided in the
+\htmladdnormallink{pyrap.images}{../../../pyrap/docs/pyrap_images.html}
+package. The main constructor makes it possible to open an image
+expression as a virtual image.
 
 \begin{verbatim}
-  im := imagecalc(outfile='outimage', pixels='inimage1+inimage2');
+  from pyrap.images import *
+  im = image('inimage1+inimage2')
   im.statistics();
 \end{verbatim}
-
-\medskip\noindent The first command creates an image file \texttt{outimage} filling
-it with the sum of the input images. The second command does
-statistics on that new image.
-
-\medskip\noindent Writing it as
-\begin{verbatim}
-    im := imagecalc(pixels='inimage1+inimage2');
-    im.statistics();
-\end{verbatim}
-would do the same with the exception of creating the output image.
-Instead the created image is transient; it only lives as an
-expression and each time it is used the expression is evaluated.
-
-\medskip\noindent We can use the function {\tt calc} on an already existing image.  Thus
-\begin{verbatim}
-  im := image('ngc1213');
-  im.calc('ngc1213^2');
-\end{verbatim}
-would replace the pixels by the square of their value.
-
 
 \medskip Sometimes you need to double quote the file names in your expression.
 For example, if the images reside in a different directory as in
 this example.
 
 \begin{verbatim}
-  im := imagecalc ('"dir1/im1" + "/nfs/data/im2"');
+  im = image('"dir1/im1" + "/nfs/data/im2"');
 \end{verbatim}
 
-\subsubsection {Symbol (or tool) substitution}
+\subsubsection {Substitution of Pyhon variables}
 
-\medskip\noindent Images created/opened in Glish can be used with their Glish name
-in a LEL expression. Similarly a region created in Glish with the
-Regionmanager can be used with its Glish name.
-
-\medskip\noindent It is also possible to embed other Glish variables and expressions in
-a LEL command using the syntax \texttt{\$variable} and
-\texttt{\$(expression)}. A variable can be a standard numeric scalar.
+\medskip\noindent Images created/opened in Python can directly be used
+in a LEL expression by prefixing their name with a \$. Other Python
+variables and even Python expressions can be used in the same way
+using  \texttt{\$variable} or \texttt{\$(expression)} in the LEL command.
+A variable can be a standard numeric scalar.
 An expression has to result in a numeric scalar.
 
 \medskip
-E.g. one can make a Glish function like
-
+A somewhat artificial example:
 \begin{verbatim}
-    img1 := image('"/data/inimage'");
-    img2 := imagecalc(pixels='min($img[$someregion], $clipvalue)');
+    factor = 2
+    img1 = image('"/data/inimage1"');
+    img2 = image('"/data/inimage2"');
+    img3 = image('$img1 + $factor*$img2')
 \end{verbatim}
-to return a transient image formed by a region in an image clipped at the
-given clipvalue.
 
-\medskip\noindent The substitution mechanism is described in more detail in the
-\htmlref{substitute}{misc:substitute}
-functions of module
-\htmlref{misc}{misc} of the
-\htmladdnormallink{User Reference
-Manual}{../../user/Refman/Refman.html}.
-
-\medskip\noindent The substitution mechanism uses the eval function in Glish.  As of
-15-Jan-1999 eval only looks at global variables.  This means that in a
-function one needs to create a global variable (with a unique name) if
-the variable is to be used in a LEL command.  The global variable should
-be deleted at the end of the function (with {\tt symbol\_delete}).  The
-name can be made unique by using the function name as a suffix. 
-
-\medskip\noindent In Glish applying a region to an image can also be done using the
-\htmlref{subim}{images:image.subimage.function} function of an Image tool.
-It forms an image from the given region in the input image.
-This new image can be used in a LEL expression.
-E.g.
-\begin{verbatim}
-  img := image('inimage');
-  subimg := img.subimage(region=someregion);             # Virtual Image tool (a reference)
-  img2 := imagecalc(pixels='min($subimg, $clipvalue)');  
-\end{verbatim}
-has the same result as the earlier example.  Both {\bf subimg} and {\bf im2}
-are virtual images (not written to disk). 
-
+\medskip\noindent The substitution mechanism is described in more detail in
+\htmladdnormallink{pyrap.util}{../../../pyrap/docs/pyrap_util.html}.
 
 \subsection {C++ interface}
 This consists of 2 parts.  
@@ -1067,22 +1009,22 @@ This consists of 2 parts.
   \item
     The function \texttt{command} in
     \htmladdnormallink{Images/ImageExprParse.h}
-    {../../images/implement/Images/ImageExprParse.html}
+    {../html/classcasa_1_1ImageExprParse.html}
     can be used to execute a LEL command. The result is a
     \htmladdnormallink{LatticeExprNode}
-    {../../lattices/implement/Lattices/LatticeExprNode.html}
+    {../html/classcasa_1_1LatticeExprNode.html}
     object. E.g.
 \begin{verbatim}
   LatticeExprNode seltab1 = ImageExprParse::command
          ("imagein1 + imagein2");
 \end{verbatim}
-    This example does the same as the Glish one shown above.
+    This example does the same as the Python one shown above.
 
   \item
     The other interface is a true C++ interface having the
     advantage that C++ variables can be used. Class
     \htmladdnormallink{LatticeExprNode}
-    {../../lattices/implement/Lattices/LatticeExprNode.html}
+    {../html/classcasa_1_1LatticeExprNode.html}
     contains functions to form an expression. The same operators
     and functions as in the command interface are available.
     E.g.
@@ -1095,7 +1037,7 @@ This consists of 2 parts.
     written as a normal C++ expression. The overloaded operators and
     functions in class 
     \htmladdnormallink{LatticeExprNode}
-    {../../lattices/implement/Lattices/LatticeExprNode.html}
+    {../html/classcasa_1_1LatticeExprNode.html}
     ensure that the expression is formed in the correct way.
     \\ Note that a \texttt{LatticeExprNode} object is usually
     automatically converted to a templated \texttt{LatticeExpr} object,
@@ -1113,7 +1055,7 @@ This consists of 2 parts.
 
 \section{\label{LEL:EXAMPLES}{Examples}}
 The following examples show some LEL expressions (equally valid 
-in C++ or Glish).
+in C++ or Python).
 
 Note that LEL is readonly; i.e. it does not change any value in
 the images given. A function in the \texttt{image} client has to
@@ -1149,8 +1091,8 @@ be used to do something with the result (e.g. storing in another image).
     divided by 2.
 \end{description}
 
-Here follows a sample Glish session showing some of the LEL
-capabilities and how Glish variables can be used in LEL.
+Here follows a sample Python session showing some of the LEL
+capabilities and how Python variables can be used in LEL.
 \begin{verbatim}
 duw01> glish -l image.g
 - a := array(1:50,5,10)              # make some data
