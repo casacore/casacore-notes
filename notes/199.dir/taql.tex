@@ -2425,7 +2425,7 @@ and classes form the programmer interface.
 \item
   The main TaQL interface in Python is formed by the
   \htmladdnormallink{\texttt{query}}
-  {../../../pyrap/docs/pyrap_tables\#pyrap.tables.table.query} function in module
+  {../../../pyrap/docs/pyrap_tables.html\#pyrap.tables.table.query} function in module
   \htmladdnormallink{\texttt{table}}{../../../pyrap/docs/pyrap_tables.html}.
   The function can be used
   to compose and execute a TaQL command using the various (optional)
@@ -2476,9 +2476,10 @@ and classes form the programmer interface.
   \\The substitution mechanism is described in more detail in
   \htmladdnormallink{pyrap.util}{../../../pyrap/docs/pyrap_util.html}.
 
-  The other function that can be used is \texttt{taql} (or
-  \texttt{tablecommand}). The
-  full TaQL command has to be given to that command. The result is
+  The other function that can be used is
+  \htmladdnormallink{taql}{../../../pyrap/docs/pyrap_tables.html\#pyrap.tables.taql}
+  (or its synonym \texttt{tablecommand}).
+  The full TaQL command has to be given to that command. The result is
   a table object. E.g.
   \begin{verbatim}
     t = taql('select from GER.MS where ANTENNA1==1');
