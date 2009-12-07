@@ -29,7 +29,8 @@ table are modified.
 Many reduction functions can be applied to arrays.
 \item A very rich set of mathematical functions.
 \item Full support of units and automatic conversion of units.
-\item Support of various types of patterns/regular expressions.
+\item Support of various types of patterns/regular expressions and
+maximum string distances (Levensthein or Edit distance).
 \item Specific operators and functions for cone searching
 (i.e. spatial searching with a search radius).
 \item An advanced way of specifying intervals.
@@ -38,6 +39,7 @@ Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
 \item Joins are not supported yet.
 \item In the SELECT command GROUPBY and HAVING are not supported yet.
+\item The COUNT command exists to count the ocurrences of column values.
 \item The CALC command exists to
 calculate an arbitrary expression (including subqueries) on a
 table. This can be useful to derive values from a table (e.g. the
@@ -97,6 +99,13 @@ table list.
 It can be used to delete some or all rows from the first table
 in the table list.
 
+\item counting
+\begin{verbatim}
+  COUNT [column_list] FROM table_list [WHERE ...]
+\end{verbatim}
+It can be used to count occurrences of column values. It is similar to
+the GROUPBY clause in SQL which is not impemented yet.
+
 \item calculation
 \begin{verbatim}
   CALC [FROM table_list CALC] expression
@@ -119,7 +128,9 @@ be used at will.
 \\\htmlref{Section 6 (Modifying a table)}{TAQL:MODIFYING} explains the
 UPDATE, INSERT, and DELETE commands in more detail. The CREATE TABLE command is
 explained in \htmlref{section 7 (Creating a table)}{TAQL:CREATETABLE}.
-\\\htmlref{Section 8 (Calculations on a table)}{TAQL:CALCULATING}
+\\\htmlref{Section 8 (Counting in a table)}{TAQL:COUNTING}
+explains the COUNT command in more detail.
+\\\htmlref{Section 9 (Calculations on a table)}{TAQL:CALCULATING}
 explains the CALC command in more detail.
 
 \subsection{Using a style}
@@ -608,13 +619,15 @@ The last example shows a \htmlref{set}{TAQL:SETS} with a continuous interval.
 \subsection{\label{TAQL:DATATYPES}Data Types}
 Internally TaQL uses the following data types:
 \begin{description}
-  \item[Bool ] logical values (true or false)
+  \item[Bool ] logical values (true or T or false or F)
   \item[Integer ] integer numbers up to 64 bits
   \item[Double ] 64 bit floating point numbers including times/positions
   \item[Complex ] 128 bit complex numbers
   \item[String ] string values on which operator + can be used (concatenation).
   \item[Regex ] regular expressions can be used for string
-    matching (see \htmlref{section 4.2}{TAQL:REGEX}).
+    matching (see \htmlref{section 4.2}{TAQL:REGEX}). Maximum string
+    distances can also be used in a way similar to regular
+    expressions. 
   \item[DateTime ] representing a date/time. There are several functions
        acting on a date/time. Operator + and - can be used on them.
 \end{description}
@@ -651,8 +664,8 @@ The following case-insensitive values can be used to specify a type:
   S          STRING
 \end{verbatim}
 
-\subsection{\label{TAQL:REGEX}Regular Expressions}
-TaQL supports the use of extended regular expressions. They can be
+\subsection{\label{TAQL:REGEX}Regular Expressions and String Distances}
+TaQL supports the use of extended regular expressions and string distances. They can be
 specified in various ways as discussed in \htmlref{section 4.3.6}{TAQL:REGEXCONST}.
 There are three basic types of regular expressions.
 \begin{itemize}
@@ -701,7 +714,7 @@ matches \texttt{3c\_} and \texttt{3c\_xx}, but not \texttt{3caxx}.
       (.,!? etc.)
       \\- \textbf{graph} matching any visible printable character (alnum, punct)
       \\- \textbf{cntrl} matching any control character.
-      For example
+      \\For example
       \texttt{[\_[:isalpha:]][\_[:isalnum:]]*} to match variable names.
     \item A bracket expression cannot be empty, thus if ] is the first
       character in the bracket expression, it is interpreted
@@ -758,6 +771,13 @@ matches \texttt{3c\_} and \texttt{3c\_xx}, but not \texttt{3caxx}.
 \end{verbatim}
   do the same as the pattern examples above.
 \end{itemize}
+Furthermore it is possible to specify maximum string distances
+(known as Levensthein or Edit distance). It is explained in 
+\htmlref{section 4.3.6}{TAQL:REGEXCONST}.
+
+\begin{verbatim}
+  column ~ d/string/ibnn
+\end{verbatim}
 
 \subsection{\label{TAQL:CONSTANTS}Constants}
 Scalar constants of the various data types can be formed in a way similar
@@ -822,7 +842,7 @@ constants.
   "ab'cd"'ef"gh'
       which results in:   ab'cdef"gh
   \end{verbatim}
-\subsubsection{\label{TAQL:REGEXCONST}Regular expression}
+\subsubsection{\label{TAQL:REGEXCONST}Regular expression and String distance}
 A \htmlref{regular expression}{TAQL:REGEX} constant can be given
 directly or using a function.
 \begin{itemize}
@@ -850,7 +870,9 @@ directly or using a function.
 \end{verbatim}
   All examples but the last one do the same: matching a name starting with
   3c or 3C.
-  \item Apart from these Perl-like specifications, a regular expression can
+  \\The last example shows a glob-style pattern to find files on
+  \texttt{/usr} not ending in \texttt{.h} or \texttt{.cc}.
+\item Apart from these Perl-like specifications, a regular expression can
   also be formed by applying a function to a string constant. The operator
   = or != has to be applied to it.
   \begin{itemize}
@@ -865,9 +887,29 @@ directly or using a function.
   \item Function \texttt{regex} treats its argument as a full regular expression.
   \end{itemize}
   Case-insensitive matching can only be done as shown in the example
-  above by downcasing the string to bbe matched.
+  above by downcasing the string to be matched.
   \\Please note that these functions are not limited to constants. They can
   also be used to form regular expressions from variables.
+\end{itemize}
+
+A maximum string distance constant can be specified in a similar way.
+Such a distance is known as the Levensthein or Edit distance.
+It is a measure
+of the similarity of strings by counting the minimum number of edits
+(deletions, insertions, substitutions, and swaps of adjacent
+characters) that need to be done to make the strings equal.
+\begin{verbatim}
+  column ~ d/string/ibnn
+\end{verbatim}
+This tests if the strings in the given column are within the maximum
+distance of the string given in the constant. The following qualifiers
+can be given (in any order):
+\begin{itemize}
+  \item \textbf{i} means a case insensitive test.
+  \item \textbf{b} means that blanks in the strings are ignored.
+  \item \textbf{nn} is an integer value giving the maximum
+    distance. If not given it defaults to \texttt{1 + len(string) / 3}.
+\end{itemize}
 
 \subsubsection{\label{TAQL:DATETIMECONST}Date/time}
   DateTime constant can be formed in 2 ways:
@@ -921,7 +963,6 @@ directly or using a function.
     A DateTime constant with the current date/time can be made
     by using the function \texttt{datetime} without arguments.
   \end{enumerate}
-\end{itemize}
 
 \subsubsection{Arrays}
 N-dimensional arrays of all data types can be created with the
@@ -2282,6 +2323,29 @@ thus in Fortran order. TaQL has no knowledge about these internals.
 have to be bound to the data manager.
 
 
+\section{\label{TAQL:COUNTING}Counting in a table}
+TaQL does not have a GROUPBY command (yet). However, it has a command
+that can be used to count the number of occurrences in a table.
+
+The exact syntax is:
+\begin{verbatim}
+  COUNT column-list FROM table-list [WHERE expression]
+\end{verbatim}
+It counts the number of rows for each unique tuple in the column list
+of the table (after the possible WHERE selection is done).
+For example:
+\begin{verbatim}
+  COUNT TIME FROM my.ms
+\end{verbatim}
+counts the number of rows per timestamp.
+\begin{verbatim}
+  COUNT ANTENNA1,ANTENNA2 FROM my.ms
+\end{verbatim}
+counts the number of rows per baseline.
+
+As in the other TaQL commands a column in the column list can be any
+expression, but that will be slower than straight columns.
+
 \section{\label{TAQL:CALCULATING}Calculations on a table}
 TaQL can be used to get derived values from a table by means of an
 expression. The expression can result in any data type and value type.
@@ -2580,11 +2644,12 @@ great advantage that it also works on FITS and Miriad images.
 
 
 \section{\label{TAQL:GLISHPC}Interface to TaQL}
-There exists a user and a programmer interface to TaQL.
-Python and Glish functions form the user interface, while C++ functions
-and classes form the programmer interface.
-\begin{itemize}
-\item
+User and a programmer interfaces to TaQL are available.
+The program \texttt{taql} and some Python and Glish functions form the
+user interface, while C++ classes and functions
+form the programmer interface.
+
+\subsection{Python interface \texttt{pyrap}}
   The main TaQL interface in Python is formed by the
   \htmladdnormallink{\texttt{query}}
   {../../../pyrap/docs/pyrap_tables.html\#pyrap.tables.table.query} function in module
@@ -2610,6 +2675,15 @@ and classes form the programmer interface.
   \\During execution \$1 is replaced by table \texttt{seltab1}.
   \\Note that the \texttt{name} argument
   generates the \texttt{GIVING} part to make the result persistent.
+
+  The functions \texttt{sort} and \texttt{select} exist as convenience
+  functions for a query consisting of a sort or  column selection
+  only. Both functions have an optional second \texttt{name} parameter
+  to make the result persistent.
+\begin{verbatim}
+   t1 = tab.sort ('time')
+   t1 = tab.select ('column1,column2')
+\end{verbatim}
 
   The \texttt{calc} function can be used to execute a TaQL
   \texttt{calc} command on the current table. The result can be kept
@@ -2650,7 +2724,8 @@ and classes form the programmer interface.
   By default, these commands will use the Python style for a TaQL
   statement. The \texttt{style} argument can be used
   to choose another style.
-\item
+
+\subsection{Interface to Glish}
   The Glish interface is formed by script \texttt{table.g}.
   By default, it will use the Glish style for a TaQL
   statement.
@@ -2668,10 +2743,41 @@ and classes form the programmer interface.
   med := t.calc ('median(DATA)')
 \end{verbatim}
 
-\item
-  The C++ interface consists of 2 parts.
-  \begin{enumerate}
-  \item
+\subsection{Program \texttt{taql}}
+  The program \texttt{taql} makes it possible to execute TaQL commands
+  from the shell. 
+  \\The first way to run it is by giving the TaQL command as a single
+  (quoted) argument. It will execute the command and exit.
+  \\The other way is to run it interactively by giving no command
+  argument. It will run until the user stops via the
+  command \texttt{exit}, \texttt{quit}, or \texttt{q} or by giving
+  ctrl/D. A few types of commands can be given:
+  \begin{itemize}
+    \item \texttt{help}, \texttt{h} or \texttt{?} shows brief help information.
+    \item A full TaQL command. If no GIVING part is given, the
+      resulting table is not kept. It shows the number of matching rows.
+    \item A full TaQL command preceeded by \texttt{varname=}, where
+      \texttt{varname} is the name under which the resulting table is
+      kept in this session. Thus the result is not a persistent table
+      (unless GIVING was given), but it is kept temporarily.
+      The name can be used in subsequent commands like
+      \texttt{SELECT FROM \$varname}.
+    \item \texttt{varname=} without a further command removes the
+      temporary result.
+    \item \texttt{varname} shows the number of rows in the temporary
+      result. It can be followed by one or more question marks to show
+      the column names and details about them.
+      \\Note that if an unknown varname is given, it is treated as a
+      TaQL command resulting in a parse error.
+  \end{itemize}
+  If columns are selected in the TaQL command, their values are
+  printed. For arrays, only the data type and shape is printed. Also the result of
+  CALC commands is printed. Otherwise only the number of selected (or
+  updated or deleted) rows is printed.
+
+\subsection{C++ interface}
+The C++ programmer can use TaQL commands and expressions at various levels,
+\subsubsection{TaQL query string}
     The function \texttt{tableCommand} in
     \htmladdnormallink{TableParse.h}
     {../html/classcasa_1_1TableParse.html}
@@ -2693,9 +2799,45 @@ and classes form the programmer interface.
     should be the first part of the TaQL statement. Note that no style
     defaults to the Glish style.
 
-  \item
-    The other interface is a true C++ interface having the
-    advantage that C++ variables can be used. Class
+\subsubsection{Expression string}
+    The function \texttt{parse} in
+    \htmladdnormallink{RecordGram.h}
+    {../html/classcasa_1_1RecordGram.html}
+    can be used to parse a TaQL expression. The result is a
+    \htmladdnormallink{TableExprNode}{../html/classcasa_1_1ExprNode.html}
+    object that can be evaluated for each row in the table. E.g.
+\begin{verbatim}
+  Table tab("mytable");
+  TableExprNode expr = RecordGram::parse (tab, "column1>0");
+  Table seltab1 = tab(expr);
+\end{verbatim}
+    The example above does the same as the first example in the previous
+    section. There are, however, better ways to use this functionality.
+\begin{verbatim}
+  Table tab("somename");
+  TableExprNode expr = RecordGram::parse (tab, "ANTENNA1=1");
+  for (uInt row=0; row<tab.nrow(); ++row) {
+    if (expr.getBool(row)) {
+      // expression is true for this row, so do something ...
+    }
+  }
+\end{verbatim}
+    The example above shows a boolean scalar expression, but it can also be
+    a numeric expression or an array expression as shown in the example
+    below.
+    Note that TaQL expression results have data type Bool, Int64, Double,
+    DComplex, String, or MVTime.
+\begin{verbatim}
+  TableExprNode expr = RecordGram::parse (tab, "abs(DATA)");
+  Array<Double> data;
+  for (uInt row=0; row<tab.nrow(); ++row) {
+    expr.get (row, data);
+  }
+\end{verbatim}
+
+\subsubsection{Expression classes}
+    The other expression interface is a true C++ interface having the
+    advantage that C++ variables can be used directly. Class
     \htmladdnormallink{Table}{../html/classcasa_1_1Table.html}
     contains functions to sort a table or to select columns or rows.
     When selecting rows class \htmladdnormallink{TableExprNode}
@@ -2716,9 +2858,7 @@ and classes form the programmer interface.
     \htmladdnormallink{TableExprNodeSet}
     {../html/classcasa_1_1TableExprNodeSet.html} for more
     information on how to construct a WHERE expression.
-  \end{enumerate}
-  
-\end{itemize}
+
 
 \section{Possible future developments}
 In the near or far future TaQL can be enhanced by adding new
