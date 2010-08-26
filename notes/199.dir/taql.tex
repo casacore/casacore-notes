@@ -6,7 +6,8 @@ The Table Query Language (TaQL, rhymes with bagel (though many people
 pronounce it as tackle)) makes it possible to select
 rows from an arbitrary table based on the contents of its
 columns and keywords. It supports arbitrary complex
-expressions including units, extended regular expressions, and many functions.
+expressions including units, extended regular expressions, and many
+functions. User defined functions written in C++ are also supported.
 TaQL also makes sorting and column selection possible.
 Furthermore TaQL has commands to create a table and to modify data
 in a table.
@@ -1419,6 +1420,10 @@ other is the name as used in SQL.
 In the following tables the function names are shown in uppercase,
 while the result and argument types are shown in lowercase.
 Note, however, that function names are case-insensitive.
+\\Furthermore it is possible to have \htmlref{user defined  functions}{TAQL:UDF}
+that are dynamically loaded from a shared library. In section
+\htmlref{Writing user defined functions}{TAQL:UDFWRITE} it is
+explained how to write user defined functions.
 
 \htmlref{Sets}{TAQL:SETS}, and in particular
 \htmlref{subqueries}{TAQL:SUBQUERIES}, can result in a 1-dim array.
@@ -1913,6 +1918,54 @@ with 1 arcsecond and 1 arcminute.
 resulting in an array with glish shape \texttt{[3,nrow,1,nrow]}.
 In this way one can get a better indication how close sources are to
 the cone centers.
+
+\subsubsection{\label{TAQL:UDF}User defined functions}
+User defined functions (UDF) have to exist in a dynamically loadable
+library. In TaQL the name of a UDF consists of the name of the
+library (without  lib prefix and extension) followed by a dot and the function name.
+For example:
+\begin{verbatim}
+  derivedmscal.pa1
+\end{verbatim}
+denotes function \texttt{pa1} in shared library
+\texttt{libderivedmscal.so} or \texttt{libcasa\_derivedmscal.so}. On
+OS-X the extension \texttt{.dylib} is used.
+\\The library and function name are case-insensitive.
+
+ In section
+\htmlref{Writing user defined functions}{TAQL:UDFWRITE} it is
+explained how to write user defined functions.
+
+The casacore package comes with a few predefined UDFs in library
+\texttt{libcasa\_derivedmscal}. The functions can be used on a
+MeasurementSet or a CASA calibration table. 
+All angles are returned in radians.
+For a calibration table, where a row contains a single antenna, 
+functions like PA1 are the same as PA2. 
+\begin{description}
+  \item[] \texttt{double DERIVEDMSCAL.HA()}\\
+    is the hourangle of the array center (observatory position).
+  \item[] \texttt{double DERIVEDMSCAL.HA1()}\\
+    is the hourangle of ANTENNA1.
+  \item[] \texttt{double DERIVEDMSCAL.HA2()}\\
+    is the hourangle of ANTENNA2.
+  \item[] \texttt{double DERIVEDMSCAL.LAST()}\\
+    is the local sidereal time of the array center.
+  \item[] \texttt{double DERIVEDMSCAL.LAST1()}\\
+    is the local sidereal time of ANTENNA1.
+  \item[] \texttt{double DERIVEDMSCAL.LAST2()}\\
+    is the local sidereal time of ANTENNA2.
+  \item[] \texttt{double DERIVEDMSCAL.PA1()}\\
+    is the parallactic angle of ANTENNA1.
+  \item[] \texttt{double DERIVEDMSCAL.PA2()}\\
+    is the parallactic angle of ANTENNA2.
+  \item[] \texttt{doublearray DERIVEDMSCAL.AZEL1()}\\
+    is the azimuth/elevation of ANTENNA1.
+  \item[] \texttt{doublearray DERIVEDMSCAL.AZEL2()}\\
+    is the azimuth/elevation of ANTENNA2.
+  \item[] \texttt{doublearray DERIVEDMSCAL.UVW\_J2000()}\\
+    is the UVW coordinates in J2000 (in meters).
+\end{description}
 
 \subsection{\label{TAQL:SUBQUERIES}Subqueries}
 As in SQL it is possible to create a set from a subquery. A
@@ -2859,6 +2912,29 @@ The C++ programmer can use TaQL commands and expressions at various levels,
     {../html/classcasa_1_1TableExprNodeSet.html} for more
     information on how to construct a WHERE expression.
 
+\section{\label{TAQL:UDFWRITE}Writing user defined functions}
+A user defined function has to be written as a class in C++
+derived from the abstract base class
+\htmladdnormallink{UDFBase}{../html/classcasa_1_1UDFBase.html}.
+The documentation of this base class describes how to write a
+UDF. Furthermore one can look at class
+\htmladdnormallink{UDFMSCal}{../html/classcasa_1_1UDFBMSCal.html}
+that contains the UDFs described in subsection
+\htmlref{User defined functions}{TAQL:UDF}.
+
+Note that a class can contain multiple UDFs as done in UDFMSCal.
+Also note that a single UDF can operate on multiple data types which
+is similar to a function like \texttt{min} that can operate on scalars
+and arrays of different data types.
+
+TaQL finds a UDF by looking in a dictionary that maps the UDF name
+to a function constructing an  object of the UDF class. If not found,
+it tries to load the shared library with the name of the library part
+of the UDF (like in \texttt{derivedmscal.pa1}). If the load is successful, it calls an
+initialization function in the shared library that should add all UDF
+functions in the library to the dictionary. The description of the
+\htmladdnormallink{UDFBase}{../html/classcasa_1_1UDFBase.html}
+class shows how this should be done.
 
 \section{Possible future developments}
 In the near or far future TaQL can be enhanced by adding new
