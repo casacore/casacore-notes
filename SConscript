@@ -12,7 +12,7 @@ htenv['LATEXRETRIES']  = 2
 prefix = env["PREFIX"]
 
 for srcno in ["notes", "191", "199", "216", "223", "224", "229", "233", "238",
-              "255", "256"]:
+              "255", "256","260"]:
     env["TEXINPUTS"] = 'texinputs.dir:'+'notes/'+srcno+'.dir'
     htenv["TEXINPUTS"] = env["TEXINPUTS"]
     src = env.File(os.path.join("notes", srcno+".latex"))

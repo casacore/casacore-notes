@@ -17,7 +17,7 @@
 \title{NOTE 199 --
 Table Query Language}
 \author {Ger van Diepen, ASTRON Dwingeloo}
-\date {2010 August 26}
+\date {2010 November 5}
 \maketitle
 \begin{abstract}
 The Table Query Language (TaQL) is an SQL-like high level language to

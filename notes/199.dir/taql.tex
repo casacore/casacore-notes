@@ -50,6 +50,8 @@ desk calculator.
 example the order of array axes. Therefore it is possible to set the
 language style to be used.
 \end{itemize}
+TaQL has a keyword that makes it possible to time the various parts of
+a TaQL command.
 
 The first sections of this document explain the syntax and show the options.
 The last sections show the interface to TaQL using Python or C++.
@@ -170,6 +172,23 @@ reversed (data will not be transposed).
 
 The style feature has to be used with care. A given TaQL statement will
 behave differently when used with another style.
+
+\subsection{Timing}
+It is possible to time a TaQL command by giving the case-insensitive
+keyword \texttt{TIME} after the optional style keywords described
+above. If given, the total execution time and the times needed for various parts of the
+TaQL command will be shown on stdout. For example:
+\begin{verbatim}
+time select distinct ANTENNA1,ANTENNA2
+from ~/3C343.MS where any(FLAG)'
+
+  Where          2.87 real    2.16 user    0.69 system
+  Projection        0 real       0 user       0 system
+  Distinct       0.18 real    0.16 user    0.03 system
+ Total time      3.07 real    2.33 user    0.72 system
+\end{verbatim}
+shows the time to do the where part (i.e. row selection on FLAG),
+projection (selection of columns), and distinct (unique column values).
 
 \subsection{\label{TAQL:RESERVEDWORDS}Reserved words}
 TaQL uses the following words as part of its language.
@@ -334,7 +353,8 @@ with the difference that ORDERBY DISTINCT will change the order.
 ALL which is the opposite of DISTINCT, thus all values are
 returned. This is the default. Because there is an ambiguity between
 the keyword ALL and function ALL, the first element of the column
-list cannot be an expression if the keyword ALL is used.
+list cannot be an expression starting with a parenthesis if the
+keyword ALL is used.
 
 \subsection{\label{TAQL:INTO}INTO [table] [AS type]}
 This indicates that the ultimate result of the SELECT command should be
@@ -449,7 +469,8 @@ given, only primary tables are taken into account.
 Like in OQL it is possible to use a
 \htmlref{nested query}{TAQL:SUBQUERIES}
 command in the FROM clause. This is a normal query command
-enclosed in square brackets or parentheses.
+enclosed in square brackets or parentheses. Besides the SELECT command
+the COUNT command can also be used.
 It results in a temporary table
 which can thereafter be used as a table in the rest of the
 query command. A shorthand has to be defined for it in order
@@ -640,7 +661,7 @@ is used, TaQL will do the following automatic conversions:
 \\- from Double to Complex.
 \\- from String to DateTime.
 
-In this document some special data types are used.
+In this document some special data types are used when describing the functions.
 \\- \textbf{Real} means Integer or Double.
 \\- \textbf{Numeric} means Integer, Double, or Complex.
 \\- \textbf{DNumeric} means Double or Complex.
@@ -1111,21 +1132,22 @@ that can be used with them.
   \texttt{+} & no bool & addition. If a date is
   used, only a real (converted to unit day) can be added to it. String addition means
   concatenation. \\
-  \texttt{-} & numeric,date & subtraction. A date or real (converted to unit
-  day) can be subtracted from a date resulting in a real with unit
-  day. \\
+  \texttt{-} & numeric,date & subtraction. Substracting a date from a
+  date results in a real (with unit day). Subtracting a real
+  (converted to unit day) from a date results in a date. \\
   \texttt{\&} & integer & bitwise and \\
   \verb+|+ & integer & bitwise or \\
-  \verb+^+ XOR & integer & bitwise xor \\
-  $==$ $=$ & all & comparison for equal. Norm is used for complex comparisons. \\
+  \verb+^+, XOR & integer & bitwise xor \\
+  $==$, $=$& all & comparison for equal. The norm is used when
+  comparing complex numbers. \\
   $>$ & no bool & comparison for greater \\
   $>=$ & no bool & comparison for greater or equal \\
   $<$ & no bool & comparison for less \\
   $<=$ & no bool & comparison for less or equal \\
-  $!=$ $<>$ & all & comparison for not equal \\
-  \texttt{\&\&} AND & bool & logical and \\
-  \verb+||+ OR & bool & logical or \\
-  \texttt{!} NOT & bool & logical not \\
+  $!=$, $<>$ & all & comparison for not equal \\
+  \texttt{\&\&}, AND & bool & logical and \\
+  \verb+||+, OR & bool & logical or \\
+  \texttt{!}, NOT & bool & logical not \\
   \verb+~+ & integer & bitwise negation \\
   \texttt{+} & numeric & unary plus \\
   \texttt{-} & numeric & unary minus \\
@@ -1392,7 +1414,7 @@ Units can be given as follows:
   (3+3mm) cm       result is 0.6 cm
   [3,4,5]mm        result is [3mm, 4mm, 5mm]
   [3,4cm,5]mm      result is [30mm, 40mm, 50mm]
-      Note: first all values in set get same unit cm
+      Note: all values in the set first get the same unit cm
   asin(1)          result is pi/2 radians
   asin(1) deg      result is 90 degrees
   (3mm+7cm) m      result is 0.073 m
@@ -1488,38 +1510,44 @@ on a scalar or an array argument.
 The syntax of a date/time string or constant is explained in
 \htmlref{section 4.3.7}{TAQL:DATETIMECONST}.
 \begin{description}
-  \item[] \texttt{DateTime DATETIME(string),  DateTime CTOD(string)}\\
+  \item[] \texttt{DateTime DATETIME(string)}\\
        Parse the string and convert it to a DateTime value.
   \item[] \texttt{DateTime MJDTODATE(real)}\\
        The real value, which has to be a MJD (ModifiedJulianDate), is
        converted to a DateTime.
+  \item[] \texttt{double MJD(DateTime)}\\
+        Get the DateTime as MJD (ModifiedJulianDate).
   \item[] \texttt{DateTime DATE(DateTime)}\\
         Get the date (i.e., remove the time part). This function is
         needed in something like:
        \\\texttt{DATE(column) == 12Feb1997}
        \\if the column contains date/times with times$>$0.
-  \item[] \texttt{double MJD(DateTime)}\\
-        Get the DateTime as MJD (ModifiedJulianDate).
+  \item[] \texttt{double TIME(DateTime)}\\
+       Get the time part of the day. It is converted to radians to
+       be compatible with the internal representation of times/positions.
+       In that way the function can easily be used as in:
+       \\\texttt{TIME(date) $>$ 12h}
   \item[] \texttt{integer YEAR(DateTime)}\\
         Get the year (which includes the century).
   \item[] \texttt{integer MONTH(DateTime)}\\
         Get the month number (1-12).
   \item[] \texttt{integer DAY(DateTime)}\\
         Get the day number (1-31).
-  \item[] \texttt{integer WEEKDAY(DateTime),  integer DOW(DateTime)}\\
-        Get the weekday number (1=Monday, ..., 7=Sunday).
-  \item[] \texttt{string CMONTH(DateTime)}\\
-        Get the abbreviated name of the month (Jan ... Dec).
-  \item[] \texttt{string CWEEKDAY(DateTime),  string CDOW(DateTime)}\\
-        Get the abbreviated name of the weekday (Mon .. Sun).
   \item[] \texttt{integer WEEK(DateTime)}\\
         Get the week number in the year (0 ... 53).
         \\Note that week 1 is the week containing Jan 4th.
-  \item[] \texttt{double TIME(DateTime)}\\
-       Get the time part of the day. It is converted to radians to
-       be compatible with the internal representation of times/positions.
-       In that way the function can easily be used as in:
-       \\\texttt{TIME(date) $>$ 12h}
+  \item[] \texttt{integer WEEKDAY(DateTime),  integer DOW(DateTime)}\\
+        Get the weekday number (1=Monday, ..., 7=Sunday).
+  \item[] \texttt{string CDATETIME(DateTime),  string CTOD(DateTime)}\\
+        Get the DateTime as a string like YYYY/MM/DD/HH:MM:SS.SSS.
+  \item[] \texttt{string CDATE(DateTime)}\\
+        Get the date part of a DateTime as a string like DD-MMM-YYYY.
+  \item[] \texttt{string CTIME(DateTime)}\\
+        Get the time part of a DateTime as a string like HH:MM:SS.SSS.
+  \item[] \texttt{string CMONTH(DateTime)}\\
+        Get the abbreviated name of the month (Jan ... Dec).
+  \item[] \texttt{string CWEEKDAY(DateTime),  string CDOW(DateTime)}\\
+        Get the abbreviated name of the weekday (Mon ... Sun).
 \end{description}
 All functions can be used without an argument in which case the current
 date/time is used. E.g. \texttt{DATE()} results in the current date.
@@ -1596,7 +1624,7 @@ Standard mathematical can be used on scalar and array arguments (and a mix of th
     Return -1 for a negative value, 0 for zero, 1 for a positive value.
   \item[] \texttt{real ROUND(real)}\\
     Return the rounded value of the number. Negative numbers are
-    rounded an absolute way.
+    rounded in an absolute way.
     E.g. \texttt{ROUND(-1.6) = -2.}.
   \item[] \texttt{real FLOOR(real)}\\
     Works towards negative infinity.
@@ -1712,6 +1740,47 @@ They can only be used for arrays, thus not for scalars.
     Fraction 0.5 is the same as the median.
 \end{description}
 
+\subsubsection{Array downsampling functions}
+These functions are a generalization of the functions in the previous
+section. They downsample an array by taking, say, the mean of every
+n*m elements. The functions in the previous section downsample by
+taking the mean of a full line or plane, etc.
+The most useful one is probably calculating the boxed mean, but
+the other ones can be used similarly.
+The width of each window axis has to be given. Missing axes default to 1.
+Similarly to the partial reduction functions described above, the axes
+can be given as scalars or as a set.
+\\For example,
+\texttt{BOXEDMEAN(array,3,3)} calculates the mean
+in each 3x3 box. At the end of an axis the box used will be smaller
+if it does not fit integrally.
+\\The functions can only be used for arrays, thus not for scalars.
+\begin{description}
+  \item[] \texttt{bool BOXEDANY(bool)}\\
+    Is any element true?
+  \item[] \texttt{bool BOXEDALL(bool)}\\
+    Are all elements true?
+  \item[] \texttt{double BOXEDMIN(real)}\\
+    Return minimum of elements.
+  \item[] \texttt{double BOXEDMAX(real)}\\
+    Return maximum of elements.
+  \item[] \texttt{double BOXEDMEAN(real)}\\
+    Return mean of elements.
+  \item[] \texttt{double BOXEDVARIANCE(real)}\\
+    Return variance (the sum of
+    \\\texttt{(a(i) - mean(a))**2/(nelements(a) - 1)}.
+  \item[] \texttt{double BOXEDSTDDEV(real)}\\
+    Return standard deviation (the square root of the variance).
+  \item[] \texttt{double BOXEDAVDEV(real)}\\
+    Return average deviation. (the sum of 
+    \\\texttt{abs(a(i) - mean(a))/nelements(a)}.
+  \item[] \texttt{double BOXEDRMS(real)}\\
+    Return root-mean-squares. (the square root of the sum of
+    \\\texttt{(a(i)**2)/nelements(a)}.
+  \item[] \texttt{double BOXEDMEDIAN(real)}\\
+    Return median (the middle element).
+\end{description}
+
 \subsubsection{Array functions operating in running windows}
 These functions transform an array into an array with the same shape
 by operating on a rectangular window around each array element.
@@ -1785,6 +1854,20 @@ window can be applied) are set to 0 (or false).
     time, so the results are different from run to run.
     \\The function can, for instance, be used to select a random
     subset from a table.
+  \item[] \texttt{double ANGDIST(arg1,arg2)},
+              \texttt{double ANGULARDISTANCE(arg1,arg2)}\\
+    Return the angular distance (in radians) between the
+    positions in \texttt{arg1} and \texttt{arg2}. Both arguments have
+    to be numeric arrays containing an even number of values. Two subsequent values 
+    give the RA and DEC (or longitude and latitude) of positions on a
+    sphere. The result is a 2-dim array containing the angular
+    distance between each position in \texttt{arg1} and \texttt{arg2}.
+    If both arguments contain only 2 values, the result is a scalar.
+    For example:
+    \\\texttt{angdist(DELAY\_DIR[0,], [12h13m45,4d21m39.4, 12h13m49,10d8m4])}
+    \\returns an array with shape [2,1] (when using Glish-style [1,2])
+    containing the angular
+    distance between the center of the field and the two posiitions given. 
   \item[] \texttt{anytype IIF(cond,arg1,arg2)}\\
     This is a special funtion which operates like the ternary \texttt{?:}
     operator in C++. 
@@ -1827,7 +1910,7 @@ in an example at the end of this section.
 The arguments of all functions are described below. All of them have
 to be given in radians. However, usually one does not need to bother
 because TaQL makes it possible
-to specify positions in many formats which are automatically converted
+to specify positions in many formats automatically converted
 to radians.
 \begin{description}
   \item[] \texttt{SOURCES}\\
