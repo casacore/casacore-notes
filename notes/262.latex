@@ -1,0 +1,179 @@
+%% Testing Framework
+%%----------------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage{hyperref}
+\setlength{\textwidth}{6.5in}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{8.5in}
+\setlength{\topmargin}{0.0in}
+
+%%-----------------------------------------------------------------------------
+%% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
+%% for these and other variables which override style settings.
+
+\begin{document}
+
+\title{NOTE 262 --
+Casacore Testing Framework}
+\author {Ger van Diepen, ASTRON Dwingeloo}
+\date {2011 May 12}
+\maketitle
+\begin{abstract}
+Casacore has an advanced testing framework on top of the CMake environment.
+It makes it possible to do regression testing and use tools like
+valgrind in an automatic way.
+\end{abstract}
+%%---------------------------------------------------------------------------
+%%\begin{htmlonly}
+\href{199.pdf}{A pdf version of this note is available.}
+%%\end{htmlonly}
+
+\tableofcontents 
+\newpage
+
+\section{Introduction}
+Casacore comes with an extensive set of test programs. The
+tests can be run in the cmake/ctest environment used by casacore.
+A few scripts are doing the actual execution of a test.
+
+A test can use a script for optional preprocessing or postprocessing
+of a test or to run a test in multiple ways. For regression testing
+purposes the standard output of a test run can be compared with
+the expected output.
+
+\section{Creating a test}
+Casacore consists of several modules (e.g. {\tt scimath}, {\tt tables}), where a
+module can consists of several packages (e.g. {\tt casa/IO}, {\tt
+casa/OS}). Each package contains one or more classes, usually one
+class per file.
+
+Usually a test for a class X (in source file X.cc) is written in C++.
+The casacore convention
+is to name such a test tX, thus the source code for a test is in
+{\tt <module>/<package>/test/tX.cc}. In order to build the test
+program, it needs to be added to the
+{\tt tests} list in the{\tt CMakeLists.txt} file in that test
+directory.
+
+Besides the .cc file a few more files can created for a test:
+\begin{itemize}
+\item {\tt tX.run} is a script. It can contain commands to do some
+preprocessing, postprocessing, to run the test in different ways, etc.
+Note that such a script is usually a shell script, but could also be
+a python script or any other executable script. If the script is not
+executable, it is run through {\tt sh}.
+\\Note that the invocation of the test program in a script should be
+preceeded by {\tt \$casa\_checktool}. This environment variable defines an
+optional check tool (like valgrind) as described in the last section.
+\item {\tt tX.in} is a text file. If existing, the standard input of
+the test program is redirected to this file.
+\item {\tt tX.out} is a text file containing the expected standard
+output of the test. 
+\item {\tt tX.in\_*} are other inputs that can be used by the
+test. They can be files, but also directories (e.g., casacore
+tables). These inputs are test specific.
+\item {\tt *.data\_*} are other possible input files/directories. These
+inputs can be used for multiple tests (as they do not contain tX in
+their names).
+\end{itemize}
+If a test uses a file named differently, the {\tt test/CMakeLists.txt}
+file needs to have lines like
+\begin{verbatim}
+set (datafiles
+amp_0.fits
+ampErr_0.fits
+)
+foreach (file ${datafiles})
+    configure_file (${CMAKE_CURRENT_SOURCE_DIR}/${file} ${CMAKE_CURRENT_BINARY_DIR}/${file} COPYONLY)
+endforeach (file)
+\end{verbatim}
+to get the file copied to the working directory. An entire directory
+cannot be done in a single line; each individual file
+has to be mentioned.
+
+If the test program or script creates output files, it is best to call
+them {\tt tX\_tmp<something>}. In that way they will be reoved
+automatically after the test is run.
+
+\section{Running tests}
+The standard way to run a test program is using {\tt ctest}. It makes
+it possible to run all or some tests.
+\begin{verbatim}
+ctest                    # all tests
+ctest -R tArray          # only tests matching *tArray*
+ctest -E tArray          # exclude tests matching *tArray*
+\end{verbatim}
+If such a command is run in the casacore top build directory, all
+casacore tests are considered. However, it is also possible to run it
+in a subdirectory to execute only tests of a specific module or
+package.
+
+The system runs a test as follows:
+\begin{enumerate}
+\item {\tt ctest} starts the script {cmake\_assay} to run the test.
+\item {\tt cmake\_assay} copies the files mentioned in the previous
+section to the working directory, i.e., where the test executable
+resides. Thereafter it starts {\tt casacore\_assay} to run the actual test.
+\item {\tt casacore\_assay} executes the test as follows:
+\begin{itemize}
+\item If {\tt tX.run} exists, that script will be executed. otherwise
+{\tt tX} itself.
+\item If {\tt tX.in} exists, it will be redirected as input to tX.
+\item If {\tt tX.out} exists, it will be compared with the standard
+output of the test. The comparison is not done if the test exits with
+an error status. Before the comparison is done the output is massaged
+to cater for system specific output.
+\item At the end of the test the {\tt tX\_tmp*} files/directories are removed.
+\begin{itemize}
+\item The working directory is removed from the test output.
+\item Text enclosed in {\tt >>>} and {\tt <<<} on a single line is removed from the test
+output and the expected output.
+\item Text demarked by lines starting with {\tt >>>} and {\tt <<<} is removed from
+the test output and the expected output.
+\item If the results are equal, the test passes. If any non-numerical
+value mismatches, the test fails.
+\item Otherwise {\tt casacore\_floatcheck} is run to compare all
+numerical values with a relative error margin of 10e-5. The test fails
+if a value is found unequal.
+\end{itemize}
+\end{itemize}
+\end{enumerate}
+
+\subsection{Return status}
+The return of a test program or script can be:
+\\- 0 indicates success.
+\\- 3 indicates hat the test is skipped. This might be used if an
+expected file is not available or if the test is run on a platform not
+supporting it. {\tt cmake\_assay} will change this to 0, because ctest
+can only deal with success and failure.
+\\- Any other value indicates a failure.
+
+
+\section{Valgrind support}
+If the environment variable CASACORE\_CHECK has the value 1, the {\tt
+casacore\_assay} script will run the test of an executable through
+{\tt casacore\_memcheck}. This script will run the test through
+valgrind's memcheck tool and test for errors, definite and possible
+leaks, and leaked file descriptors. If any such problem is found, the
+valgrind output is put into a file {\tt tX.checktool.valgrind} in the working directory.
+
+If a .run file is used to execute the test, each invocation of the
+test program in the .run file should be preceeded by {\tt
+\$casa\_checktool}. This environment variable defines the valgrind command.
+If valgrind is not used, the variable is empty.
+
+\subsection{Using other checking tools}
+The same mechanism can be used to use a check tool different
+from valgrind's memcheck. CASACORE\_CHECK can be defined as the
+name of a script or a command to use. In fact, defining CASACORE\_CHECK
+as {\tt casacore\_memcheck} would have the same effect as defining it as 1.
+
+\subsection{Omitting tests in check tool}
+Sometimes a test run though a check tool can take too much time.
+There is no direct way to tell that a specific test should be
+omitted. However, it can easily be achieved by having a 
+.run file for such a test without the {\tt \$casa\_checktool} prefix.
+
+
+\end{document}
