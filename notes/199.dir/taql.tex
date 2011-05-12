@@ -658,8 +658,8 @@ However, arrays of Regex are not possible.
 \\If an operand or function argument with a non-matching data type
 is used, TaQL will do the following automatic conversions:
 \\- from Integer to Double or Complex.
-\\- from Double to Complex.
-\\- from String to DateTime.
+\\- from Integer or Double to Complex.
+\\- from String or Double to DateTime.
 
 In this document some special data types are used when describing the functions.
 \\- \textbf{Real} means Integer or Double.
@@ -1516,7 +1516,7 @@ The syntax of a date/time string or constant is explained in
        The real value, which has to be a MJD (ModifiedJulianDate), is
        converted to a DateTime.
   \item[] \texttt{double MJD(DateTime)}\\
-        Get the DateTime as MJD (ModifiedJulianDate).
+        Get the DateTime as MJD (ModifiedJulianDate) in days.
   \item[] \texttt{DateTime DATE(DateTime)}\\
         Get the date (i.e., remove the time part). This function is
         needed in something like:
@@ -2492,10 +2492,14 @@ single scalar if a reduction function like SUM is used.
 
 The exact syntax is:
 \begin{verbatim}
-  CALC [FROM table_list CALC] expression
+  CALC expression [FROM table_list]
 \end{verbatim}
 The part in square brackets can be omitted if no column is (directly)
 used in the expression. The examples will make clear what that means.
+\\The following syntax is still available for backward compatibility:
+\begin{verbatim}
+  CALC FROM table_list CALC expression
+\end{verbatim}
 
 \begin{verbatim}
   CALC 1in cm
@@ -2504,7 +2508,7 @@ is a simple expression not using a table. It shows how the CALC
 command can be used as a desk calculator to convert 1 inch to cm.
 
 \begin{verbatim}
-  CALC FROM mytable CALC mean(column1+column2)
+  CALC mean(column1+column2) FROM mytable
 \end{verbatim}
 gives a vector of scalars containing the mean per row.
 
@@ -2907,7 +2911,8 @@ form the programmer interface.
       TaQL command resulting in a parse error.
   \end{itemize}
   If columns are selected in the TaQL command, their values are
-  printed. For arrays, only the data type and shape is printed. Also the result of
+  printed. Epoch, position, and direction measures are printed in a
+  formatted way.  Also the result of
   CALC commands is printed. Otherwise only the number of selected (or
   updated or deleted) rows is printed.
 
