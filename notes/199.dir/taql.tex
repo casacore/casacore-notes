@@ -2,7 +2,7 @@
 %%\externallabels{../../user/Refman}{../../user/Refman/labels.pl}
 
 \section{Introduction}
-The Table Query Language (TaQL, rhymes with bagel (though many people
+The Table Query Language (TaQL, rhymes with bagel (though some people
 pronounce it as tackle)) makes it possible to select
 rows from an arbitrary table based on the contents of its
 columns and keywords. It supports arbitrary complex
@@ -38,9 +38,9 @@ maximum string distances (Levensthein or Edit distance).
 \item No support of indices, thus always a linear search is done.
 Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
-\item Joins are not supported yet.
+\item Limited support for joins. Only implicit joins on row number are supported.
 \item In the SELECT command GROUPBY and HAVING are not supported yet.
-\item The COUNT command exists to count the ocurrences of column values.
+\item The COUNT command exists to count the occurrences of column values.
 \item The CALC command exists to
 calculate an arbitrary expression (including subqueries) on a
 table. This can be useful to derive values from a table (e.g. the
@@ -111,7 +111,7 @@ the GROUPBY clause in SQL which is not impemented yet.
 
 \item calculation
 \begin{verbatim}
-  CALC [FROM table_list CALC] expression
+  CALC expression [FROM table_list]
 \end{verbatim}
 It can be used to calculate an expression, in which columns
 in a table can be used.
@@ -1981,8 +1981,9 @@ soon as a cone is found.
 For example, to find sources matching other sources in the same
 catalogue (within a radius of 10 arcseconds):
 \begin{verbatim}
-  CALC FROM table.cat CALC CONES([RA,DEC],
-       [SELECT FROM table.cat GIVING [RA,DEC]], 0d0m10)
+  CALC CONES([RA,DEC],
+             [SELECT FROM table.cat GIVING [RA,DEC]], 0d0m10)
+     FROM table.cat
 \end{verbatim}
 Note that in this example the SELECT clause returns an array with positions
 which are used as the cone centers. So each source in the catalogue is
@@ -1995,8 +1996,9 @@ each row in a array with shape \texttt{[1,nrow,1]}.
 \\The query can be done with multiple radii, for example also
 with 1 arcsecond and 1 arcminute.
 \begin{verbatim}
-  CALC FROM table.cat CALC CONES([RA,DEC],
+  CALC CONES([RA,DEC],
        [SELECT FROM table.cat GIVING [RA,DEC]], [0d0m1, 0d0m10, 0d1m])
+     FROM table.cat
 \end{verbatim}
 resulting in an array with glish shape \texttt{[3,nrow,1,nrow]}.
 In this way one can get a better indication how close sources are to
@@ -2019,36 +2021,91 @@ OS-X the extension \texttt{.dylib} is used.
 \htmlref{Writing user defined functions}{TAQL:UDFWRITE} it is
 explained how to write user defined functions.
 
-The casacore package comes with a few predefined UDFs in library
+\subsubsection{\label{TAQL:MSFUNC}Special MeasurementSet functions}
+The casacore package comes with several predefined UDFs in library
 \texttt{libcasa\_derivedmscal}. The functions can be used on a
-MeasurementSet or a CASA calibration table. 
+MeasurementSet or a CASA calibration table (both old and new format). 
 All angles are returned in radians.
-For a calibration table, where a row contains a single antenna, 
+For calibration tables, where a row contains a single antenna, 
 functions like PA1 are the same as PA2. 
 \begin{description}
   \item[] \texttt{double DERIVEDMSCAL.HA()}\\
-    is the hourangle of the array center (observatory position).
+    gives the hourangle of the array center (observatory position).
   \item[] \texttt{double DERIVEDMSCAL.HA1()}\\
-    is the hourangle of ANTENNA1.
+    gives the hourangle of ANTENNA1.
   \item[] \texttt{double DERIVEDMSCAL.HA2()}\\
-    is the hourangle of ANTENNA2.
+    gives the hourangle of ANTENNA2.
   \item[] \texttt{double DERIVEDMSCAL.LAST()}\\
-    is the local sidereal time of the array center.
+    gives the local sidereal time of the array center.
   \item[] \texttt{double DERIVEDMSCAL.LAST1()}\\
-    is the local sidereal time of ANTENNA1.
+    gives the local sidereal time of ANTENNA1.
   \item[] \texttt{double DERIVEDMSCAL.LAST2()}\\
-    is the local sidereal time of ANTENNA2.
+    gives the local sidereal time of ANTENNA2.
   \item[] \texttt{double DERIVEDMSCAL.PA1()}\\
-    is the parallactic angle of ANTENNA1.
+    gives the parallactic angle of ANTENNA1.
   \item[] \texttt{double DERIVEDMSCAL.PA2()}\\
-    is the parallactic angle of ANTENNA2.
+    gives the parallactic angle of ANTENNA2.
   \item[] \texttt{doublearray DERIVEDMSCAL.AZEL1()}\\
-    is the azimuth/elevation of ANTENNA1.
+    gives the azimuth/elevation of ANTENNA1.
   \item[] \texttt{doublearray DERIVEDMSCAL.AZEL2()}\\
-    is the azimuth/elevation of ANTENNA2.
+    gives the azimuth/elevation of ANTENNA2.
   \item[] \texttt{doublearray DERIVEDMSCAL.UVW\_J2000()}\\
-    is the UVW coordinates in J2000 (in meters).
+    gives the UVW coordinates in J2000 (in meters).
 \end{description}
+By default all these functions will use the direction given in column PHASE\_DIR
+of the FIELD subtable. It is possible to use another column by giving
+its name as a string (e.g., 'DELAY\_DIR'). 
+\\It is also possible to use an explicit direction which
+must be given as [RA,DEC] in J2000 or as a case-insensitive name of a planetary object
+(as defined by the casacore Measures).
+For example:
+\begin{verbatim}
+   derivedmscal.azel1([5h23m32.76, 10d15m56.49])
+   derivedmscal.azel1('MOON')
+\end{verbatim} 
+These examples give the azimuth and elevation of the given directions for each
+selected row in the MeasurementSet, thus using the position of ANTENNA1 and the
+times in these rows. 
+
+If a string value is given, it is first tried as a planetary object.
+Theoretically it is possible that a column has the same name as a
+planetary object. In such a case the name can be escaped by a backslash
+to indicate that a column name is meant.
+For example:
+\begin{verbatim}
+   derivedmscal.azel1('\MOON')
+\end{verbatim}
+means that column MOON in the FIELD table has to be used.
+
+\paragraph*{}
+The \texttt{STOKES} function makes it possible to convert the Stokes
+parameters of a DATA column in a MeasurementSet, for instance from
+linear or circular to iquv. It is also possible to convert the weights
+or flags, i.e., to combine them in the same way as the data would be combined.
+\begin{description}
+ \item[] \texttt{complexarray DERIVEDMSCAL.STOKES(complexarray, string)}\\
+   converts the data.
+ \item[] \texttt{doublearray DERIVEDMSCAL.STOKES(doublearray, string)}\\
+   combines the weights.
+ \item[] \texttt{boolarray DERIVEDMSCAL.STOKES(boolarray, string)}\\
+   combines the flags.
+\end{description}
+In all cases the case-insensitive string argument defines the output Stokes
+axes. It must be a comma separated list of Stokes names. All values
+defined in the casacore class \texttt{Stokes} are possible. Most
+important are:
+\begin{itemize}
+ \item XX, XY, YX, and/or YY. \\LINEAR or LIN means XX,XY,YX,YY.
+ \item RR, RL, LR, and/or LL. \\CIRCULAR or CIRC means RR,RL,LR,LL.
+ \item I, Q, U, and/or V. \\IQUV or STOKES means I,Q,U,V.
+ \item PTOTAL is the polarized intensity (sqrt(Q**2+U**2+V**2))
+ \item PLINEAR is the linearly polarized intensity (sqrt(Q**2+U**2))
+ \item PFTOTAL is the polarization fraction (Ptotal/I)
+ \item PFLINEAR is the linear polarization fraction (Plinear/I)
+ \item PANGLE is the linear polarization angle (0.5*arctan(U/Q)) (in radians)
+\end{itemize}
+If not given, the string argument defaults to 'IQUV'.
+
 
 \subsection{\label{TAQL:SUBQUERIES}Subqueries}
 As in SQL it is possible to create a set from a subquery. A
@@ -2588,6 +2645,11 @@ common case when using TaQL.
      \\Note that the two comparisons result in a boolean vector. If
        a bool in the and-ed vectors is true, that baseline matches.
 
+  \item[] \texttt{ SELECT FROM this.ms t1, that.ms t2}
+     \\\texttt{ WHERE !all(near(t1.DATA, t2.DATA, 1e-5))}
+     \\ selects all rows where the DATA columns in both tables are
+     not equal (with some tolerance). Note the use of shorthands t1 and t2.
+
   \item[] \texttt{ SELECT FROM mytable WHERE}
      \\\texttt{ cos(0d1m) $<$
          sin(52deg) * sin(DEC) + cos(52deg) * cos(DEC) *
@@ -2657,15 +2719,15 @@ a data type.
       The sole purpose of this selection is to convert the data type
       of the column.
 
-  \item[] \texttt{ SELECT means(DATA,2) AS DATA\_MEAN C4 FROM my.ms }
+  \item[] \texttt{ SELECT means(DATA,0) AS DATA\_MEAN C4 FROM my.ms }
     \\creates a table of 1 column with name \texttt{DATA\_MEAN}.
       Column DATA in a AIPS++ MeasurementSet is a 2-dimensional array
       with axes polarization and frequency. This command calculates
       and stores the mean in each polarization.
       If no data type was given, the means would have been stored
       as double precision complex (which is the expression data type).
-      \\Note that this command is valid when using glish style; in
-      python style \texttt{MEANS(DATA,0)} should be used.
+      \\Note that this command is valid when using python style; in
+      glish style \texttt{MEANS(DATA,2)} should be used.
 
 \end{description}
 
@@ -2759,8 +2821,8 @@ great advantage that it also works on FITS and Miriad images.
   \item[] \texttt{ calc sum([select from MY.MS giving [ntrue(FLAG)]]) }
       \\determines the total number of flags set in the measurement set.
 
-  \item[] \texttt{ calc from [select from MY.MS where ANTENNA1==0] }
-          \\\texttt{ calc mean(abs(DATA)) }
+  \item[] \texttt{ calc mean(abs(DATA)) }
+          \\\texttt{ from [select from MY.MS where ANTENNA1==0] }
 
         calculates for each row the mean of the data for the selected
         subset of the measurement set.
@@ -2773,11 +2835,11 @@ great advantage that it also works on FITS and Miriad images.
         subset of the measurement set.
 
   \item[] \texttt{ calc max([select from MY.MS where isdefined(DATA) }
-          \\\texttt{ giving [max(abs(VIDEO\_POINT-MEANS(DATA,2)))]]) }
+          \\\texttt{ giving [max(abs(VIDEO\_POINT-MEANS(DATA,0)))]]) }
 
         shows the maximum absolute difference between VIDEO\_POINT of
         each correlation and the mean of the DATA for that correlation.
-        Note that the 2 indicates averaging over the second axis,
+        Note that the 2 indicates averaging over the first axis,
         thus the frequency axis.
 
 \end{description}
