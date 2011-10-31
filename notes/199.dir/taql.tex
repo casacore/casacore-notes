@@ -35,10 +35,10 @@ maximum string distances (Levensthein or Edit distance).
 \item Specific operators and functions for cone searching
 (i.e. spatial searching with a search radius).
 \item An advanced way of specifying intervals.
-\item No support of indices, thus always a linear search is done.
+\item No support of indices, thus a linear table search is done.
 Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
-\item Limited support for joins. Only implicit joins on row number are supported.
+\item Limited support for joins (only joins on row number).
 \item In the SELECT command GROUPBY and HAVING are not supported yet.
 \item The COUNT command exists to count the occurrences of column values.
 \item The CALC command exists to
@@ -49,6 +49,9 @@ desk calculator.
 \item TaQL can be used from languages with different conventions, for
 example the order of array axes. Therefore it is possible to set the
 language style to be used.
+\item The language can be extended by means of User Defined
+  Functions. Some standard UDFs exist to deal with measure conversions
+  (for directions, epochs, and positions).
 \end{itemize}
 TaQL has a keyword that makes it possible to time the various parts of
 a TaQL command.
@@ -166,7 +169,7 @@ It is important to note that the interpretation of the axes numbers
 depends on the style being used. E.g. when using glish style, axes numbers are
 1-based and in Fortran order, thus axis 1 is the most rapidly varying
 axis. When using python style, axis 0 is the most slowly varying axis.
-\\AIPS++ arrays are in Fortran order, but TaQL maps it to the
+\\Casacore arrays are in Fortran order, but TaQL maps it to the
 style being used. Thus when using python style, the axes will be
 reversed (data will not be transposed).
 
@@ -258,6 +261,13 @@ at least one of them has to be used. Otherwise no operation is
 performed on the primary table (which makes no sense).
 Note that the GIVING clause with a value set is seen as an operation
 as well.
+
+There is no explicit JOIN clause, but it is possible to
+equi-join tables on row number. One can join
+tables of equal size by giving them all in the table list. One can
+also join , for example, the main table of a
+MeasurementSet with a subtable like the ANTENNA table using a
+\htmlref{subquery}{TAQL:SUBQUERIES}.
 
 \subsection{\label{TAQL:COLUMNLIST}SELECT column\_list}
 Columns to be selected can be given as
@@ -414,10 +424,20 @@ The qualifying name can not contain special characters like a slash.
 Therefore a table\_name needs an explicit shorthand alias
 if it contains special characters.
 
+Multiple table lists can also be used to join the tables on row
+number. E.g.
+\begin{verbatim}
+  SELECT FROM mytable,othertable
+    WHERE not all(near(mytable.data, othertable.data))
+\end{verbatim}
+Such a command could be used to check if the data in mytable is about
+equal to the data in othertable. It checks if both tables have the
+same number of rows.
+
 The full table\_list syntax is:
 \\
 \texttt{table\_name1 [shorthand1], table\_name2 [shorthand2], etc.}
-\\The shorthand defaults to the table\_name. A shorthand is needed if
+\\The shorthand defaults to the table\_name. A shorthand (alias) is needed if
 the table name contains non-alphanumeric characters.
 In the following example shorthand \texttt{my} is not really needed.
 Shorthand \texttt{other} is needed though.
@@ -1446,6 +1466,10 @@ Note, however, that function names are case-insensitive.
 that are dynamically loaded from a shared library. In section
 \htmlref{Writing user defined functions}{TAQL:UDFWRITE} it is
 explained how to write user defined functions.
+\\A set of standard UDFs exists dealing with \htmlref{Measure
+  conversions}{TAQL:MEASFUNC}, for example to convert J2000 to apparent.
+Another set of UDFs deals with measures in \htmlref{MeasurementSets and
+  Calibration Tables}{TAQL:MSFUNC}. 
 
 \htmlref{Sets}{TAQL:SETS}, and in particular
 \htmlref{subqueries}{TAQL:SUBQUERIES}, can result in a 1-dim array.
@@ -1555,6 +1579,19 @@ date/time is used. E.g. \texttt{DATE()} results in the current date.
 case the string is parsed and converted to a date (i.e., the
 function DATETIME is used implicitly).
 
+\subsubsection{Angle formatting functions}
+Angles (scalar or array) can be returned as strings in HMS and/or DMS
+format. Currently, they are always formatted with 3 decimals in the seconds.
+\begin{description}
+  \item[] \texttt{string HMS(real)}\\
+    Return angle(s) like 12h34m56.789
+  \item[] \texttt{string DMS(real)}\\
+    Return angle(s) like 12d34m56.789
+  \item[] \texttt{string HDMS(realarray)}\\
+    Return angles like 12h34m56.789 (even elements) and 12d34m56.789
+    (odd elements). It is useful for arrays containing RA,DEC values.
+\end{description}
+
 \subsubsection{Comparison functions}
 The exact comparison of floating point values is quite tricky.
 Two functions make it possible to compare 2 double or complex
@@ -1580,6 +1617,10 @@ The tolerance must be a scalar though.
     The default tolerance is 1.0e-13.
   \item[] \texttt{bool ISNAN(numeric val)}\\
     Tests if a numeric value is a NaN (not-a-number).
+  \item[] \texttt{bool ISINF(numeric val)}\\
+    Tests if a numeric value is infinite (positive or negative).
+  \item[] \texttt{bool ISFINITE(numeric val)}\\
+    Tests if a numeric value is a finite number (not NaN or infinite).
 \end{description}
 
 \subsubsection{Mathematical functions}
@@ -1844,7 +1885,7 @@ window can be applied) are set to 0 (or false).
   \item[] \texttt{integer ROWID()}\\
     Return the row number in the original table. This is especially
     useful for returning the result of a selection of a subtable
-    of an AIPS++ measurement set
+    of a Casacore measurement set
     (see also \htmlref{subqueries in section 4.11}{TAQL:SUBQUERIES}
     and \htmlref{examples in section 9}{TAQL:SELEXAMPLES}).
   \item[] \texttt{double RAND()}\\
@@ -2028,33 +2069,40 @@ MeasurementSet or a CASA calibration table (both old and new format).
 All angles are returned in radians.
 For calibration tables, where a row contains a single antenna, 
 functions like PA1 are the same as PA2. 
+\\For ease of use it is possible to use the alias \texttt{mscal}.
 \begin{description}
-  \item[] \texttt{double DERIVEDMSCAL.HA()}\\
+  \item[] \texttt{double MSCAL.HA()}\\
     gives the hourangle of the array center (observatory position).
-  \item[] \texttt{double DERIVEDMSCAL.HA1()}\\
+  \item[] \texttt{double MSCAL.HA1()}\\
     gives the hourangle of ANTENNA1.
-  \item[] \texttt{double DERIVEDMSCAL.HA2()}\\
+  \item[] \texttt{double MSCAL.HA2()}\\
     gives the hourangle of ANTENNA2.
-  \item[] \texttt{double DERIVEDMSCAL.LAST()}\\
+  \item[] \texttt{double MSCAL.HADEC()}\\
+    gives the hourangle/declination of the array center (observatory position).
+  \item[] \texttt{double MSCAL.HADEC1()}\\
+    gives the hourangle/declination of ANTENNA1.
+  \item[] \texttt{double MSCAL.HADEC2()}\\
+    gives the hourangle/declination of ANTENNA2.
+  \item[] \texttt{double MSCAL.LAST()}\\
     gives the local sidereal time of the array center.
-  \item[] \texttt{double DERIVEDMSCAL.LAST1()}\\
+  \item[] \texttt{double MSCAL.LAST1()}\\
     gives the local sidereal time of ANTENNA1.
-  \item[] \texttt{double DERIVEDMSCAL.LAST2()}\\
+  \item[] \texttt{double MSCAL.LAST2()}\\
     gives the local sidereal time of ANTENNA2.
-  \item[] \texttt{double DERIVEDMSCAL.PA1()}\\
+  \item[] \texttt{double MSCAL.PA1()}\\
     gives the parallactic angle of ANTENNA1.
-  \item[] \texttt{double DERIVEDMSCAL.PA2()}\\
+  \item[] \texttt{double MSCAL.PA2()}\\
     gives the parallactic angle of ANTENNA2.
-  \item[] \texttt{doublearray DERIVEDMSCAL.AZEL1()}\\
+  \item[] \texttt{doublearray MSCAL.AZEL1()}\\
     gives the azimuth/elevation of ANTENNA1.
-  \item[] \texttt{doublearray DERIVEDMSCAL.AZEL2()}\\
+  \item[] \texttt{doublearray MSCAL.AZEL2()}\\
     gives the azimuth/elevation of ANTENNA2.
-  \item[] \texttt{doublearray DERIVEDMSCAL.UVW\_J2000()}\\
+  \item[] \texttt{doublearray MSCAL.UVW\_J2000()}\\
     gives the UVW coordinates in J2000 (in meters).
 \end{description}
 By default all these functions will use the direction given in column PHASE\_DIR
 of the FIELD subtable. It is possible to use another column by giving
-its name as a string (e.g., 'DELAY\_DIR'). 
+its name as a string argument (e.g., 'HA(DELAY\_DIR)'). 
 \\It is also possible to use an explicit direction which
 must be given as [RA,DEC] in J2000 or as a case-insensitive name of a planetary object
 (as defined by the casacore Measures).
@@ -2073,9 +2121,9 @@ planetary object. In such a case the name can be escaped by a backslash
 to indicate that a column name is meant.
 For example:
 \begin{verbatim}
-   derivedmscal.azel1('\MOON')
+   derivedmscal.azel1('\SUN')
 \end{verbatim}
-means that column MOON in the FIELD table has to be used.
+means that column SUN in the FIELD table has to be used.
 
 \paragraph*{}
 The \texttt{STOKES} function makes it possible to convert the Stokes
@@ -2083,11 +2131,11 @@ parameters of a DATA column in a MeasurementSet, for instance from
 linear or circular to iquv. It is also possible to convert the weights
 or flags, i.e., to combine them in the same way as the data would be combined.
 \begin{description}
- \item[] \texttt{complexarray DERIVEDMSCAL.STOKES(complexarray, string)}\\
+ \item[] \texttt{complexarray MSCAL.STOKES(complexarray, string)}\\
    converts the data.
- \item[] \texttt{doublearray DERIVEDMSCAL.STOKES(doublearray, string)}\\
+ \item[] \texttt{doublearray MSCAL.STOKES(doublearray, string)}\\
    combines the weights.
- \item[] \texttt{boolarray DERIVEDMSCAL.STOKES(boolarray, string)}\\
+ \item[] \texttt{boolarray MSCAL.STOKES(boolarray, string)}\\
    combines the flags.
 \end{description}
 In all cases the case-insensitive string argument defines the output Stokes
@@ -2106,6 +2154,179 @@ important are:
 \end{itemize}
 If not given, the string argument defaults to 'IQUV'.
 
+\subsubsection{\label{TAQL:MEASFUNC}Special Measures functions}
+These functions make it possible to convert measures like directions,
+epochs, and positions from one reference frame to another. All
+conversions supported by casacore's 
+\htmladdnormallink{Measures}{../html/group__Measures__module.html}
+are possible.
+For example:
+\begin{verbatim}
+  meas.galactic (-6h52m36.7, 34d25m56.1, "J2000")
+  meas.azel ("MOON", date(), "WSRT")
+\end{verbatim}
+The first example converts a J2000 position to galactic coordinates.
+The second example gives the moon's azimuth/elevation at the WSRT at
+the current date/time.
+
+\paragraph*{}
+A few basic functions and some specialized functions are available.
+\\Note that all names used below are case-insensitive.
+\begin{description}
+  \item[] \texttt{doublearray MEAS.DIR(toref, direction, epoch, position)}\\
+    converts a direction to the reference type given by the 'toref' string.
+    The epoch and position arguments only need to be given if the conversion
+    needs frame information (e.g. when converting to apparent).\\
+    Function name MEAS.DIRECTION can be used as well.
+  \item[] \texttt{doublearray MEAS.EPOCH(toref, epoch, position)}\\
+    converts an epoch to the reference type given by the 'toref' string.
+    The position argument only needs to be given if the conversion
+    needs frame information.
+  \item[] \texttt{doublearray MEAS.POS(toref, position)}\\
+    converts a position to the reference type given by the 'toref' string.\\
+    Function name MEAS.POSITION can be used as well.
+\end{description}
+
+For ease of use several specialized functions are defined with an implicit
+'toref' argument.
+\begin{description}
+  \item[] \texttt{doublearray MEAS.J2000(direction, epoch, position)}\\
+    converts a direction to J2000.
+  \item[] \texttt{doublearray MEAS.B1950(direction, epoch, position)}\\
+    converts a direction to B1950.
+  \item[] \texttt{doublearray MEAS.APP(direction, epoch, position)}\\
+    converts a direction to apparent coordinates.
+    \\Function name MEAS.APPARENT can be used as well.
+  \item[] \texttt{doublearray MEAS.HADEC(direction, epoch, position)}\\
+    converts a direction to hourangle/declination.
+  \item[] \texttt{doublearray MEAS.AZEL(direction, epoch, position)}\\
+    converts a direction to azimuth/elevation.
+  \item[] \texttt{doublearray MEAS.ECL(direction, epoch, position)}\\
+    converts a direction to ecliptic coordinates.
+    \\Function name MEAS.ECLIPTIC can be used as well.
+  \item[] \texttt{doublearray MEAS.GAL(direction, epoch, position)}\\
+    converts a direction to galactic coordinates.
+    \\Function name MEAS.GALACTIC can be used as well.
+  \item[] \texttt{doublearray MEAS.SGAL(direction, epoch, position)}\\
+    converts a direction to supergalactic coordinates.
+    \\Function name MEAS.SUPERGAL or MEAS.SUPERGALACTIC can be used as well.
+  \item[] \texttt{doublearray MEAS.LAST(epoch, position)}\\
+    converts an epoch to local sidereal time.
+    \\Function name MEAS.LST can be used as well.
+  \item[] \texttt{doublearray MEAS.ITRF(toref, position)}\\
+    converts a position to ITRF coordinates.
+  \item[] \texttt{doublearray MEAS.WGS(toref, position)}\\
+    converts a position to WGS84 coordinates.
+\end{description}
+The name of the last two functions can have a suffix indicating how
+positions are returned.
+\\- XYZ means as x,y,z
+\\- LL or LONLAT means as lon,lat
+\\- H or HEIGHT means as height
+It defaults to XYZ.
+
+\paragraph*{}
+The function arguments can be given in a variety of ways.
+\begin{itemize}
+\item 'toref' is a constant scalar string giving the reference type to
+  convert to. See the Measure classes
+  \htmladdnormallink{MDirection}{../html/classcasa_1_1MDirection.html},
+  \htmladdnormallink{MEpoch}{../html/classcasa_1_1MEpoch.html}, and
+  \htmladdnormallink{MPosition}{../html/classcasa_1_1MPosition.html},
+  for an overview of the types.
+\item 'direction' gives one or more directions to convert. They can be
+  given in several ways.
+  \begin{itemize}
+    \item As a constant scalar or array of strings giving one or more planetary objects
+      like MOON or VENUS. In the future support for comets might be
+      added.
+    \item As 2 constant double scalar arguments giving ra and dec (or
+      longitude and latitude).
+    \item As a double array with an even number of elements giving
+      ra/dec or longitude/latitude of one or more directions.
+      It can be a constant array, but it
+      can also be a column or an expression using a column.
+  \end{itemize}
+  If a column or a column slice is given, the UDF will recognize the
+  reference type stored in the column keywords. In other cases the reference
+  type should be given in the next string argument. If not given, it
+  defaults to J2000.
+  \\For example:
+\begin{verbatim}
+  ['MOON','sun', 'venus']            # 3 planetary objects
+  12h23m17.5, 23d56m43.8, 'B1950'    # 2 scalar constants (as B1950)
+  [12h23m17.5, 23d56m43.8]           # constant array (default J2000)
+  PHASE_DIR[0,]                      # 1st direction in given column
+\end{verbatim}
+\item 'epoch' gives one or more epochs to use. Similar to
+  directions the reference type is taken from the column keywords or
+  can be given in the next argument. It defaults to UTC.
+\\Epochs can be given in two ways:
+  \begin{itemize}
+    \item As a scalar or array containing double values. It can be a constant or a
+      column (expression).
+    \item As a scalar or array containing DateTime values.
+  \end{itemize}
+  For example:
+\begin{verbatim}
+  date()                             # current date/time
+  [select unique TIME from my.ms]    # all times from some MS
+  date('9Oct2011/12:00:00'), 'UTC'   # given UTC time
+\end{verbatim}
+Note that in the last example 'UTC' is not necessary, because it is
+the default.
+\item 'position' gives one or more directions to use. They can be
+  given as x,y,z or as lon,lat with an optional height. Usually the
+  unit of the first value defines if x,y,z or lon,lat is used. It is, however. also
+  possible to use suffices like XYZ or LL in the reference type given
+  in the next argument.
+  \begin{itemize}
+    \item As a scalar or array of observatory names to use their positions
+      in the Observatory table.
+    \item As 2 or 3 constant double scalar values giving xyz, lonlat,
+      or lonlat/height.
+    \item As a double array giving one or more positions in xyz or
+      lonlat. Similar to directions it can be a column (expression)
+      where the reference type is taken from the column keywords.
+    \item As two constant double arrays giving lonlat and height of
+      one or more positions. The array sizes have to match (thus the
+      size of the lonlat array must be twice the size of the height array).
+  \end{itemize}
+  If needed, the reference type (with optional suffix) can be given in
+  the next argument. The reference type defaults to ITRF if xyz is used,
+  otherwise to WGS.
+  \\For example:
+\begin{verbatim}
+  'WSRT'                             # WSRT position
+  5deg, 52deg                        # 2 scalar constants (WGS84)
+  (5deg, 52deg]                      # same, but as array
+  5deg, 52deg, 5m                    # WGS84 with height
+  [5deg, 52deg], [5m]                # same, but as array
+  3.8288e+06m, 442449, 5.0649e+06    # xyz as scalars (ITRF)
+  [41.84m, 4.835, 55.722], 'WGS'     # xyz as array (WGS84)
+  POSITION                           # POSITION column
+\end{verbatim}
+\end{itemize}
+A few more elaborate examples are given below.
+\begin{verbatim}
+  meas.last (date('15Oct2011/15:34'), 5deg, 52deg)
+  meas.last (date('15Oct2011/15:34'), 5deg, 52deg) d
+\end{verbatim}
+It calculates the local apparent sidereal time for the given date and
+position. Note that the first example returns the value in seconds,
+while the second returns it in days (because unit 'd' was given).
+\begin{verbatim}
+  meas.azel ("JUPITER", [select unique TIME from ~/GER1.MS],
+            ["WSRT","VLA"])
+\end{verbatim}
+It calculates Jupiter's azimuth/elevation for WSRT and VLA for all
+times returned by the subquery (see next section for subqueries).
+\begin{verbatim}
+  calc meas.b1950(PHASE_DIR[0,]) from ~/GER1.MS/FIELD'
+\end{verbatim}
+It converts the PHASE\_DIR directions in the FIELD table to B1950. Note
+that no frame information is needed for such a conversion.
+
 
 \subsection{\label{TAQL:SUBQUERIES}Subqueries}
 As in SQL it is possible to create a set from a subquery. A
@@ -2121,13 +2342,24 @@ for which the windspeed matches. Subsequently the main query
 is executed and selects all rows from the main table with times in
 that set.
 Note that like other bounded sets this set is transformed to a
-constant array, so it is possible to apply functions to it (e.g. min, mean).
+constant array, so it is possible to apply functions to it (e.g. min,
+mean).
+
+\begin{verbatim}
+  SELECT [SELECT NAME FROM ::ANTENNA][ANTENNA1]
+         FROM ~/GER1.MS 
+\end{verbatim}
+This example shows how a subquery is used to join the main table of a
+MeasurementSet with its ANTENNA subtable. The subquery returns a list
+with the names of all antennae, which subsequently is indexed with the
+antenna number to get the antenna name for each row in the main table.
+
 \begin{verbatim}
   SELECT FROM maintable WHERE time IN
       [SELECT time FROM othertable WHERE windspeed <
            mean([SELECT windspeed FROM othertable])]
 \end{verbatim}
-This contains another subquery to get all windspeeds and
+This example contains another subquery to get all windspeeds and
 to take the mean of them. So the first subquery selects all times
 where the windspeed is less than the average windspeed.
 \\A subquery result should contain only one column, otherwise
@@ -2157,7 +2389,7 @@ still exists after the query and has to be deleted explictly by the
 user. Below a better solution for this problem is shown.
 
 TaQL has a few extensions to support tables better,
-in particular the AIPS++ measurement sets.
+in particular the Casacore measurement sets.
 \begin{enumerate}
 \item
 The temporary problem above can be circumvented by using the
@@ -2189,7 +2421,7 @@ where possible. In this way the minimum number of intervals have to be
 examined by the main query.
 
 \item
-In AIPS++ the other table will often be the name of a subtable,
+In Casacore the other table will often be the name of a subtable,
 which is stored in a table or column keyword of the main table.
 The standard \htmlref{keyword syntax}{TAQL:KEYWORDS} can be used
 to indicate that the other table is the table in the given keyword.
@@ -2223,6 +2455,31 @@ values in the measurement set.
 
 
 \section{Some further remarks}
+\subsection{Joining tables}
+As discussed in some previous sections it is possible to join tables
+on row number. Two examples show how to do it.
+
+\begin{verbatim}
+  SELECT FROM mytable,othertable
+    WHERE not all(near(mytable.data, othertable.data))
+\end{verbatim}
+This command can be used to check if the data in mytable is about
+equal to the data in othertable. It checks if both tables have the
+same number of rows.
+\\The join is done on row number, thus the data of the same rows are
+compared.
+
+\begin{verbatim}
+  SELECT [SELECT NAME FROM ::ANTENNA][ANTENNA1]
+         FROM ~/GER1.MS 
+\end{verbatim}
+This example shows how a subquery is used to join the main table of a
+MeasurementSet with its ANTENNA subtable. The subquery returns a list
+with the names of all antennae, which subsequently is indexed with the
+antenna number to get the antenna name for each row in the main table.
+\\The join is done using the ANTENNA1 column which gives the row
+number in the subtable, thus the index in the subquery result.
+
 \subsection{Optimization}
 A lot of development work can be done to improve the query optimization.
 At this stage only a few simple optimizations are done.
@@ -2510,7 +2767,7 @@ given:
 \\\texttt{TYPE} defines the type of data manager.
 \\\texttt{SPEC} is a list of keywords giving the characteristics of the
 data manager. This is highly data manager type specific. If shapes
-have to be given here, they always have to be in AIPS++ format,
+have to be given here, they always have to be in casacore format,
 thus in Fortran order. TaQL has no knowledge about these internals.
 \\\texttt{COLUMNS} is a list of column names defining all columns that
 have to be bound to the data manager.
@@ -2721,7 +2978,7 @@ a data type.
 
   \item[] \texttt{ SELECT means(DATA,0) AS DATA\_MEAN C4 FROM my.ms }
     \\creates a table of 1 column with name \texttt{DATA\_MEAN}.
-      Column DATA in a AIPS++ MeasurementSet is a 2-dimensional array
+      Column DATA in a Casacore MeasurementSet is a 2-dimensional array
       with axes polarization and frequency. This command calculates
       and stores the mean in each polarization.
       If no data type was given, the means would have been stored
@@ -2757,7 +3014,7 @@ a data type.
 
 \subsubsection{\label{TAQL:RUNEXAMPLES}Applying running median to an image}
 The following piece of Python code shows how a running median can 
-be applied to an AIPS++ image.
+be applied to an Casacore image.
 \begin{verbatim}
   t1 = tablecommand ('update my.imgd set map =
                          map - runningmedian(map,25,25)')
@@ -3070,7 +3327,7 @@ The documentation of this base class describes how to write a
 UDF. Furthermore one can look at class
 \htmladdnormallink{UDFMSCal}{../html/classcasa_1_1UDFBMSCal.html}
 that contains the UDFs described in subsection
-\htmlref{User defined functions}{TAQL:UDF}.
+\htmlref{User defined functions}{TAQL:MSFUNC}.
 
 Note that a class can contain multiple UDFs as done in UDFMSCal.
 Also note that a single UDF can operate on multiple data types which
@@ -3078,8 +3335,8 @@ is similar to a function like \texttt{min} that can operate on scalars
 and arrays of different data types.
 
 TaQL finds a UDF by looking in a dictionary that maps the UDF name
-to a function constructing an  object of the UDF class. If not found,
-it tries to load the shared library with the name of the library part
+to a function constructing an object of the UDF class. If not found,
+it tries to load the shared library with the lowercase name of the library part
 of the UDF (like in \texttt{derivedmscal.pa1}). If the load is successful, it calls an
 initialization function in the shared library that should add all UDF
 functions in the library to the dictionary. The description of the
@@ -3092,7 +3349,7 @@ features and by doing optimizations.
 \begin{itemize}
   \item Implement the GROUP BY and  HAVING clause, possibly with
     ROLLUP and CUBE.
-  \item Add JOIN clause (only equi-joins).
+  \item Add explicit JOIN clause (probably only equi-joins).
   \item Add UNION, INTERSECTION, and DIFFERENCE.
   \item Add masked arrays.
   \item Optimize by removing an \texttt{IN} node if the righthand
@@ -3101,8 +3358,6 @@ features and by doing optimizations.
   \item Handle invalid subexpressions (e.g. exceeding array bounds)
     as undefined values
     which can be tested with the function ISDEFINED.
-  \item Maybe functions to convert positions from one equinox or system
-    to another (using the Measures system).
   \item Optimize IN if righthand is an integer bounded set by turning
     it into a boolean vector.
 \end{itemize}
