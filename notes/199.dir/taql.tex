@@ -38,7 +38,7 @@ maximum string distances (Levensthein or Edit distance).
 \item No support of indices, thus a linear table search is done.
 Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
-\item Limited support for joins (only joins on row number).
+\item Limited support for joins (only implicit joins on row number).
 \item In the SELECT command GROUPBY and HAVING are not supported yet.
 \item The COUNT command exists to count the occurrences of column values.
 \item The CALC command exists to
@@ -263,11 +263,12 @@ Note that the GIVING clause with a value set is seen as an operation
 as well.
 
 There is no explicit JOIN clause, but it is possible to
-equi-join tables on row number. One can join
-tables of equal size by giving them all in the table list. One can
-also join , for example, the main table of a
+equi-join tables on row number.
+Such tables have to have the same number of rows.
+\\One can also join , for example, the main table of a
 MeasurementSet with a subtable like the ANTENNA table using a
 \htmlref{subquery}{TAQL:SUBQUERIES}.
+\\Joins are explained further in \htmlref{section 5}{TAQL:JOIN}.
 
 \subsection{\label{TAQL:COLUMNLIST}SELECT column\_list}
 Columns to be selected can be given as
@@ -427,8 +428,8 @@ if it contains special characters.
 Multiple table lists can also be used to join the tables on row
 number. E.g.
 \begin{verbatim}
-  SELECT FROM mytable,othertable
-    WHERE not all(near(mytable.data, othertable.data))
+  SELECT FROM mytable t1,othertable t2
+    WHERE not all(near(t1.data, t2.data))
 \end{verbatim}
 Such a command could be used to check if the data in mytable is about
 equal to the data in othertable. It checks if both tables have the
@@ -964,7 +965,7 @@ can be given (in any order):
   datetime ("11-Dec-1972")
 \end{verbatim}
   \item A more convenient way is to specify it directly. Since this
-    makes use of the delimiters - or /, it conflicts with the
+    makes use of the delimiters space, - or /, it conflicts with the
     expression grammar as such. However, such conflicts can be
     solved by using whitespace in a expression and it is believed
     that in practice the convenience surpasses the possible
@@ -972,7 +973,7 @@ can be given (in any order):
     \\A large subset of the MVTime formats is supported.
     A DateTime has to be specified as \texttt{date/time}
     or \texttt{date-time}, where the time part (including
-    the / or - delimiter) is optional.
+    the space, -, or / delimiter) is optional.
     The possible date formats are:
     \\- YYYY/MM/DD or DD-MM-YYYY
     \\- DD-MMMMMMMM-YY where the - is optional and MMMMMMM is the
@@ -995,10 +996,10 @@ can be given (in any order):
   1997/2/10          are all identical
 
   1May96/3:          : (or h) is mandatory
-  1May96/3:0
-  1May96/3:0:0
-  1May96/3h          h (or :) is mandatory
-  1May96/3H0
+  1May96-3:0
+  1May96 3:0:0
+  1May96-3h          h (or :) is mandatory
+  1May96 3H0
   1May96/3h0M
   1May96/3hm0.0
 \end{verbatim}
@@ -1084,7 +1085,7 @@ fields, but thereafter an error message will be given.
 It is possible to use table or column keywords, which can have
 a scalar or an array value. A table keyword has to be specified
 as \texttt{::key}. In an expression the \texttt{::} part can be omitted
-if there is no column with such a name.
+if there is no column with the same name.
 A column keyword has to be specified as \texttt{column::key}.
 \\Note that the \texttt{::} syntax is chosen, because it is similar
 to the scope operator in C++.
@@ -1480,18 +1481,33 @@ be used on a set or the result of a subquery.
 These functions can be used on a scalar or an array argument.
 \begin{description}
   \item[] \texttt{integer STRLENGTH(string),  integer LEN(string)}\\
-       Returns the number of characters in a string
-       (trailing whitespace is significant).
+    Returns the number of characters in a string
+    (trailing whitespace is significant).
   \item[] \texttt{string UPCASE(string), string UPPER(string) }\\
-        Convert to uppercase.
+    Convert to uppercase.
   \item[] \texttt{string DOWNCASE(string),  string LOWER(string)}\\
-        Convert to lowercase.
+    Convert to lowercase.
   \item[] \texttt{string LTRIM(string)}\\
-       Removes leading whitespace.
+    Removes leading whitespace.
   \item[] \texttt{string RTRIM(string)}\\
-       Removes trailing whitespace.
+    Removes trailing whitespace.
   \item[] \texttt{string TRIM(string)}\\
-       Removes leading and trailing whitespace.
+    Removes leading and trailing whitespace.
+  \item[] \texttt{string SUBSTR(string, integer ST, integer N)}
+    Returns a substring starting at the 0-based position
+    \texttt{ST} with a length of at most \texttt{N} characters.
+   If the string argument is an array of strings, an array with the substring of each
+   string is returned. The arguments N and ST have to be scalar
+   values. They will be set to 0 if negative.
+  \item[] \texttt{string REPLACE(string SRC, PATTERN, string REPL)}
+   Replaces all occurrences of PATTERN in SRC by REPL and returns the
+   result. REPL can be omitted and defaults to the empty string.
+   If the first argument is an array of strings, each element in the
+   array is replaced.
+   The arguments PATTERN and REPL have to be scalar values. PATTERN
+   can be a string or a regular expression (see below). For example:
+   \\\verb+REPLACE(''abcdab'', "ab'')+ results in \texttt{cd}
+   \\\verb+REPLACE(''abcdab'', REGEX("^ab''), "xyz"')+ results in \texttt{xyzcdab}
 \end{description}
 
 \subsubsection{Regex functions}
@@ -1630,6 +1646,8 @@ Standard mathematical can be used on scalar and array arguments (and a mix of th
     Return the value of \textbf{pi}.
   \item[] \texttt{double E()}\\
     Return the value of \textbf{e} (is equal to \texttt{EXP(1)}).
+  \item[] \texttt{double C()}\\
+    Return the value of the speed of light (with unit m/s).
   \item[] \texttt{dnumeric SIN(numeric)}
   \item[] \texttt{dnumeric SINH(numeric)}
   \item[] \texttt{double ASIN(real)}
@@ -2170,7 +2188,7 @@ The second example gives the moon's azimuth/elevation at the WSRT at
 the current date/time.
 
 \paragraph*{}
-A few basic functions and some specialized functions are available.
+The following basic functions are available.
 \\Note that all names used below are case-insensitive.
 \begin{description}
   \item[] \texttt{doublearray MEAS.DIR(toref, direction, epoch, position)}\\
@@ -2258,23 +2276,29 @@ The function arguments can be given in a variety of ways.
   [12h23m17.5, 23d56m43.8]           # constant array (default J2000)
   PHASE_DIR[0,]                      # 1st direction in given column
 \end{verbatim}
+
 \item 'epoch' gives one or more epochs to use. Similar to
   directions the reference type is taken from the column keywords or
   can be given in the next argument. It defaults to UTC.
-\\Epochs can be given in two ways:
+\\Epochs can be given in three ways:
   \begin{itemize}
     \item As a scalar or array containing double values. It can be a constant or a
       column (expression).
     \item As a scalar or array containing DateTime values.
+    \item As a scalar or array containing String values representing
+      date/time. They will automatically be converted to DateTime
+      values using function \texttt{datetime}. 
   \end{itemize}
   For example:
 \begin{verbatim}
-  date()                             # current date/time
+  datetime()                         # current date/time
+  'today'                            # current date/time
   [select unique TIME from my.ms]    # all times from some MS
-  date('9Oct2011/12:00:00'), 'UTC'   # given UTC time
+  9Oct2011/12:00:00, 'UTC'           # given UTC time
 \end{verbatim}
 Note that in the last example 'UTC' is not necessary, because it is
 the default.
+
 \item 'position' gives one or more directions to use. They can be
   given as x,y,z or as lon,lat with an optional height. Usually the
   unit of the first value defines if x,y,z or lon,lat is used. It is, however. also
@@ -2455,16 +2479,16 @@ values in the measurement set.
 
 
 \section{Some further remarks}
-\subsection{Joining tables}
+\subsection{\label{TAQL:JOIN}Joining tables}
 As discussed in some previous sections it is possible to join tables
 on row number. Two examples show how to do it.
 
 \begin{verbatim}
-  SELECT FROM mytable,othertable
-    WHERE not all(near(mytable.data, othertable.data))
+  SELECT FROM mytable t1,othertable t2
+    WHERE not all(near(t1.data, t2.data))
 \end{verbatim}
 This command can be used to check if the data in mytable is about
-equal to the data in othertable. It checks if both tables have the
+equal to the data in othertable. Both tables have to have the
 same number of rows.
 \\The join is done on row number, thus the data of the same rows are
 compared.
@@ -2595,7 +2619,8 @@ exit with an error message.
   UPDATE table_list SET update_list [WHERE ...] [ORDERBY ...]
                                     [LIMIT ...] [OFFSET ...]
 \end{verbatim}
-updates selected rows in the selected part of the table.
+updates all or some rows in the first table of the table list. Other
+tables can be used in clauses like SET and WHERE.
 \\\texttt{update\_list}
 is a comma-separated list of \texttt{column=expression} parts.
 Each part tells to update the given column using the
@@ -2606,7 +2631,15 @@ E.g.
 \end{verbatim}
 to make the antenna numbers zero-based if accidently they were
 written one-based.
-\\If an array gets an array value, the shape of the array can be
+
+\begin{verbatim}
+  UPDATE this.ms, that.ms t2 set DATA=t2.DATA, FLAG=t2.FLAG
+                     where all(FLAG)
+\end{verbatim}
+to copy the DATA and FLAG column of that.ms to this.ms for rows where
+all data are flagged. Note the use of the shorthand (alias) \texttt{t2}.
+
+If an array gets an array value, the shape of the array can be
 changed (provided it is allowed for that table column).
 Arrays can also be updated with a scalar value causing all elements
 in the array to be set to that scalar value.
@@ -2616,10 +2649,11 @@ It is also possible to update part of an array using
 \begin{verbatim}
   UPDATE vla.ms SET FLAG[1,1]=T
   UPDATE vla.ms SET FLAG[1,]=T
+  UPDATE vla.ms SET FLAG=F
 \end{verbatim}
-The first example sets only the first array element, while the second
-one sets an entire row in the array. The second example also
-shows that it is possible to set an array to a scalar value.
+The first example sets only a single array element, while the second
+one sets an entire row in the array. The second and third example
+show it is possible to set an array to a scalar value.
 
 Type promotion and demotion will be done as much as possible.
 For example, an integer column can get the value of a double
@@ -2638,6 +2672,19 @@ expression. E.g. in
   UPDATE vla.ms SET DATA=DATA+1, SUMD=sum(DATA)
 \end{verbatim}
 the \texttt{SUMD} update uses the new \texttt{DATA} values.
+
+Thus to swap the values of the ANTENNA1 and ANTENNA2 column, one
+should \bf{not} do:
+\begin{verbatim}
+  UPDATE vla.ms SET ANTENNA1=ANTENNA2, ANTENNA2=ANTENNA1
+\end{verbatim}
+TaQL does not have temporary variables to solve the problem. However, the
+following could be used:
+\begin{verbatim}
+  UPDATE vla.ms SET ANTENNA1=ANTENNA1+ANTENNA2,
+                    ANTENNA2=ANTENNA1-ANTENNA2,  #A2 is old A1
+                    ANTENNA1=ANTENNA1-ANTENNA2   #A1 is old A2
+\end{verbatim}
     
 
 \subsection{INSERT}
