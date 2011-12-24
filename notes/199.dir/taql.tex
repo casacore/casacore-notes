@@ -395,8 +395,10 @@ for SQL compliance.
 The FROM part defines which tables are used in the selection.
 It is a comma-separated list of table names which can contain
 path specification and environment variables or the UNIX
-\verb+~+ notation.
-The first table in the list is the primary
+\verb+~+ notation. If the tablename contains a special character, the
+character can be escaped with a backslash or the table name can be
+enclosed in single or double quotes.
+\\The first table in the list is the primary
 table and is used for all columns in the other clauses.
 Usually only one table is used in which case the list consists
 of only one table name. E.g.
@@ -408,9 +410,10 @@ of only one table name. E.g.
 In this example columns \texttt{col1} and \texttt{col2}
 are taken from \texttt{mytable}.
 
-However, it is possible to specify more tables in the table\_list.
-In the WHERE clause these secondary tables can be used to take
-keywords from. E.g.
+However, it is very well possible to specify more tables in the
+table\_list to execute a \htmlref{join}{TAQL:JOIN} or to get a keyword
+value from another table.
+E.g.
 \begin{verbatim}
   SELECT FROM mytable,othertable
     WHERE col1>othertable.key
@@ -579,14 +582,19 @@ E.g.
 
 \subsection{LIMIT expression}
 It indicates that up to N rows have to be selected, where N is
-the result of the expression. 
+the result of the expression.  If N is a negative value, it counts
+from the end (a la Python indexing). For example, limit -1 means all rows
+but the last.
 \\\texttt{LIMIT} is applied after \texttt{ORDERBY}, so it is
 particularly useful in combination with
 \texttt{ORDERBY} to select, for example, the highest 10 values.
+\\Similarly, \texttt{LIMIT} is applied after \texttt{SELECT DISTINCT}.
 
 \subsection{OFFSET expression}
 It indicates that the first N rows of the selection have to be 
-skipped. As \texttt{LIMIT} it is particularly useful in
+skipped. If N is negative, it counts from the end (a la Python
+indexing). For example, offset -1 means the last row.
+As \texttt{LIMIT} it is particularly useful in
 combination with \texttt{ORDERBY}. For example:
 \begin{verbatim}
   SELECT FROM my.tab ORDERBY DISTINCT TIME LIMIT 1 OFFSET 10
@@ -1895,7 +1903,7 @@ window can be applied) are set to 0 (or false).
     Return dimensionality of an array (0 for a scalar).
   \item[] \texttt{integerarray SHAPE(anytype)}\\
     Return shape of an array (returns an empty array for a scalar).
-  \item[] \texttt{integer ROWNUMBER()}\\
+  \item[] \texttt{integer ROWNUMBER(), integer ROWNR()}\\
     Return the row number being tested (first row is row number 0 or 1
     depending on the style used).
     \\In combination with function RAND it can, for instance,
@@ -1919,14 +1927,22 @@ window can be applied) are set to 0 (or false).
     positions in \texttt{arg1} and \texttt{arg2}. Both arguments have
     to be numeric arrays containing an even number of values. Two subsequent values 
     give the RA and DEC (or longitude and latitude) of positions on a
-    sphere. The result is a 2-dim array containing the angular
-    distance between each position in \texttt{arg1} and \texttt{arg2}.
+    sphere. The result is a 1-dim array containing the angular
+    distance between corresponding positions in \texttt{arg1} and
+    \texttt{arg2}.
+    If either array contains only one position, the result is the
+    distance between that position and each position in the other array.
     If both arguments contain only 2 values, the result is a scalar.
     For example:
-    \\\texttt{angdist(DELAY\_DIR[0,], [12h13m45,4d21m39.4, 12h13m49,10d8m4])}
-    \\returns an array with shape [2,1] (when using Glish-style [1,2])
-    containing the angular
-    distance between the center of the field and the two posiitions given. 
+    \\\texttt{angdist(PHASE\_DIR[0,], [12h13m45,4d21m39.4, 12h13m49,10d8m4])}
+    \\returns an array with shape [2] containing the angular
+    distance between the phase center of the field and the two positions given. 
+  \item[] \texttt{double ANGDISTX(arg1,arg2)},
+              \texttt{double ANGULARDISTANCEX(arg1,arg2)}\\
+    Same as above, but the result is a 2-dim array giving the distance
+    between each position in the first argument and each position in
+    the second argument. Only if both argument contain a single
+    position, the result is a scalar.
   \item[] \texttt{anytype IIF(cond,arg1,arg2)}\\
     This is a special funtion which operates like the ternary \texttt{?:}
     operator in C++. 
@@ -1947,6 +1963,12 @@ window can be applied) are set to 0 (or false).
     Its successive values are stored in the created array. If the
     new array has more values than the value array, the value array is
     reset to its beginning and the process continues.
+  \item[] \texttt{anytypearray TRANSPOSE(anytypearray[,axes])}\\
+    This function transposes an N-dim array. If no axes
+    are given, the array is fully transposed (thus all axes are
+    reversed). Axes can be specified meaning that those axes will become the
+    first axes in the output array. Non-given axes follow thereafter
+    in their natural order.
 \end{description}
 
 \subsubsection{\label{TAQL:CONESEARCH}Cone search functions}
@@ -2475,6 +2497,31 @@ because it will give the row number in the selection and not
 Furthermore, \texttt{ROWID} gives a 0-relative row number which is
 needed to be able to use it as a selection criterium on the 0-relative
 values in the measurement set.
+
+\item
+Select if any channel has a UV distance < 100 wavelengths.
+\begin{verbatim}
+  select from MY.MS where any(sqrt(sumsqr(UVW[:2])) / c() *
+      [select CHAN_FREQ from ::SPECTRAL_WINDOW][DATA_DESC_ID,]
+         < 100)
+
+\end{verbatim}
+In a MeasurementSet the UVW coordinates are stored in meters, so they
+have to be multiplied with the frequency and divided by speed of light
+to get them in wavelengths.
+\\Because TaQL has no proper join operation, it is not possible to
+select directly on the DATA\_DESC\_ID. However, using a nested query and
+indexing the result with the DATA\_DESC\_ID has the same effect. It only
+requires that CHAN\_FREQ has the same length in all rows in the
+subtable.
+
+\item
+Calculate the angular distance between the sun and the moon as seen
+from the WSRT for the coming 30 days.
+\begin{verbatim}
+  calc angdist(meas.app('SUN',  date()+[0:31], 'WSRT'),
+               meas.app('MOON', date()+[0:31], 'WSRT'))
+\end{verbatim}
 \end{enumerate}
 
 
@@ -2674,7 +2721,7 @@ expression. E.g. in
 the \texttt{SUMD} update uses the new \texttt{DATA} values.
 
 Thus to swap the values of the ANTENNA1 and ANTENNA2 column, one
-should \bf{not} do:
+can \bf{not} do:
 \begin{verbatim}
   UPDATE vla.ms SET ANTENNA1=ANTENNA2, ANTENNA2=ANTENNA1
 \end{verbatim}
@@ -3372,7 +3419,7 @@ derived from the abstract base class
 \htmladdnormallink{UDFBase}{../html/classcasa_1_1UDFBase.html}.
 The documentation of this base class describes how to write a
 UDF. Furthermore one can look at class
-\htmladdnormallink{UDFMSCal}{../html/classcasa_1_1UDFBMSCal.html}
+\htmladdnormallink{UDFMSCal}{../html/classcasa_1_1UDFMSCal.html}
 that contains the UDFs described in subsection
 \htmlref{User defined functions}{TAQL:MSFUNC}.
 
