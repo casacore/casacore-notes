@@ -1127,7 +1127,7 @@ The operator precedence order is:
   &
   ^
   |
-  == != >  >= <  <=  IN INCONE BETWEEN EXISTS LIKE  ~  !~
+  == != >  >= <  <=  =~ !=~ IN INCONE BETWEEN EXISTS LIKE  ~  !~
   &&
   ||
 \end{verbatim}
@@ -1174,6 +1174,10 @@ that can be used with them.
   $<$ & no bool & comparison for less \\
   $<=$ & no bool & comparison for less or equal \\
   $!=$, $<>$ & all & comparison for not equal \\
+  $=~$ is a shorthand for the \htmlref{NEAR function}{TAQL:COMPARISONFUNCTIONS}
+ with a tolerance of 1e-5.
+  $!=~$ is a shorthand for NOT \htmlref{NEAR}{TAQL:COMPARISONFUNCTIONS} 
+  with a tolerance of 1e-5.
   \texttt{\&\&}, AND & bool & logical and \\
   \verb+||+, OR & bool & logical or \\
   \texttt{!}, NOT & bool & logical not \\
@@ -1616,7 +1620,7 @@ format. Currently, they are always formatted with 3 decimals in the seconds.
     (odd elements). It is useful for arrays containing RA,DEC values.
 \end{description}
 
-\subsubsection{Comparison functions}
+\subsubsection{\label{TAQL:COMPARISONFUNCTIONS}Comparison functions}
 The exact comparison of floating point values is quite tricky.
 Two functions make it possible to compare 2 double or complex
 values with a tolerance.
@@ -2278,8 +2282,10 @@ The function arguments can be given in a variety of ways.
   given in several ways.
   \begin{itemize}
     \item As a constant scalar or array of strings giving one or more planetary objects
-      like MOON or VENUS. In the future support for comets might be
-      added.
+      like MOON or VENUS and/or giving the name of standard sources
+      (CasA, CygA, TauA, VirA, HerA, HydA, or PerA).
+      In the future support for comets might be added. 
+      \\The names are case-insensitive.
     \item As 2 constant double scalar arguments giving ra and dec (or
       longitude and latitude).
     \item As a double array with an even number of elements giving
