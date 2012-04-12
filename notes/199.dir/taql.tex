@@ -51,7 +51,7 @@ example the order of array axes. Therefore it is possible to set the
 language style to be used.
 \item The language can be extended by means of User Defined
   Functions. Some standard UDFs exist to deal with measure conversions
-  (for directions, epochs, and positions).
+  (for directions, epochs, positions, and stokes).
 \end{itemize}
 TaQL has a keyword that makes it possible to time the various parts of
 a TaQL command.
@@ -457,7 +457,7 @@ Similar to SQL and OQL the shorthand can also be given using
 Note that if using \texttt{IN}, the shorthand has to preceed
 the table name. It can be seen as an iterator variable.
 
-There are three special ways to specify a table:
+There are four special ways to specify a table:
 \begin{enumerate}
 
 \item
@@ -488,6 +488,15 @@ the current query level and proceeds outwards (i.e., up to the
 main query level). If a shorthand is given, only tables with
 that shorthand are taken into account. If no shorthand is
 given, only primary tables are taken into account.
+
+\item
+Opening a subtable using a path name like \texttt{my.ms/ANTENNA}
+will fail if \texttt{my.ms} is a reference table instead of the
+original table.
+Therefore the path of a subtable can be given using colons instead of
+slashes like \texttt{my.ms::ANTENNA} which is a slight extension of
+specifying table names in the previous bullet.
+\\In this way a subtable can always be found, no matter where it is located.
 
 \item
 Like in OQL it is possible to use a
@@ -1127,7 +1136,7 @@ The operator precedence order is:
   &
   ^
   |
-  == != >  >= <  <=  =~ !=~ IN INCONE BETWEEN EXISTS LIKE  ~  !~
+  == != >  >= <  <=  ~= !~= IN INCONE BETWEEN EXISTS LIKE  ~  !~
   &&
   ||
 \end{verbatim}
@@ -1174,10 +1183,12 @@ that can be used with them.
   $<$ & no bool & comparison for less \\
   $<=$ & no bool & comparison for less or equal \\
   $!=$, $<>$ & all & comparison for not equal \\
-  $=~$ is a shorthand for the \htmlref{NEAR function}{TAQL:COMPARISONFUNCTIONS}
- with a tolerance of 1e-5.
-  $!=~$ is a shorthand for NOT \htmlref{NEAR}{TAQL:COMPARISONFUNCTIONS} 
-  with a tolerance of 1e-5.
+  \verb+~=+ & numeric & shorthand for the
+  \htmlref{NEAR function}{TAQL:COMPARISONFUNCTIONS}
+  with a tolerance of 1e-5 \\
+  \verb+!~=+ & numeric & shorthand for NOT 
+  \htmlref{NEAR}{TAQL:COMPARISONFUNCTIONS} 
+  with a tolerance of 1e-5 \\
   \texttt{\&\&}, AND & bool & logical and \\
   \verb+||+, OR & bool & logical or \\
   \texttt{!}, NOT & bool & logical not \\
@@ -1195,7 +1206,7 @@ that can be used with them.
        (See the discussion of \htmlref{sets}{TAQL:SETS}). \\
   NOT IN & all & negation of IN \\
   BETWEEN & no bool & \texttt{a BETWEEN b AND c} is similar to
-  \texttt{a>=b AND a<=c} and \texttt{a IN [b:=:c]} \\
+  \texttt{a>=b AND a<=c} and \texttt{a IN [b=:=c]} \\
   NOT BETWEEN & no bool & \texttt{a NOT BETWEEN b AND c} is negation
   of above. \\
   INCONE & & cone search. (See the discussion of
@@ -1505,21 +1516,21 @@ These functions can be used on a scalar or an array argument.
     Removes trailing whitespace.
   \item[] \texttt{string TRIM(string)}\\
     Removes leading and trailing whitespace.
-  \item[] \texttt{string SUBSTR(string, integer ST, integer N)}
+  \item[] \texttt{string SUBSTR(string, integer ST, integer N)}\\
     Returns a substring starting at the 0-based position
     \texttt{ST} with a length of at most \texttt{N} characters.
    If the string argument is an array of strings, an array with the substring of each
    string is returned. The arguments N and ST have to be scalar
    values. They will be set to 0 if negative.
-  \item[] \texttt{string REPLACE(string SRC, PATTERN, string REPL)}
+  \item[] \texttt{string REPLACE(string SRC, PATTERN, string REPL)}\\
    Replaces all occurrences of PATTERN in SRC by REPL and returns the
    result. REPL can be omitted and defaults to the empty string.
    If the first argument is an array of strings, each element in the
    array is replaced.
    The arguments PATTERN and REPL have to be scalar values. PATTERN
    can be a string or a regular expression (see below). For example:
-   \\\verb+REPLACE(''abcdab'', "ab'')+ results in \texttt{cd}
-   \\\verb+REPLACE(''abcdab'', REGEX("^ab''), "xyz"')+ results in \texttt{xyzcdab}
+   \\\verb+REPLACE("abcdab", "ab")+ results in \texttt{cd}
+   \\\verb+REPLACE("abcdab", REGEX("^ab"), "xyz")+ results in \texttt{xyzcdab}
 \end{description}
 
 \subsubsection{Regex functions}
@@ -2013,8 +2024,8 @@ to radians.
        one or more cones (e.g. as RA,DEC,radius).
        Usually the user will specify it as constants.
        \\For example:
-       \\\texttt{[12:13:54, -5.3.34, 0d1m]} for a single cone.
-       \\\texttt{[12:13:54, -5.3.34, 0d1m, 1:2:3, 4.5.6, 0d1m]} for two cones.
+       \\\texttt{[12h13m54, -5.3.34, 0d1m]} for a single cone.
+       \\\texttt{[12h13m54, -5.3.34, 0d1m, 1h2m3, 4.5.6, 0d1m]} for two cones.
   \item[] \texttt{CONEPOS}\\
        is a set or array giving the positions of one or more
        cone centers (e.g. as RA,DEC).
@@ -2025,7 +2036,7 @@ to radians.
        it as \texttt{CONES} if the same radius has to be used for
        multiple cones.
        \\For example:
-       \\\texttt{[12:13:54, -5.3.34, 1:2:3, 4.5.6], 0d1m} is the same
+       \\\texttt{[12h13m54, -5.3.34, 1h2m3, 4.5.6], 0d1m} is the same
        as the second \texttt{CONES} example above.
 \end{description}
 The following cone search functions are available.
@@ -2197,6 +2208,13 @@ important are:
  \item PANGLE is the linear polarization angle (0.5*arctan(U/Q)) (in radians)
 \end{itemize}
 If not given, the string argument defaults to 'IQUV'.
+For example:
+\begin{verbatim}
+  select mscal.stokes(DATA,'circ') as CIRCDATA from my.ms
+\end{verbatim}
+creates a table with column CIRCDATA containing the circular
+polarization data.
+
 
 \subsubsection{\label{TAQL:MEASFUNC}Special Measures functions}
 These functions make it possible to convert measures like directions,
