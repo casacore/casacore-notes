@@ -26,12 +26,13 @@ but it does not contain data. Instead it contains references to the
 rows and columns in the original table. Thus modifying data in a
 reference table means that effectively the data in the original
 table are modified.
+\item A very rich set of mathematical and other functions.
 \item Any operand can be a scalar or an N-dimensional array.
 Many reduction functions can be applied to arrays.
-\item A very rich set of mathematical functions.
+\item Arrays can optionally be masked.
 \item Full support of units and automatic conversion of units.
 \item Support of various types of patterns/regular expressions and
-maximum string distances (Levensthein or Edit distance).
+maximum string distances (Levensthein (aka Edit) distance).
 \item Specific operators and functions for cone searching
 (i.e. spatial searching with a search radius).
 \item An advanced way of specifying intervals.
@@ -378,6 +379,7 @@ omitted if a memory table is created.
 The type argument is optional and can be one of several values:
 \begin{description}
   \item[MEMORY ]to store the result in a memory table.
+  \item[SCRATCH ]to store the result in a scratch table, possibly on disk.
   \item[PLAIN ]to store the result in a plain table. Its endian format
 is determined by the aipsrc definition.
   \item[PLAIN\_BIG ]to store the result in a plain table in big-endian format.
@@ -390,6 +392,13 @@ the result is written in a plain table.
 \\The standard TaQL way to define the output table is the
 \htmlref{GIVING}{TAQL:GIVING} clause. INTO is available
 for SQL compliance.
+
+If the INTO (or GIVING) clause is not given, the query result will be
+written into a memory table. In this way queries done in a readonly
+directory will not fail because it cannot create a result
+table. However, if the result is expected to not fit in memory (which
+will seldomly be the case), type SCRATCH should be used to make it fit.
+
 
 \subsection{\label{TAQL:TABLE_LIST}FROM table\_list}
 The FROM part defines which tables are used in the selection.
@@ -589,27 +598,36 @@ E.g.
   ORDERBY mjd(datetime(col)) is correct
 \end{verbatim}
 
-\subsection{LIMIT expression}
-It indicates that up to N rows have to be selected, where N is
-the result of the expression.  If N is a negative value, it counts
-from the end (a la Python indexing). For example, limit -1 means all rows
-but the last.
-\\\texttt{LIMIT} is applied after \texttt{ORDERBY}, so it is
-particularly useful in combination with
-\texttt{ORDERBY} to select, for example, the highest 10 values.
-\\Similarly, \texttt{LIMIT} is applied after \texttt{SELECT DISTINCT}.
+\subsection{LIMIT/OFFSET expression}
+It indicates which of the matching and sorted rows should be
+selected. If not given, all of them are selected.
+\\\texttt{LIMIT} and \texttt{OFFSET} are applied after
+\texttt{ORDERBY} and \texttt{SELECT DISTINCT},
+so they are particularly useful in combination with those clauses
+to select, for example, the highest 10 values.
 
-\subsection{OFFSET expression}
-It indicates that the first N rows of the selection have to be 
-skipped. If N is negative, it counts from the end (a la Python
-indexing). For example, offset -1 means the last row.
-As \texttt{LIMIT} it is particularly useful in
-combination with \texttt{ORDERBY}. For example:
+It can be given in two ways:
+\begin{itemize}
+\item In the semi-standard SQL way using \texttt{LIMIT N} to select N rows
+  and/or \texttt{OFFSET M} to skip the first M rows. Similar to Python, N
+  and M can be negative meaning they are counted from the end. E.g.,
+  \texttt{LIMIT -1} means all rows but the last.
+\item As a Python-style range using \texttt{LIMIT start:end:incr}, where the end is
+  exclusive. Start defaults to 0, end to the number of rows, and incr
+  to 1. As above, start and end can be negative to count from the
+  end. The increment must be positive.
+\end{itemize}
+For example:
 \begin{verbatim}
-  SELECT FROM my.tab ORDERBY DISTINCT TIME LIMIT 1 OFFSET 10
+  SELECT FROM my.tab ORDERBY DISTINCT TIME LIMIT 2 OFFSET 10
+  SELECT FROM my.tab ORDERBY DISTINCT TIME LIMIT 10:12
 \end{verbatim}
-sorts uniquely by time, skips the first 10 values, and selects a
-single row.
+sorts uniquely by time, skips the first 10 rows, and selects the next
+two rows.
+\begin{verbatim}
+  SELECT FROM my.tab LIMIT ::100
+\end{verbatim}
+selects every 100-th row.
 
 \subsection{\label{TAQL:GIVING}GIVING [table] [AS type] $|$ set}
 It indicates that the ultimate result of the SELECT command should be
@@ -1053,6 +1071,39 @@ The first examples create an array with shape [10,4] containing the values
 1..10 in each line.
 The latter results in a boolean array having the same
 shape as the DATA array and filled with False.
+
+\subsubsection{Masked Arrays}
+An array can have an optional mask. Similar to numpy's masked
+array, a mask value True means that the value is masked off, thus not
+taken into account in reduction functions like calculating the mean.
+\\Note that this definition is the same as the FLAG column in a
+MeasurementSet, but is different from a mask in a casacore Image where
+True means good and False means bad.
+
+All operations on arrays will take the possible mask into account.
+Reduction functions like \texttt{median} only use
+the unmasked array elements. Furthermore, partial reduction functions
+like \texttt{medians} will set an output mask element to True if the
+corresponding input array part has no unmasked elements.
+\\Operators like + and functions like \texttt{cos} operate on all array
+elements. The mask in the resulting array is the logical OR of the
+input masks. Of course, the result has no mask if no input array has
+a mask.
+
+A masked array is created by applying a boolean array to an array
+using the square brackets operator. For example:
+\begin{verbatim}
+  DATA[FLAG]
+  DATA[DATA > 3*median(DATA)]
+\end{verbatim}
+The first example applies the FLAG column in a MeasurementSet to the
+DATA column.
+The second example masks off high DATA values.
+
+The function \texttt{arraydata}, \texttt{arraymask}, and \texttt{flatten}
+can be used to get the array data or mask. The last one flattens the
+array to a vector while removing all masked elements.
+
 
 \subsection{\label{TAQL:COLUMNS}Table Columns}
 A table column can be used in a query by giving its name in the
@@ -1510,6 +1561,8 @@ These functions can be used on a scalar or an array argument.
     Convert to uppercase.
   \item[] \texttt{string DOWNCASE(string),  string LOWER(string)}\\
     Convert to lowercase.
+  \item[] \texttt{string CAPITALIZE(string)}\\
+    Capitalize a string (make first letter uppercase).
   \item[] \texttt{string LTRIM(string)}\\
     Removes leading whitespace.
   \item[] \texttt{string RTRIM(string)}\\
@@ -1618,7 +1671,7 @@ date/time is used. E.g. \texttt{DATE()} results in the current date.
 case the string is parsed and converted to a date (i.e., the
 function DATETIME is used implicitly).
 
-\subsubsection{Angle formatting functions}
+\subsubsection{Pretty printing functions}
 Angles (scalar or array) can be returned as strings in HMS and/or DMS
 format. Currently, they are always formatted with 3 decimals in the seconds.
 \begin{description}
@@ -1630,6 +1683,59 @@ format. Currently, they are always formatted with 3 decimals in the seconds.
     Return angles like 12h34m56.789 (even elements) and 12d34m56.789
     (odd elements). It is useful for arrays containing RA,DEC values.
 \end{description}
+The functions mentioned above and the date/time functions in the previous
+subsection can format a value in a predefined way only.
+\\The \texttt{string} (shorthand \texttt{str}) function makes it possible to convert values to
+strings using an optional format string or width.precision
+value. It also makes it possible to format dates, times, and angles
+in a variety of ways.
+\begin{description}
+  \item[] \texttt{string STRING(value, [format]),    string STR(value, [format])}
+\end{description}
+The value can be of any type (except Regex) and can be a scalar or
+array. The optional format must be a scalar string or numeric value.
+If no format is given, an appropriate default format will be used.
+\begin{itemize}
+\item A numeric format value defines the width and/or precision. For example:
+\begin{verbatim}
+  8        defines width 8 and default precision
+  20.12    defines width 20 and precision 12
+  .8       defines precision 8 and default width
+\end{verbatim}
+In this way precision represents all digits, not only the ones behind
+the decimal point. A default width or precision is used if not given.
+\item A string format value can contain a \texttt{printf}-style format
+  string, which must include the \%-sign.
+  Note that the real and imaginary part of a complex value are
+  formatted separately, so such a format string needs to contain a
+  format specifier for
+  both parts. See \htmladdnormallink{printf reference}
+  {http://www.cplusplus.com/reference/cstdio/printf} for possible
+  format specifiers.
+  For example:
+\begin{verbatim}
+  %10d     decimal with width 10
+  %010d    decimal with width 10 and filled with zeroes
+  %f+%fi   to format a complex value as a+bi
+\end{verbatim}
+  Apart from a \texttt{printf}-style format string, it is also possible
+  to define a string to format date/time and angle values (which are
+  automatically converted to radians if containing units).
+  \\Such a format string contains one or more format values as defined in
+  class \htmladdnormallink{MVTime}{../html/classcasa_1_1MVTime.html}.
+  A vertical bar (with optional whitespace) must be used as separator.
+  A string part can be a numeric value defining the precision of the time/angle.
+  For example:
+\begin{verbatim}
+  YMD             format as YYYY/MM/DD/HH:MM:SS
+  DMY|NO_TIME     format as DD-MMM-YYYY
+  DMY | DAY | 8   format as Thu-DD-MMM-YYY/HH:MM:SS.SS
+  TIME            format a date or angle as HH:MM:SS
+  ANGLE|9         format an angle as DD.MM.SS.SSS
+\end{verbatim}
+If such a format string contains an invalid part, it is assumed that
+the entire string is a \texttt{printf}-style format string.
+\end{itemize}
 
 \subsubsection{\label{TAQL:COMPARISONFUNCTIONS}Comparison functions}
 The exact comparison of floating point values is quite tricky.
@@ -1905,6 +2011,84 @@ window can be applied) are set to 0 (or false).
     Return median (the middle element).
 \end{description}
 
+\subsubsection{Type conversion functions}
+Explicit type conversions can be done using one of the functions
+below. They can operate on scalars and arrays.
+\begin{description}
+  \item[] \texttt{integer INT(numeric or bool or string)}\\
+    Convert the argument to an integer. A real number is
+    truncated (-10.9 results in -10). For a complex number the
+    truncated real part is taken. A bool is converted to 0 (False) or 1 (True).
+    It does not check if a string represent a valid integer. It is
+    interpreted until the first non-valid character, so a string
+    containing a floating point value is truncated.
+  \item[] \texttt{double REAL(numeric or bool or string)}\\
+    Convert the argument to a real number. For a complex number the
+    real part is taken. A bool is converted to 0 (False) or 1 (True).
+    It does not check if a string represent a valid floating point value.
+    A string is interpreted until the first non-valid character.
+  \item[] \texttt{complex COMPLEX(real,real)}\\
+    Form a complex number from the given real and imaginary part.
+  \item[] \texttt{complex COMPLEX(string)}\\
+    Convert the string to a complex number. The number can be given
+    like \texttt{(1,2)} or \texttt{1+2i}. In fact, any separator
+    (except whitespace) between real and imaginary part is possible.
+    It does not check if a string represent a valid complex value.
+    The string is interpreted until the first non-valid character, so
+    the last character can be any character (e.g., also \texttt{j}).
+  \item[] \texttt{bool BOOL(anytype)}\\
+    Convert the value to a bool. A numeric type (or date) results in False if
+    the value is 0, otherwise True.
+    A string is case-insensitive. False, F, No, N, -, or 0 results in False, otherwise True.
+\end{description}
+
+\subsubsection{Array creation functions}
+\begin{description}
+  \item[] \texttt{anytypearray ARRAY(anytype,shape)}\\
+    This function creates an unmasked array of the given type and shape.
+    The shape is given in the last argument(s).
+    It can be given in two ways:
+    \\- As a single set argument; for example, \texttt{array(0,[3,4])}
+    \\- As individual scalar arguments; for example, \texttt{array(0,3,4)}
+    \\The first argument gives the values the array is filled with.
+    It can be a scalar or an array of any shape. To initialize the
+    created array, the value array is flattened to a 1D array.
+    Its successive values are stored in the created array. If the
+    new array has more values than the value array, the value array is
+    reset to its beginning and the process continues.
+    \\Note that a masked array can be created from an (unmasked) array and a mask
+    using the brackets operator like \texttt{ARRAY[MASK]}.
+  \item[] \texttt{anytypearray TRANSPOSE(anytypearray[,axes])}\\
+    This function transposes an N-dim array. If no axes
+    are given, the array is fully transposed (thus all axes are
+    reversed). Axes can be specified meaning that those axes will become the
+    first axes in the output array. Non-given axes follow thereafter
+    in their natural order.
+    \\A possible mask is transposed as well.
+  \item[] \texttt{anytypearray DIAGONAL(anytypearray[,firstaxis[,diag]])}\\
+    This function takes the diagonal of 2-dim subarrays in an N-dim array resulting in
+    an array with 1 dimension less. For a 2-dim array, it is simply the
+    diagonal of the matrix. For a higher dimensional array, it takes
+    the diagonal of each matrix defined by \texttt{firstaxis} and
+    \texttt{firstaxis+1}. E.g. in a 3-dim array the
+    diagonals of each XY-plane can be taken. The default for firstaxis
+    is 0.
+    \\The \texttt{diag} argument tells which diagonal has to be
+    taken. The default 0 means the main diagonal. A value <0 means
+    below the main diagonal, while >0 means above the main diagonal.
+ \item[] \texttt{anytypearray ARRAYDATA(anytype)}\\
+    This function returns the array without a mask, thus removes the mask.
+    If the operand is a scalar, it returns a 1-dim array with 1 element.
+  \item[] \texttt{boolarray ARRAYMASK(anytype), boolarray MASK(anytype)}\\
+    This function returns the mask of an array. If the array has no
+    mask, it returns an empty array.
+    If the operand is a scalar, it returns an empty array.
+  \item[] \texttt{anytypearray FLATTEN(anytype)}\\
+    This function flattens an N-dim array to a 1-dim array keeping the
+    unmasked elements only.
+    If the operand is a scalar, it returns a 1-dim array with 1 element.
+\end{description}
+
 \subsubsection{Miscellaneous functions}
 \begin{description}
   \item[] \texttt{bool ISDEFINED(anytype)}\\
@@ -1956,7 +2140,7 @@ window can be applied) are set to 0 (or false).
               \texttt{double ANGULARDISTANCEX(arg1,arg2)}\\
     Same as above, but the result is a 2-dim array giving the distance
     between each position in the first argument and each position in
-    the second argument. Only if both argument contain a single
+    the second argument. Only if both arguments contain a single
     position, the result is a scalar.
   \item[] \texttt{anytype IIF(cond,arg1,arg2)}\\
     This is a special funtion which operates like the ternary \texttt{?:}
@@ -1965,25 +2149,12 @@ window can be applied) are set to 0 (or false).
     an array. In the latter case possible scalar arguments are
     virtually expanded to arrays.
     IIF evaluates the condition for each element. If True, it takes
-    the corresponding element of \texttt{arg1}, otherwise of \texttt{arg2}.
-  \item[] \texttt{anytypearray ARRAY(anytype,shape)}\\
-    This function creates an array of the given type and shape.
-    The shape is given in the last argument(s).
-    It can be given in two ways:
-    \\- As a single set argument; for example, \texttt{array(0,[3,4])}
-    \\- As individual scalar arguments; for example, \texttt{array(0,3,4)}
-    \\The first argument gives the values the array is filled with.
-    It can be a scalar or an array of any shape. To initialize the
-    created array, the value array is flattened to a 1D array.
-    Its successive values are stored in the created array. If the
-    new array has more values than the value array, the value array is
-    reset to its beginning and the process continues.
-  \item[] \texttt{anytypearray TRANSPOSE(anytypearray[,axes])}\\
-    This function transposes an N-dim array. If no axes
-    are given, the array is fully transposed (thus all axes are
-    reversed). Axes can be specified meaning that those axes will become the
-    first axes in the output array. Non-given axes follow thereafter
-    in their natural order.
+    the corresponding element of \texttt{arg1}, otherwise of
+    \texttt{arg2}.
+    \\If one of the input arrays has a mask, the output array will
+    also have a mask. Each output mask element value is the logical OR of the
+    condition mask element value and the mask value of the element taken
+    from arg1 or arg2.
 \end{description}
 
 \subsubsection{\label{TAQL:CONESEARCH}Cone search functions}
@@ -2152,7 +2323,7 @@ functions like PA1 are the same as PA2.
     gives the azimuth/elevation of ANTENNA1.
   \item[] \texttt{doublearray MSCAL.AZEL2()}\\
     gives the azimuth/elevation of ANTENNA2.
-  \item[] \texttt{doublearray MSCAL.UVW\_J2000()}\\
+  \item[] \texttt{doublearray MSCAL.UVW()}\\
     gives the UVW coordinates in J2000 (in meters).
 \end{description}
 By default all these functions will use the direction given in column PHASE\_DIR
@@ -2215,6 +2386,26 @@ For example:
 creates a table with column CIRCDATA containing the circular
 polarization data.
 
+\paragraph*{}
+The \texttt{BASELINE} function makes it possible to do selection on
+baselines in a MeasurementSet or CalTable using the special
+\htmladdnormallink{ CASA baseline selection syntax}
+{http://www.aoc.nrao.edu/~sbhatnag/misc/msselection/msselection.html}
+\begin{verbatim}
+  select from my.ms where mscal.baseline('RT[2-4]')
+\end{verbatim}
+selects the baselines containing an antenna whose name matches the pattern in the
+function argument. Note that autocorrelations are not selected this
+way.
+
+Similar functions \texttt{TIME, FIELD, SCAN, SPW, UVDIST, STATE, OBS}, and
+\texttt{ARRAY} use the CASA selection syntax to select on
+the corresponding fields.
+The aforementioned document also describes these syntaxes. For
+example:
+\begin{verbatim}
+  select from my.ms where mscal.field('1~4')
+\end{verbatim}
 
 \subsubsection{\label{TAQL:MEASFUNC}Special Measures functions}
 These functions make it possible to convert measures like directions,
@@ -2233,6 +2424,8 @@ the current date/time.
 
 \paragraph*{}
 The following basic functions are available.
+Most functions return double angle values with unit rad. Only the
+RISESET function returns date/time values.
 \\Note that all names used below are case-insensitive.
 \begin{description}
   \item[] \texttt{doublearray MEAS.DIR(toref, direction, epoch, position)}\\
@@ -2240,6 +2433,11 @@ The following basic functions are available.
     The epoch and position arguments only need to be given if the conversion
     needs frame information (e.g. when converting to apparent).\\
     Function name MEAS.DIRECTION can be used as well.
+  \item[] \texttt{DateTimearray MEAS.RISESET(direction, epoch, position)}\\
+   returns the rise and set date/times (UTC) of the sources given in the
+    direction argument for the given dates and positions. Note that
+    the TIME or CTIME function can be used on the result to get the
+    time part only (as double or string).
   \item[] \texttt{doublearray MEAS.EPOCH(toref, epoch, position)}\\
     converts an epoch to the reference type given by the 'toref' string.
     The position argument only needs to be given if the conversion
@@ -2311,8 +2509,8 @@ The function arguments can be given in a variety of ways.
       It can be a constant array, but it
       can also be a column or an expression using a column.
   \end{itemize}
-  If a column or a column slice is given, the UDF will recognize the
-  reference type stored in the column keywords. In other cases the reference
+  If a column or a column slice is given, the reference type stored in
+  the column keywords will be recognized. In other cases the reference
   type should be given in the next string argument. If not given, it
   defaults to J2000.
   \\For example:
@@ -2745,7 +2943,7 @@ expression. E.g. in
 the \texttt{SUMD} update uses the new \texttt{DATA} values.
 
 Thus to swap the values of the ANTENNA1 and ANTENNA2 column, one
-can \bf{not} do:
+can {\bf not} do:
 \begin{verbatim}
   UPDATE vla.ms SET ANTENNA1=ANTENNA2, ANTENNA2=ANTENNA1
 \end{verbatim}
@@ -3074,6 +3272,23 @@ common case when using TaQL.
       NET\_SIDEBAND.
       \\The MeasurementSet uses a table to map spectral-window-id to
       data-desc-id. Hence two nested subqueries are needed.
+
+    \item[] \texttt{ select findcone(REFERENCE\_DIR[0,],}
+     \\\texttt{[16h34m33.805,62d45m36.83, 12h29m06.7,2d3m9], 1arcsec)}
+     \\\texttt{from MS/FIELD}
+     //compares the direction given in the first argument with the
+     directions given in the second function argument using the search
+     radius given in the third argument. It returns the index of the
+     first matching cone (thus 0 or 1). If no cone matches, it returns -1.
+     \\It can be used in the following example to find the name of the
+     source matching a direction.
+
+     \item[] \texttt{select ['unknown','3C343', '3C273'][1+int(findcone(...))]}
+       \\\texttt{from MS/FIELD}
+       where ... is the findcone argument list given in the previous
+       example. 1 is added to cope with the case that no cone matches.
+       \\Note that the conversion to int is done to circumvent a small
+       bug in TaQL. 
 \end{description}
 
 \subsubsection{Plain table results}
