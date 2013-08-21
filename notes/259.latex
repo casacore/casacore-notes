@@ -1,6 +1,9 @@
 \documentclass[11pt]{article}
-\usepackage{html}
-\usepackage[dvips]{graphicx, color}
+\usepackage{hyperref}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{8.5in}
+\setlength{\topmargin}{0.0in}
 %%-----------------------------------------------------------------------------
 
 \begin{document}
@@ -15,11 +18,11 @@ It consists of a set of standard converters and bindings to the classes.
 As much as possible the bindings are the same as in glish.
 \end{abstract}
 %%---------------------------------------------------------------------------
-\begin{htmlonly}
-\htmladdnormallink{A (gzipped) postscript version of this note is available.}{../259.ps.gz}
-\end{htmlonly}
+%%\begin{htmlonly}
+\href{259.pdf}{A pdf version of this note is available.}
+%%\end{htmlonly}
 
 \tableofcontents
 \newpage      
-\input{appspython.tex}
+\input{259.dir/appspython.tex}
 \end{document}
