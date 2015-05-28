@@ -1,7 +1,7 @@
 %% helpProposal.latex
 %% $Id$
 
-\documentstyle[10pt] {article}
+\documentstyle {article}
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}

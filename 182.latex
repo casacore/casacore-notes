@@ -1,7 +1,7 @@
 
 \def\thisfile{~/aips++/nfra/matform.latex}
 
-\documentstyle[11pt]{article}			% default is [10pt]
+\documentstyle{article}
 \setlength{\unitlength}{1mm}
 \setlength{\parindent}{0mm}
 \setlength{\parskip}{\medskipamount}

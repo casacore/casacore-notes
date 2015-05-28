@@ -1,4 +1,4 @@
-\documentstyle[10pt]{article}
+\documentstyle{article}
 \begin{document}
 
 \newcommand{\aipspp}{{\sc aips++}}

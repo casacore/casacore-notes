@@ -2,7 +2,7 @@
 	      \def\ThisFile{~/aips++/nfra/185.latex}
 	      \def\SymbFile{~/aips++/nfra/megi-symbols}
 
-\documentstyle[11pt]{article}			% default is [10pt]
+\documentstyle{article}
 \setlength{\unitlength}{1mm}
 \setlength{\parindent}{0mm}
 \setlength{\parskip}{\medskipamount}
