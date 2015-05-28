@@ -1,6 +1,6 @@
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{html, epsfig, longtable, aips2help}
+\usepackage{html, graphicx, longtable, aips2help}
 \input{aips2defs.tex}
 %%-----------------------------------------------------------------------------
 
@@ -272,17 +272,17 @@ seen in this example are typical of those acheived using the pixon
 algorithm when the data properties are well-understood.
 
 \begin{figure}
-\centering\epsfig{file=242.dir/m31.model.ps, height=3in, angle=0}
+\centering\includegraphics[height=3in]{m31_model}
 \caption{Model image}
 \end{figure}
 
 \begin{figure}
-\centering\epsfig{file=242.dir/m31.dirty.ps, height=3in, angle=0}
+\centering\includegraphics[height=3in]{m31_dirty}
 \caption{Dirty image: smoothed model, plus noise}
 \end{figure}
 
 \begin{figure}
-\centering\epsfig{file=242.dir/m31.pixon.ps, height=3in, angle=0}
+\centering\includegraphics[height=3in]{m31_pixon}
 \caption{Pixon image}
 \end{figure}
 

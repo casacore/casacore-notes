@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{epsfig}
+\usepackage{graphicx}
 \usepackage{html}
 \include{aips2defs}
 \begin{document}
@@ -71,11 +71,11 @@ the relative speedup of time versus processors for the median time to completion
 the Clark CLEAN algorithm with 50000 iterations.
 
 \begin{figure}
-\centering\epsfig{file=clean_time2complete.ps, height=4in, angle=-90}
+\centering\includegraphics[height=4in,angle=-90]{clean_time2complete}
 \caption{Clark CLEAN time to completion}
 \end{figure}
 \begin{figure}
-\centering\epsfig{file=clean_speedup.ps, height=4in, angle=-90}
+\centering\includegraphics[height=4in,angle=-90]{clean_speedup}
 \caption{Clark CLEAN speedup}
 \end{figure}
 
@@ -106,11 +106,11 @@ are adjusted to a normalized 175MHz R10000 chip.  Absolute timings on the 225MHz
 about 30\% faster.
 
 \begin{figure}
-\centering\epsfig{file=pio_time2complete.ps, height=4in, angle=-90}
+\centering\includegraphics[height=4in,angle=-90]{pio_time2complete}
 \caption{Parallel IO test time to completion}
 \end{figure}
 \begin{figure}
-\centering\epsfig{file=pio_speedup.ps, height=4in, angle=-90}
+\centering\includegraphics[height=4in,angle=-90]{pio_speedup}
 \caption{Parallel IO test speedup}
 \end{figure}
 

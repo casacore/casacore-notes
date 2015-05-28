@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{heqn,html,makeidx,epsfig}
+\usepackage{heqn,html,makeidx,graphicx}
 \pagestyle{headings}
 
 \textheight  8.5truein
