@@ -82,7 +82,7 @@ started may remain active even after the writer has been disabled.
 \item[Statistics:] Computes and displays basic statistical measures for the
    spectra from each beam and polarization as a function of time as an
    observation progresses, and computes global statistics once the observation
-   has finished.  Typically it would be used to monitor $T_\mathrm{sys}$ for
+   has finished.  Typically it would be used to monitor $T_{\mathrm{sys}}$ for
    each IF\@.
 
 \item[Writer:] data may be written either in {\tt SDFITS} format or as an
@@ -599,7 +599,7 @@ module.
    \item[{\tt pksstats.cc}]
       The {\em pksstats\/} client accumulates data and computes running
       statistics of the spectra for each beam and polarization, for example,
-      the mean, median, and $T_\mathrm{sys}$.  It passes these back to the
+      the mean, median, and $T_{\mathrm{sys}}$.  It passes these back to the
       {\em pksstats\/} agent for display.  Finally it computes statistics for
       the observation as a whole from accumulated data.
 
