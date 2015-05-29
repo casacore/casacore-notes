@@ -1,7 +1,7 @@
 %% Table file formats
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
@@ -24,9 +24,10 @@ storage manager has its own files. The document describes the formats
 of all files that can be used by the Table system.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
-\href{260.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\ifpdf
+\else
+\href{../pdf/260.pdf}{A pdf version of this note is available.}
+\fi
 
 \tableofcontents 
 \newpage

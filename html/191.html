@@ -10,7 +10,7 @@ AIPS++ Note 191</title>
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
 <!-- xhtml,mathml,fn-in,html --> 
 <meta name="src" content="191.tex" /> 
-<meta name="date" content="2015-05-29 11:45:00" /> 
+<meta name="date" content="2015-05-29 12:30:00" /> 
 <link rel="stylesheet" type="text/css" href="191.css" /> 
 </head><body 
 >
@@ -32,8 +32,8 @@ class="cmr-12">T.J. Cornwell, NRAO</span></div>
 <div class="date" ><span 
 class="cmr-12">October 4, 1996</span></div>
    </div>
-<!--l. 40--><p class="indent" >   <a 
-href="191.pdf" >A pdf version of this note is available.</a>
+<!--l. 41--><p class="indent" >   <a 
+href="../pdf/191.pdf" >A pdf version of this note is available.</a>
 </p>
    <h3 class="likesectionHead"><a 
  id="x1-1000"></a>Contents</h3>
@@ -74,14 +74,14 @@ href="#x1-160004.11" id="QQ2-1-16">WEATHER: weather station information</a></spa
    </div>
    <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
  id="x1-20001"></a>Summary</h3>
-<!--l. 45--><p class="noindent" >A MeasurementSet is an AIPS++&#x00A0;&#x00A0;Table containing data from a telescope. Telescopes all record data in
+<!--l. 47--><p class="noindent" >A MeasurementSet is an AIPS++&#x00A0;&#x00A0;Table containing data from a telescope. Telescopes all record data in
 their own way, the MeasurementSet layout describes how these measurements are to be stored within the
 AIPS++&#x00A0;&#x00A0;system. This document describes the predefined columns and keywords (including subtables)
 of the MeasurementSet (MS). The predefined items include required and optional ones. In
 addition to the predefined columns, MeasurementSets can contain instrument specific columns,
 keywords or subtables. These additional items would only be accessed from instrument specific
 code.
-</p><!--l. 55--><p class="noindent" >
+</p><!--l. 57--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-30002"></a>Details</h3>
@@ -147,18 +147,18 @@ code.
      EPOCH) and a MEASURE_REFERENCE keyword giving the Measure enum type as a String (e.g.,
      &#8221;J2000&#8221; or &#8221;UTC&#8221;)
      </li></ul>
-<!--l. 122--><p class="noindent" >
+<!--l. 124--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
  id="x1-40003"></a>MeasurementSet classes</h3>
-<!--l. 124--><p class="noindent" >The MeasurementSet is coded as a series of related classes. Each subtable follows the same basic scheme
+<!--l. 126--><p class="noindent" >The MeasurementSet is coded as a series of related classes. Each subtable follows the same basic scheme
 as the MAIN table. The namespace in each table is separate. For each (sub)table there is a separate class
 which provides various conversion and inquiry functions for the columns and keywords and defines the
 required set of columns and keywords. The main MeasumentSet class provides access to the subtables via
 these classes. E.g., MeasurementSet has a member function antenna() which gives access to the
 ANTENNA subtable. More detailed documentation on these classes can be found in the on-line
 documentation (directory: code/trial/implement/MeasurementSet).
-</p><!--l. 136--><p class="indent" >   The definite descriptions of the MS tables are contained within the AIPS++&#x00A0;class documentation files
+</p><!--l. 138--><p class="indent" >   The definite descriptions of the MS tables are contained within the AIPS++&#x00A0;class documentation files
 in the MeasurementSet module. For each of the MeasurementSet tables there is a file (e.g.
 MSMainEnums.html, MSAntennaEnums.html) giving a description for the enum name (e.g., DATA,
 POSITION) used for a particular column or keyword. Examples on how to use these classes
@@ -170,7 +170,7 @@ uvfitsfiller.
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
  id="x1-50004"></a>MS layout</h3>
-<!--l. 149--><p class="noindent" >There is a MAIN table containing a number of data columns and keys into various subtables. There is at
+<!--l. 151--><p class="noindent" >There is a MAIN table containing a number of data columns and keys into various subtables. There is at
 most one of each subtable. The subtables are stored as keywords of the MS.
 </p>
    <div class="tabular"> <table id="TBL-2" class="tabular" 
@@ -192,40 +192,40 @@ class="td11">        <div class="multicolumn"  style="text-align:center; white-s
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-2-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-5-1"  
 class="td11">ANTENNA                 </td><td  style="text-align:left;" id="TBL-2-5-2"  
-class="td11"><!--l. 156--><p class="noindent" >Antenna
+class="td11"><!--l. 158--><p class="noindent" >Antenna
 characteristics           </p></td><td  style="text-align:left;" id="TBL-2-5-3"  
-class="td11"><!--l. 156--><p class="noindent" >ANTENNA_ID,
+class="td11"><!--l. 158--><p class="noindent" >ANTENNA_ID,
 ARRAY_ID                </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-6-1"  
 class="td11">ARRAY                     </td><td  style="text-align:left;" id="TBL-2-6-2"  
-class="td11"><!--l. 157--><p class="noindent" >Array characteristics  </p></td><td  style="text-align:left;" id="TBL-2-6-3"  
-class="td11"><!--l. 157--><p class="noindent" >ARRAY_ID                </p></td>
+class="td11"><!--l. 159--><p class="noindent" >Array characteristics  </p></td><td  style="text-align:left;" id="TBL-2-6-3"  
+class="td11"><!--l. 159--><p class="noindent" >ARRAY_ID                </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-7-1"  
 class="td11">CORRELATOR          </td><td  style="text-align:left;" id="TBL-2-7-2"  
-class="td11"><!--l. 158--><p class="noindent" >Correlator setup        </p></td><td  style="text-align:left;" id="TBL-2-7-3"  
-class="td11"><!--l. 158--><p class="noindent" >CORRELATOR_ID     </p></td>
+class="td11"><!--l. 160--><p class="noindent" >Correlator setup        </p></td><td  style="text-align:left;" id="TBL-2-7-3"  
+class="td11"><!--l. 160--><p class="noindent" >CORRELATOR_ID     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-8-1"  
 class="td11">FEED                        </td><td  style="text-align:left;" id="TBL-2-8-2"  
-class="td11"><!--l. 159--><p class="noindent" >Feed characteristics    </p></td><td  style="text-align:left;" id="TBL-2-8-3"  
-class="td11"><!--l. 159--><p class="noindent" >FEED_ID,
+class="td11"><!--l. 161--><p class="noindent" >Feed characteristics    </p></td><td  style="text-align:left;" id="TBL-2-8-3"  
+class="td11"><!--l. 161--><p class="noindent" >FEED_ID,
 ANTENNA_ID,
 ARRAY_ID,      TIME,
 SPECTRAL_WINDOW_ID </p> </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-9-1"  
 class="td11">FIELD                       </td><td  style="text-align:left;" id="TBL-2-9-2"  
-class="td11"><!--l. 160--><p class="noindent" >Position  etc  for  each
+class="td11"><!--l. 162--><p class="noindent" >Position  etc  for  each
 pointing.                  </p></td><td  style="text-align:left;" id="TBL-2-9-3"  
-class="td11"><!--l. 160--><p class="noindent" >FIELD_ID                 </p></td>
+class="td11"><!--l. 162--><p class="noindent" >FIELD_ID                 </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-10-1"  
 class="td11">FLAGGING_LOG       </td><td  style="text-align:left;" id="TBL-2-10-2"  
-class="td11"><!--l. 161--><p class="noindent" >Log      of      flagging
+class="td11"><!--l. 163--><p class="noindent" >Log      of      flagging
 operations                </p></td><td  style="text-align:left;" id="TBL-2-10-3"  
-class="td11"><!--l. 161--><p class="noindent" >ANTENNA_ID,
+class="td11"><!--l. 163--><p class="noindent" >ANTENNA_ID,
 ARRAY_ID, FEED_ID,
 SPECTRAL_WINDOW_ID,
 FIELD_ID,        TIME,
@@ -233,52 +233,52 @@ INTERVAL                </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-11-1"  
 class="td11">OBSERVATION          </td><td  style="text-align:left;" id="TBL-2-11-2"  
-class="td11"><!--l. 162--><p class="noindent" >Observer,     Schedule,
+class="td11"><!--l. 164--><p class="noindent" >Observer,     Schedule,
 etc                          </p></td><td  style="text-align:left;" id="TBL-2-11-3"  
-class="td11"><!--l. 162--><p class="noindent" >OBSERVATION_ID     </p></td>
+class="td11"><!--l. 164--><p class="noindent" >OBSERVATION_ID     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-12-1"  
 class="td11">OBS_LOG                  </td><td  style="text-align:left;" id="TBL-2-12-2"  
-class="td11"><!--l. 163--><p class="noindent" >Log     from     on-line
+class="td11"><!--l. 165--><p class="noindent" >Log     from     on-line
 system                     </p></td><td  style="text-align:left;" id="TBL-2-12-3"  
-class="td11"><!--l. 163--><p class="noindent" >OBSERVATION_ID,
+class="td11"><!--l. 165--><p class="noindent" >OBSERVATION_ID,
 TIME                        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-13-1"  
 class="td11">SOURCE                   </td><td  style="text-align:left;" id="TBL-2-13-2"  
-class="td11"><!--l. 164--><p class="noindent" >Positions, etc for each
+class="td11"><!--l. 166--><p class="noindent" >Positions, etc for each
 source                      </p></td><td  style="text-align:left;" id="TBL-2-13-3"  
-class="td11"><!--l. 164--><p class="noindent" >SOURCE_ID,
+class="td11"><!--l. 166--><p class="noindent" >SOURCE_ID,
 SPECTRAL_WINDOW_ID,
 TIME                        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-14-1"  
 class="td11">SPECTRAL_WINDOW</td><td  style="text-align:left;" id="TBL-2-14-2"  
-class="td11"><!--l. 165--><p class="noindent" >Spectral         window
+class="td11"><!--l. 167--><p class="noindent" >Spectral         window
 setups                     </p></td><td  style="text-align:left;" id="TBL-2-14-3"  
-class="td11"><!--l. 165--><p class="noindent" >SPECTRAL_WINDOW_ID </p> </td>
+class="td11"><!--l. 167--><p class="noindent" >SPECTRAL_WINDOW_ID </p> </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-15-1"  
 class="td11">SYSCAL                    </td><td  style="text-align:left;" id="TBL-2-15-2"  
-class="td11"><!--l. 166--><p class="noindent" >System      calibration
+class="td11"><!--l. 168--><p class="noindent" >System      calibration
 characteristics           </p></td><td  style="text-align:left;" id="TBL-2-15-3"  
-class="td11"><!--l. 166--><p class="noindent" >FEED_ID,
+class="td11"><!--l. 168--><p class="noindent" >FEED_ID,
 ANTENNA_ID,
 ARRAY_ID,      TIME,
 SPECTRAL_WINDOW_ID </p> </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-16-1"  
 class="td11">WEATHER                </td><td  style="text-align:left;" id="TBL-2-16-2"  
-class="td11"><!--l. 167--><p class="noindent" >Weather info for each
+class="td11"><!--l. 169--><p class="noindent" >Weather info for each
 antenna                   </p></td><td  style="text-align:left;" id="TBL-2-16-3"  
-class="td11"><!--l. 167--><p class="noindent" >ANTENNA_ID,
+class="td11"><!--l. 169--><p class="noindent" >ANTENNA_ID,
 ARRAY_ID, TIME      </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-2-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-17-1"  
 class="td11">                    </td> </tr></table>
 </div>
-<!--l. 172--><p class="indent" >   Note that there are two types of subtables. For the first, simpler type, the key (ID) is the row number
+<!--l. 174--><p class="indent" >   Note that there are two types of subtables. For the first, simpler type, the key (ID) is the row number
 in the subtable. Examples are ARRAY, FIELD, SPECTRAL_WINDOW, OBSERVATION and
 CORRELATOR. For the second, the key is a collection of parameters, usually including TIME.
                                                                                          
@@ -289,7 +289,7 @@ interpolation test is a good one: CORRELATOR setups cannot be sensibly interpola
 thus a different ID is required for each setup. For the interpolable tables, one needs to decide
 what value is actually to be used. We think this belongs in access routines independent of the
 MS.
-</p><!--l. 184--><p class="indent" >   Notes: </p>
+</p><!--l. 186--><p class="indent" >   Notes: </p>
      <ul class="itemize1">
      <li class="itemize">All ID columns are zero-based, a value of -1 indicates that there is no corresponding subtable
      present.
@@ -352,31 +352,31 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-3-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-11-1"  
 class="td11"><span 
 class="cmr-10">ANTENNA1                    </span></td><td  style="text-align:left;" id="TBL-3-11-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-11-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-11-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-11-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">First antenna</span>             </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-12-1"  
 class="td11"><span 
 class="cmr-10">ANTENNA2                    </span></td><td  style="text-align:left;" id="TBL-3-12-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-12-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-12-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-12-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Second antenna</span>          </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-13-1"  
 class="td11"><span 
 class="cmr-10">EXPOSURE </span></td> <td  style="text-align:left;" id="TBL-3-13-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Double</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-3-13-3"  
 class="td11"><span 
 class="cmr-10">s </span></td> <td  style="text-align:left;" id="TBL-3-13-4"  
-class="td11"><!--l. 236--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-13-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-13-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">The effective</span>
 <span 
 class="cmr-10">integration time</span>         </p></td>
@@ -384,64 +384,64 @@ class="cmr-10">integration time</span>         </p></td>
  style="vertical-align:baseline;" id="TBL-3-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-14-1"  
 class="td11"><span 
 class="cmr-10">FEED1                           </span></td><td  style="text-align:left;" id="TBL-3-14-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-14-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-14-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-14-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-14-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Feed on ANTENNA1</span>  </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-15-1"  
 class="td11"><span 
 class="cmr-10">FEED2 </span></td> <td  style="text-align:left;" id="TBL-3-15-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-3-15-3"  
 class="td11"> </td> <td  style="text-align:left;" id="TBL-3-15-4"  
-class="td11"><!--l. 236--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-15-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-15-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Feed on ANTENNA2</span></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-16-1"  
 class="td11"><span 
 class="cmr-10">INTERVAL                      </span></td><td  style="text-align:left;" id="TBL-3-16-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-16-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-3-16-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-16-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-16-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Sampling interval</span>       </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-17-1"  
 class="td11"><span 
 class="cmr-10">PULSAR</span><span 
 class="cmr-10">_BIN                  </span></td><td  style="text-align:left;" id="TBL-3-17-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-17-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-17-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-17-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-17-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Pulsar bin number</span>      </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-18-1"  
 class="td11"><span 
 class="cmr-10">SCAN</span><span 
 class="cmr-10">_NUMBER </span></td> <td  style="text-align:left;" id="TBL-3-18-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-3-18-3"  
 class="td11"> </td> <td  style="text-align:left;" id="TBL-3-18-4"  
-class="td11"><!--l. 236--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-18-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-18-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Scan Number</span></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-19-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-19-1"  
 class="td11"><span 
 class="cmr-10">TIME                             </span></td><td  style="text-align:left;" id="TBL-3-19-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-19-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-3-19-4"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">EPOCH</span>         </p></td><td  style="text-align:left;" id="TBL-3-19-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Midpoint      of      the</span>
 <span 
 class="cmr-10">integration.</span>               </p></td>
@@ -451,12 +451,12 @@ class="td11"><span
 class="cmr-10">TIME</span><span 
 class="cmr-10">_EXTRA</span><span 
 class="cmr-10">_PREC      </span></td><td  style="text-align:left;" id="TBL-3-20-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-20-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-3-20-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-20-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-20-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">add to TIME for extra</span>
 <span 
 class="cmr-10">precision (optional)</span>     </p></td>
@@ -464,13 +464,13 @@ class="cmr-10">precision (optional)</span>     </p></td>
  style="vertical-align:baseline;" id="TBL-3-21-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-21-1"  
 class="td11"><span 
 class="cmr-10">UVW                             </span></td><td  style="text-align:left;" id="TBL-3-21-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Double(3)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-21-3"  
 class="td11"><span 
 class="cmr-10">m     </span></td><td  style="text-align:left;" id="TBL-3-21-4"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">UVW</span>            </p></td><td  style="text-align:left;" id="TBL-3-21-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">UVW coordinates</span>       </p></td>
 </tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -483,60 +483,60 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">ARRAY</span><span 
 class="cmr-10">_ID                     </span></td><td  style="text-align:left;" id="TBL-3-25-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-25-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-25-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-25-5"  
-class="td11"><!--l. 236--><p class="noindent" >                   </p></td>
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-25-5"  
+class="td11"><!--l. 238--><p class="noindent" >                   </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-26-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-26-1"  
 class="td11"><span 
 class="cmr-10">CORRELATOR</span><span 
 class="cmr-10">_ID           </span></td><td  style="text-align:left;" id="TBL-3-26-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-26-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-26-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-26-5"  
-class="td11"><!--l. 236--><p class="noindent" >                   </p></td></tr><tr  
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-26-5"  
+class="td11"><!--l. 238--><p class="noindent" >                   </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-27-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-27-1"  
 class="td11"><span 
 class="cmr-10">FIELD</span><span 
 class="cmr-10">_ID </span></td> <td  style="text-align:left;" id="TBL-3-27-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-3-27-3"  
 class="td11"> </td> <td  style="text-align:left;" id="TBL-3-27-4"  
-class="td11"><!--l. 236--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-27-5"  
-class="td11"><!--l. 236--><p class="noindent" ></p></td>
+class="td11"><!--l. 238--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-27-5"  
+class="td11"><!--l. 238--><p class="noindent" ></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-28-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-28-1"  
 class="td11"><span 
 class="cmr-10">OBSERVATION</span><span 
 class="cmr-10">_ID          </span></td><td  style="text-align:left;" id="TBL-3-28-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-28-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-28-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-28-5"  
-class="td11"><!--l. 236--><p class="noindent" >                   </p></td></tr><tr  
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-28-5"  
+class="td11"><!--l. 238--><p class="noindent" >                   </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-29-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-29-1"  
 class="td11"><span 
 class="cmr-10">PULSAR</span><span 
 class="cmr-10">_ID </span></td> <td  style="text-align:left;" id="TBL-3-29-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-3-29-3"  
 class="td11"> </td> <td  style="text-align:left;" id="TBL-3-29-4"  
-class="td11"><!--l. 236--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-29-5"  
-class="td11"><!--l. 236--><p class="noindent" ></p></td>
+class="td11"><!--l. 238--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-3-29-5"  
+class="td11"><!--l. 238--><p class="noindent" ></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-30-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-30-1"  
 class="td11"><span 
 class="cmr-10">SPECTRAL</span><span 
 class="cmr-10">_WINDOW</span><span 
 class="cmr-10">_ID</span></td><td  style="text-align:left;" id="TBL-3-30-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-30-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-30-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-30-5"  
-class="td11"><!--l. 236--><p class="noindent" >                   </p></td></tr><tr 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-30-5"  
+class="td11"><!--l. 238--><p class="noindent" >                   </p></td></tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-32-"><td colspan="5" style="text-align:left; white-space:nowrap;" id="TBL-3-32-1"  
 class="td11"><div class="multicolumn"  style="text-align:left; white-space:nowrap;"><span 
@@ -545,15 +545,15 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-3-34-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-34-1"  
 class="td11"><span 
 class="cmr-10">DATA                             </span></td><td  style="text-align:left;" id="TBL-3-34-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Complex(NUM</span><span 
 class="cmr-10">_CORR,</span>
 <span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_CHAN)</span>        </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-34-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-34-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-34-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-34-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Complex        visibility</span>
 <span 
 class="cmr-10">matrix         (synthesis</span>
@@ -564,15 +564,15 @@ class="cmr-10">arrays, optional)</span>         </p></td>
 class="td11"><span 
 class="cmr-10">FLOAT</span><span 
 class="cmr-10">_DATA                 </span></td><td  style="text-align:left;" id="TBL-3-35-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Float(NUM</span><span 
 class="cmr-10">_CORR,</span>
 <span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_CHAN)</span>        </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-35-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-35-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-35-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-35-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Float    data    matrix</span>
 <span 
 class="cmr-10">(single dish, optional)</span>  </p></td>
@@ -580,12 +580,12 @@ class="cmr-10">(single dish, optional)</span>  </p></td>
  style="vertical-align:baseline;" id="TBL-3-36-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-36-1"  
 class="td11"><span 
 class="cmr-10">SIGMA                           </span></td><td  style="text-align:left;" id="TBL-3-36-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Float(NUM</span><span 
 class="cmr-10">_CORR)</span></p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-36-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-36-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-36-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-36-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Estimated   rms   noise</span>
 <span 
 class="cmr-10">for single channel</span>       </p></td>
@@ -594,15 +594,15 @@ class="cmr-10">for single channel</span>       </p></td>
 class="td11"><span 
 class="cmr-10">SIGMA</span><span 
 class="cmr-10">_SPECTRUM        </span></td><td  style="text-align:left;" id="TBL-3-37-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Float(NUM</span><span 
 class="cmr-10">_CORR,</span>
 <span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_CHAN)</span>        </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-37-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-37-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-37-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-37-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Estimated   rms   noise</span>
 <span 
 class="cmr-10">(optional)</span>                 </p></td>
@@ -610,11 +610,11 @@ class="cmr-10">(optional)</span>                 </p></td>
  style="vertical-align:baseline;" id="TBL-3-38-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-38-1"  
 class="td11"><span 
 class="cmr-10">WEIGHT                        </span></td><td  style="text-align:left;" id="TBL-3-38-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-38-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-38-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-38-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-38-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Weight for whole data</span>
 <span 
 class="cmr-10">matrix</span>                      </p></td>
@@ -623,12 +623,12 @@ class="cmr-10">matrix</span>                      </p></td>
 class="td11"><span 
 class="cmr-10">WEIGHT</span><span 
 class="cmr-10">_SPECTRUM     </span></td><td  style="text-align:left;" id="TBL-3-39-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Float(NUM</span><span 
 class="cmr-10">_CHAN)</span></p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-39-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-39-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-39-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-39-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Weight      for      each</span>
 <span 
 class="cmr-10">channel (optional)</span>      </p></td>
@@ -642,22 +642,22 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-3-43-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-43-1"  
 class="td11"><span 
 class="cmr-10">FLAG                             </span></td><td  style="text-align:left;" id="TBL-3-43-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Bool(NUM</span><span 
 class="cmr-10">_CORR,</span>
 <span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_CHAN)</span>        </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-43-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-43-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-43-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-43-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">The data flags</span>            </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-44-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-44-1"  
 class="td11"><span 
 class="cmr-10">FLAG</span><span 
 class="cmr-10">_HISTORY             </span></td><td  style="text-align:left;" id="TBL-3-44-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Bool (NUM</span><span 
 class="cmr-10">_CORR,</span>
 <span 
@@ -667,8 +667,8 @@ class="cmr-10">_CHAN,</span>
 class="cmr-10">NUM</span><span 
 class="cmr-10">_HIS)</span>            </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-44-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-44-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-44-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-44-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">History      of      flags</span>
 <span 
 class="cmr-10">(optional)</span>                 </p></td>
@@ -677,18 +677,18 @@ class="cmr-10">(optional)</span>                 </p></td>
 class="td11"><span 
 class="cmr-10">FLAG</span><span 
 class="cmr-10">_ROW                    </span></td><td  style="text-align:left;" id="TBL-3-45-2"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">Bool</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-45-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-3-45-4"  
-class="td11"><!--l. 236--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-45-5"  
-class="td11"><!--l. 236--><p class="noindent" ><span 
+class="td11"><!--l. 238--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-3-45-5"  
+class="td11"><!--l. 238--><p class="noindent" ><span 
 class="cmr-10">The row flag</span>              </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-46-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-46-1"  
 class="td11">                       </td> </tr></table>
 </div>
-<!--l. 238--><p class="noindent" >
+<!--l. 240--><p class="noindent" >
                                                                                          
 
                                                                                          
@@ -733,7 +733,7 @@ class="cmr-10">A set of NUM</span><span
 class="cmr-10">_HIS flags for each data point, each for a different category of flagging</span>
      <span 
 class="cmr-10">(e.g. on-line, calibration, interactive, etc.)</span></dd></dl>
-<!--l. 254--><p class="noindent" ><span 
+<!--l. 256--><p class="noindent" ><span 
 class="cmr-10">Next we describe the various subtables. The columns are categorized into Keys, Data description, Data, and</span>
 <span 
 class="cmr-10">Flags.</span>
@@ -786,22 +786,22 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">ANTENNA</span><span 
 class="cmr-10">_ID          </span></td><td  style="text-align:left;" id="TBL-4-11-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-4-11-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-11-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-11-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Key</span>                         </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-4-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-12-1"  
 class="td11"><span 
 class="cmr-10">ARRAY</span><span 
 class="cmr-10">_ID              </span></td><td  style="text-align:left;" id="TBL-4-12-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-4-12-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-12-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-12-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Key</span>                         </p></td>
 </tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -814,11 +814,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">ORBIT</span><span 
 class="cmr-10">_ID               </span></td><td  style="text-align:left;" id="TBL-4-16-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-16-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-4-16-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-16-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-16-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Orbit parameters</span>        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-4-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-17-1"  
@@ -826,11 +826,11 @@ class="td11"><span
 class="cmr-10">PHASED</span><span 
 class="cmr-10">_ARRAY</span><span 
 class="cmr-10">_ID</span></td><td  style="text-align:left;" id="TBL-4-17-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-17-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-4-17-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-17-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-17-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Phased array</span>             </p></td>
 </tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -843,22 +843,22 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">DISH</span><span 
 class="cmr-10">_DIAMETER    </span></td><td  style="text-align:left;" id="TBL-4-21-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-21-3"  
 class="td11"><span 
 class="cmr-10">m     </span></td><td  style="text-align:left;" id="TBL-4-21-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-21-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-21-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Diameter of dish</span>        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-4-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-22-1"  
 class="td11"><span 
 class="cmr-10">MOUNT                  </span></td><td  style="text-align:left;" id="TBL-4-22-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-22-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-4-22-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-22-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-22-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Mount</span>
 <span 
 class="cmr-10">type:alt-az,  equatorial,</span>
@@ -868,23 +868,23 @@ class="cmr-10">X-Y, orbiting, bizarre</span>  </p></td>
  style="vertical-align:baseline;" id="TBL-4-23-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-23-1"  
 class="td11"><span 
 class="cmr-10">NAME                     </span></td><td  style="text-align:left;" id="TBL-4-23-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-23-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-4-23-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-23-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-23-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Antenna name</span>           </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-4-24-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-24-1"  
 class="td11"><span 
 class="cmr-10">OFFSET                  </span></td><td  style="text-align:left;" id="TBL-4-24-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Double(3)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-24-3"  
 class="td11"><span 
 class="cmr-10">m     </span></td><td  style="text-align:left;" id="TBL-4-24-4"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">POSITION</span>     </p></td><td  style="text-align:left;" id="TBL-4-24-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Axes offset of mount to</span>
 <span 
 class="cmr-10">FEED   REFERENCE</span>
@@ -894,13 +894,13 @@ class="cmr-10">point</span>                        </p></td>
  style="vertical-align:baseline;" id="TBL-4-25-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-25-1"  
 class="td11"><span 
 class="cmr-10">POSITION               </span></td><td  style="text-align:left;" id="TBL-4-25-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Double(3)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-25-3"  
 class="td11"><span 
 class="cmr-10">m     </span></td><td  style="text-align:left;" id="TBL-4-25-4"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">POSITION</span>     </p></td><td  style="text-align:left;" id="TBL-4-25-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Antenna  X,Y,Z  phase</span>
 <span 
 class="cmr-10">reference positions</span>      </p></td>
@@ -908,11 +908,11 @@ class="cmr-10">reference positions</span>      </p></td>
  style="vertical-align:baseline;" id="TBL-4-26-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-26-1"  
 class="td11"><span 
 class="cmr-10">STATION                 </span></td><td  style="text-align:left;" id="TBL-4-26-2"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-26-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-4-26-4"  
-class="td11"><!--l. 274--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-26-5"  
-class="td11"><!--l. 274--><p class="noindent" ><span 
+class="td11"><!--l. 276--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-4-26-5"  
+class="td11"><!--l. 276--><p class="noindent" ><span 
 class="cmr-10">Station name</span>             </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -975,11 +975,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-5-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-5-8-1"  
 class="td11"><span 
 class="cmr-10">NAME      </span></td><td  style="text-align:left;" id="TBL-5-8-2"  
-class="td11"><!--l. 290--><p class="noindent" ><span 
+class="td11"><!--l. 292--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-5-8-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-5-8-4"  
-class="td11"><!--l. 290--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-5-8-5"  
-class="td11"><!--l. 290--><p class="noindent" ><span 
+class="td11"><!--l. 292--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-5-8-5"  
+class="td11"><!--l. 292--><p class="noindent" ><span 
 class="cmr-10">Name</span>
 <span 
 class="cmr-10">of array (e.g. &#8217;VLAA&#8217;,</span>
@@ -991,13 +991,13 @@ class="cmr-10">Informational only</span>      </p></td>
  style="vertical-align:baseline;" id="TBL-5-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-5-9-1"  
 class="td11"><span 
 class="cmr-10">POSITION</span></td><td  style="text-align:left;" id="TBL-5-9-2"  
-class="td11"><!--l. 290--><p class="noindent" ><span 
+class="td11"><!--l. 292--><p class="noindent" ><span 
 class="cmr-10">Double(3)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-5-9-3"  
 class="td11"><span 
 class="cmr-10">m     </span></td><td  style="text-align:left;" id="TBL-5-9-4"  
-class="td11"><!--l. 290--><p class="noindent" ><span 
+class="td11"><!--l. 292--><p class="noindent" ><span 
 class="cmr-10">POSITION</span>     </p></td><td  style="text-align:left;" id="TBL-5-9-5"  
-class="td11"><!--l. 290--><p class="noindent" ><span 
+class="td11"><!--l. 292--><p class="noindent" ><span 
 class="cmr-10">Array           reference</span>
 <span 
 class="cmr-10">position      (optional),</span>
@@ -1058,43 +1058,43 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">ANTENNA</span><span 
 class="cmr-10">_ID                 </span></td><td  style="text-align:left;" id="TBL-6-11-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-11-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-11-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-11-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Antenna id</span>                </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-12-1"  
 class="td11"><span 
 class="cmr-10">ARRAY</span><span 
 class="cmr-10">_ID                     </span></td><td  style="text-align:left;" id="TBL-6-12-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-12-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-12-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-12-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Array id</span>                   </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-13-1"  
 class="td11"><span 
 class="cmr-10">FEED</span><span 
 class="cmr-10">_ID                        </span></td><td  style="text-align:left;" id="TBL-6-13-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-13-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-13-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-13-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-13-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Feed id</span>                     </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-6-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-14-1"  
 class="td11"><span 
 class="cmr-10">INTERVAL </span></td> <td  style="text-align:left;" id="TBL-6-14-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Double</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-6-14-3"  
 class="td11"><span 
 class="cmr-10">s </span></td> <td  style="text-align:left;" id="TBL-6-14-4"  
-class="td11"><!--l. 313--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-6-14-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-6-14-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Interval</span></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-15-1"  
@@ -1102,23 +1102,23 @@ class="td11"><span
 class="cmr-10">SPECTRAL</span><span 
 class="cmr-10">_WINDOW</span><span 
 class="cmr-10">_ID</span></td><td  style="text-align:left;" id="TBL-6-15-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-15-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-15-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-15-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-15-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Spectral Window id</span>    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-16-1"  
 class="td11"><span 
 class="cmr-10">TIME                             </span></td><td  style="text-align:left;" id="TBL-6-16-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-16-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-6-16-4"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">EPOCH</span>         </p></td><td  style="text-align:left;" id="TBL-6-16-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Midpoint   of   validity</span>
 <span 
 class="cmr-10">range of parameters</span>    </p></td>
@@ -1133,11 +1133,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_RECEPTORS         </span></td><td  style="text-align:left;" id="TBL-6-20-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-20-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-20-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-20-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-20-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10"># receptors on this feed</span></p></td>
 </tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -1150,27 +1150,27 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">BEAM</span><span 
 class="cmr-10">_ID                       </span></td><td  style="text-align:left;" id="TBL-6-24-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-24-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-24-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-24-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-24-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Beam model</span>              </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-25-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-25-1"  
 class="td11"><span 
 class="cmr-10">BEAM</span><span 
 class="cmr-10">_OFFSET              </span></td><td  style="text-align:left;" id="TBL-6-25-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Double(2,</span>
 <span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_RECEPTORS)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-6-25-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-6-25-4"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">DIRECTION</span>  </p></td><td  style="text-align:left;" id="TBL-6-25-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Beam   position   offset</span>
 <span 
 class="cmr-10">(on sky but in antenna</span>
@@ -1182,24 +1182,24 @@ class="td11"><span
 class="cmr-10">PHASED</span><span 
 class="cmr-10">_FEED</span><span 
 class="cmr-10">_ID          </span></td><td  style="text-align:left;" id="TBL-6-26-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-26-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-26-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-26-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-26-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Phased feed</span>               </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-6-27-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-27-1"  
 class="td11"><span 
 class="cmr-10">POLARIZATION</span><span 
 class="cmr-10">_TYPE </span></td> <td  style="text-align:left;" id="TBL-6-27-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">String</span>
 <span 
 class="cmr-10">(NUM</span><span 
 class="cmr-10">_RECEPTORS)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-6-27-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-27-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-27-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-27-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Type of polarization to</span>
 <span 
 class="cmr-10">which       a       given</span>
@@ -1212,7 +1212,7 @@ class="cmr-10">Probably R, L or X, Y.</span></p></td>
 class="td11"><span 
 class="cmr-10">POL</span><span 
 class="cmr-10">_RESPONSE             </span></td><td  style="text-align:left;" id="TBL-6-28-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Complex</span>
 <span 
 class="cmr-10">(NUM</span><span 
@@ -1221,8 +1221,8 @@ class="cmr-10">_RECEPTORS,</span>
 class="cmr-10">NUM</span><span 
 class="cmr-10">_RECEPTORS)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-6-28-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-6-28-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-28-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-28-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">D-matrix   i.e.   leakage</span>
 <span 
 class="cmr-10">between two receptors</span> </p></td>
@@ -1230,13 +1230,13 @@ class="cmr-10">between two receptors</span> </p></td>
  style="vertical-align:baseline;" id="TBL-6-29-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-29-1"  
 class="td11"><span 
 class="cmr-10">POSITION                      </span></td><td  style="text-align:left;" id="TBL-6-29-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Double(3)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-29-3"  
 class="td11"><span 
 class="cmr-10">m     </span></td><td  style="text-align:left;" id="TBL-6-29-4"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">POSITION</span>     </p></td><td  style="text-align:left;" id="TBL-6-29-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Position of feed relative</span>
 <span 
 class="cmr-10">to</span>
@@ -1249,15 +1249,15 @@ class="cmr-10">for this antenna</span>         </p></td>
 class="td11"><span 
 class="cmr-10">RECEPTOR</span><span 
 class="cmr-10">_ANGLE       </span></td><td  style="text-align:left;" id="TBL-6-30-2"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">Double</span>
 <span 
 class="cmr-10">(NUM</span><span 
 class="cmr-10">_RECEPTORS)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-6-30-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-6-30-4"  
-class="td11"><!--l. 313--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-30-5"  
-class="td11"><!--l. 313--><p class="noindent" ><span 
+class="td11"><!--l. 315--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-6-30-5"  
+class="td11"><!--l. 315--><p class="noindent" ><span 
 class="cmr-10">The reference angle for</span>
 <span 
 class="cmr-10">polarization.  Converts</span>
@@ -1355,11 +1355,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">FIELD</span><span 
 class="cmr-10">_ID                      </span></td><td  style="text-align:left;" id="TBL-7-11-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-7-11-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-11-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-11-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Field Id</span>                    </p></td>
 </tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -1371,11 +1371,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-7-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-15-1"  
 class="td11"><span 
 class="cmr-10">CODE                           </span></td><td  style="text-align:left;" id="TBL-7-15-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-15-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-7-15-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-15-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-15-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Special  characteristics</span>
 <span 
 class="cmr-10">of field</span>                     </p></td>
@@ -1384,13 +1384,13 @@ class="cmr-10">of field</span>                     </p></td>
 class="td11"><span 
 class="cmr-10">DELAY</span><span 
 class="cmr-10">_DIR                  </span></td><td  style="text-align:left;" id="TBL-7-16-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-16-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-7-16-4"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">DIRECTION</span>  </p></td><td  style="text-align:left;" id="TBL-7-16-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Direction    of    delay</span>
 <span 
 class="cmr-10">center.</span>                      </p></td>
@@ -1400,12 +1400,12 @@ class="td11"><span
 class="cmr-10">DELAY</span><span 
 class="cmr-10">_DIR</span><span 
 class="cmr-10">_RATE         </span></td><td  style="text-align:left;" id="TBL-7-17-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-17-3"  
 class="td11"><span 
 class="cmr-10">rad/s</span></td><td  style="text-align:left;" id="TBL-7-17-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-17-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-17-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Rate</span>
 <span 
 class="cmr-10">of change of direction of</span>
@@ -1415,24 +1415,24 @@ class="cmr-10">delay direction</span>           </p></td>
  style="vertical-align:baseline;" id="TBL-7-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-18-1"  
 class="td11"><span 
 class="cmr-10">NAME                           </span></td><td  style="text-align:left;" id="TBL-7-18-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-18-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-7-18-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-18-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-18-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Name of field</span>             </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-19-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-19-1"  
 class="td11"><span 
 class="cmr-10">PHASE</span><span 
 class="cmr-10">_DIR                   </span></td><td  style="text-align:left;" id="TBL-7-19-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-19-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-7-19-4"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">DIRECTION</span>  </p></td><td  style="text-align:left;" id="TBL-7-19-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Phase center.</span>             </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-20-1"  
@@ -1440,12 +1440,12 @@ class="td11"><span
 class="cmr-10">PHASE</span><span 
 class="cmr-10">_DIR</span><span 
 class="cmr-10">_RATE         </span></td><td  style="text-align:left;" id="TBL-7-20-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-20-3"  
 class="td11"><span 
 class="cmr-10">rad/s</span></td><td  style="text-align:left;" id="TBL-7-20-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-20-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-20-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Rate</span>
 <span 
 class="cmr-10">of change of direction of</span>
@@ -1456,13 +1456,13 @@ class="cmr-10">phase center.</span>             </p></td>
 class="td11"><span 
 class="cmr-10">POINTING</span><span 
 class="cmr-10">_DIR             </span></td><td  style="text-align:left;" id="TBL-7-21-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-21-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-7-21-4"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">DIRECTION</span>  </p></td><td  style="text-align:left;" id="TBL-7-21-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Pointing center</span>          </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-22-1"  
@@ -1470,12 +1470,12 @@ class="td11"><span
 class="cmr-10">POINTING</span><span 
 class="cmr-10">_DIR</span><span 
 class="cmr-10">_RATE   </span></td><td  style="text-align:left;" id="TBL-7-22-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-22-3"  
 class="td11"><span 
 class="cmr-10">rad/s</span></td><td  style="text-align:left;" id="TBL-7-22-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-22-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-22-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Rate      of      change</span>
 <span 
 class="cmr-10">of direction of pointing</span>
@@ -1486,13 +1486,13 @@ class="cmr-10">center.</span>                      </p></td>
 class="td11"><span 
 class="cmr-10">REFERENCE</span><span 
 class="cmr-10">_DIR          </span></td><td  style="text-align:left;" id="TBL-7-23-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-23-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-7-23-4"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">DIRECTION</span>  </p></td><td  style="text-align:left;" id="TBL-7-23-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Reference center</span>         </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-24-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-24-1"  
@@ -1500,12 +1500,12 @@ class="td11"><span
 class="cmr-10">REFERENCE</span><span 
 class="cmr-10">_DIR</span><span 
 class="cmr-10">_RATE</span></td><td  style="text-align:left;" id="TBL-7-24-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-24-3"  
 class="td11"><span 
 class="cmr-10">rad/s</span></td><td  style="text-align:left;" id="TBL-7-24-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-24-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-24-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Rate      of      change</span>
 <span 
 class="cmr-10">of direction of reference</span>
@@ -1516,22 +1516,22 @@ class="cmr-10">center.</span>                      </p></td>
 class="td11"><span 
 class="cmr-10">SOURCE</span><span 
 class="cmr-10">_ID                   </span></td><td  style="text-align:left;" id="TBL-7-25-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-25-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-7-25-4"  
-class="td11"><!--l. 346--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-25-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-7-25-5"  
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Index in Source table</span>  </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-7-26-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-26-1"  
 class="td11"><span 
 class="cmr-10">TIME </span></td> <td  style="text-align:left;" id="TBL-7-26-2"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Double</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-7-26-3"  
 class="td11"><span 
 class="cmr-10">s </span></td> <td  style="text-align:left;" id="TBL-7-26-4"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">EPOCH</span> </p> </td> <td  style="text-align:left;" id="TBL-7-26-5"  
-class="td11"><!--l. 346--><p class="noindent" ><span 
+class="td11"><!--l. 348--><p class="noindent" ><span 
 class="cmr-10">Time origin for the</span>
 <span 
 class="cmr-10">directions and rates</span>    </p></td>
@@ -1549,7 +1549,7 @@ class="description">
 class="cmbx-10">SOURCE</span><span 
 class="cmbx-10">_ID</span> </dt><dd 
 class="description"><span 
-class="cmr-10">Points to an entry in the optional SOURCE subtable, a value of </span><!--l. 350--><math 
+class="cmr-10">Points to an entry in the optional SOURCE subtable, a value of </span><!--l. 352--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-bin">-</mo> <mn>1</mn></math>
@@ -1602,42 +1602,42 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">CORR</span><span 
 class="cmr-10">_SCHEDULE</span></td><td  style="text-align:left;" id="TBL-8-11-2"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">String(*)</span>               </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-8-11-4"  
-class="td11"><!--l. 370--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-11-5"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-11-5"  
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">Correlator script</span>        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-12-1"  
 class="td11"><span 
 class="cmr-10">OBSERVER           </span></td><td  style="text-align:left;" id="TBL-8-12-2"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-8-12-4"  
-class="td11"><!--l. 370--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-12-5"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-12-5"  
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">Name of observer(s)</span>    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-13-1"  
 class="td11"><span 
 class="cmr-10">OBS</span><span 
 class="cmr-10">_SCHEDULE   </span></td><td  style="text-align:left;" id="TBL-8-13-2"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">String(*)</span>               </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-13-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-8-13-4"  
-class="td11"><!--l. 370--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-13-5"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-13-5"  
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">Project Schedule</span>        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-14-1"  
 class="td11"><span 
 class="cmr-10">PROJECT             </span></td><td  style="text-align:left;" id="TBL-8-14-2"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-14-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-8-14-4"  
-class="td11"><!--l. 370--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-14-5"  
-class="td11"><!--l. 370--><p class="noindent" ><span 
+class="td11"><!--l. 372--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-8-14-5"  
+class="td11"><!--l. 372--><p class="noindent" ><span 
 class="cmr-10">Project    identification</span>
 <span 
 class="cmr-10">string.</span>                      </p></td>
@@ -1652,7 +1652,7 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-8-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-18-1"  
 class="td11">                 </td>
    </tr></table></div>
-<!--l. 372--><p class="noindent" >
+<!--l. 374--><p class="noindent" >
      </p><dl class="description"><dt class="description">
 <span 
 class="cmbx-10">Notes:</span> </dt><dd 
@@ -1719,11 +1719,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">OBSERVATION</span><span 
 class="cmr-10">_ID</span></td><td  style="text-align:left;" id="TBL-9-11-2"  
-class="td11"><!--l. 387--><p class="noindent" ><span 
+class="td11"><!--l. 389--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-9-11-4"  
-class="td11"><!--l. 387--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-9-11-5"  
-class="td11"><!--l. 387--><p class="noindent" ><span 
+class="td11"><!--l. 389--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-9-11-5"  
+class="td11"><!--l. 389--><p class="noindent" ><span 
 class="cmr-10">Points                   to</span>
 <span 
 class="cmr-10">OBSERVATION table</span> </p></td>
@@ -1731,13 +1731,13 @@ class="cmr-10">OBSERVATION table</span> </p></td>
  style="vertical-align:baseline;" id="TBL-9-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-12-1"  
 class="td11"><span 
 class="cmr-10">TIME                   </span></td><td  style="text-align:left;" id="TBL-9-12-2"  
-class="td11"><!--l. 387--><p class="noindent" ><span 
+class="td11"><!--l. 389--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-12-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-9-12-4"  
-class="td11"><!--l. 387--><p class="noindent" ><span 
+class="td11"><!--l. 389--><p class="noindent" ><span 
 class="cmr-10">EPOCH</span>         </p></td><td  style="text-align:left;" id="TBL-9-12-5"  
-class="td11"><!--l. 387--><p class="noindent" ><span 
+class="td11"><!--l. 389--><p class="noindent" ><span 
 class="cmr-10">Timestamp for message</span></p></td>
 </tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -1749,11 +1749,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-9-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-16-1"  
 class="td11"><span 
 class="cmr-10">MESSAGE            </span></td><td  style="text-align:left;" id="TBL-9-16-2"  
-class="td11"><!--l. 387--><p class="noindent" ><span 
+class="td11"><!--l. 389--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-16-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-9-16-4"  
-class="td11"><!--l. 387--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-9-16-5"  
-class="td11"><!--l. 387--><p class="noindent" ><span 
+class="td11"><!--l. 389--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-9-16-5"  
+class="td11"><!--l. 389--><p class="noindent" ><span 
 class="cmr-10">log message</span>               </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -1807,46 +1807,46 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-10-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-11-1"  
 class="td11"><span 
 class="cmr-10">INTERVAL                      </span></td><td  style="text-align:left;" id="TBL-10-11-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-11-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-10-11-4"  
-class="td11"><!--l. 404--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-11-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-11-5"  
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Interval</span>                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-10-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-12-1"  
 class="td11"><span 
 class="cmr-10">SOURCE</span><span 
 class="cmr-10">_ID                   </span></td><td  style="text-align:left;" id="TBL-10-12-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-10-12-4"  
-class="td11"><!--l. 404--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-12-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-12-5"  
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Source id</span>                  </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-10-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-13-1"  
 class="td11"><span 
 class="cmr-10">SPECTRAL</span><span 
 class="cmr-10">_WINDOW</span><span 
 class="cmr-10">_ID</span></td> <td  style="text-align:left;" id="TBL-10-13-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Int</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-10-13-3"  
 class="td11"> </td> <td  style="text-align:left;" id="TBL-10-13-4"  
-class="td11"><!--l. 404--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-10-13-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-10-13-5"  
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Spectral Window id</span></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-10-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-14-1"  
 class="td11"><span 
 class="cmr-10">TIME                             </span></td><td  style="text-align:left;" id="TBL-10-14-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-14-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-10-14-4"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">EPOCH</span>         </p></td><td  style="text-align:left;" id="TBL-10-14-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Midpoint     of     time</span>
 <span 
 class="cmr-10">for  which  this  set  of</span>
@@ -1863,11 +1863,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">CALIBRATION</span><span 
 class="cmr-10">_GROUP   </span></td><td  style="text-align:left;" id="TBL-10-18-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-18-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-10-18-4"  
-class="td11"><!--l. 404--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-18-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-18-5"  
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">#      grouping      for</span>
 <span 
 class="cmr-10">calibration purpose</span>     </p></td>
@@ -1875,11 +1875,11 @@ class="cmr-10">calibration purpose</span>     </p></td>
  style="vertical-align:baseline;" id="TBL-10-19-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-19-1"  
 class="td11"><span 
 class="cmr-10">CODE                            </span></td><td  style="text-align:left;" id="TBL-10-19-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-19-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-10-19-4"  
-class="td11"><!--l. 404--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-19-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-19-5"  
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Special  characteristics</span>
 <span 
 class="cmr-10">of       source,       e.g.</span>
@@ -1889,13 +1889,13 @@ class="cmr-10">Bandpass calibrator</span>    </p></td>
  style="vertical-align:baseline;" id="TBL-10-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-20-1"  
 class="td11"><span 
 class="cmr-10">DIRECTION                   </span></td><td  style="text-align:left;" id="TBL-10-20-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-20-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-10-20-4"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">DIRECTION</span>  </p></td><td  style="text-align:left;" id="TBL-10-20-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Direction    (e.g.    RA,</span>
 <span 
 class="cmr-10">DEC)</span>                       </p></td>
@@ -1903,11 +1903,11 @@ class="cmr-10">DEC)</span>                       </p></td>
  style="vertical-align:baseline;" id="TBL-10-21-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-21-1"  
 class="td11"><span 
 class="cmr-10">NAME                            </span></td><td  style="text-align:left;" id="TBL-10-21-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-21-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-10-21-4"  
-class="td11"><!--l. 404--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-21-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-21-5"  
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Name                    of</span>
 <span 
 class="cmr-10">source as given during</span>
@@ -1917,13 +1917,13 @@ class="cmr-10">observations</span>              </p></td>
  style="vertical-align:baseline;" id="TBL-10-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-22-1"  
 class="td11"><span 
 class="cmr-10">POSITION                      </span></td><td  style="text-align:left;" id="TBL-10-22-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Double(3)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-22-3"  
 class="td11"><span 
 class="cmr-10">m     </span></td><td  style="text-align:left;" id="TBL-10-22-4"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">POSITION</span>     </p></td><td  style="text-align:left;" id="TBL-10-22-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Position (e.g. for solar</span>
 <span 
 class="cmr-10">system objects)</span>          </p></td>
@@ -1932,26 +1932,26 @@ class="cmr-10">system objects)</span>          </p></td>
 class="td11"><span 
 class="cmr-10">PROPER</span><span 
 class="cmr-10">_MOTION          </span></td><td  style="text-align:left;" id="TBL-10-23-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Double(2)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-23-3"  
 class="td11"><span 
 class="cmr-10">rad/s</span></td><td  style="text-align:left;" id="TBL-10-23-4"  
-class="td11"><!--l. 404--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-23-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-10-23-5"  
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Proper motion</span>           </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-10-24-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-24-1"  
 class="td11"><span 
 class="cmr-10">SYSVEL                         </span></td><td  style="text-align:left;" id="TBL-10-24-2"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-10-24-3"  
 class="td11"><span 
 class="cmr-10">m/s  </span></td><td  style="text-align:left;" id="TBL-10-24-4"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">RADIAL</span>
 <span 
 class="cmr-10">VELOCITY</span>   </p></td><td  style="text-align:left;" id="TBL-10-24-5"  
-class="td11"><!--l. 404--><p class="noindent" ><span 
+class="td11"><!--l. 406--><p class="noindent" ><span 
 class="cmr-10">Systemic   velocity   at</span>
 <span 
 class="cmr-10">reference</span>                   </p></td>
@@ -2011,12 +2011,12 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">CORR</span><span 
 class="cmr-10">_TYPE             </span></td><td  style="text-align:left;" id="TBL-11-11-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Int(NUM</span><span 
 class="cmr-10">_CORR)</span>   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-11-11-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-11-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-11-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Polarization            of</span>
 <span 
 class="cmr-10">correlation</span>                </p></td>
@@ -2025,12 +2025,12 @@ class="cmr-10">correlation</span>                </p></td>
 class="td11"><span 
 class="cmr-10">CORR</span><span 
 class="cmr-10">_PRODUCT      </span></td><td  style="text-align:left;" id="TBL-11-12-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Int(2, NUM</span><span 
 class="cmr-10">_CORR)</span></p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-11-12-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-12-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-12-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">(see below)</span>                </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-11-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-13-1"  
@@ -2038,11 +2038,11 @@ class="td11"><span
 class="cmr-10">IF</span><span 
 class="cmr-10">_CONV</span><span 
 class="cmr-10">_CHAIN       </span></td><td  style="text-align:left;" id="TBL-11-13-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-13-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-11-13-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-13-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-13-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">The    IF    conversion</span>
 <span 
 class="cmr-10">chain</span>                       </p></td>
@@ -2051,22 +2051,22 @@ class="cmr-10">chain</span>                       </p></td>
 class="td11"><span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_CHAN              </span></td><td  style="text-align:left;" id="TBL-11-14-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-14-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-11-14-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-14-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-14-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10"># spectral channels</span>    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-11-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-15-1"  
 class="td11"><span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_CORR              </span></td><td  style="text-align:left;" id="TBL-11-15-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-15-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-11-15-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-15-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-15-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10"># correlations</span>            </p></td>
 </tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2079,14 +2079,14 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">CHAN</span><span 
 class="cmr-10">_FREQ             </span></td><td  style="text-align:left;" id="TBL-11-19-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Double(NUM</span><span 
 class="cmr-10">_CHAN)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-11-19-3"  
 class="td11"><span 
 class="cmr-10">Hz    </span></td><td  style="text-align:left;" id="TBL-11-19-4"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">FREQUENCY</span></p></td><td  style="text-align:left;" id="TBL-11-19-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Center  frequencies  for</span>
 <span 
 class="cmr-10">each   channel   in   the</span>
@@ -2096,11 +2096,11 @@ class="cmr-10">data matrix.</span>              </p></td>
  style="vertical-align:baseline;" id="TBL-11-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-20-1"  
 class="td11"><span 
 class="cmr-10">MOLECULE              </span></td><td  style="text-align:left;" id="TBL-11-20-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-20-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-11-20-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-20-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-20-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Molecule       observed</span>
 <span 
 class="cmr-10">(optional)</span>                 </p></td>
@@ -2109,13 +2109,13 @@ class="cmr-10">(optional)</span>                 </p></td>
 class="td11"><span 
 class="cmr-10">REF</span><span 
 class="cmr-10">_FREQUENCY     </span></td><td  style="text-align:left;" id="TBL-11-21-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-21-3"  
 class="td11"><span 
 class="cmr-10">Hz    </span></td><td  style="text-align:left;" id="TBL-11-21-4"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">FREQUENCY</span></p></td><td  style="text-align:left;" id="TBL-11-21-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">The              reference</span>
 <span 
 class="cmr-10">frequency.</span>                 </p></td>
@@ -2123,13 +2123,13 @@ class="cmr-10">frequency.</span>                 </p></td>
  style="vertical-align:baseline;" id="TBL-11-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-22-1"  
 class="td11"><span 
 class="cmr-10">RESOLUTION            </span></td><td  style="text-align:left;" id="TBL-11-22-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Double(NUM</span><span 
 class="cmr-10">_CHAN)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-11-22-3"  
 class="td11"><span 
 class="cmr-10">Hz    </span></td><td  style="text-align:left;" id="TBL-11-22-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-22-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-22-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">The    effective    noise</span>
 <span 
 class="cmr-10">bandwidth  of  spectral</span>
@@ -2140,12 +2140,12 @@ class="cmr-10">channels</span>                   </p></td>
 class="td11"><span 
 class="cmr-10">TOTAL</span><span 
 class="cmr-10">_BANDWIDTH</span></td><td  style="text-align:left;" id="TBL-11-23-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-23-3"  
 class="td11"><span 
 class="cmr-10">Hz    </span></td><td  style="text-align:left;" id="TBL-11-23-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-23-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-23-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">total   bandwidth   for</span>
 <span 
 class="cmr-10">this window</span>               </p></td>
@@ -2153,11 +2153,11 @@ class="cmr-10">this window</span>               </p></td>
  style="vertical-align:baseline;" id="TBL-11-24-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-24-1"  
 class="td11"><span 
 class="cmr-10">TRANSITION            </span></td><td  style="text-align:left;" id="TBL-11-24-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">String</span>                   </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-24-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-11-24-4"  
-class="td11"><!--l. 423--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-24-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-11-24-5"  
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Transition  of  molecule</span>
 <span 
 class="cmr-10">(optional)</span>                 </p></td>
@@ -2166,13 +2166,13 @@ class="cmr-10">(optional)</span>                 </p></td>
 class="td11"><span 
 class="cmr-10">REST</span><span 
 class="cmr-10">_FREQUENCY   </span></td><td  style="text-align:left;" id="TBL-11-25-2"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-11-25-3"  
 class="td11"><span 
 class="cmr-10">Hz    </span></td><td  style="text-align:left;" id="TBL-11-25-4"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">FREQUENCY</span></p></td><td  style="text-align:left;" id="TBL-11-25-5"  
-class="td11"><!--l. 423--><p class="noindent" ><span 
+class="td11"><!--l. 425--><p class="noindent" ><span 
 class="cmr-10">The    rest    frequency</span>
 <span 
 class="cmr-10">(spectral line)</span>            </p></td>
@@ -2288,43 +2288,43 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">ANTENNA</span><span 
 class="cmr-10">_ID                 </span></td><td  style="text-align:left;" id="TBL-12-11-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-11-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-11-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-11-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Antenna id</span>                </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-12-1"  
 class="td11"><span 
 class="cmr-10">ARRAY</span><span 
 class="cmr-10">_ID                     </span></td><td  style="text-align:left;" id="TBL-12-12-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-12-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-12-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-12-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Array id</span>                   </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-13-1"  
 class="td11"><span 
 class="cmr-10">FEED</span><span 
 class="cmr-10">_ID                        </span></td><td  style="text-align:left;" id="TBL-12-13-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-13-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-13-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-13-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-13-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Feed id</span>                     </p></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-12-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-14-1"  
 class="td11"><span 
 class="cmr-10">INTERVAL </span></td> <td  style="text-align:left;" id="TBL-12-14-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Double</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-12-14-3"  
 class="td11"><span 
 class="cmr-10">s </span></td> <td  style="text-align:left;" id="TBL-12-14-4"  
-class="td11"><!--l. 471--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-12-14-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" > </p> </td> <td  style="text-align:left;" id="TBL-12-14-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Interval</span></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-15-1"  
@@ -2332,23 +2332,23 @@ class="td11"><span
 class="cmr-10">SPECTRAL</span><span 
 class="cmr-10">_WINDOW</span><span 
 class="cmr-10">_ID</span></td><td  style="text-align:left;" id="TBL-12-15-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-15-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-15-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-15-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-15-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Spectral window id</span>     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-16-1"  
 class="td11"><span 
 class="cmr-10">TIME                             </span></td><td  style="text-align:left;" id="TBL-12-16-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-16-3"  
 class="td11"><span 
 class="cmr-10">s      </span></td><td  style="text-align:left;" id="TBL-12-16-4"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">EPOCH</span>         </p></td><td  style="text-align:left;" id="TBL-12-16-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Midpoint     of     time</span>
 <span 
 class="cmr-10">for  which  this  set  of</span>
@@ -2365,11 +2365,11 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">NUM</span><span 
 class="cmr-10">_RECEPTORS         </span></td><td  style="text-align:left;" id="TBL-12-20-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-20-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-20-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-20-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-20-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10"># receptors on this feed</span>
 <span 
 class="cmr-10">(1 or 2)</span>                    </p></td>
@@ -2384,12 +2384,12 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">PHASE</span><span 
 class="cmr-10">_DIFF                  </span></td><td  style="text-align:left;" id="TBL-12-24-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-24-3"  
 class="td11"><span 
 class="cmr-10">rad   </span></td><td  style="text-align:left;" id="TBL-12-24-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-24-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-24-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Phase          difference</span>
 <span 
 class="cmr-10">between receptor 2 and</span>
@@ -2399,50 +2399,50 @@ class="cmr-10">receptor 1</span>                 </p></td>
  style="vertical-align:baseline;" id="TBL-12-25-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-25-1"  
 class="td11"><span 
 class="cmr-10">TCAL                             </span></td><td  style="text-align:left;" id="TBL-12-25-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Float</span>
 <span 
 class="cmr-10">(NUM</span><span 
 class="cmr-10">_RECEPTORS)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-12-25-3"  
 class="td11"><span 
 class="cmr-10">K     </span></td><td  style="text-align:left;" id="TBL-12-25-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-25-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-25-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Calibration temp</span>        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-26-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-26-1"  
 class="td11"><span 
 class="cmr-10">TRX                              </span></td><td  style="text-align:left;" id="TBL-12-26-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Float</span>
 <span 
 class="cmr-10">(NUM</span><span 
 class="cmr-10">_RECEPTORS)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-12-26-3"  
 class="td11"><span 
 class="cmr-10">K     </span></td><td  style="text-align:left;" id="TBL-12-26-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-26-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-26-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Receiver temperature</span>  </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-27-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-27-1"  
 class="td11"><span 
 class="cmr-10">TSYS                             </span></td><td  style="text-align:left;" id="TBL-12-27-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Float</span>
 <span 
 class="cmr-10">(NUM</span><span 
 class="cmr-10">_RECEPTORS)</span> </p> </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-12-27-3"  
 class="td11"><span 
 class="cmr-10">K     </span></td><td  style="text-align:left;" id="TBL-12-27-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-27-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-27-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">System temp</span>             </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-28-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-28-1"  
 class="td11"><span 
 class="cmr-10">TCAL</span><span 
 class="cmr-10">_SPECTRUM          </span></td><td  style="text-align:left;" id="TBL-12-28-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Float</span>
 <span 
 class="cmr-10">(NUM</span><span 
@@ -2452,8 +2452,8 @@ class="cmr-10">NUM</span><span
 class="cmr-10">_CHAN)</span>        </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-28-3"  
 class="td11"><span 
 class="cmr-10">K     </span></td><td  style="text-align:left;" id="TBL-12-28-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-28-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-28-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Calibration         temp</span>
 <span 
 class="cmr-10">(optional)</span>                 </p></td>
@@ -2462,7 +2462,7 @@ class="cmr-10">(optional)</span>                 </p></td>
 class="td11"><span 
 class="cmr-10">TRX</span><span 
 class="cmr-10">_SPECTRUM            </span></td><td  style="text-align:left;" id="TBL-12-29-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Float</span>
 <span 
 class="cmr-10">(NUM</span><span 
@@ -2472,8 +2472,8 @@ class="cmr-10">NUM</span><span
 class="cmr-10">_CHAN)</span>        </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-29-3"  
 class="td11"><span 
 class="cmr-10">K     </span></td><td  style="text-align:left;" id="TBL-12-29-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-29-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-29-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Receiver   temperature</span>
 <span 
 class="cmr-10">(optional)</span>                 </p></td>
@@ -2482,7 +2482,7 @@ class="cmr-10">(optional)</span>                 </p></td>
 class="td11"><span 
 class="cmr-10">TSYS</span><span 
 class="cmr-10">_SPECTRUM          </span></td><td  style="text-align:left;" id="TBL-12-30-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Float</span>
 <span 
 class="cmr-10">(NUM</span><span 
@@ -2492,8 +2492,8 @@ class="cmr-10">NUM</span><span
 class="cmr-10">_CHAN)</span>        </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-30-3"  
 class="td11"><span 
 class="cmr-10">K     </span></td><td  style="text-align:left;" id="TBL-12-30-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-30-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-30-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">System              temp</span>
 <span 
 class="cmr-10">(optional)</span>                 </p></td>
@@ -2509,11 +2509,11 @@ class="td11"><span
 class="cmr-10">PHASE</span><span 
 class="cmr-10">_DIFF</span><span 
 class="cmr-10">_FLAG        </span></td><td  style="text-align:left;" id="TBL-12-34-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Bool</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-34-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-34-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-34-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-34-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Flag for PHASE</span><span 
 class="cmr-10">_DIFF</span></p></td>
 </tr><tr  
@@ -2521,33 +2521,33 @@ class="cmr-10">_DIFF</span></p></td>
 class="td11"><span 
 class="cmr-10">TCAL</span><span 
 class="cmr-10">_FLAG                   </span></td><td  style="text-align:left;" id="TBL-12-35-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Bool</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-35-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-35-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-35-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-35-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Flag for TCAL</span>           </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-36-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-36-1"  
 class="td11"><span 
 class="cmr-10">TRX</span><span 
 class="cmr-10">_FLAG                    </span></td><td  style="text-align:left;" id="TBL-12-36-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Bool</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-36-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-36-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-36-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-36-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Flag for TRX</span>            </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-12-37-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-37-1"  
 class="td11"><span 
 class="cmr-10">TSYS</span><span 
 class="cmr-10">_FLAG                   </span></td><td  style="text-align:left;" id="TBL-12-37-2"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Bool</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-12-37-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-12-37-4"  
-class="td11"><!--l. 471--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-37-5"  
-class="td11"><!--l. 471--><p class="noindent" ><span 
+class="td11"><!--l. 473--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-12-37-5"  
+class="td11"><!--l. 473--><p class="noindent" ><span 
 class="cmr-10">Flag for TSYS</span>           </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2602,33 +2602,33 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11"><span 
 class="cmr-10">ANTENNA</span><span 
 class="cmr-10">_ID        </span></td><td  style="text-align:left;" id="TBL-13-11-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-11-3"  
 class="td11">                                                                                         </td><td  style="text-align:left;" id="TBL-13-11-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-11-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-11-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Antenna number</span>        </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-13-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-12-1"  
 class="td11"><span 
 class="cmr-10">ARRAY</span><span 
 class="cmr-10">_ID            </span></td><td  style="text-align:left;" id="TBL-13-12-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Int</span>                       </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-12-3"  
 class="td11">                                                                                         </td><td  style="text-align:left;" id="TBL-13-12-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-12-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-12-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Array id</span>                   </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-13-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-13-1"  
 class="td11"><span 
 class="cmr-10">INTERVAL             </span></td><td  style="text-align:left;" id="TBL-13-13-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-13-3"  
 class="td11"><span 
 class="cmr-10">s                                                                                                                                            </span></td><td  style="text-align:left;" id="TBL-13-13-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-13-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-13-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Interval    over    which</span>
 <span 
 class="cmr-10">data is relevant</span>          </p></td>
@@ -2636,13 +2636,13 @@ class="cmr-10">data is relevant</span>          </p></td>
  style="vertical-align:baseline;" id="TBL-13-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-14-1"  
 class="td11"><span 
 class="cmr-10">TIME                    </span></td><td  style="text-align:left;" id="TBL-13-14-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Double</span>                  </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-14-3"  
 class="td11"><span 
 class="cmr-10">s                                                                                                                                            </span></td><td  style="text-align:left;" id="TBL-13-14-4"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">EPOCH</span>         </p></td><td  style="text-align:left;" id="TBL-13-14-5"  
-class="td11"><!--l. 489--><p class="noindent" >                   </p></td></tr><tr 
+class="td11"><!--l. 491--><p class="noindent" >                   </p></td></tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-13-16-"><td colspan="5" style="text-align:left; white-space:nowrap;" id="TBL-13-16-1"  
 class="td11"><div class="multicolumn"  style="text-align:left; white-space:nowrap;"><span 
@@ -2651,9 +2651,9 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-13-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-18-1"  
 class="td11"><span 
 class="cmr-10">H2O                      </span></td><td  style="text-align:left;" id="TBL-13-18-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-18-3"  
-class="td11"><!--l. 489--><math 
+class="td11"><!--l. 491--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -2661,8 +2661,8 @@ display="inline" ><msup><mrow
 ><mo 
 class="MathClass-bin">-</mo><mn>2</mn></mrow></msup 
 ></math></td><td  style="text-align:left;" id="TBL-13-18-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-18-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-18-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Average          column</span>
 <span 
 class="cmr-10">density of water</span>         </p></td>
@@ -2671,9 +2671,9 @@ class="cmr-10">density of water</span>         </p></td>
 class="td11"><span 
 class="cmr-10">IONOS</span><span 
 class="cmr-10">_ELECTRON</span></td><td  style="text-align:left;" id="TBL-13-19-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-19-3"  
-class="td11"><!--l. 489--><math 
+class="td11"><!--l. 491--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -2681,8 +2681,8 @@ display="inline" ><msup><mrow
 ><mo 
 class="MathClass-bin">-</mo><mn>2</mn></mrow></msup 
 ></math></td><td  style="text-align:left;" id="TBL-13-19-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-19-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-19-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Average          column</span>
 <span 
 class="cmr-10">density of electrons</span>     </p></td>
@@ -2690,12 +2690,12 @@ class="cmr-10">density of electrons</span>     </p></td>
  style="vertical-align:baseline;" id="TBL-13-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-20-1"  
 class="td11"><span 
 class="cmr-10">PRESSURE            </span></td><td  style="text-align:left;" id="TBL-13-20-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-20-3"  
 class="td11"><span 
 class="cmr-10">Pa                                                                                                                                         </span></td><td  style="text-align:left;" id="TBL-13-20-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-20-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-20-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Ambient   atmospheric</span>
 <span 
 class="cmr-10">pressure</span>                    </p></td>
@@ -2704,11 +2704,11 @@ class="cmr-10">pressure</span>                    </p></td>
 class="td11"><span 
 class="cmr-10">REL</span><span 
 class="cmr-10">_HUMIDITY    </span></td><td  style="text-align:left;" id="TBL-13-21-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-21-3"  
 class="td11">                                                                                         </td><td  style="text-align:left;" id="TBL-13-21-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-21-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-21-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Ambient         relative</span>
 <span 
 class="cmr-10">humidity</span>                   </p></td>
@@ -2716,12 +2716,12 @@ class="cmr-10">humidity</span>                   </p></td>
  style="vertical-align:baseline;" id="TBL-13-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-22-1"  
 class="td11"><span 
 class="cmr-10">TEMPERATURE    </span></td><td  style="text-align:left;" id="TBL-13-22-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-22-3"  
 class="td11"><span 
 class="cmr-10">K                                                                                                                                           </span></td><td  style="text-align:left;" id="TBL-13-22-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-22-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-22-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Ambient</span>
 <span 
 class="cmr-10">Air Temperature for an</span>
@@ -2732,24 +2732,24 @@ class="cmr-10">antenna</span>                    </p></td>
 class="td11"><span 
 class="cmr-10">WIND</span><span 
 class="cmr-10">_DIRECTION</span></td><td  style="text-align:left;" id="TBL-13-23-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-23-3"  
 class="td11"><span 
 class="cmr-10">rad                                                                                                                                         </span></td><td  style="text-align:left;" id="TBL-13-23-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-23-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-23-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Average wind direction</span></p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-13-24-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-24-1"  
 class="td11"><span 
 class="cmr-10">WIND</span><span 
 class="cmr-10">_SPEED        </span></td><td  style="text-align:left;" id="TBL-13-24-2"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Float</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-13-24-3"  
 class="td11"><span 
 class="cmr-10">m/s                                                                                                                                        </span></td><td  style="text-align:left;" id="TBL-13-24-4"  
-class="td11"><!--l. 489--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-24-5"  
-class="td11"><!--l. 489--><p class="noindent" ><span 
+class="td11"><!--l. 491--><p class="noindent" >            </p></td><td  style="text-align:left;" id="TBL-13-24-5"  
+class="td11"><!--l. 491--><p class="noindent" ><span 
 class="cmr-10">Average wind speed</span>    </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  

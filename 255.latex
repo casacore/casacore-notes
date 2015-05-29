@@ -1,7 +1,7 @@
 %% Table System Revisited
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 
 %%-----------------------------------------------------------------------------
 %% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
@@ -15,6 +15,9 @@ AIPS++ Table System Revisited}
 \date {2003 February 3}
 \maketitle
 %%---------------------------------------------------------------------------
-\href{255.pdf}{A pdf version of this note is available.}
+\ifpdf
+\else
+\href{../pdf/255.pdf}{A pdf version of this note is available.}
+\fi
 \input{255.dir/tablesystem}
 \end{document}

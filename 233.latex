@@ -1,6 +1,6 @@
 \documentclass[11pt]{article}
-\include{aips2defs}
-\usepackage{hyperref,epsf}
+\include{aips2defs,epsf}
+\usepackage[colorlinks]{hyperref}
 %%-----------------------------------------------------------------------------
 
 \begin{document}
@@ -14,7 +14,10 @@
 
 \maketitle
 %%---------------------------------------------------------------------------
-\href{233.pdf}{A pdf version of this note is available.}
+\ifpdf
+\else
+\href{../pdf/233.pdf}{A pdf version of this note is available.}
+\fi
 
 
 \tableofcontents

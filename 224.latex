@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
-\usepackage{hyperref,epsf}
+\usepackage[colorlinks]{hyperref}
+\usepackage{epsf}
 %%-----------------------------------------------------------------------------
 
 \begin{document}
@@ -13,7 +14,10 @@
 
 \maketitle
 %%---------------------------------------------------------------------------
-\href{224.pdf}{A pdf version of this note is available.}
+\ifpdf
+\else
+\href{../pdf/224.pdf}{A pdf version of this note is available.}
+\fi
 
 
 \tableofcontents

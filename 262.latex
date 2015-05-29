@@ -1,7 +1,7 @@
 %% Testing Framework
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
@@ -25,9 +25,10 @@ It makes it possible to do regression testing, coverage testing, and use tools l
 valgrind in an automatic way.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
-\href{262.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\ifpdf
+\else
+\href{../pdf/262.pdf}{A pdf version of this note is available.}
+\fi
 
 \tableofcontents 
 \newpage

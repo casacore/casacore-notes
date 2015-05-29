@@ -1,6 +1,6 @@
 \documentclass{article}
-\include{aips2defs}
-\usepackage{hyperref,epsf}
+\include{aips2defs,epsf}
+\usepackage[colorlinks]{hyperref}
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
@@ -38,8 +38,10 @@
 \author{A.J. Kemball (NRAO) and M.H. Wieringa (ATNF), eds.}
 \date{January 21, 2000}
 \maketitle
-
-\href{229.pdf}{A pdf version of this note is available.}
+\ifpdf
+\else
+\href{../pdf/229.pdf}{A pdf version of this note is available.}
+\fi
 
 \tableofcontents 
 \section{Summary} 

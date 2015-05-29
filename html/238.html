@@ -9,7 +9,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
 <!-- xhtml,mathml,fn-in,html --> 
 <meta name="src" content="238.tex" /> 
-<meta name="date" content="2015-05-29 11:46:00" /> 
+<meta name="date" content="2015-05-29 12:31:00" /> 
 <link rel="stylesheet" type="text/css" href="238.css" /> 
 </head><body 
 >
@@ -27,10 +27,8 @@ class="cmr-12">Athol Kemball</span></div>
 <br />
 <div class="date" ><span 
 class="cmr-12">October 15, 2000</span></div>
-   </div>
-<!--l. 25--><p class="indent" >   <a 
-href="238.pdf" >A pdf version of this note is available.</a>
-</p>
+   </div><a 
+href="../pdf/238.pdf" >A pdf version of this note is available.</a>
    <h3 class="likesectionHead"><a 
  id="x1-1000"></a>Contents</h3>
    <div class="tableofcontents">
@@ -43,29 +41,29 @@ href="#x1-40003" id="QQ2-1-4">Current capabilities and design</a></span>
 <br />   <span class="sectionToc" >4 <a 
 href="#x1-50004" id="QQ2-1-5">Proposed revisions</a></span>
    </div>
-<!--l. 29--><p class="noindent" >
+<!--l. 30--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
  id="x1-20001"></a>Introduction</h3>
-<!--l. 31--><p class="noindent" >The C++ MeasurementSet (MS) access classes are fundamental to the AIPS++&#x00A0;library, and find general use in
+<!--l. 32--><p class="noindent" >The C++ MeasurementSet (MS) access classes are fundamental to the AIPS++&#x00A0;library, and find general use in
 several areas, including data fillers, the <span 
 class="cmtt-10">ms </span>tool and a range of data reduction applications. This note is focused
 primarily on basic MS access in synthesis at this time; it describes the design of the current classes, and
 considers their future extension and consolidation. The MS data format is described in AIPS++&#x00A0;Note
+229.
                                                                                          
 
                                                                                          
-229.
-</p><!--l. 39--><p class="noindent" >
+</p><!--l. 40--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-30002"></a>Requirements for the MS access classes</h3>
-<!--l. 41--><p class="noindent" >MeasurementSets are AIPS++&#x00A0;<span 
+<!--l. 42--><p class="noindent" >MeasurementSets are AIPS++&#x00A0;<span 
 class="cmtt-10">Table</span>s and their existing access classes are built closely on the <span 
 class="cmtt-10">Table </span>infrastructure.
 This assumption is implicit in the requirements listed in this section. The C++ classes used for MS access need to
 meet the following requirements, or provide the following services:
-</p><!--l. 47--><p class="indent" >
+</p><!--l. 48--><p class="indent" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-3002x1"><span 
@@ -109,15 +107,15 @@ class="cmbx-10">MS data ranges: </span>Determination of the data ranges in a giv
      <li 
   class="enumerate" id="x1-3016x8"><span 
 class="cmbx-10">MS data objects: </span>Provision of C++ classes to model a data cube containing part or all of the current
-                                                                                         
-
-                                                                                         
      iteration or selection, which can be operated upon by other agent classes (e.g. calibration), and passed
      between AIPS++&#x00A0;classes and between C++ and Glish.
      </li>
      <li 
   class="enumerate" id="x1-3018x9"><span 
 class="cmbx-10">Connection to Glish: </span>Versatile access to the C++ MS access classes from Glish.
+                                                                                         
+
+                                                                                         
      </li>
      <li 
   class="enumerate" id="x1-3020x10"><span 
@@ -141,12 +139,12 @@ class="cmtt-10">Table </span>system  infrastructure  and  design  philosophy
 class="cmbx-10">Efficiency: </span>I/O is a critical part of astronomical data reduction performance, and efficiency is a key
      requirement for MS access. This includes integrated I/O profiling, in both the serial and parallel case.
      </li></ol>
-<!--l. 111--><p class="noindent" >
+<!--l. 112--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
  id="x1-40003"></a>Current capabilities and design</h3>
-<!--l. 113--><p class="noindent" >The following capabilities are currently provided:
-</p><!--l. 115--><p class="indent" >
+<!--l. 114--><p class="noindent" >The following capabilities are currently provided:
+</p><!--l. 116--><p class="indent" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-4002x1"><span 
@@ -175,9 +173,6 @@ class="cmti-10">no specialized MS row-based access.</span>
      <li 
   class="enumerate" id="x1-4006x3"><span 
 class="cmbx-10">Sorting and selection: </span>MS sorting and selection is possible using the TaQL capabilities directly.
-                                                                                         
-
-                                                                                         
      Sorting and selection are also performed by <span 
 class="cmtt-10">MSSelector</span>, to some degree in <span 
 class="cmtt-10">MSIter</span>, and in specialized
@@ -200,6 +195,9 @@ class="cmti-10">syntax, including unification of </span><span
 class="cmtt-10">MSSelector </span><span 
 class="cmti-10">keywords and </span><span 
 class="cmtt-10">MSCalEnums</span>.
+                                                                                         
+
+                                                                                         
      </li>
      <li 
   class="enumerate" id="x1-4008x4"><span 
@@ -288,9 +286,6 @@ class="cmtt-10">pimager::tryparread</span>. <span
 class="cmti-10">Missing:</span>
      <span 
 class="cmti-10">full parallel I/O implementation.</span>
-                                                                                         
-
-                                                                                         
      </li>
      <li 
   class="enumerate" id="x1-4024x12"><span 
@@ -303,6 +298,9 @@ class="cmti-10">Missing: i) large file support in</span>
 class="cmti-10">the </span><span 
 class="cmtt-10">Table </span><span 
 class="cmti-10">system; and, ii) ability to remove existing columns held in TSM</span>
+                                                                                         
+
+                                                                                         
      </li>
      <li 
   class="enumerate" id="x1-4026x13"><span 
@@ -310,14 +308,14 @@ class="cmbx-10">Efficiency: </span>I/O profiling curently is implemented using P
 class="cmti-10">Missing: continued profiling</span>
      <span 
 class="cmti-10">of computational and I/O components. </span></li></ol>
-<!--l. 203--><p class="noindent" >
+<!--l. 204--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
  id="x1-50004"></a>Proposed revisions</h3>
-<!--l. 205--><p class="noindent" >This section considers short-term revisions to the existing MS access classes to rationalize certain existing
+<!--l. 206--><p class="noindent" >This section considers short-term revisions to the existing MS access classes to rationalize certain existing
 capabilities, and to add missing capabilities required for application development in several areas in the short
 term.
-</p><!--l. 210--><p class="indent" >
+</p><!--l. 211--><p class="indent" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-5002x1"><span 

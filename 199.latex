@@ -1,7 +1,7 @@
 %% TaQL
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
@@ -33,9 +33,10 @@ matching of two sky catalogues.
 \\A binding in C++, Python, and Glish is available.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
-\href{199.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\ifpdf
+\else
+\href{../pdf/199.pdf}{A pdf version of this note is available.}
+\fi
 
 \tableofcontents 
 \newpage

@@ -1,7 +1,7 @@
 %% LEL
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 
 %%-----------------------------------------------------------------------------
 %% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
@@ -23,7 +23,10 @@ Lattice Expression Language Implementation}
 \date {1998 January 20}
 \maketitle
 %%---------------------------------------------------------------------------
-\href{216.pdf}{A pdf version of this note is available.}
+\ifpdf
+\else
+\href{../pdf/216.pdf}{A pdf version of this note is available.}
+\fi
 
 \input{216.dir/LEL}
 \end{document}

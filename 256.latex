@@ -2,7 +2,7 @@
 %%----------------------------------------------------------------------------
 
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 
 %%-----------------------------------------------------------------------------
 %% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
@@ -15,7 +15,10 @@
 \date {2003 February 10}
 \maketitle
 %%---------------------------------------------------------------------------
-\href{256.pdf}{A pdf version of this note is available.}
+\ifpdf
+\else
+\href{../pdf/256.pdf}{A pdf version of this note is available.}
+\fi
 
 \input{256.dir/tablelock}
 \end{document}

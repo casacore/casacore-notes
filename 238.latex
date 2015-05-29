@@ -3,7 +3,7 @@
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
 \parskip=5truept
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 \newcommand{\aipspp}{AIPS++\ }
 \newcommand{\nc}{$N_c$}
 \newcommand{\nr}{$N_r$}
@@ -21,9 +21,10 @@
 \author{Athol Kemball}
 \date{October 15, 2000}
 \maketitle
-
-\href{238.pdf}{A pdf version of this note is available.}
-
+\ifpdf
+\else
+\href{../pdf/238.pdf}{A pdf version of this note is available.}
+\fi
 \tableofcontents 
 
 \section{Introduction}

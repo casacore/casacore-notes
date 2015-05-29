@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
 \setlength{\textheight}{8.5in}
@@ -18,9 +18,10 @@ It consists of a set of standard converters and bindings to the classes.
 As much as possible the bindings are the same as in glish.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
-\href{259.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\ifpdf
+\else
+\href{../pdf/259.pdf}{A pdf version of this note is available.}
+\fi
 
 \tableofcontents
 \newpage      

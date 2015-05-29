@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
@@ -36,8 +36,10 @@
 \date{October 4, 1996}
 \maketitle
 
-
-\href{191.pdf}{A pdf version of this note is available.}
+\ifpdf
+\else
+\href{../pdf/191.pdf}{A pdf version of this note is available.}
+\fi
 
 
 \tableofcontents
