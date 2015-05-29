@@ -1,0 +1,29 @@
+\documentclass[11pt]{article}
+\usepackage[colorlinks]{hyperref}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{8.5in}
+\setlength{\topmargin}{0.0in}
+%%-----------------------------------------------------------------------------
+
+\begin{document}
+
+\title{NOTE 259: libpyrap, casacore-python converters}
+\author{Ger van Diepen, ASTRON Dwingeloo}
+\date{November 10, 2006}
+\maketitle
+\begin{abstract}
+pyrap is a Python binding to casacore classes using Boost.Python.
+It consists of a set of standard converters and bindings to the classes.
+As much as possible the bindings are the same as in glish.
+\end{abstract}
+%%---------------------------------------------------------------------------
+\ifpdf
+\else
+\href{../pdf/259.pdf}{A pdf version of this note is available.}
+\fi
+
+\tableofcontents
+\newpage      
+\input{259.dir/appspython.tex}
+\end{document}

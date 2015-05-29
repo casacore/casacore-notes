@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
+"http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>NOTE 262 &#8211; Casacore Testing Framework</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- xhtml,mathml,fn-in,html --> 
+<meta name="src" content="262.tex" /> 
+<meta name="date" content="2015-05-29 12:31:00" /> 
+<link rel="stylesheet" type="text/css" href="262.css" /> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                                         
+
+                                                                                         
+                                                                                         
+
+                                                                                         
+
+<h2 class="titleHead">NOTE 262 &#8211; Casacore Testing Framework</h2>
+<div class="author" ><span 
+class="cmr-12">Ger van Diepen, ASTRON Dwingeloo</span></div><br />
+<div class="date" ><span 
+class="cmr-12">2013 Aug 21</span></div>
+   </div><div 
+class="abstract" 
+>
+<div class="center" 
+>
+<!--l. 22--><p class="noindent" >
+</p><!--l. 22--><p class="noindent" ><span 
+class="cmbx-10">Abstract</span></p></div>
+     <!--l. 23--><p class="indent" >    <span 
+class="cmr-10">Casacore has an advanced testing framework on top of the CMake environment. It makes it</span>
+     <span 
+class="cmr-10">possible to do regression testing, coverage testing, and use tools like valgrind in an automatic</span>
+     <span 
+class="cmr-10">way.</span>
+</p>
+</div> <a 
+href="../pdf/262.pdf" >A pdf version of this note is available.</a>
+   <h3 class="likesectionHead"><a 
+ id="x1-1000"></a>Contents</h3>
+   <div class="tableofcontents">
+   <span class="sectionToc" >1 <a 
+href="#x1-20001" id="QQ2-1-2">Introduction</a></span>
+<br />   <span class="sectionToc" >2 <a 
+href="#x1-30002" id="QQ2-1-3">Casacore build system</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >2.1 <a 
+href="#x1-40002.1" id="QQ2-1-4">Source code structure</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >2.2 <a 
+href="#x1-50002.2" id="QQ2-1-5">Build directory structure</a></span>
+<br />   <span class="sectionToc" >3 <a 
+href="#x1-60003" id="QQ2-1-6">Creating a test</a></span>
+<br />   <span class="sectionToc" >4 <a 
+href="#x1-70004" id="QQ2-1-7">Running tests</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >4.1 <a 
+href="#x1-80004.1" id="QQ2-1-8">Return status</a></span>
+<br />   <span class="sectionToc" >5 <a 
+href="#x1-90005" id="QQ2-1-9">Valgrind support</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >5.1 <a 
+href="#x1-100005.1" id="QQ2-1-10">Using other checking tools</a></span>
+<br />   &#x00A0;<span class="subsectionToc" >5.2 <a 
+href="#x1-110005.2" id="QQ2-1-11">Omitting tests in check tool</a></span>
+<br />   <span class="sectionToc" >6 <a 
+href="#x1-120006" id="QQ2-1-12">Test coverage support</a></span>
+   </div>
+                                                                                         
+
+                                                                                         
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="x1-20001"></a>Introduction</h3>
+<!--l. 37--><p class="noindent" >Casacore comes with an extensive set of test programs. The tests can be built in the cmake environment
+used by casacore by adding <span 
+class="cmtt-10x-x-109">-DBUILD</span><span 
+class="cmtt-10x-x-109">_TESTING=ON </span>to the <span 
+class="cmtt-10x-x-109">cmake </span>command. Running the tests can be done
+using the <span 
+class="cmtt-10x-x-109">make test </span>or <span 
+class="cmtt-10x-x-109">ctest </span>command. For regression testing purposes the standard output of a test run
+can be compared with the expected output. Casacore uses a few scripts doing the actual execution of a
+test.
+</p><!--l. 47--><p class="indent" >   A test be embedded in a script for optional preprocessing or postprocessing of a test or to run a test in
+multiple ways. <br 
+class="newline" />Such a script can also be used to test an application (like <span 
+class="cmtt-10x-x-109">taql</span>).
+</p><!--l. 51--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="x1-30002"></a>Casacore build system</h3>
+<!--l. 52--><p class="noindent" >Casacore uses the cmake system to build the code and test programs. Ctest is used to execute the test
+programs and to check for success or failure.
+</p><!--l. 56--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
+ id="x1-40002.1"></a>Source code structure</h4>
+<!--l. 57--><p class="noindent" >The casacore source code is divided into modules (e.g. casa, tables). Each module is divided into packages
+(e.g. casa/IO) containing the source files. Each package should have a test directory containing the test
+programs. Schematically it is organized like:
+                                                                                         
+
+                                                                                         
+</p>
+   <div class="verbatim" id="verbatim-1">
+&#x00A0;&#x00A0;casacore
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;module1&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;package1
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;*.h
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;*cc
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;test
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;tX.cc
+</div>
+<!--l. 69--><p class="nopar" > The build system creates a library per module (e.g. <span 
+class="cmtt-10x-x-109">libcasa</span><span 
+class="cmtt-10x-x-109">_tables</span>). Modules are layered,
+thus the libraries not mutually dependent. Packages in a module can use each other, also
+mutually.
+</p><!--l. 75--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
+ id="x1-50002.2"></a>Build directory structure</h4>
+<!--l. 76--><p class="noindent" >It is best to build casacore in a <span 
+class="cmtt-10x-x-109">build </span>directory at the same level as the <span 
+class="cmtt-10x-x-109">casacore </span>directory. In this way
+the source and build files are well separated.
+</p><!--l. 80--><p class="indent" >   The code can be built in various ways (optimized, debug, etc.), so in the build directory a directory
+should be created telling the build type. The build system makes uses of the name to automatically set
+the compile options for a build type. It recognizes: </p>
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">dbg </span>or <span 
+class="cmtt-10x-x-109">debug </span>defining a debug build (sets <span 
+class="cmtt-10x-x-109">-O0 -g</span>).
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">cov </span>defining a coverage build (sets <span 
+class="cmtt-10x-x-109">--coverage</span>).
+     </li>
+     <li class="itemize">Any other name defines an optimized build (sets <span 
+class="cmtt-10x-x-109">-O3</span>).</li></ul>
+<!--l. 89--><p class="noindent" >In this directory the source code structure is mirrored, thus it will have directories like <span 
+class="cmtt-10x-x-109">casa/IO/test</span>.
+</p><!--l. 92--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="x1-60003"></a>Creating a test</h3>
+<!--l. 93--><p class="noindent" >Casacore consists of several modules (e.g. <span 
+class="cmtt-10x-x-109">scimath</span>, <span 
+class="cmtt-10x-x-109">tables</span>). A module can consist of one or more
+packages (e.g. <span 
+class="cmtt-10x-x-109">casa/IO</span>, <span 
+class="cmtt-10x-x-109">casa/OS</span>). Each package contains one or more classes, usually one class per file.
+Test programs should be created in the <span 
+class="cmtt-10x-x-109">test </span>directory of a package.
+                                                                                         
+
+                                                                                         
+</p><!--l. 100--><p class="indent" >   Usually a test for class X is written in C++. The casacore convention is to name such a test tX,
+thus the source code for a test is in <span 
+class="cmtt-10x-x-109">&#x003C;module&#x003E;/&#x003C;package&#x003E;/test/tX.cc</span>. In order to build the
+test program, it needs to be added to the <span 
+class="cmtt-10x-x-109">tests </span>list in the <span 
+class="cmtt-10x-x-109">CMakeLists.txt </span>file in that test
+directory.
+</p><!--l. 108--><p class="indent" >   The test executable is created in the build directory <span 
+class="cmtt-10x-x-109">build/&#x003C;type&#x003E;/&#x003C;module&#x003E;/&#x003C;package&#x003E;/test</span>.
+</p><!--l. 111--><p class="indent" >   Besides the .cc file, a few more files can be created for a test. They also need to reside in the source
+test directory. When using a standard name as in the list below, they will be copied automatically to the
+build test directory when the test is run. </p>
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">tX.run </span>is a script. It can contain commands to do some preprocessing, postprocessing, to run
+     the test in different ways, etc. Note that such a script is usually a shell script, but could also
+     be a python script or any other executable script. If the script is not executable, it is run
+     through <span 
+class="cmtt-10x-x-109">sh</span>. <br 
+class="newline" />Note that the invocation of the test program in a script should in principle be preceeded by
+     <span 
+class="cmtt-10x-x-109">$casa</span><span 
+class="cmtt-10x-x-109">_checktool</span>. This environment variable defines an optional check tool (like valgrind)
+     as described in a next section. <br 
+class="newline" />Also note that in a script a test program should be run as <span 
+class="cmtt-10x-x-109">./tX</span>, because . does not need to
+     be part of the PATH.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">tX.in </span>is a text file giving test input lines. If existing, the standard input of the test program
+     (or script) is redirected to this file.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">tX.out </span>is a text file containing the expected standard output of the test. It is very useful for
+     regression testing. The next section discusses how it is used.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">tX.in</span><span 
+class="cmtt-10x-x-109">_* </span>are other inputs that can be used by the test. They can be simple files, but also
+     tar-files (which can be unpacked in the .run file) or directories (e.g., casacore tables).</li></ul>
+<!--l. 139--><p class="noindent" >Note that to run test tX, the test system will only copy files/directories as named above to the build test
+directory. After the test they will be removed from the build test directory. If test input files are named
+differently, they can be used in one of the two following ways.
+</p>
+     <ul class="itemize1">
+     <li class="itemize">For each test the test system defines the environment variable <span 
+class="cmtt-10x-x-109">testsrcdir </span>as the source
+     directory of that test. It can be used in test programs or scripts to copy a test file from the
+     test source directory or to use it directly. If using it directly, it should (of course) be used
+     readonly.
+     </li>
+     <li class="itemize">Another option to copy files from the source to the working directory is by adding appropriate lines
+     to <span 
+class="cmtt-10x-x-109">test/CMakeLists.txt </span>like:
+                                                                                         
+
+                                                                                         
+     <div class="verbatim" id="verbatim-2">
+     set&#x00A0;(datafiles
+     &#x00A0;<br />amp_0.fits
+     &#x00A0;<br />ampErr_0.fits
+     &#x00A0;<br />)
+     &#x00A0;<br />foreach&#x00A0;(file&#x00A0;${datafiles})
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;configure_file&#x00A0;(${CMAKE_CURRENT_SOURCE_DIR}/${file}&#x00A0;${CMAKE_CURRENT_BINARY_DIR}/${file}&#x00A0;COPYONLY)
+     &#x00A0;<br />endforeach&#x00A0;(file)
+</div>
+     <!--l. 163--><p class="nopar" > to let the cmake system copy the file to the working directory. An entire directory cannot be done
+     in a single line; each individual file has to be named.</p></li></ul>
+<!--l. 169--><p class="indent" >   If the test program or script creates output files, it is best to call them <span 
+class="cmtt-10x-x-109">tX</span><span 
+class="cmtt-10x-x-109">_tmp&#x003C;something&#x003E;</span>. In this
+way they will be removed automatically after the test is run.
+</p><!--l. 173--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+ id="x1-70004"></a>Running tests</h3>
+<!--l. 174--><p class="noindent" >The standard way to run a test is using <span 
+class="cmtt-10x-x-109">ctest</span>. It makes it possible to run all or some tests.
+                                                                                         
+
+                                                                                         
+</p>
+   <div class="verbatim" id="verbatim-3">
+ctest&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;all&#x00A0;tests
+&#x00A0;<br />ctest&#x00A0;-R&#x00A0;tArray&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;only&#x00A0;tests&#x00A0;matching&#x00A0;*tArray*
+&#x00A0;<br />ctest&#x00A0;-E&#x00A0;tArray&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;exclude&#x00A0;tests&#x00A0;matching&#x00A0;*tArray*
+</div>
+<!--l. 180--><p class="nopar" > If such a command is run in the casacore top build directory, all casacore tests are considered. However,
+it is also possible to run it in a subdirectory (e.g. casa or casa/IO/test) to execute only tests of a specific
+module or package.
+</p><!--l. 186--><p class="indent" >   The system runs a test as follows:
+     </p><ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x1-7002x1"><span 
+class="cmtt-10x-x-109">ctest </span>starts the script <span 
+class="cmtt-10x-x-109">cmake</span><span 
+class="cmtt-10x-x-109">_assay </span>to run the test.
+     </li>
+     <li 
+  class="enumerate" id="x1-7004x2"><span 
+class="cmtt-10x-x-109">cmake</span><span 
+class="cmtt-10x-x-109">_assay </span>copies the tX files mentioned in the previous section to the build test directory
+     where the test is run. Thereafter it starts <span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_assay </span>to run the actual test.
+     </li>
+     <li 
+  class="enumerate" id="x1-7006x3"><span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_assay </span>executes the test as follows:
+          <ul class="itemize1">
+          <li class="itemize">If <span 
+class="cmtt-10x-x-109">tX.run </span>exists, that script will be executed. otherwise <span 
+class="cmtt-10x-x-109">tX </span>itself.
+          </li>
+          <li class="itemize">If <span 
+class="cmtt-10x-x-109">tX.in </span>exists, it will be redirected as input to tX.
+          </li>
+          <li class="itemize">If <span 
+class="cmtt-10x-x-109">tX.out </span>exists, it will be compared with the standard output of the test. The comparison is
+          not done if the test exits with an error status. Before the comparison is done the output is
+          massaged as follows to cater for system specific output.
+              <ul class="itemize2">
+              <li class="itemize">The working directory is removed from the test output.
+              </li>
+              <li class="itemize">Text enclosed in <span 
+class="cmtt-10x-x-109">&#x003E;&#x003E;&#x003E; </span>and <span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;&#x003C; </span>on a single line is removed from the test output and
+              the expected output.
+              </li>
+              <li class="itemize">Text demarked by lines starting with <span 
+class="cmtt-10x-x-109">&#x003E;&#x003E;&#x003E; </span>and <span 
+class="cmtt-10x-x-109">&#x003C;&#x003C;&#x003C; </span>is removed from the test output
+              and the expected output.
+              </li>
+              <li class="itemize">If a diff of the resulting test output and expected output finds no differences, the
+              test passes. If any non-numerical value mismatches, the test fails.
+              </li>
+              <li class="itemize">Otherwise <span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_floatcheck </span>is run to compare all numerical values with a
+              relative error margin of 10e-5. The test fails if a value is found unequal.</li></ul>
+                                                                                         
+
+                                                                                         
+          </li>
+          <li class="itemize">At the end of the test the <span 
+class="cmtt-10x-x-109">tX</span><span 
+class="cmtt-10x-x-109">_tmp* </span>files/directories and the copied tX files are removed by
+          <span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_assay</span>.</li></ul>
+     </li></ol>
+<!--l. 219--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
+ id="x1-80004.1"></a>Return status</h4>
+<!--l. 220--><p class="noindent" >The return of a test program or script can be: <br 
+class="newline" />- 0 indicating success. <br 
+class="newline" />- 3 indicating that the test is skipped. This might be used if an expected input file is not available or if the
+test is run on a platform not supporting it. <span 
+class="cmtt-10x-x-109">cmake</span><span 
+class="cmtt-10x-x-109">_assay </span>will change this to 0, because ctest can only deal
+with success and failure. <br 
+class="newline" />- Any other value indicates a failure.
+</p><!--l. 229--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="x1-90005"></a>Valgrind support</h3>
+<!--l. 230--><p class="noindent" >If the environment variable CASACORE_CHECK has the value 1, the <span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_assay </span>script runs the
+test of an executable through <span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_memcheck</span>. This script runs the test through valgrind&#8217;s memcheck
+tool and tests for errors, definite and possible leaks, and leaked file descriptors. If any such
+problem is found, the valgrind output is put into a file <span 
+class="cmtt-10x-x-109">tX.checktool.valgrind </span>in the working
+directory.
+</p><!--l. 237--><p class="indent" >   If a .run file is used to execute the test, each invocation of the test program in the .run file should be
+preceeded by <span 
+class="cmtt-10x-x-109">$casa</span><span 
+class="cmtt-10x-x-109">_checktool</span>. This environment variable defines the valgrind command. If valgrind is
+not used, the variable is empty.
+</p><!--l. 242--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
+ id="x1-100005.1"></a>Using other checking tools</h4>
+<!--l. 243--><p class="noindent" >The same mechanism can be used to use a check tool different from valgrind&#8217;s memcheck.
+<br 
+class="newline" />CASACORE_CHECK can be defined as the name of a script or a command to use. In fact, defining
+CASACORE_CHECK as <span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_memcheck </span>would have the same effect as defining it as
+1.
+</p><!--l. 249--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
+ id="x1-110005.2"></a>Omitting tests in check tool</h4>
+                                                                                         
+
+                                                                                         
+<!--l. 250--><p class="noindent" >Sometimes a test run with a check tool can take too much time and should be omitted. There is no direct
+way to tell that a specific test should be omitted. However, it can easily be achieved by having a .run file
+for such a test without the <span 
+class="cmtt-10x-x-109">$casa</span><span 
+class="cmtt-10x-x-109">_checktool </span>prefix.
+</p><!--l. 256--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
+ id="x1-120006"></a>Test coverage support</h3>
+<!--l. 257--><p class="noindent" >The casacore build system has support for test coverage analysis. By building in the directory <span 
+class="cmtt-10x-x-109">build/cov</span>
+the code is automatically built this way. Currently, only the g++ compiler is supported. Support for clang
+will be added later. <br 
+class="newline" />The script <span 
+class="cmtt-10x-x-109">casacore</span><span 
+class="cmtt-10x-x-109">_cov </span>(in casacore/scons-tools) should be used to run the tests, analyze the test
+output, and generate coverage reports from it using <span 
+class="cmtt-10x-x-109">lcov </span>and <span 
+class="cmtt-10x-x-109">genhtml</span>. It works as follows:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">The coverage counters are initialized.
+     </li>
+     <li class="itemize">All tests are run using <span 
+class="cmtt-10x-x-109">ctest</span>.
+     </li>
+     <li class="itemize">Coverage results are assembled with <span 
+class="cmtt-10x-x-109">lcov </span>and converted to nice html pages using <span 
+class="cmtt-10x-x-109">genhtml</span>.
+     The root page is ./cov/index.html.
+     </li>
+     <li class="itemize">Both code and branch coverage info is generated for the module code, thus test program code
+     is removed. Function coverage info is not generated, because the tools cannot cope well with
+     functions automatically generated by the compiler.
+     </li>
+     <li class="itemize">The file <span 
+class="cmtt-10x-x-109">testcov.log </span>contains a log of the script&#8217;s output.
+     </li>
+     <li class="itemize">The script can be run at various levels.
+          <ul class="itemize2">
+          <li class="itemize">If run in build/cov it will run all tests and generate test coverage for all modules.
+          </li>
+          <li class="itemize">If run in e.g. build/cov/casa, it will generate test coverage for module casa.
+          </li>
+          <li class="itemize">If run in e.g. build/cov/casa/IO/test, it will generate test coverage for package IO of
+          module casa.</li></ul>
+     </li></ul>
+    
+</body></html> 
+
+                                                                                         
+
+

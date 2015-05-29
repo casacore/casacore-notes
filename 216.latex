@@ -1,0 +1,33 @@
+%% LEL
+%%----------------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage[colorlinks]{hyperref}
+
+%%-----------------------------------------------------------------------------
+%% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
+%% for these and other variables which override style settings.
+
+\setlength{\textheight}{260 mm}
+\setlength{\textwidth}{175 mm}
+\setlength{\parindent}{0 mm}
+\setlength{\parskip}{1.5 ex}
+%\setlength{\hoffset}{-250 mm}
+%\setlength{\voffset}{-2.75 cm}
+\hoffset -3.0truecm
+\voffset -2.5truecm
+\begin{document}
+
+\title{NOTE 216 --
+Lattice Expression Language Implementation}
+\author {Neil Killeen (ATNF) and Ger van Diepen (NFRA)}
+\date {1998 January 20}
+\maketitle
+%%---------------------------------------------------------------------------
+\ifpdf
+\else
+\href{../pdf/216.pdf}{A pdf version of this note is available.}
+\fi
+
+\input{216.dir/LEL}
+\end{document}
+

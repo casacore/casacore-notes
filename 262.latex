@@ -1,0 +1,288 @@
+%% Testing Framework
+%%----------------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage[colorlinks]{hyperref}
+\setlength{\textwidth}{6.5in}
+\setlength{\evensidemargin}{0.0in}
+\setlength{\oddsidemargin}{0.0in}
+\setlength{\textheight}{8.5in}
+\setlength{\topmargin}{0.0in}
+
+%%-----------------------------------------------------------------------------
+%% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
+%% for these and other variables which override style settings.
+
+\begin{document}
+
+\title{NOTE 262 --
+Casacore Testing Framework}
+\author {Ger van Diepen, ASTRON Dwingeloo}
+\date {2013 Aug 21}
+\maketitle
+\begin{abstract}
+Casacore has an advanced testing framework on top of the CMake environment.
+It makes it possible to do regression testing, coverage testing, and use tools like
+valgrind in an automatic way.
+\end{abstract}
+%%---------------------------------------------------------------------------
+\ifpdf
+\else
+\href{../pdf/262.pdf}{A pdf version of this note is available.}
+\fi
+
+\tableofcontents 
+\newpage
+
+\section{Introduction}
+Casacore comes with an extensive set of test programs. The
+tests can be built in the cmake environment used by casacore
+by adding {\tt -DBUILD\_TESTING=ON} to the {\tt cmake} command.
+Running the tests can be done using the {\tt make test} or
+{\tt ctest} command.
+For regression testing
+purposes the standard output of a test run can be compared with
+the expected output.
+Casacore uses a few scripts doing the actual execution of a test.
+
+A test be embedded in a script for optional preprocessing or postprocessing
+of a test or to run a test in multiple ways.
+\\Such a script can also be used to test an application (like {\tt taql}).
+
+\section{Casacore build system}
+Casacore uses the cmake system to build the code and test programs.
+Ctest is used to execute the test programs and to check for
+success or failure.
+
+\subsection{Source code structure}
+The casacore source code is divided into modules (e.g. casa,
+tables). Each module is divided into packages (e.g. casa/IO) containing
+the source files. Each package should have a test directory containing
+the test programs. Schematically it is organized like:
+\begin{verbatim}
+  casacore
+    module1        # 
+      package1
+        *.h
+        *cc
+        test
+          tX.cc
+\end{verbatim}
+The build
+system creates a library per module (e.g. {\tt libcasa\_tables}). 
+Modules are layered, thus the libraries not mutually dependent. 
+Packages in a module can use each other, also mutually.
+
+\subsection{Build directory structure}
+It is best to build casacore in a {\tt build} directory at the same
+level as the {\tt casacore} directory. In this way the source and
+build files are well separated.
+
+The code can be built in various ways (optimized, debug, etc.), so
+in the build directory a directory should be created telling the
+build type. The build system makes uses of the name to automatically
+set the compile options for a build type. It recognizes:
+\begin{itemize}
+\item {\tt dbg} or {\tt debug} defining a debug build (sets {\tt -O0 -g}).
+\item {\tt cov} defining a coverage build (sets {\tt --coverage}).
+\item Any other name defines an optimized build (sets {\tt -O3}).
+\end{itemize}
+In this directory the source code structure is mirrored, thus it
+will have directories like {\tt casa/IO/test}.
+
+\section{Creating a test}
+Casacore consists of several modules (e.g. {\tt scimath}, {\tt
+tables}). A
+module can consist of one or more packages (e.g. {\tt casa/IO}, {\tt
+casa/OS}). Each package contains one or more classes, usually one
+class per file. Test programs should be created in the {\tt test}
+directory of a package.
+
+Usually a test for class X is written in C++.
+The casacore convention
+is to name such a test tX, thus the source code for a test is in
+{\tt <module>/<package>/test/tX.cc}. In order to build the test
+program, it needs to be added to the
+{\tt tests} list in the {\tt CMakeLists.txt} file in that test
+directory.
+
+The test executable is created in the build directory
+{\tt build/<type>/<module>/<package>/test}.
+
+Besides the .cc file, a few more files can be created for a test. They
+also need to reside in the source test directory. When using a
+standard name as in the list below, they will be copied automatically to the build test
+directory when the test is run.
+\begin{itemize}
+\item {\tt tX.run} is a script. It can contain commands to do some
+preprocessing, postprocessing, to run the test in different ways, etc.
+Note that such a script is usually a shell script, but could also be
+a python script or any other executable script. If the script is not
+executable, it is run through {\tt sh}.
+\\Note that the invocation of the test program in a script should in
+principle be
+preceeded by {\tt \$casa\_checktool}. This environment variable defines an
+optional check tool (like valgrind) as described in a next section.
+\\Also note that in a script a test program should be run as {\tt ./tX}, because
+. does not need to be part of the PATH.
+
+\item {\tt tX.in} is a text file giving test input lines. If existing, the standard input of
+the test program (or script) is redirected to this file.
+
+\item {\tt tX.out} is a text file containing the expected standard
+output of the test. It is very useful for regression testing. The next
+section discusses how it is used.
+
+\item {\tt tX.in\_*} are other inputs that can be used by the
+test. They can be simple files, but also tar-files (which can be unpacked in
+the .run file) or directories (e.g., casacore tables).
+\end{itemize}
+Note that to run test tX, the test system will only copy files/directories as
+named above to the build test directory. After the test they will be
+removed from the build test directory. If test input files are
+named differently, they can be used in one of the two following ways.
+
+\begin{itemize}
+\item
+For each test the test system defines the environment variable {\tt
+testsrcdir} as the source directory of that test.
+It can be used in test programs or scripts to copy a
+test file from the test source directory or to use it directly. If
+using it directly, it should (of course) be used readonly.
+
+\item
+Another option to copy files from the source to the working directory is
+by adding appropriate lines to {\tt test/CMakeLists.txt} like:
+\begin{verbatim}
+set (datafiles
+amp_0.fits
+ampErr_0.fits
+)
+foreach (file ${datafiles})
+    configure_file (${CMAKE_CURRENT_SOURCE_DIR}/${file} ${CMAKE_CURRENT_BINARY_DIR}/${file} COPYONLY)
+endforeach (file)
+\end{verbatim}
+to let the cmake system copy the file to the working directory. An entire directory
+cannot be done in a single line; each individual file
+has to be named.
+\end{itemize}
+
+If the test program or script creates output files, it is best to call
+them {\tt tX\_tmp<something>}. In this way they will be removed
+automatically after the test is run.
+
+\section{Running tests}
+The standard way to run a test is using {\tt ctest}. It makes
+it possible to run all or some tests.
+\begin{verbatim}
+ctest                    # all tests
+ctest -R tArray          # only tests matching *tArray*
+ctest -E tArray          # exclude tests matching *tArray*
+\end{verbatim}
+If such a command is run in the casacore top build directory, all
+casacore tests are considered. However, it is also possible to run it
+in a subdirectory (e.g. casa or casa/IO/test) to execute only tests of
+a specific module or package.
+
+The system runs a test as follows:
+\begin{enumerate}
+\item {\tt ctest} starts the script {\tt cmake\_assay} to run the test.
+\item {\tt cmake\_assay} copies the tX files mentioned in the previous
+section to the build test directory where the test is run.
+Thereafter it starts {\tt casacore\_assay} to run the actual test.
+\item {\tt casacore\_assay} executes the test as follows:
+\begin{itemize}
+\item If {\tt tX.run} exists, that script will be executed. otherwise
+{\tt tX} itself.
+\item If {\tt tX.in} exists, it will be redirected as input to tX.
+\item If {\tt tX.out} exists, it will be compared with the standard
+output of the test. The comparison is not done if the test exits with
+an error status. Before the comparison is done the output is massaged
+as follows to cater for system specific output.
+\begin{itemize}
+\item The working directory is removed from the test output.
+\item Text enclosed in {\tt >>>} and {\tt <<<} on a single line is removed from the test
+output and the expected output.
+\item Text demarked by lines starting with {\tt >>>} and {\tt <<<} is removed from
+the test output and the expected output.
+\item If a diff of the resulting test output and expected output finds
+no differences, the test passes. If any non-numerical
+value mismatches, the test fails.
+\item Otherwise {\tt casacore\_floatcheck} is run to compare all
+numerical values with a relative error margin of 10e-5. The test fails
+if a value is found unequal.
+\end{itemize}
+\item At the end of the test the {\tt tX\_tmp*} files/directories and
+the copied tX files are removed by {\tt casacore\_assay}.
+\end{itemize}
+\end{enumerate}
+
+\subsection{Return status}
+The return of a test program or script can be:
+\\- 0 indicating success.
+\\- 3 indicating that the test is skipped. This might be used if an
+expected input file is not available or if the test is run on a platform not
+supporting it. {\tt cmake\_assay} will change this to 0, because ctest
+can only deal with success and failure.
+\\- Any other value indicates a failure.
+
+
+\section{Valgrind support}
+If the environment variable CASACORE\_CHECK has the value 1, the {\tt
+casacore\_assay} script runs the test of an executable through
+{\tt casacore\_memcheck}. This script runs the test through
+valgrind's memcheck tool and tests for errors, definite and possible
+leaks, and leaked file descriptors. If any such problem is found, the
+valgrind output is put into a file {\tt tX.checktool.valgrind} in the working directory.
+
+If a .run file is used to execute the test, each invocation of the
+test program in the .run file should be preceeded by {\tt
+\$casa\_checktool}. This environment variable defines the valgrind command.
+If valgrind is not used, the variable is empty.
+
+\subsection{Using other checking tools}
+The same mechanism can be used to use a check tool different
+from valgrind's memcheck.
+\\CASACORE\_CHECK can be defined as the
+name of a script or a command to use. In fact, defining CASACORE\_CHECK
+as {\tt casacore\_memcheck} would have the same effect as defining it as 1.
+
+\subsection{Omitting tests in check tool}
+Sometimes a test run with a check tool can take too much time and
+should be omitted.
+There is no direct way to tell that a specific test should be
+omitted. However, it can easily be achieved by having a 
+.run file for such a test without the {\tt \$casa\_checktool} prefix.
+
+\section{Test coverage support}
+The casacore build system has support for test coverage analysis.
+By building in the directory {\tt build/cov} the code is automatically
+built this way. Currently, only the g++ compiler is supported. Support
+for clang will be added later.
+\\The script {\tt casacore\_cov} (in casacore/scons-tools) should be
+used to run the tests, analyze the
+test output, and generate coverage reports from it using {\tt lcov}
+and {\tt genhtml}.
+It works as follows:
+\begin{itemize}
+\item The coverage counters are initialized.
+\item All tests are run using {\tt ctest}.
+\item Coverage results are assembled with {\tt lcov} and converted to
+nice html pages using {\tt genhtml}. The root page is ./cov/index.html.
+\item Both code and branch coverage
+info is generated for the module code, thus test program code is
+removed. Function coverage info is not generated, because
+the tools cannot cope well with functions automatically generated by
+the compiler. 
+\item The file {\tt testcov.log} contains a log of the script's output.
+\item The script can be run at various levels.
+\begin{itemize}
+\item If run in build/cov it will run all tests and generate test
+coverage for all modules.
+\item If run in e.g. build/cov/casa, it will generate test coverage
+for module casa.
+\item If run in e.g. build/cov/casa/IO/test, it will generate test coverage
+for package IO of module casa.
+\end{itemize}
+\end{itemize}
+
+\end{document}

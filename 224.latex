@@ -1,0 +1,26 @@
+\documentclass[11pt]{article}
+\usepackage[colorlinks]{hyperref}
+\usepackage{epsf}
+%%-----------------------------------------------------------------------------
+
+\begin{document}
+
+\title{NOTE 224 -- AIPS++ Least Squares background}
+  
+
+\author{Wim Brouw}
+
+\date{22 January 1999}
+
+\maketitle
+%%---------------------------------------------------------------------------
+\ifpdf
+\else
+\href{../pdf/224.pdf}{A pdf version of this note is available.}
+\fi
+
+
+\tableofcontents
+      
+\input{224.dir/lsq.latex}
+\end{document}

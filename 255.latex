@@ -1,0 +1,23 @@
+%% Table System Revisited
+%%----------------------------------------------------------------------------
+\documentclass[11pt]{article}
+\usepackage[colorlinks]{hyperref}
+
+%%-----------------------------------------------------------------------------
+%% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
+%% for these and other variables which override style settings.
+
+\begin{document}
+
+\title{NOTE 255 --
+AIPS++ Table System Revisited}
+\author {Ger van Diepen, ASTRON Dwingeloo}
+\date {2003 February 3}
+\maketitle
+%%---------------------------------------------------------------------------
+\ifpdf
+\else
+\href{../pdf/255.pdf}{A pdf version of this note is available.}
+\fi
+\input{255.dir/tablesystem}
+\end{document}

@@ -1,0 +1,26 @@
+\documentclass[11pt]{article}
+\include{aips2defs,epsf}
+\usepackage[colorlinks]{hyperref}
+%%-----------------------------------------------------------------------------
+
+\begin{document}
+
+\title{NOTE 233 -- Guide to Measures in C++}
+  
+
+\author{Wim Brouw}
+
+\date{20 May 2000}
+
+\maketitle
+%%---------------------------------------------------------------------------
+\ifpdf
+\else
+\href{../pdf/233.pdf}{A pdf version of this note is available.}
+\fi
+
+
+\tableofcontents
+      
+\input{233.dir/mguide.latex}
+\end{document}
