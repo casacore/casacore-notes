@@ -1,0 +1,50 @@
+\contentsline {section}{\numberline {1}General Syntax}{4}{section.1}
+\contentsline {subsection}{\numberline {1.1}Number Format}{4}{subsection.1.1}
+\contentsline {subsection}{\numberline {1.2}Range Specification}{4}{subsection.1.2}
+\contentsline {subsection}{\numberline {1.3}Units}{5}{subsection.1.3}
+\contentsline {subsection}{\numberline {1.4}Strings}{5}{subsection.1.4}
+\contentsline {subsection}{\numberline {1.5}White Spaces (blanks in expressions)}{6}{subsection.1.5}
+\contentsline {section}{\numberline {2}Time Selection}{6}{section.2}
+\contentsline {subsection}{\numberline {2.1}Syntax}{6}{subsection.2.1}
+\contentsline {section}{\numberline {3}Antenna/Baseline Selection}{8}{section.3}
+\contentsline {subsection}{\numberline {3.1}Syntax}{8}{subsection.3.1}
+\contentsline {subsubsection}{\numberline {3.1.1}Antenna Specification}{8}{subsubsection.3.1.1}
+\contentsline {subsubsection}{\numberline {3.1.2}Antenna@Station Specification}{9}{subsubsection.3.1.2}
+\contentsline {subsubsection}{\numberline {3.1.3}Baseline Specification}{10}{subsubsection.3.1.3}
+\contentsline {subsubsection}{\numberline {3.1.4}Baseline Negation Operator}{10}{subsubsection.3.1.4}
+\contentsline {subsubsection}{\numberline {3.1.5}Baseline negation and Regular Expression negation}{11}{subsubsection.3.1.5}
+\contentsline {subsubsection}{\numberline {3.1.6}Examples}{12}{subsubsection.3.1.6}
+\contentsline {subsection}{\numberline {3.2}Integers-as-names VLA Naming Convention}{12}{subsection.3.2}
+\contentsline {section}{\numberline {4}Field Selection}{13}{section.4}
+\contentsline {subsection}{\numberline {4.1}Syntax}{13}{subsection.4.1}
+\contentsline {section}{\numberline {5}UV Distance Selection}{13}{section.5}
+\contentsline {subsection}{\numberline {5.1}Syntax}{13}{subsection.5.1}
+\contentsline {section}{\numberline {6}Frequency Selection}{14}{section.6}
+\contentsline {subsection}{\numberline {6.1}Spectral Window Specification Syntax}{15}{subsection.6.1}
+\contentsline {subsubsection}{\numberline {6.1.1}Selection by ID}{16}{subsubsection.6.1.1}
+\contentsline {subsubsection}{\numberline {6.1.2}Selection By Name}{16}{subsubsection.6.1.2}
+\contentsline {subsubsection}{\numberline {6.1.3}Selection By Frequency}{16}{subsubsection.6.1.3}
+\contentsline {subsection}{\numberline {6.2}Channel Specification Syntax}{17}{subsection.6.2}
+\contentsline {subsection}{\numberline {6.3} Frequency Selection Syntax}{18}{subsection.6.3}
+\contentsline {subsubsection}{\numberline {6.3.1}Notes}{19}{subsubsection.6.3.1}
+\contentsline {section}{\numberline {7}Polarization Selection}{19}{section.7}
+\contentsline {section}{\numberline {8}"Scan intent'' Based Selection}{20}{section.8}
+\contentsline {subsection}{\numberline {8.1}Syntax}{20}{subsection.8.1}
+\contentsline {subsection}{\numberline {8.2}Examples}{21}{subsection.8.2}
+\contentsline {section}{\numberline {9}Scan/Sub-array Selection}{21}{section.9}
+\contentsline {subsection}{\numberline {9.1}Syntax}{21}{subsection.9.1}
+\contentsline {section}{\numberline {10}Using {\tt MSSelection}\ expressions in TaQL}{23}{section.10}
+\contentsline {section}{\numberline {A}Appendix: API Note - General Error Handling}{24}{appendix.A}
+\contentsline {subsection}{\numberline {A.1}Installing Error Handlers}{24}{subsection.A.1}
+\contentsline {section}{\numberline {B}Appendix: API Note - Using the {\tt MSSelection} module for other MS-like Tables}{26}{appendix.B}
+\contentsline {subsection}{\numberline {B.1}Using {\tt MSSelection}\ for {\tt CalTables}}{27}{subsection.B.1}
+\contentsline {section}{\numberline {C}Appendix: Usage Examples}{29}{appendix.C}
+\contentsline {subsection}{\numberline {C.1}Example 1}{29}{subsection.C.1}
+\contentsline {subsection}{\numberline {C.2}Example 2}{30}{subsection.C.2}
+\contentsline {subsection}{\numberline {C.3}Example 3}{30}{subsection.C.3}
+\contentsline {subsection}{\numberline {C.4}Example 4}{31}{subsection.C.4}
+\contentsline {subsection}{\numberline {C.5}Example 5}{32}{subsection.C.5}
+\contentsline {subsection}{\numberline {C.6}Example 6}{32}{subsection.C.6}
+\contentsline {subsection}{\numberline {C.7}Example 7}{33}{subsection.C.7}
+\contentsline {subsection}{\numberline {C.8}Example 8}{33}{subsection.C.8}
+\contentsline {subsection}{\numberline {C.9}Example 9}{34}{subsection.C.9}
