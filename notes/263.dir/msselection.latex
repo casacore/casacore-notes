@@ -1064,7 +1064,8 @@ as a comma separated list.  E.g.
 \section{"Scan intent'' Based Selection}
 
 "Scan intent" selection is based on the entries in the {\tt
-  "OBS\_MODE"} column of the {\tt "STATE"} sub-table.  The main table
+  "OBS\_MODE"} column of the {\tt "STATE"} sub-table, as described in
+the Railroad diagram format in Table~\ref{Tab:RAILROAD_INTENT}.  The main table
 of a Measurement Set has the {\tt "STATE\_ID"} column containing the
 row number of the {\tt "STATE"} sub-table appropriate for each row in
 the main table.  The {\tt "OBS\_MODE"} column of the {\tt STATE}
@@ -1072,6 +1073,20 @@ sub-table contains strings describing the observational intent.
 These intents are referred to as "scan intents" and the scan-intent
 expressions in the \MSS\ module can be used for data selection
 based on these intents.
+
+\begin{table}[h]
+  \caption{Railroad diagrams for the syntax of scan-intent expression.}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\small {Syntax of} & \small{Railroad Diagram}\\
+\hline
+   Scan Intent expresssion    &  \includegraphics[width=8cm]{INTENT-EXPR.png}  \\
+\hline
+\end{tabular}
+\label{Tab:RAILROAD_INTENT}
+\end{center}
+\end{table}
 
 \subsection{Syntax}
 

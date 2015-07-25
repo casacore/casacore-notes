@@ -78,4 +78,16 @@ set all_graphs {
       line {line T0 { or nil {line ~ T1}}}
     }
 
+   INTENT-EXPR
+    {
+	loop
+	{
+	    line {or RANGE {line {
+		loop 
+		{
+		    line {or STRING REGEX}
+		} & 
+	    }}}
+	} ,
+    }
 }
