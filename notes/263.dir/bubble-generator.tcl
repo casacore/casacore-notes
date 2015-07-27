@@ -651,6 +651,7 @@ proc draw_graph {name spec {do_xv 1}} {
   global DPI
   .c delete bgrect
   exec convert -density ${DPI}x$DPI -antialias $name.ps $name.png
+  exec rm -f $name.ps
   if {$do_xv} {
     if {[catch {exec xv $name.png &}]} {
       exec display $name.png &

@@ -30,7 +30,7 @@ set all_graphs {
 
     FREQ 
     {
-	line RANGESPEC {or nil K M G T} Hz
+	line RANGESPEC {line {or nil {line {or nil K M G T} Hz}}}
     }
 
     RANGE
