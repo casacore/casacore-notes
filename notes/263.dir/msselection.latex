@@ -698,6 +698,29 @@ specifications.  E.g.
 
 \section{UV Distance Selection}
 
+The UV-distance expression can be used to select data that lines
+within a given range of uv radius.  The syntax is described as a
+railroad diagram in Table~\ref{Tab:RAILROAD_UVDIST} and explained in
+sections below.
+
+\begin{table}[h]
+  \caption{Railroad diagrams for the syntax of UV-distance selection expression.}
+\begin{center}
+\begin{tabular}{|l|l|}
+\hline
+\small {Syntax of}         & \small{Railroad Diagram}\\
+\hline
+   UVDIST Expression     &  \includegraphics[width=8cm]{UVDIST-EXPR.png}\\
+\hline
+   UVDIST-UNIT      & \includegraphics[width=8cm]{UVDIST-UNIT.png}  \\
+\hline
+   UVDIST-PRECENT-EXPR   & \includegraphics[width=8cm]{UVDIST-PERCENT-EXPR.png}\\
+\hline
+\end{tabular}
+\label{Tab:RAILROAD_UVDIST}
+\end{center}
+\end{table}
+
 \subsection{Syntax}
 \label{SPWEXPR}
 

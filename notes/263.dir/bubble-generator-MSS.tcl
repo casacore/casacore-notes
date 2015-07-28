@@ -105,7 +105,7 @@ set all_graphs {
 	line {or 
 	    {line RANGE {or nil UVDIST-UNIT}}
 	    {line {or < >} NUMBER {or nil UVDIST-UNIT}}
-	    {line NUMBER {or nil {line UNIT {or nil UVDIST-PERCENT-EXPR}} UVDIST-PERCENT-EXPR}}
+	    {line NUMBER {or {line UVDIST-UNIT {or nil UVDIST-PERCENT-EXPR}} UVDIST-PERCENT-EXPR}}
 	}
     }
 }
