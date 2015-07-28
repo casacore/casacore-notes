@@ -30,7 +30,7 @@ set all_graphs {
 
     FREQ 
     {
-	line RANGESPEC {line {or nil {line {or nil K M G T} Hz}}}
+	line RANGESPEC {or nil {line {or nil K M G T} Hz}}
     }
 
     RANGE
@@ -89,5 +89,23 @@ set all_graphs {
 		} & 
 	    }}}
 	} ,
+    }
+
+   UVDIST-PERCENT-EXPR
+    {
+	line : NUMBER %
+    }
+
+   UVDIST-UNIT
+    {
+	line {or nil K M G} {or m lambda}
+    }
+   UVDIST-EXPR
+    {
+	line {or 
+	    {line RANGE {or nil UVDIST-UNIT}}
+	    {line {or < >} NUMBER {or nil UVDIST-UNIT}}
+	    {line NUMBER {or nil {line UNIT {or nil UVDIST-PERCENT-EXPR}} UVDIST-PERCENT-EXPR}}
+	}
     }
 }
