@@ -1,4 +1,4 @@
-\documentclass[12pt, twoside]{article}
+\documentclass[11pt, twoside]{article}
 %\documentstyle[12pt,amsmath]{article}
 %\usepackage{html}
 \usepackage{epsf}

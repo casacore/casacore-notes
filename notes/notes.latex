@@ -2,7 +2,6 @@
 \usepackage{hyperref}
 
 \begin{document}
-\label{Top}
 \title{casacore Notes Series}
 \maketitle
 
