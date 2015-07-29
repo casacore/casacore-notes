@@ -1,6 +1,7 @@
 \documentclass[11pt]{article}
 \include{aips2defs}
-\usepackage{hyperref,epsf}
+\usepackage[colorlinks]{hyperref}
+\usepackage{epsf}
 %%-----------------------------------------------------------------------------
 
 \begin{document}

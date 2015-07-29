@@ -11,7 +11,7 @@
 \usepackage{marvosym}
 \usepackage{xcolor}
 \usepackage{listings}
-\usepackage[breaklinks]{hyperref}
+\usepackage[breaklinks,colorlinks]{hyperref}
 
 \colorlet{light-gray}{gray!20}
 

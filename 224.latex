@@ -1,5 +1,6 @@
 \documentclass[11pt]{article}
-\usepackage{hyperref,epsf}
+\usepackage[colorlinks]{hyperref}
+\usepackage{epsf}
 %%-----------------------------------------------------------------------------
 
 \begin{document}

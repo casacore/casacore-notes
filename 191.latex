@@ -1,5 +1,5 @@
 \documentclass[11pt]{article}
-\usepackage{hyperref}
+\usepackage[colorlinks]{hyperref}
 
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
