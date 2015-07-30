@@ -1,0 +1,1968 @@
+<?xml version="1.0" encoding="iso-8859-1" ?> 
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
+"http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
+<html xmlns="http://www.w3.org/1999/xhtml"  
+> 
+<head><title>NOTE 223 &#8211; Lattice Expression Language</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<!-- xhtml,mathml,fn-in,css2,css-in,html --> 
+<meta name="src" content="223.tex" /> 
+<meta name="date" content="2015-07-30 09:21:00" /> 
+ 
+<style type="text/css"> 
+<!--  
+ 
+/* start css.sty */  
+.cmex-10{font-size:90%;}  
+.cmr-10x-x-109{}  
+.cmbx-10x-x-109{ font-weight: bold;}  
+.cmbsy-10x-x-109{font-weight: bold;}  
+.cmbsy-10x-x-109{font-weight: bold;}  
+.cmbsy-10x-x-109{font-weight: bold;}  
+.cmbsy-8{font-size:72%;font-weight: bold;}  
+.cmbsy-8{font-weight: bold;}  
+.cmbsy-8{font-weight: bold;}  
+.cmbsy-6{font-size:54%;font-weight: bold;}  
+.cmbsy-6{font-weight: bold;}  
+.cmbsy-6{font-weight: bold;}  
+.cmr-8{font-size:72%;}  
+.cmr-6{font-size:54%;}  
+.cmmi-10x-x-109{font-style: italic;}  
+.cmmi-8{font-size:72%;font-style: italic;}  
+.cmmi-6{font-size:54%;font-style: italic;}  
+.cmsy-10x-x-109{}  
+.cmsy-8{font-size:72%;}  
+.cmsy-6{font-size:54%;}  
+.cmr-17{font-size:154%;}  
+.cmr-12{font-size:109%;}  
+.cmtt-10x-x-109{font-family: monospace;}  
+.cmti-10x-x-109{ font-style: italic;}  
+p.noindent { text-indent: 0em }  
+td p.noindent { text-indent: 0em; margin-top:0em; }  
+p.nopar { text-indent: 0em; }  
+p.indent{ text-indent: 1.5em }  
+@media print {div.crosslinks {visibility:hidden;}}  
+a img { border-top: 0; border-left: 0; border-right: 0; }  
+center { margin-top:1em; margin-bottom:1em; }  
+td center { margin-top:0em; margin-bottom:0em; }  
+.Canvas { position:relative; }  
+math { text-indent: 0em; }  
+li p.indent { text-indent: 0em }  
+li p:first-child{ margin-top:0em; }  
+li p:last-child, li div:last-child { margin-bottom:0.5em; }  
+li p~ul:last-child, li p~ol:last-child{ margin-bottom:0.5em; }  
+ul.itemize1 {list-style-type: none;}  
+ul.itemize1 li.itemize:before { display: marker; marker-offset: 0.5em; content: "&#x2219; " }  
+ul.itemize2 {list-style-type: none;}  
+ul.itemize2 li.itemize:before { display: marker; marker-offset: 0.5em; content: "\protect \protect \edef OT1{OT1}\let \enc @update \relax \protect \edef cmr{cmr}\protect \edef m{m}\protect \edef n{n}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \ignorespaces \relax \protect \relax \protect \edef m{bx}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \OT 1\textendash " }  
+ul.itemize3 {list-style-type: none;}  
+ul.itemize3 li.itemize:before { display: marker; marker-offset: 0.5em; content: "* " }  
+.enumerate1 {list-style-type:decimal;}  
+.enumerate2 {list-style-type:lower-alpha;}  
+.enumerate3 {list-style-type:lower-roman;}  
+.enumerate4 {list-style-type:upper-alpha;}  
+div.newtheorem { margin-bottom: 2em; margin-top: 2em;}  
+.obeylines-h,.obeylines-v {white-space: nowrap; }  
+div.obeylines-v p { margin-top:0; margin-bottom:0; }  
+.overline{ text-decoration:overline; }  
+.overline img{ border-top: 1px solid black; }  
+td.displaylines {text-align:center; white-space:nowrap;}  
+.centerline {text-align:center;}  
+.rightline {text-align:right;}  
+div.verbatim {font-family: monospace; white-space: nowrap; text-align:left; clear:both; }  
+.fbox {padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
+div.fbox {display:table}  
+div.center div.fbox {text-align:center; clear:both; padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
+div.minipage{width:100%;}  
+div.center, div.center div.center {text-align: center; margin-left:1em; margin-right:1em;}  
+div.center div {text-align: left;}  
+div.flushright, div.flushright div.flushright {text-align: right;}  
+div.flushright div {text-align: left;}  
+div.flushleft {text-align: left;}  
+.underline{ text-decoration:underline; }  
+.underline img{ border-bottom: 1px solid black; margin-bottom:1pt; }  
+.framebox-c, .framebox-l, .framebox-r { padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
+.framebox-c {text-align:center;}  
+.framebox-l {text-align:left;}  
+.framebox-r {text-align:right;}  
+span.thank-mark{ vertical-align: super }  
+span.footnote-mark sup.textsuperscript, span.footnote-mark a sup.textsuperscript{ font-size:80%; }  
+div.footnotes{border-top:solid 1px black; border-bottom:solid 1px black; padding-bottom:1ex; padding-top:0.5ex; margin-right:15%; margin-top:2ex; font-style:italic; font-size:85%;}  
+div.footnotes p{margin-top:0; margin-bottom:0; text-indent:0;}  
+div.tabular, div.center div.tabular {text-align: center; margin-top:0.5em; margin-bottom:0.5em; }  
+table.tabular td p{margin-top:0em;}  
+table.tabular {margin-left: auto; margin-right: auto;}  
+td p:first-child{ margin-top:0em; }  
+td p:last-child{ margin-bottom:0em; }  
+div.td00{ margin-left:0pt; margin-right:0pt; }  
+div.td01{ margin-left:0pt; margin-right:5pt; }  
+div.td10{ margin-left:5pt; margin-right:0pt; }  
+div.td11{ margin-left:5pt; margin-right:5pt; }  
+table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }  
+td.td00{ padding-left:0pt; padding-right:0pt; }  
+td.td01{ padding-left:0pt; padding-right:5pt; }  
+td.td10{ padding-left:5pt; padding-right:0pt; }  
+td.td11{ padding-left:5pt; padding-right:5pt; }  
+table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }  
+.hline hr, .cline hr{ height : 1px; margin:0px; }  
+.tabbing-right {text-align:right;}  
+span.TEX {letter-spacing: -0.125em; }  
+span.TEX span.E{ position:relative;top:0.5ex;left:-0.0417em;}  
+a span.TEX span.E {text-decoration: none; }  
+span.LATEX span.A{ position:relative; top:-0.5ex; left:-0.4em; font-size:85%;}  
+span.LATEX span.TEX{ position:relative; left: -0.4em; }  
+div.float, div.figure {margin-left: auto; margin-right: auto;}  
+div.float img {text-align:center;}  
+div.figure img {text-align:center;}  
+.marginpar {width:20%; float:right; text-align:left; margin-left:auto; margin-top:0.5em; font-size:85%; text-decoration:underline;}  
+.marginpar p{margin-top:0.4em; margin-bottom:0.4em;}  
+.equation td{text-align:center; vertical-align:middle; }  
+td.eq-no{ width:5%; }  
+table.equation { width:100%; }  
+div.math-display, div.par-math-display{text-align:center;}  
+mtr.hline mtd{ border-bottom:black solid 1px; padding-top:2px; padding-bottom:0em; }  
+mtr.hline mtd mo{ display:none }  
+math .texttt { font-family: monospace; }  
+math .textit { font-style: italic; }  
+math .textsl { font-style: oblique; }  
+math .textsf { font-family: sans-serif; }  
+math .textbf { font-weight: bold; }  
+mo.MathClass-op + mi{margin-left:0.3em}  
+mi + mo.MathClass-op{margin-left:0.3em}  
+math mstyle[mathvariant="bold"] mi { font-weight: bold; font-style: normal; }  
+math mstyle[mathvariant="normal"] mi { font-weight: normal; font-style: normal; }  
+.partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}  
+.index-item, .index-subitem, .index-subsubitem {display:block}  
+div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}  
+div.caption span.id{font-weight: bold; white-space: nowrap; }  
+h1.partHead{text-align: center}  
+p.bibitem { text-indent: -2em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }  
+p.bibitem-p { text-indent: 0em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }  
+.paragraphHead, .likeparagraphHead { margin-top:2em; font-weight: bold;}  
+.subparagraphHead, .likesubparagraphHead { font-weight: bold;}  
+.quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify;}  
+.verse{white-space:nowrap; margin-left:2em}  
+div.maketitle {text-align:center;}  
+h2.titleHead{text-align:center;}  
+div.maketitle{ margin-bottom: 2em; }  
+div.author, div.date {text-align:center;}  
+div.thanks{text-align:left; margin-left:10%; font-size:85%; font-style:italic; }  
+.quotation {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; }  
+.abstract p {margin-left:5%; margin-right:5%;}  
+div.abstract {width:100%;}  
+/* end css.sty */  
+ 
+ 
+--> 
+</style> 
+</head><body 
+>
+   <div class="maketitle">
+                                                                     
+
+                                                                     
+                                                                     
+
+                                                                     
+
+<h2 class="titleHead">NOTE 223 &#8211; Lattice Expression Language</h2>
+<div class="author" ><span 
+class="cmr-12">Ger van Diepen (NFRA) and Neil Killeen (ATNF)</span></div><br />
+<div class="date" ><span 
+class="cmr-12">2003 November 10</span></div>
+   </div><a 
+href="223.pdf" >A pdf version of this note is available.</a>
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+ id="x1-10001"></a>Introduction</h3>
+<!--l. 3--><p class="noindent" >The Lattice Expression Language (LEL) makes it possible to do arithmetic on
+lattices (in particular on images [which are just lattices plus coordinates]) in
+AIPS++. An expression can be seen as a lattice (or image) in itself. It can be
+used in any operation where a normal image is used.
+</p><!--l. 9--><p class="indent" >   To summarize, the following functionality is supported: </p>
+     <ul class="itemize1">
+     <li class="itemize">The common mathematical, comparison, and relational <a 
+href="#x1-40002.2">operators</a>.
+     </li>
+     <li class="itemize">An extensive list of mathematical and logical <a 
+href="#x1-50002.3">functions</a>.
+     </li>
+     <li class="itemize">Mixed <a 
+href="#x1-20002">data type</a> arithmetic and automatic data type promotion.
+     </li>
+     <li class="itemize">Support of image <a 
+href="#x1-110003">masks</a>.
+     </li>
+     <li class="itemize"><a 
+href="#x1-130003.2">Masking</a> using boolean expressions.
+     </li>
+     <li class="itemize">Handling of <a 
+href="#x1-140003.3">masks</a> in an expression.
+                                                                     
+
+                                                                     
+     </li>
+     <li class="itemize">Support of image <a 
+href="#x1-150004">regions</a>.
+     </li>
+     <li class="itemize">Interface from both C++ and Python (and Glish).</li></ul>
+<!--l. 24--><p class="indent" >   The first section explains the syntax. The last sections show the interface to
+LEL using Python or C++. The Python interface makes it possible to embed
+Python variables and expressions in a LEL command. At the end some <a 
+href="#x1-230007">examples</a>
+are given. If you like, you can go straight to the examples and hopefully
+immediately be able to do some basic things.
+</p><!--l. 31--><p class="noindent" >LEL operates on lattices, which are a generalization of arrays. As said above a
+particular type of lattice is an image; they will be used most often. Because
+lattices can be very large and usually reside on disk, an expression is only
+evaluated when a chunk of its data is requested. This is similar to reading only
+the requested chunk of data from a disk file.
+</p><!--l. 39--><p class="noindent" >LEL is quite efficient and can therefore be used well in C++ and Python code.
+Note however, that it can never be as efficient as carefully constructed C++
+code.
+</p><!--l. 43--><p class="noindent" ><a 
+href="216.html" >Note 216</a> gives a detailed description how LEL is implemented using various
+C++ classes.
+</p><!--l. 47--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="x1-20002"></a>Expressions</h3>
+<!--l. 49--><p class="noindent" >A LEL expression can be as simple or as complex as one likes using the standard
+<a 
+href="#x1-40002.2">arithmetic, comparison, and logical operators</a>. Parentheses can be used to group
+subexpressions. <br 
+class="newline" />The operands in an expression can be <a 
+href="#x1-100002.4">lattices</a>, <a 
+href="#x1-30002.1">constants</a>, <a 
+href="#x1-50002.3">functions</a>, and <a 
+href="#x1-130003.2">condition
+masks</a>. <a 
+href="#x1-150004">lattice regions and masks</a>. E.g.
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-1">
+&#x00A0;&#x00A0;lat1&#x00A0;+&#x00A0;10
+&#x00A0;<br />&#x00A0;&#x00A0;lat1&#x00A0;+&#x00A0;2&#x00A0;*&#x00A0;max(lat2,1)
+&#x00A0;<br />&#x00A0;&#x00A0;amp(lat1,&#x00A0;lat2)
+&#x00A0;<br />&#x00A0;&#x00A0;lat1&#x00A0;+&#x00A0;mean(img[region1])
+&#x00A0;<br />&#x00A0;&#x00A0;lat1&#x00A0;+&#x00A0;mean(lat2[lat2&#x003E;5&#x00A0;&amp;&amp;&#x00A0;lat2&#x003C;10])
+</div>
+<!--l. 66--><p class="nopar" >
+</p><!--l. 68--><p class="indent" >   The last example shows how a boolean expression can be used to form a mask
+on a lattice. Only the pixels fulfilling the boolean condition will be used when
+calculating the mean.
+</p><!--l. 72--><p class="noindent" >In general the result of a LEL expression is a lattice, but it can be a scalar too. If
+is is a scalar, it will be handled correctly by C++ and Python functions using it
+as the source in, say, an assignment to another lattice.
+</p><!--l. 77--><p class="noindent" >LEL fully supports masks. In most cases the mask of a subexpression is
+formed by and-ing the masks of its operands. It is fully explained in a <a 
+href="#x1-140003.3">later
+section</a>.
+</p><!--l. 83--><p class="indent" >   LEL supports the following data types:
+     </p><dl class="description"><dt class="description">
+ <span 
+class="cmbx-10x-x-109">Bool</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmbx-10x-x-109">Float</span> </dt><dd 
+class="description">single precision real (which includes integers)
+     </dd><dt class="description">
+ <span 
+class="cmbx-10x-x-109">Double</span> </dt><dd 
+class="description">double precision real
+     </dd><dt class="description">
+ <span 
+class="cmbx-10x-x-109">Complex</span>  </dt><dd 
+class="description">single precision complex
+     </dd><dt class="description">
+ <span 
+class="cmbx-10x-x-109">DComplex</span>  </dt><dd 
+class="description">double precision complex</dd></dl>
+<!--l. 91--><p class="noindent" >All these data types can be used for scalars and lattices. <br 
+class="newline" />LEL will do automatic data type promotion when needed. E.g. when a Double
+and a Complex are used in an operation, they will be promoted to DComplex. It
+is also possible to promote explicitly using the conversion functions (FLOAT,
+                                                                     
+
+                                                                     
+DOUBLE, COMPLEX and DCOMPLEX). These functions can also be used to
+demote a data type (e.g. convert from Double to Float), which can sometimes be
+useful for better performance.
+</p><!--l. 100--><p class="indent" >   <span 
+class="cmbx-10x-x-109">Region </span>is a specific data type. It indicates a region of any type (in pixel or
+world coordinates, relative, fractional). A region can only be applied to a lattice
+subexpression using operator <span 
+class="cmtt-10x-x-109">[]</span>.
+</p><!--l. 106--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
+ id="x1-30002.1"></a>Constants</h4>
+<!--l. 107--><p class="noindent" >Scalar constants of the various data types can be formed as follows (which is
+similar to Python): </p>
+     <ul class="itemize1">
+     <li class="itemize">A  Bool  constant  can  be  given  as  T  or  F  (meaning  true  and  false
+     respectively).
+     </li>
+     <li class="itemize">A Float constant can be any integer or floating-point number. E.g.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-2">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;3
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;3.14
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;3.14e-2
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 117--><p class="nopar" >
+     </p></li>
+     <li class="itemize">A Double constant is a floating-point number using a D for the exponent.
+     One can also use the <span 
+class="cmtt-10x-x-109">DOUBLE </span>function. E.g.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-3">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;1d2
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;3.14d-2
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;double(2)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 124--><p class="nopar" >
+     </p></li>
+     <li class="itemize">The imaginary part of a Complex or DComplex constant is formed by a
+     Float or Double constant immediately followed by a lowercase <span 
+class="cmbx-10x-x-109">i </span>or <span 
+class="cmbx-10x-x-109">j</span>. A full
+     complex constant is formed by adding another constant as the real part.
+     E.g.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-4">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;1.5&#x00A0;+&#x00A0;2j
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;2i+1.5&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;is&#x00A0;identical
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 133--><p class="nopar" > Note that a full complex constant has to be enclosed in parentheses when,
+     say, a multiplication is performed on it. E.g.
+                                                                     
+
+                                                                     
+</p>
+     <div class="verbatim" id="verbatim-5">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;2&#x00A0;*&#x00A0;(1.5+2j)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 138--><p class="nopar" ></p></li></ul>
+<!--l. 140--><p class="noindent" >The functions <span 
+class="cmtt-10x-x-109">pi() </span>and <span 
+class="cmtt-10x-x-109">e() </span>should be used to specify the constants pi and e. Note
+that they form a Double constant, so when using e.g. pi with a Float lattice, it
+could make a lot of sense to convert pi to a Float. Otherwise the lattice is
+converted to a Double, which is time-consuming. However, one may have very
+valid reasons to convert to Double, e.g. to ensure that the calculations are
+accurate enough.
+</p><!--l. 148--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
+ id="x1-40002.2"></a>Operators</h4>
+<!--l. 149--><p class="noindent" >The following operators can be used (with their normal meaning and
+precedence):
+     </p><dl class="description"><dt class="description">
+ </dt><dd 
+class="description">Unary <span 
+class="cmbx-10x-x-109">+ </span>and <span 
+class="cmbx-10x-x-109">- </span><br 
+class="newline" />Can not be used with Bool operands.
+     </dd><dt class="description">
+ </dt><dd 
+class="description">Unary <span 
+class="cmbx-10x-x-109">! </span><br 
+class="newline" />Logical NOT operator. Can only be used with Bool operands. <br 
+class="newline" />For a region it forms the complement.
+     </dd><dt class="description">
+ </dt><dd 
+class="description">Binary <!--l. 158--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mo 
+class="MathClass-bin">&#x2227;</mo></math><span 
+class="cmbx-10x-x-109">,</span>
+     <span 
+class="cmbx-10x-x-109">*, /, %, +</span>, and <span 
+class="cmbx-10x-x-109">- </span><br 
+class="newline" />% is the modulo operator. E.g. <span 
+class="cmtt-10x-x-109">3%1.4 </span>results in <span 
+class="cmtt-10x-x-109">0.2 </span>and <span 
+class="cmtt-10x-x-109">-10%3 </span>results
+     in <span 
+class="cmtt-10x-x-109">-1</span>. <br 
+class="newline" /><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span> is the power operator. <br 
+class="newline" />All operators are left-associative, except <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span> which is right-associative;
+     thus <span 
+class="cmtt-10x-x-109">2</span><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span><span 
+class="cmtt-10x-x-109">1</span><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span><span 
+class="cmtt-10x-x-109">2 </span>results in <span 
+class="cmtt-10x-x-109">2</span>. <br 
+class="newline" />Operator % can only be used for real operands, while the others can
+     be used for real and complex operands. <br 
+class="newline" />Operator <span 
+class="cmbx-10x-x-109">- </span>can also be used for regions. It forms the difference of the
+     left and right operand.
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmbx-10x-x-109">==, </span><!--l. 170--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mo 
+class="MathClass-punc">!</mo> <mo 
+class="MathClass-rel">=</mo></math><span 
+class="cmbx-10x-x-109">,</span>
+     <!--l. 170--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math><span 
+class="cmbx-10x-x-109">,</span>
+     <!--l. 170--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo><mo 
+class="MathClass-rel">=</mo></math><span 
+class="cmbx-10x-x-109">,</span>
+     <!--l. 170--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>,
+     and <!--l. 170--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo><mo 
+class="MathClass-rel">=</mo></math>
+     <br 
+class="newline" />For Bool operands only <!--l. 171--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">=</mo><mo 
+class="MathClass-rel">=</mo></math>
+     and <!--l. 171--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mo 
+class="MathClass-punc">!</mo> <mo 
+class="MathClass-rel">=</mo></math>
+     can be used. <br 
+class="newline" />A Bool operand cannot be compared with a numeric operand. <br 
+class="newline" />The comparison operators use the norm for complex values.
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmbx-10x-x-109">&amp;&amp; </span>and <!--l. 174--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mo 
+class="MathClass-rel">&#x2223;</mo><mo 
+class="MathClass-rel">&#x2223;</mo></math>
+     <br 
+class="newline" />Logical AND and OR operator. <br 
+class="newline" />These operators can only be used with Bool operands. <br 
+class="newline" />When used on a region <span 
+class="cmbx-10x-x-109">&amp;&amp; </span>forms the intersection, while <!--l. 178--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mo 
+class="MathClass-rel">&#x2223;</mo><mo 
+class="MathClass-rel">&#x2223;</mo></math>
+     forms the union.</dd></dl>
+<!--l. 180--><p class="noindent" >
+     </p><dl class="description"><dt class="description">
+ </dt><dd 
+class="description">The precedence order is: <br 
+class="newline" /><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span> <br 
+class="newline" />unary <span 
+class="cmtt-10x-x-109">+, -, ! </span><br 
+class="newline" /><span 
+class="cmtt-10x-x-109">*, /, % </span><br 
+class="newline" /><span 
+class="cmtt-10x-x-109">+, - </span><br 
+class="newline" /><!--l. 186--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">=</mo><mo 
+class="MathClass-rel">=</mo><mo 
+class="MathClass-punc">,</mo><mo 
+class="MathClass-punc">!</mo> <mo 
+class="MathClass-rel">=</mo><mo 
+class="MathClass-punc">,</mo><mo 
+class="MathClass-rel">&#x003E;</mo><mo 
+class="MathClass-punc">,</mo><mo 
+class="MathClass-rel">&#x003E;</mo><mo 
+class="MathClass-rel">=</mo><mo 
+class="MathClass-punc">,</mo><mo 
+class="MathClass-rel">&#x003C;</mo><mo 
+class="MathClass-punc">,</mo><mo 
+class="MathClass-rel">&#x003C;</mo><mo 
+class="MathClass-rel">=</mo></math>
+     <br 
+class="newline" /><span 
+class="cmtt-10x-x-109">&amp;&amp; </span><br 
+class="newline" /><!--l. 188--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mo 
+class="MathClass-rel">&#x2223;</mo><mo 
+class="MathClass-rel">&#x2223;</mo></math></dd></dl>
+<!--l. 190--><p class="noindent" >Note that <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span> has a higher precedence than the unary operators. <br 
+class="newline" />E.g. <span 
+class="cmtt-10x-x-109">-3</span><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span><span 
+class="cmtt-10x-x-109">2 </span>results in <span 
+class="cmtt-10x-x-109">-9</span>.
+                                                                     
+
+                                                                     
+</p><!--l. 193--><p class="indent" >   The operands of these operators can be 2 scalars, 2 lattices, or a lattice and a
+scalar. When 2 lattices are used, they should in principle conform; i.e.
+they should have the same shape and coordinates. However, LEL will
+try if it can extend one lattice to make it conformant with the other. It
+can do that if both lattices have coordinates and if one lattice is a true
+subset of the other (thus if one lattice has all the coordinate axes of
+the other lattice and if those axes have the same length or have length
+1). If so, LEL will add missing axes and/or stretch axes with length
+1
+</p><!--l. 204--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.3   </span> <a 
+ id="x1-50002.3"></a>Functions</h4>
+<!--l. 205--><p class="noindent" >In the following tables the function names are shown in uppercase, while the
+result and argument types are shown in lowercase. Note, however, that function
+names are case-insensitive. All functions can have scalar and/or lattice
+arguments. <br 
+class="newline" />When a function can have multiple arguments (e.g. atan2), the operands are
+automatically promoted where needed.
+</p><!--l. 212--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.3.1   </span> <a 
+ id="x1-60002.3.1"></a>Mathematical functions</h5>
+<!--l. 213--><p class="noindent" >Several functions can operate on real or complex arguments. The data types of
+such arguments are given as &#8217;numeric&#8217;.
+     </p><dl class="description"><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Double PI()</span> </dt><dd 
+class="description">Returns the value of <span 
+class="cmbx-10x-x-109">pi</span>.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Double E()</span> </dt><dd 
+class="description">Returns the value of <span 
+class="cmbx-10x-x-109">e</span>.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric SIN(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric SINH(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real ASIN(real)</span> </dt><dd 
+class="description">
+                                                                     
+
+                                                                     
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric COS(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric COSH(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real ACOS(real)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real TAN(real)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real TANH(real)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real ATAN(real)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real ATAN2(real y, real x)</span> </dt><dd 
+class="description">Returns <span 
+class="cmtt-10x-x-109">ATAN(y/x) </span>in correct quadrant.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric EXP(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric LOG(numeric)</span> </dt><dd 
+class="description">Natural logarithm.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric LOG10(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric POW(numeric, numeric)</span> </dt><dd 
+class="description">The same as operator <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span>.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric SQRT(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">complex COMPLEX(real, real)</span> </dt><dd 
+class="description">Create a complex number from two reals.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">complex CONJ(complex)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real REAL(numeric)</span> </dt><dd 
+class="description">Real value itself or real part of a complex number.
+                                                                     
+
+                                                                     
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real IMAG(complex)</span> </dt><dd 
+class="description">Imaginary part of a complex number.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real NORM(numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real ABS(numeric), real AMPLITUDE(numeric)</span> </dt><dd 
+class="description">both                   find
+     the amplitude of a complex number. If the numeric argument is real,
+     imaginary part zero is assumed.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real ARG(complex), real PHASE(complex)</span> </dt><dd 
+class="description">both  find  the  phase  of  a
+     complex number.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric MIN(numeric, numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric MAX(numeric, numeric)</span> </dt><dd 
+class="description">
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Float SIGN(real)</span> </dt><dd 
+class="description">Returns  -1  for  a  negative  value,  0  for  zero,  1  for  a
+     positive value.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real ROUND(real)</span> </dt><dd 
+class="description">Rounds the absolute value of the number. <br 
+class="newline" />E.g. <span 
+class="cmtt-10x-x-109">ROUND(-1.6) = -2</span>.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real FLOOR(real)</span> </dt><dd 
+class="description">Works towards negative infinity. <br 
+class="newline" />E.g. <span 
+class="cmtt-10x-x-109">FLOOR(-1.2) = -2</span>
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real CEIL(real)</span> </dt><dd 
+class="description">Works towards positive infinity.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real FMOD(real, real)</span> </dt><dd 
+class="description">The same as operator %.</dd></dl>
+<!--l. 259--><p class="noindent" >Note that the trigonometric functions need their arguments in radians.
+                                                                     
+
+                                                                     
+</p><!--l. 261--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.3.2   </span> <a 
+ id="x1-70002.3.2"></a>Scalar result functions</h5>
+<!--l. 262--><p class="noindent" >The result of these functions is a scalar.
+     </p><dl class="description"><dt class="description">
+ <span 
+class="cmtt-10x-x-109">double NELEMENTS(anytype)</span> </dt><dd 
+class="description">Return number of elements in a lattice (1
+     for a scalar).
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">double NDIM(anytype)</span> </dt><dd 
+class="description">Return dimensionality of a lattice (0 for a scalar).
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">double LENGTH(anytype, real axis)</span> </dt><dd 
+class="description">Return  length  of  a  lattice  axis
+     (returns 1 for a scalar or if axis exceeds number of axes). Axis number
+     is 1-relative.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Bool ANY(Bool)</span> </dt><dd 
+class="description">Is any element true?
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Bool ALL(Bool)</span> </dt><dd 
+class="description">Are all elements true?
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Double NTRUE(Bool)</span> </dt><dd 
+class="description">Number of true elements.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Double NFALSE(Bool)</span> </dt><dd 
+class="description">Number of false elements.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric SUM(numeric)</span> </dt><dd 
+class="description">Return sum of all elements.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric MIN(numeric)</span> </dt><dd 
+class="description">Return minimum of all elements.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric MAX(numeric)</span> </dt><dd 
+class="description">Return maximum of all elements.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real MEDIAN(real)</span> </dt><dd 
+class="description">Return median of a lattice. For smallish lattices (max.
+     512*512 elements) the median can be found in 1 pass. Other lattices
+     usually require 2 passes.
+                                                                     
+
+                                                                     
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real FRACTILE(real,float)</span> </dt><dd 
+class="description">Return  the  fractile  of  a  lattice  at  the
+     fraction given by the second argument. A fraction of 0.5 is the same
+     as the median. The fraction has to be between 0 and 1. For smallish
+     lattices (max. 512*512 elements) the fractile can be found in 1 pass.
+     Other lattices usually require 2 passes.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real FRACTILERANGE(real,float,float)</span> </dt><dd 
+class="description">Return the range between the
+     fractiles at the fraction given by the second and third argument. The
+     fractions have to be between 0 and 1 and the second fraction has to be
+     greater than the first one. The second fraction is optional and defaults
+     to <span 
+class="cmtt-10x-x-109">1-fraction1</span>. Thus <br 
+class="newline" /><span 
+class="cmtt-10x-x-109">FRACTILERANGE(lat, 0.1) </span><br 
+class="newline" /><span 
+class="cmtt-10x-x-109">FRACTILERANGE(lat, 0.1, 0.9) </span><br 
+class="newline" /><span 
+class="cmtt-10x-x-109">FRACTILE(lat,0.9) - FRACTILE(lat,0.1) </span><br 
+class="newline" />are equal, be it that the last one is about twice as slow. <br 
+class="newline" />For smallish lattices (max. 512*512 elements) the fractile range can be
+     found in 1 pass. Other lattices usually require 2 passes.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric MEAN(numeric)</span> </dt><dd 
+class="description">Return mean of all elements.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric VARIANCE(numeric)</span> </dt><dd 
+class="description">Return variance <br 
+class="newline" />(<span 
+class="cmtt-10x-x-109">sum((a(i) - mean(a))**2) / (nelements(a) - 1)</span>). <br 
+class="newline" />All calculations are done in double precision.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric STDDEV(numeric)</span> </dt><dd 
+class="description">Return standard deviation (the square root of
+     the variance).
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real AVDEV(numeric)</span> </dt><dd 
+class="description">Return average deviation. <br 
+class="newline" />(<span 
+class="cmtt-10x-x-109">sum(abs(a(i) - mean(a))) / nelements(a)</span>). <br 
+class="newline" />All calculations are done in double precision.</dd></dl>
+<!--l. 317--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.3.3   </span> <a 
+ id="x1-80002.3.3"></a>Miscellaneous functions</h5>
+                                                                     
+
+                                                                     
+<!--l. 318--><p class="noindent" >
+     </p><dl class="description"><dt class="description">
+ <span 
+class="cmtt-10x-x-109">numeric REBIN(numeric,[f1,f2,...])</span> </dt><dd 
+class="description">rebins the image using the given
+     (integer) factors. It averages the pixels in each bin with shape [f1,f2,...].
+     Masked-off pixels are not taken into account. If all pixels in a bin are
+     masked off, the resulting pixel will be masked off. The length of the factor
+     list [f1,f2,...] has to match the dimensionality of the image. The factors do
+     not need to divide the axes lengths evenly. Each factor can be a literal
+     value, but it can also be any expression resulting in a real scalar value.
+     <br 
+class="newline" />For instance, for a 3-dimensional image:
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-6">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;rebin(lat,[2,2,1])
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 332--><p class="nopar" > will halve the size of axis 1 and 2.
+     </p></dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real AMP(real,real)</span> </dt><dd 
+class="description">It returns the square root of the quadrature sum of the
+     two arguments. Thus
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-7">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;amp(lat1,lat2)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 339--><p class="nopar" > gives <!--l. 340--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><msqrt><mrow><mrow ><mo 
+class="MathClass-open">(</mo><mrow><mi 
+>l</mi><mi 
+>a</mi><mi 
+>t</mi><msup><mrow 
+><mn>1</mn></mrow><mrow 
+><mn>2</mn> </mrow> </msup 
+> <mo 
+class="MathClass-bin">+</mo> <mi 
+>l</mi><mi 
+>a</mi><mi 
+>t</mi><msup><mrow 
+><mn>2</mn></mrow><mrow 
+><mn>2</mn> </mrow> </msup 
+> </mrow><mo 
+class="MathClass-close">)</mo></mrow></mrow></msqrt></math>.
+     This can be used to form, for example, (biased) polarized intensity images
+     when lat1 and lat2 are Stokes Q and U images.
+     </p></dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real PA(real,real)</span> </dt><dd 
+class="description">It returns a &#8220;position angle&#8221; (in degrees) from the two
+     lattices. That is,
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-8">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pa(lat1,lat2)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 348--><p class="nopar" > gives <!--l. 349--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mn>1</mn><mn>8</mn><mn>0</mn><mo 
+class="MathClass-bin">&#x2215;</mo><mi 
+>&#x03C0;</mi> <mo 
+class="MathClass-bin">*</mo> <mi 
+>a</mi><mi 
+>t</mi><mi 
+>a</mi><mi 
+>n</mi><mn>2</mn><mrow ><mo 
+class="MathClass-open">(</mo><mrow><mi 
+>l</mi><mi 
+>a</mi><mi 
+>t</mi><mn>1</mn><mo 
+class="MathClass-punc">,</mo><mi 
+>l</mi><mi 
+>a</mi><mi 
+>t</mi><mn>2</mn></mrow><mo 
+class="MathClass-close">)</mo></mrow><mo 
+class="MathClass-bin">&#x2215;</mo><mn>2</mn></math>.
+     This can be used to form, for example, linear polarization position angle
+     images when lat1 and lat2 are Stokes Q and U images, <span 
+class="cmti-10x-x-109">respectively</span>.
+     </p></dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">real SPECTRALINDEX(real,real)</span> </dt><dd 
+class="description">It returns a the spectral index made from
+     the two lattices. That is,
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-9">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;log(s1/s2)&#x00A0;/&#x00A0;log(f1/f2)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 356--><p class="nopar" > where s1 and s2 are the source fluxes in the lattices and f1 and f2 are the
+     frequencies of the spectral axes of both lattices. Similar to e.g. operator
+     + the lattices do not need to have the same shape. One can be
+     extended/stretched as needed.
+     </p></dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">anytype VALUE(anytype)</span> </dt><dd 
+class="description">It returns the argument without its possible mask,
+     thus it removes the mask from the argument. The section about <a 
+href="#x1-140003.3">mask
+     handling</a> discusses it in more detail.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Bool MASK(anytype)</span> </dt><dd 
+class="description">It returns the mask of the argument. The section about
+     <a 
+href="#x1-140003.3">mask handling</a> discusses it in more detail.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Bool ISNAN(anytype)</span> </dt><dd 
+class="description">It tests lattice elements on a NaN value and sets the
+     corresponding output element to T if so; otherwise to F.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">anytype REPLACE(anytype, anytype)</span> </dt><dd 
+class="description">The first argument has to be a lattice
+     (expression). The optional second argument can be a scalar or a lattice
+     (expression). It defaults to 0. <br 
+class="newline" />The result of the function is a copy of the first argument, where each
+     masked-off element in the first argument is replaced by the corresponding
+     element in the second argument. The result&#8217;s mask is a copy of the mask of
+     the first argument.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-10">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;replace&#x00A0;(lat1,&#x00A0;0)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;replace&#x00A0;(lat1,&#x00A0;lat2)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 384--><p class="nopar" > The first example replaces each masked-off element in <span 
+class="cmtt-10x-x-109">lat1 </span>by 0.
+     <br 
+class="newline" />The second example replaces it by the corresponding element in <span 
+class="cmtt-10x-x-109">lat2</span>. A
+     possible mask of <span 
+class="cmtt-10x-x-109">lat2 </span>is not used.
+     </p></dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">anytype IIF(Bool, anytype, anytype)</span> </dt><dd 
+class="description">The first argument is a boolean
+     expression. If an element in it is true, the corresponding element from the
+     second argument is taken, otherwise from the third argument. It is similar
+     to the ternary <span 
+class="cmtt-10x-x-109">?: </span>construct in C++. E.g.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-11">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;iif&#x00A0;(lat1&#x003E;0,&#x00A0;lat1,&#x00A0;0)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;same&#x00A0;as&#x00A0;max(lat1,0)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;iif&#x00A0;(sum(lat1)&#x003E;0,&#x00A0;lat1,&#x00A0;lat2)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 397--><p class="nopar" > The examples shows that scalars and lattices can be freely mixed. When
+     all arguments are scalars, the result is a scalar. Otherwise the result is a
+     lattice. <br 
+class="newline" />Note that the mask of the result is formed by combining the mask of the
+     arguments in an appropriate way as explained in the section about <a 
+href="#x1-140003.3">mask
+     handling</a>.
+     </p></dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Bool INDEXIN(real axis, set indices)</span> </dt><dd 
+class="description">The first argument is a 1-relative
+     axis number. The second argument is a set of indices. It returns a Bool
+     array telling for each lattice element if the index of the given axis is
+     contained in the set of indices. <br 
+class="newline" />The 1-relative indices have to be given as elements with
+     integer values enclosed in square brackets and separated by
+     commas. Each element can be a single index, an index range as
+     <span 
+class="cmtt-10x-x-109">start:end</span>, or a strided index range as <span 
+class="cmtt-10x-x-109">start:end:stride</span>. The
+     elements do not need to be ordered, but in a range start must be
+     <!--l. 414--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo><mo 
+class="MathClass-rel">=</mo></math>
+     end. For example:
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-12">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;image[indexin(2,&#x00A0;[3,4:8,10:20:2])]
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 417--><p class="nopar" > masks <span 
+class="cmtt-10x-x-109">image </span>such that only the pixels with an index 3, 4, 5, 6, 7, 8, 10, 12,
+     14, 16, 18, or 20 on the second axis are set to True.
+     </p><!--l. 422--><p class="noindent" >The following special syntax exists for this function.
+                                                                     
+
+                                                                     
+</p>
+     <div class="verbatim" id="verbatim-13">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;INDEXi&#x00A0;IN&#x00A0;set
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 425--><p class="nopar" > where <span 
+class="cmtt-10x-x-109">i </span>is the axis number. So the example above can also be written
+     as:
+                                                                     
+
+                                                                     
+</p>
+     <div class="verbatim" id="verbatim-14">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;image[index2&#x00A0;in&#x00A0;[3,4:8,10:20:2]]
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 430--><p class="nopar" > Negated versions of this function exist as:
+                                                                     
+
+                                                                     
+</p>
+     <div class="verbatim" id="verbatim-15">
+     &#x00A0;&#x00A0;&#x00A0;&#x00A0;INDEXNOTIN(axis,&#x00A0;set)
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;INDEXi&#x00A0;NOT&#x00A0;IN&#x00A0;set
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+</div>
+     <!--l. 435--><p class="nopar" ></p></dd></dl>
+<!--l. 438--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">2.3.4   </span> <a 
+ id="x1-90002.3.4"></a>Conversion functions</h5>
+<!--l. 439--><p class="noindent" >
+     </p><dl class="description"><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Float FLOAT(real)</span> </dt><dd 
+class="description">Convert to single precision.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Double DOUBLE(real)</span> </dt><dd 
+class="description">Convert to double precision.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Complex COMPLEX(numeric)</span> </dt><dd 
+class="description">Convert to single precision complex. If the
+     argument is real, the imaginary part is set to 0.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">DComplex DCOMPLEX(numeric)</span> </dt><dd 
+class="description">Convert  to  double  precision  complex.  If
+     the argument is real, the imaginary part is set to 0.
+     </dd><dt class="description">
+ <span 
+class="cmtt-10x-x-109">Bool BOOLEAN(region)</span> </dt><dd 
+class="description">Convert to boolean. This can be useful to convert
+     a region to a boolean lattice. Only a region in pixel coordinates can
+     be converted, so in practice only an image mask can be converted.</dd></dl>
+<!--l. 456--><p class="noindent" >Note that, where necessary, up-conversions are done automatically. Usually it may
+only be needed to do a down-conversion (e.g. Double to Float).
+                                                                     
+
+                                                                     
+</p><!--l. 459--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.4   </span> <a 
+ id="x1-100002.4"></a>Lattice names</h4>
+<!--l. 461--><p class="noindent" >When a lattice (e.g. an image) is used in an expression, its name has to be given.
+The name can be given directly if it consists of the characters <span 
+class="cmtt-10x-x-109">-.$</span><span 
+class="cmtt-10x-x-109">&#x00A0;</span><span 
+class="cmtt-10x-x-109">&#x0303; </span>and
+alphanumeric characters.
+</p><!--l. 466--><p class="noindent" >If the name contains other characters or if it is a reserved word (currently only T
+and F are reserved), it has to be escaped. Escaping can be done by preceeding
+the special characters with a backslash or by enclosing the string in single or
+double quotes. E.g.
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-16">
+&#x00A0;&#x00A0;~/myimage.data
+&#x00A0;<br />&#x00A0;&#x00A0;~/myimage.data\-old
+&#x00A0;<br />&#x00A0;&#x00A0;&#8217;~/myimage.data-old&#8217;
+</div>
+<!--l. 475--><p class="nopar" >
+</p><!--l. 477--><p class="noindent" >Note that when LEL is used from Python, it is also possible to use a Python
+image variable as a lattice operand (e.g. <span 
+class="cmtt-10x-x-109">$im</span>). This is explained in the section
+describing the <a 
+href="#x1-190006">Python binding</a>. It means that in Python a name starting with a <span 
+class="cmtt-10x-x-109">$</span>
+should be escaped too.
+</p><!--l. 485--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="x1-110003"></a>Masks</h3>
+<!--l. 487--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
+ id="x1-120003.1"></a>Access to Image Masks</h4>
+<!--l. 489--><p class="noindent" >A boolean mask associated with an image indicates whether a pixel is good
+(mask value True) or bad (mask value False). If the mask value is bad, then the
+image pixel is not used for computation (e.g. when finding the mean of the
+image).
+</p><!--l. 494--><p class="noindent" >An image can have zero (all pixels are good) or more masks. One mask can be
+designated as the default mask. By default it will be applied to the image (from
+Python, designation of the default mask is handled by the <span 
+class="cmbx-10x-x-109">??</span> function of the <span 
+class="cmbx-10x-x-109">??</span>
+tool).
+</p><!--l. 500--><p class="noindent" >When using LEL, the basic behaviour is that the default mask is used. However,
+by qualifying the image name with a suffix string, it is possible to specify that no
+mask or another mask should be used. The suffix is a colon followed by the word
+<span 
+class="cmtt-10x-x-109">nomask </span>or the name of the alternative mask.
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-17">
+&#x00A0;&#x00A0;myimage.data
+&#x00A0;<br />&#x00A0;&#x00A0;myimage.data:nomask
+&#x00A0;<br />&#x00A0;&#x00A0;&#8217;myimage.data:othermask&#8217;
+</div>
+<!--l. 510--><p class="nopar" >
+</p><!--l. 512--><p class="noindent" >The first example uses the default mask (if the image has one). The second
+example uses no mask (thus all pixels are designated good) and the third
+example uses mask <span 
+class="cmtt-10x-x-109">othermask</span>.
+</p><!--l. 517--><p class="noindent" >Note that if the image name is enclosed in quotes, the mask name should be
+enclosed too. It means that a colon cannot be part of an image name.
+</p><!--l. 522--><p class="noindent" >It is also possible to use a mask from another image like
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-18">
+&#x00A0;&#x00A0;myimage.data:nomask[myotherimage::othermask]
+</div>
+<!--l. 526--><p class="nopar" > This syntax is explained in the section describing <a 
+href="#x1-150004">regions</a>
+</p><!--l. 531--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
+ id="x1-130003.2"></a>Lattice Condition Mask</h4>
+<!--l. 533--><p class="noindent" >We have seen in the previous section that lattices (in this case images) can have
+an associated mask. These masks are stored with the image &#8211; they are
+persistent.
+</p><!--l. 537--><p class="noindent" >It is also possible to create transient masks when a LEL expression is executed
+(dawn, usually). This is done with the operator <span 
+class="cmtt-10x-x-109">[] </span>and a boolean expression. For
+example,
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-19">
+&#x00A0;&#x00A0;sum(&#x00A0;lat1[lat1&#x003C;5&#x00A0;&amp;&amp;&#x00A0;lat1&#x003E;10]&#x00A0;)
+</div>
+<!--l. 543--><p class="nopar" > creates a mask for <span 
+class="cmtt-10x-x-109">lat1 </span>indicating that only its elements fulfilling the boolean
+condition should be taken into account in the <span 
+class="cmtt-10x-x-109">sum </span>function. Note that the mask is
+local to that part of the expression. So in the expression
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-20">
+&#x00A0;&#x00A0;sum(&#x00A0;lat1[lat1&#x003C;5&#x00A0;&amp;&amp;&#x00A0;lat1&#x003E;10]&#x00A0;)&#x00A0;+&#x00A0;sum(lat1)
+</div>
+<!--l. 551--><p class="nopar" > the second <span 
+class="cmtt-10x-x-109">sum </span>function takes all elements into account. Masking can also be
+applied to more complex expressions and it is recursive.
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-21">
+&#x00A0;&#x00A0;(lat1+lat2)[lat3&#x003C;lat4]
+&#x00A0;<br />&#x00A0;&#x00A0;sum(&#x00A0;lat1[lat1&#x003C;5][lat1&#x003E;10]&#x00A0;)
+&#x00A0;<br />&#x00A0;&#x00A0;(lat1&#x00A0;+&#x00A0;lat2[lat3&#x003C;lat4])&#x00A0;[lat1&#x003C;5]
+</div>
+<!--l. 559--><p class="nopar" > The first example applies the mask generated by the <span 
+class="cmtt-10x-x-109">[] </span>operator to the
+expression <span 
+class="cmtt-10x-x-109">lat1+lat2</span>. The second example shows the recursion (which ANDs the
+masks). It is effectively a (slower) implementation of the first example in this
+subsection. In the last example, the expression inside the parentheses is only
+evaluated where the condition <span 
+class="cmtt-10x-x-109">[lat1&#x003C;5] </span>is true and the resulting expression has
+a mask associated with it.
+</p><!--l. 568--><p class="indent" >   Please note that it is possible to select pixels on an axis by means of the
+function <span 
+class="cmtt-10x-x-109">INDEXIN </span>(or by the <span 
+class="cmtt-10x-x-109">INDEXi IN </span>expression) as shown in the previous
+section about <a 
+href="#x1-80002.3.3">miscellaneous functions</a>.
+</p><!--l. 574--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">3.3   </span> <a 
+ id="x1-140003.3"></a>Mask Handling</h4>
+<!--l. 576--><p class="noindent" >As explained in the previous subsections, lattices can have a mask. Examples are
+a <a 
+href="#x1-110003">mask</a> of good pixels in an image, a mask created using a <a 
+href="#x1-130003.2">boolean condition</a> and
+the operator <span 
+class="cmtt-10x-x-109">[]</span>, or a mask defining a <a 
+href="#x1-150004">region</a> within its bounding box.
+<br 
+class="newline" />A pixel is bad when the image has a mask and when the mask value for that
+pixel is False. Functions like <span 
+class="cmtt-10x-x-109">max </span>ignore the bad pixels. <br 
+class="newline" />Note that in a MeasurementSet a False mask value indicates a good visibility.
+Alas this is a historically grown distinction in radio-astronomy.
+</p><!--l. 589--><p class="noindent" >Image masks are combined and propagated throughout an expression. E.g. when
+two lattices are added, the mask of the result is formed by and-ing the masks of
+the two lattices. That is, the resultant mask is True where the mask of lattice one
+is true AND the mask of lattice 2 is True. Otherwise, the resultant mask is
+False.
+</p><!--l. 596--><p class="noindent" >In general the mask of a subexpression is formed by and-ing the masks of the
+operands. This is true for e.g. +, *, <span 
+class="cmtt-10x-x-109">atan2</span>, etc.. However, there are a few special
+cases:
+</p>
+                                                                     
+
+                                                                     
+     <ul class="itemize1">
+     <li class="itemize">The mask created by <span 
+class="cmtt-10x-x-109">operator[condition] </span>is formed by and-ing the
+     condition result, the mask of the result, and the mask of the subexpression
+     where the condition is applied to. For example, suppose <span 
+class="cmtt-10x-x-109">lat1 </span>and <span 
+class="cmtt-10x-x-109">lat2</span>
+     each have a mask. Then in
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-22">
+     &#x00A0;&#x00A0;sum(&#x00A0;lat1[lat2&#x003C;5]&#x00A0;)
+</div>
+     <!--l. 609--><p class="nopar" > the <span 
+class="cmtt-10x-x-109">sum </span>function will only sum those elements for which the mask of <span 
+class="cmtt-10x-x-109">lat1</span>
+     and <span 
+class="cmtt-10x-x-109">lat2 </span>is valid and for which the condition is true.
+     </p></li>
+     <li class="itemize">The logical AND operator forms the resultant mask by looking at the result
+     and the masks of the operands.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-23">
+     &#x00A0;&#x00A0;lat1[lat1&#x003C;0&#x00A0;&amp;&amp;&#x00A0;lat2&#x003E;0]
+</div>
+     <!--l. 620--><p class="nopar" > Let us say both <span 
+class="cmtt-10x-x-109">lat1 </span>and <span 
+class="cmtt-10x-x-109">lat2 </span>have masks. The operand <span 
+class="cmtt-10x-x-109">lat1&#x003C;0 </span>is
+     true if the mask of <span 
+class="cmtt-10x-x-109">lat1 </span>is true and the operand evaluates to true,
+     otherwise it is false. Apply the same rule to the operand <span 
+class="cmtt-10x-x-109">lat2 &#x003E; 0</span>. The
+     AND operator gives true if the left and right operands are both
+     true. If the left operand is false, the right operand is no longer
+     relevant. It is, in fact, 3-valued logic with the values true, false, and
+     undefined.
+     </p><!--l. 629--><p class="noindent" >Thus, the full expression generates a lattice with a mask. The mask is true
+     when the condition in the <span 
+class="cmtt-10x-x-109">[] </span>operator is true, and false otherwise.
+     The values of the output lattice are only defined where its mask is
+     true.
+     </p></li>
+     <li class="itemize">The logical OR operator works the same as the AND operator. If an
+     operand has a true value the other operand can be ignored.
+     </li>
+     <li class="itemize">The mask of the result of the <span 
+class="cmtt-10x-x-109">replace </span>function is a copy of the mask of
+     its first operand. The mask of the second operand is not used at
+     all.
+     </li>
+     <li class="itemize">The <span 
+class="cmtt-10x-x-109">iif </span>function has three operands. Depending on the condition, an
+     element from the second or third operand has to be taken. The
+     resultant mask is formed by the mask of the condition and-ed with
+     the appropriate elements from the masks of the second or third
+     operand.
+     </li>
+     <li class="itemize">The <span 
+class="cmtt-10x-x-109">value </span>function returns the value without a mask, thus it removes the
+     mask from a value. It has the same effect as the <span 
+class="cmtt-10x-x-109">image:nomask </span>construction
+     discussed <a 
+href="#x1-110003">above</a>. However, the <span 
+class="cmtt-10x-x-109">value </span>function is more general, because it
+     can also be applied to a subexpression.
+                                                                     
+
+                                                                     
+     </li>
+     <li class="itemize">The <span 
+class="cmtt-10x-x-109">mask </span>function returns the mask of a value. The returned value is a
+     boolean lattice and has no mask itself. When the value has no mask, it
+     returns a mask consisting of all True values. When applied to an image, it
+     returns its default mask.</li></ul>
+<!--l. 665--><p class="indent" >   Consider the following more or less equivalent examples:
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-24">
+&#x00A0;&#x00A0;&#x00A0;value(image1)[mask(image2)]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;image1:nomask[mask(image2)]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;image1:nomask[image2::mask0]
+</div>
+<!--l. 670--><p class="nopar" > The first two use the default mask of <span 
+class="cmtt-10x-x-109">image2 </span>as the mask for <span 
+class="cmtt-10x-x-109">image1</span>.
+<br 
+class="newline" />The latter uses <span 
+class="cmtt-10x-x-109">mask0 </span>of <span 
+class="cmtt-10x-x-109">image2 </span>as the mask for <span 
+class="cmtt-10x-x-109">image1</span>. It is equivalent to the
+first two examples if <span 
+class="cmtt-10x-x-109">mask0 </span>is the default mask of <span 
+class="cmtt-10x-x-109">image2</span>.
+</p><!--l. 678--><p class="noindent" >It is possible that the entire mask of a subexpression is false. For example, if the
+mean of such a subexpression is taken, the result is undefined. This is fully
+supported by LEL, because a scalar value also has a mask associated with
+it. One can see a masked-off scalar as a lattice with an all false mask.
+Hence an operation involving an undefined scalar results in an undefined
+scalar. The following functions act as described below on fully masked-off
+lattices:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">MEDIAN, MEAN, VARIANCE, STDDEV, AVDEV, MIN, MAX <br 
+class="newline" />result in an undefined scalar:
+     </li>
+     <li class="itemize">NELEMENTS, NTRUE, NFALSE, SUM <br 
+class="newline" />result in a scalar with value 0.
+     </li>
+     <li class="itemize">ANY <br 
+class="newline" />results in a scalar with value F.
+     </li>
+     <li class="itemize">ALL <br 
+class="newline" />results in a scalar with value T.
+     </li>
+     <li class="itemize">LENGTH, NDIM <br 
+class="newline" />ignore the mask because only the shape of the lattice matters.</li></ul>
+                                                                     
+
+                                                                     
+<!--l. 699--><p class="noindent" >You should also be aware that if you remove a mask from an image, the values of
+the image that were previously masked bad may have values that are
+meaningless.
+</p><!--l. 704--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+ id="x1-150004"></a>Regions</h3>
+<!--l. 706--><p class="noindent" >A region-of-interest generally specifies a portion of a lattice which you
+are interested in for some astronomical purpose (e.g. what is the flux
+density of this source). Quite a rich variety of regions are supported in
+AIPS++. There are simple regions like a box or a polygon, and compound
+regions like unions and intersections. Regions may contain their own
+&#8220;region masks&#8221;. For example, with a 2-d polygon, the region is defined
+by the vertices, the bounding box and a mask which says whether a
+pixel inside the bounding box is inside of the polygon or outside of the
+polygon.
+</p><!--l. 716--><p class="noindent" >In addition, although masks and regions are used somewhat differently by the
+user, a mask is really a special kind of region; they are implemented with the
+same underlying code.
+</p><!--l. 720--><p class="noindent" >Like masks, regions can be persistently stored in image. From Python, regions
+are generated, manipulated and stored with the <span 
+class="cmbx-10x-x-109">??</span> tool.
+</p><!--l. 724--><p class="noindent" >We saw in the previous section how the condition operator <span 
+class="cmtt-10x-x-109">[] </span>could be used to
+generate masks with logical expressions. This operator has a further talent. A
+region of any type can be applied to a lattice with the <span 
+class="cmtt-10x-x-109">[] </span>operator. You can think
+of the region as also effectively being a logical expression. The only difference
+with what we have seen before is that it results in a lattice with the
+shape of the region&#8217;s bounding box. If the lattice or the region (as in
+the polygon above) has a mask, they are and-ed to form the result&#8217;s
+mask.
+</p><!--l. 733--><p class="noindent" >All types of regions supported in AIPS++ can be used, thus:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">regions in pixel or world coordinates
+     </li>
+     <li class="itemize">in absolute, relative and/or fractional units
+                                                                     
+
+                                                                     
+     </li>
+     <li class="itemize">basic regions box, ellipsoid, and polygon
+     </li>
+     <li class="itemize">compound regions union, intersection, difference, and complement.
+     </li>
+     <li class="itemize">extension of a region or group of regions to higher dimensions
+     </li>
+     <li class="itemize">masks</li></ul>
+<!--l. 743--><p class="noindent" >The documentation in the classes <a 
+href="../html/classcasa_1_1LCRegion.html" >LCRegion</a>, <a 
+href="../html/classcasa_1_1LCSlicer.html" >LCSlicer</a>, and <a 
+href="../html/classcasa_1_1WCRegion.html" >WCRegion</a>) gives you
+more information about the various regions.
+</p><!--l. 749--><p class="noindent" >At this moment a region can not be defined in LEL itself. It is only possible to
+use regions predefined in an image or another table.
+</p><!--l. 752--><p class="noindent" >When using Python (as will normally be done), it is also possible to use a region
+defined in Python using the $-notation. This is explained in more detail in the
+section discussing the <a 
+href="#x1-190006">interface to LEL</a>.
+</p><!--l. 757--><p class="noindent" >A predefined region can be used by specifying its name. There are three ways to
+specify a region name:
+</p><!--l. 760--><p class="indent" >
+     </p><ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x1-15002x1"><span 
+class="cmtt-10x-x-109">tablename::regionname </span><br 
+class="newline" />The region is looked up in the given table (which will usually be an
+     image) in which it is stored.
+     </li>
+     <li 
+  class="enumerate" id="x1-15004x2"><span 
+class="cmtt-10x-x-109">::regionname </span><br 
+class="newline" />The region is looked up in the last table used in the expression.
+     </li>
+     <li 
+  class="enumerate" id="x1-15006x3"><span 
+class="cmtt-10x-x-109">regionname </span><br 
+class="newline" />Is  usually  equivalent  to  above.  However,  there  is  no  syntactical
+     difference between the name of a region and a lattice/image. Therefore
+     LEL will first try if the name represents a lattice or image. If not, the
+     name is supposed to be a region name. The prefix <span 
+class="cmtt-10x-x-109">:: </span>in the previous
+     way tells that the name should only be looked up as a region.
+     </li></ol>
+<!--l. 778--><p class="indent" >   Examples are
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-25">
+&#x00A0;&#x00A0;myimage.data[reg1]
+&#x00A0;<br />&#x00A0;&#x00A0;(myimage.data&#x00A0;-&#x00A0;otherimage)[::reg1]
+&#x00A0;<br />&#x00A0;&#x00A0;(myimage.data&#x00A0;-&#x00A0;otherimage)[myimage.data::reg1]
+&#x00A0;<br />&#x00A0;&#x00A0;myimage.data:nomask[myotherimage::othermask]
+</div>
+<!--l. 785--><p class="nopar" > In the first example region <span 
+class="cmtt-10x-x-109">reg1 </span>is looked up in image <span 
+class="cmtt-10x-x-109">myimage.data</span>. It is
+assumed that <span 
+class="cmtt-10x-x-109">reg1 </span>is not the name of an image or lattice. It results in
+a lattice whose shape is the shape of the bounding box of the region.
+The mask of the result is the and of the region mask and the lattice
+mask.
+</p><!--l. 793--><p class="noindent" >In the second example it is stated explicitly that <span 
+class="cmtt-10x-x-109">reg1 </span>is a region by using the ::
+syntax. The region is looked up in <span 
+class="cmtt-10x-x-109">otherimage</span>, because that is the last table
+used in the expression. The result is a lattice with the shape of the bounding box
+of the region.
+</p><!--l. 799--><p class="noindent" >In the third example the region is looked up in <span 
+class="cmtt-10x-x-109">myimage.data</span>. Note that the this
+and the previous example also show that a region can be applied to a
+subexpression.
+</p><!--l. 803--><p class="noindent" >In the fourth example we have been very cunning. We have taken advantage of
+the fact that masks are special sorts of regions. We have told the image
+<span 
+class="cmtt-10x-x-109">myimage.data </span>not to apply any of its own masks. We have then used
+the <span 
+class="cmtt-10x-x-109">[] </span>operator to generate a mask from the mask stored in a different
+image, <span 
+class="cmtt-10x-x-109">myotherimage</span>. This effectively applies the mask from one image
+to another. Apart from copying the mask, this is the only way to do
+this.
+</p><!--l. 811--><p class="noindent" >Unions, intersections, differences and complements of regions can be
+generated and stored (in C++ and Python). However, it is also possible to
+form a union, etc. in LEL itself. However, that can only be done if the
+regions have the same type (i.e. both in world or in pixel coordinates).
+<br 
+class="newline" />The following operators can be used:
+</p>
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">reg1 || reg2 </span>to form the union.
+                                                                     
+
+                                                                     
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">reg1 &amp;&amp; reg2 </span>to form the intersection.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">reg1 - reg2 </span>to form the difference.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">!reg1 </span>to form the complement.</li></ul>
+<!--l. 825--><p class="indent" >   The normal AIPS++ rules are used when a region is applied:
+</p>
+     <ul class="itemize1">
+     <li class="itemize">A region in world or relative coordinates can only be applied to an
+     image (or a subexpression resulting in an image). Otherwise there is
+     no way to convert it to absolute pixel coordinates.
+     </li>
+     <li class="itemize">The axes of a region in world coordinates have to be axes in the image
+     (subexpression). However, the region can have fewer axes.
+     </li>
+     <li class="itemize">If  a  region  has  fewer  axes  than  the  image  or  lattice  the  region  is
+     automatically extended to the full image by taking the full length of
+     the missing axes.</li></ul>
+<!--l. 839--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
+ id="x1-160005"></a>Some further remarks</h3>
+<!--l. 841--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
+ id="x1-170005.1"></a>Optimization</h4>
+<!--l. 842--><p class="noindent" >When giving a LEL expression, it is important to keep an eye on performance
+issues.
+</p><!--l. 845--><p class="indent" >   LEL itself will do some optimization: </p>
+                                                                     
+
+                                                                     
+     <ul class="itemize1">
+     <li class="itemize">As said in the introduction a LEL expression is evaluated in chunks.
+     However, a scalar subexpression is executed only once when getting the first
+     chunk. E.g. in
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-26">
+     &#x00A0;&#x00A0;lat1&#x00A0;+&#x00A0;mean(lat2)
+     &#x00A0;<br />&#x00A0;&#x00A0;
+</div>
+     <!--l. 853--><p class="nopar" > the subexpression <span 
+class="cmtt-10x-x-109">mean(lat2) </span>is executed only once and not over and over
+     again when the user gets chunks.
+     </p></li>
+     <li class="itemize">Often the exponent 2 is used in the <span 
+class="cmtt-10x-x-109">pow </span>function (or operator <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span>). This is
+     optimized by using multiplication instead of using the system pow
+     function.
+     </li>
+     <li class="itemize">When LEL finds a <a 
+href="#x1-110003">masked-off scalar</a> in a subexpression, it does not
+     evaluate the other operand. Instead it sets the result immediately to a
+     masked-off scalar. Exceptions are the operators AND and OR and function
+     <span 
+class="cmtt-10x-x-109">iif</span>, because their masks depend on the operand values.</li></ul>
+<!--l. 868--><p class="indent" >   The user can optimize by specifying the expression carefully. </p>
+     <ul class="itemize1">
+     <li class="itemize">It is strongly recommended to combine scalars into a subexpression to
+     avoid unnecessary scalar-lattice operations. E.g.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-27">
+     &#x00A0;&#x00A0;2&#x00A0;*&#x00A0;lat1&#x00A0;*&#x00A0;pi()
+</div>
+     <!--l. 875--><p class="nopar" > should be written as
+                                                                     
+
+                                                                     
+</p>
+     <div class="verbatim" id="verbatim-28">
+     &#x00A0;&#x00A0;lat1&#x00A0;*&#x00A0;(2&#x00A0;*&#x00A0;pi())
+     &#x00A0;<br />or
+     &#x00A0;<br />&#x00A0;&#x00A0;2&#x00A0;*&#x00A0;pi()&#x00A0;*&#x00A0;lat1
+</div>
+     <!--l. 881--><p class="nopar" > because in that way the scalars form a scalar subexpression which is
+     calculated only once. Note that the subexpression parentheses are needed in
+     the first case, because multiplications are done from left to right.
+     <br 
+class="newline" />In the future LEL will be optimized to shuffle the operands when possible
+     and needed.
+     </p></li>
+     <li class="itemize">It is important to be careful with the automatic data type promotion of
+     single precision lattices. Several scalar functions (e.g. pi) produce a double
+     precision value, so using <span 
+class="cmtt-10x-x-109">pi </span>with a single precision lattice causes the lattice
+     to be promoted to double precision. If accuracy allows it, it is much better
+     to convert <span 
+class="cmtt-10x-x-109">pi </span>to single precision. E.g. assume <span 
+class="cmtt-10x-x-109">lat1 </span>and <span 
+class="cmtt-10x-x-109">lat2 </span>are single
+     precision lattices.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-29">
+     &#x00A0;&#x00A0;atan2(lat1,lat2)&#x00A0;+&#x00A0;pi()/2
+</div>
+     <!--l. 899--><p class="nopar" > The result of <span 
+class="cmtt-10x-x-109">atan2 </span>is single precision, because both operands are single
+     precision. However, <span 
+class="cmtt-10x-x-109">pi </span>is double precision, so the result of <span 
+class="cmtt-10x-x-109">atan2 </span>is
+     promoted to double precision to make the addition possible. Specifying the
+     expression as:
+                                                                     
+
+                                                                     
+</p>
+     <div class="verbatim" id="verbatim-30">
+     &#x00A0;&#x00A0;atan2(lat1,lat2)&#x00A0;+&#x00A0;float(pi())/2
+</div>
+     <!--l. 906--><p class="nopar" > avoids that (expensive) data type promotion.
+     </p></li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">POW(LAT,2) </span>or <span 
+class="cmtt-10x-x-109">LAT</span><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span><span 
+class="cmtt-10x-x-109">2 </span>is faster than <span 
+class="cmtt-10x-x-109">LAT*LAT</span>, because it accesses lattice <span 
+class="cmtt-10x-x-109">LAT</span>
+     only once.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">SQRT(LAT) </span>is faster than <span 
+class="cmtt-10x-x-109">LAT</span><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span><span 
+class="cmtt-10x-x-109">0.5 </span>or <span 
+class="cmtt-10x-x-109">POW(LAT,0.5)</span>
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">POW(U,2) + POW(V,2) </span><!--l. 919--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>
+     <span 
+class="cmtt-10x-x-109">1000</span><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">^</span></span></span><span 
+class="cmtt-10x-x-109">2 </span>is considerably faster than <br 
+class="newline" /><span 
+class="cmtt-10x-x-109">SQRT(SQUARE(U) + SQUARE(V))</span>
+     <!--l. 921--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>
+     <span 
+class="cmtt-10x-x-109">1000</span>, because it avoids the <span 
+class="cmtt-10x-x-109">SQRT </span>function.
+     </li>
+     <li class="itemize">LEL can be used with disk-based lattices and/or memory-based
+     lattices. When used with memory-based lattices it is better to make
+     subexpressions the first operand in another subexpression or a function.
+     E.g. <br 
+class="newline" /><span 
+class="cmtt-10x-x-109">lat1*lat2 + lat3 </span><br 
+class="newline" />is better than <br 
+class="newline" /><span 
+class="cmtt-10x-x-109">lat3 + lat1*lat2 </span><br 
+class="newline" />The reason is that in the first case no copy needs to be made of the lattice
+     data which already reside in memory. All LEL operators and functions try
+     to reference the data of their latter operands instead of making a copy.
+     <br 
+class="newline" />In general this optimization does not apply to LEL expression. However,
+     when using the true <a 
+href="#x1-190006">C++ interface</a> to classes like <span 
+class="cmtt-10x-x-109">LatticeExprNode</span>, one
+     can easily use memory-based lattices. In that case it can be advantageous
+     to pay attention to this optimization.
+     </li></ul>
+                                                                     
+
+                                                                     
+<!--l. 944--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
+ id="x1-180005.2"></a>Mask Storage</h4>
+<!--l. 946--><p class="noindent" >In many of the expressions we have looked at in the examples, a mask has
+been generated. What happens to this mask and indeed the values of the
+expression depends upon the implementation. If for example, the function you
+are invoking with LEL writes out the result, then both the mask and
+result will be stored. On the other hand, it is possible to just use LEL
+expressions but never write out the results to disk. In this case, no data or
+mask is written to disk. You can read more about this in the <a 
+href="#x1-190006">interface</a>
+section.
+</p><!--l. 956--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
+ id="x1-190006"></a>Interface to LEL</h3>
+<!--l. 958--><p class="noindent" >There are two interfaces to LEL. One is from Python and the other from C++. It
+depends upon your needs which one to use. Most high level users of AIPS++ will
+access LEL only via the Python interface.
+</p><!--l. 963--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">6.1   </span> <a 
+ id="x1-200006.1"></a>Python Interface</h4>
+<!--l. 965--><p class="noindent" >The LEL interface in Python is provided in the <a 
+href="../../../pyrap/docs/pyrap_images.html" >pyrap.images</a> package. The main
+constructor makes it possible to open an image expression as a virtual
+image.
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-31">
+&#x00A0;&#x00A0;from&#x00A0;pyrap.images&#x00A0;import&#x00A0;*
+&#x00A0;<br />&#x00A0;&#x00A0;im&#x00A0;=&#x00A0;image(&#8217;inimage1+inimage2&#8217;)
+&#x00A0;<br />&#x00A0;&#x00A0;im.statistics();
+</div>
+<!--l. 974--><p class="nopar" >
+</p><!--l. 976--><p class="indent" >   Sometimes you need to double quote the file names in your expression. For
+example, if the images reside in a different directory as in this example.
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-32">
+&#x00A0;&#x00A0;im&#x00A0;=&#x00A0;image(&#8217;"dir1/im1"&#x00A0;+&#x00A0;"/nfs/data/im2"&#8217;);
+</div>
+<!--l. 982--><p class="nopar" >
+</p><!--l. 984--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">6.1.1   </span> <a 
+ id="x1-210006.1.1"></a>Substitution of Pyhon variables</h5>
+<!--l. 986--><p class="noindent" >Images created/opened in Python can directly be used in a LEL expression by
+prefixing their name with a $. Other Python variables and even Python
+expressions can be used in the same way using <span 
+class="cmtt-10x-x-109">$variable </span>or <span 
+class="cmtt-10x-x-109">$(expression) </span>in
+the LEL command. A variable can be a standard numeric scalar. An expression
+has to result in a numeric scalar.
+</p><!--l. 994--><p class="indent" >   A somewhat artificial example:
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-33">
+&#x00A0;&#x00A0;&#x00A0;&#x00A0;factor&#x00A0;=&#x00A0;2
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;img1&#x00A0;=&#x00A0;image(&#8217;"/data/inimage1"&#8217;);
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;img2&#x00A0;=&#x00A0;image(&#8217;"/data/inimage2"&#8217;);
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;img3&#x00A0;=&#x00A0;image(&#8217;$img1&#x00A0;+&#x00A0;$factor*$img2&#8217;)
+</div>
+<!--l. 1000--><p class="nopar" >
+</p><!--l. 1002--><p class="noindent" >The substitution mechanism is described in more detail in <a 
+href="../../../pyrap/docs/pyrap_util.html" >pyrap.util</a>.
+</p><!--l. 1005--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
+ id="x1-220006.2"></a>C++ interface</h4>
+<!--l. 1006--><p class="noindent" >This consists of 2 parts.
+</p><!--l. 1008--><p class="indent" >
+     </p><ol  class="enumerate1" >
+     <li 
+  class="enumerate" id="x1-22002x1">The function <span 
+class="cmtt-10x-x-109">command </span>in <a 
+href="../html/classcasa_1_1ImageExprParse.html" >Images/ImageExprParse.h</a> can be used to
+     execute a LEL command. The result is a <a 
+href="../html/classcasa_1_1LatticeExprNode.html" >LatticeExprNode</a> object.
+     E.g.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-34">
+     &#x00A0;&#x00A0;LatticeExprNode&#x00A0;seltab1&#x00A0;=&#x00A0;ImageExprParse::command
+     &#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;("imagein1&#x00A0;+&#x00A0;imagein2");
+</div>
+     <!--l. 1020--><p class="nopar" > This example does the same as the Python one shown above.
+     </p></li>
+     <li 
+  class="enumerate" id="x1-22004x2">The other interface is a true C++ interface having the advantage that
+     C++ variables can be used. Class <a 
+href="../html/classcasa_1_1LatticeExprNode.html" >LatticeExprNode</a> contains functions to
+     form an expression. The same operators and functions as in the command
+     interface are available. E.g.
+                                                                     
+
+                                                                     
+     <div class="verbatim" id="verbatim-35">
+     &#x00A0;&#x00A0;Float&#x00A0;clipValue&#x00A0;=&#x00A0;10;
+     &#x00A0;<br />&#x00A0;&#x00A0;PagedImage&#x003C;Float&#x003E;&#x00A0;image("imagein");
+     &#x00A0;<br />&#x00A0;&#x00A0;LatticeExpr&#x003C;Float&#x003E;&#x00A0;expr(min(image,clipValue));
+</div>
+     <!--l. 1035--><p class="nopar" > forms an expression to clip the image. Note that the expression is written
+     as a normal C++ expression. The overloaded operators and functions in
+     class <a 
+href="../html/classcasa_1_1LatticeExprNode.html" >LatticeExprNode</a> ensure that the expression is formed in the correct
+     way. <br 
+class="newline" />Note that a <span 
+class="cmtt-10x-x-109">LatticeExprNode </span>object is usually automatically converted to
+     a templated <span 
+class="cmtt-10x-x-109">LatticeExpr </span>object, which makes it possible to use it as a
+     normal <span 
+class="cmtt-10x-x-109">Lattice</span>. <br 
+class="newline" />So far the expression is only formed, but not evaluated. Evaluation is only
+     done when the expression is used in an operation, e.g. as the source of the
+     copy operation shown below.
+                                                                     
+
+                                                                     
+</p>
+     <div class="verbatim" id="verbatim-36">
+     &#x00A0;&#x00A0;PagedImage&#x003C;Float&#x003E;&#x00A0;imout("imageout");
+     &#x00A0;<br />&#x00A0;&#x00A0;imout.copyData&#x00A0;(expr);
+</div>
+     <!--l. 1051--><p class="nopar" >
+</p>
+     </li></ol>
+<!--l. 1056--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">7   </span> <a 
+ id="x1-230007"></a>Examples</h3>
+<!--l. 1057--><p class="noindent" >The following examples show some LEL expressions (equally valid in C++ or
+Python).
+</p><!--l. 1060--><p class="indent" >   Note that LEL is readonly; i.e. it does not change any value in the images
+given. A function in the <span 
+class="cmtt-10x-x-109">image </span>client has to be used to do something with the
+result (e.g. storing in another image).
+     </p><dl class="description"><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">lat1+lat2 </span><br 
+class="newline" />adds 2 lattices
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">mean(myimage:nomask) </span><br 
+class="newline" />results in a scalar value giving the mean of the image. No mask is used
+     for the image, thus all pixels are used. The scalar value can be used
+     as a lattice. E.g. it can be used as the source in the <span 
+class="cmtt-10x-x-109">image </span>function
+     <span 
+class="cmtt-10x-x-109">replacemaskedpixels </span>to set all masked-off elements of a lattice to
+     the mean.
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">complex(lat1,lat2) </span><br 
+class="newline" />results in a complex lattice formed by <span 
+class="cmtt-10x-x-109">lat1 </span>as the real part and <span 
+class="cmtt-10x-x-109">lat2</span>
+     as the imaginary part.
+                                                                     
+
+                                                                     
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">min(lat1, 2*mean(lat1)) </span><br 
+class="newline" />results in a lattice where <span 
+class="cmtt-10x-x-109">lat1 </span>is clipped at twice its mean value.
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">min(myimage, 2*mean(mymage[myregion])) </span><br 
+class="newline" />results in an image where <span 
+class="cmtt-10x-x-109">myimage </span>is clipped at twice the mean value
+     of region <span 
+class="cmtt-10x-x-109">myregion </span>in the image..
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">lat1[lat1</span><!--l. 1082--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math><span 
+class="cmtt-10x-x-109">2*min(lat1)]</span>
+     <br 
+class="newline" />results in a lattice with a mask. Only the pixels greater than twice the
+     minimum are valid.
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">replace(lat1) </span><br 
+class="newline" />results in a lattice where each masked-off element in <span 
+class="cmtt-10x-x-109">lat1 </span>is replaced
+     by 0.
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
+class="cmtt-10x-x-109">iif(lat1</span><!--l. 1088--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math><span 
+class="cmtt-10x-x-109">mean(lat1),lat1*2,lat1/2)</span>
+     <br 
+class="newline" />results in a lattice where the elements less than the mean are doubled
+     and the elements greater or equal to the mean are divided by 2.</dd></dl>
+<!--l. 1094--><p class="indent" >   Here follows a sample Python session showing some of the LEL capabilities
+and how Python variables can be used in LEL.
+                                                                     
+
+                                                                     
+</p>
+   <div class="verbatim" id="verbatim-37">
+duw01&#x003E;&#x00A0;glish&#x00A0;-l&#x00A0;image.g
+&#x00A0;<br />-&#x00A0;a&#x00A0;:=&#x00A0;array(1:50,5,10)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;make&#x00A0;some&#x00A0;data
+&#x00A0;<br />-&#x00A0;global&#x00A0;im1&#x00A0;:=&#x00A0;imagefromarray(&#8217;im1&#8217;,&#x00A0;a);&#x00A0;&#x00A0;&#x00A0;#&#x00A0;fill&#x00A0;an&#x00A0;image&#x00A0;with&#x00A0;it
+&#x00A0;<br />-&#x00A0;im1.shape()
+&#x00A0;<br />[5&#x00A0;10]
+&#x00A0;<br />-&#x00A0;local&#x00A0;pixels,&#x00A0;mask
+&#x00A0;<br />-&#x00A0;im1.getregion(pixels,&#x00A0;mask);&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;get&#x00A0;pixels&#x00A0;and&#x00A0;mask
+&#x00A0;<br />-&#x00A0;mask[1,1]&#x00A0;:=&#x00A0;F&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;set&#x00A0;some&#x00A0;mask&#x00A0;elements&#x00A0;to&#x00A0;False
+&#x00A0;<br />-&#x00A0;mask[3,4]&#x00A0;:=&#x00A0;F
+&#x00A0;<br />-&#x00A0;im1.putregion(mask=mask);&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;put&#x00A0;new&#x00A0;mask&#x00A0;back
+&#x00A0;<br />-&#x00A0;global&#x00A0;reg:=drm.box([1,1],[4,4]);&#x00A0;&#x00A0;#&#x00A0;a&#x00A0;box&#x00A0;region
+&#x00A0;<br />-&#x00A0;im2&#x00A0;:=&#x00A0;imagecalc(pixels=&#8217;$im1[$reg]&#8217;)&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;read-only&#x00A0;image&#x00A0;applying&#x00A0;region
+&#x00A0;<br />-&#x00A0;local&#x00A0;pixels2,&#x00A0;mask2
+&#x00A0;<br />-&#x00A0;im2.getregion(pixels2,&#x00A0;mask2);&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;get&#x00A0;the&#x00A0;pixels&#x00A0;and&#x00A0;mask
+&#x00A0;<br />-&#x00A0;print&#x00A0;pixels2
+&#x00A0;<br />[[1:4,]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;1&#x00A0;6&#x00A0;11&#x00A0;16
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;2&#x00A0;7&#x00A0;12&#x00A0;17
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;3&#x00A0;8&#x00A0;13&#x00A0;18
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;4&#x00A0;9&#x00A0;14&#x00A0;19]
+&#x00A0;<br />-&#x00A0;print&#x00A0;mask2
+&#x00A0;<br />[[1:4,]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;F&#x00A0;T&#x00A0;T&#x00A0;T
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;T&#x00A0;T&#x00A0;T&#x00A0;T
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;T&#x00A0;T&#x00A0;T&#x00A0;F
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;T&#x00A0;T&#x00A0;T&#x00A0;T]
+&#x00A0;<br />-&#x00A0;im1.replacemaskedpixels&#x00A0;(&#8217;mean(im2)&#8217;);&#x00A0;#&#x00A0;replace&#x00A0;masked-off&#x00A0;values
+&#x00A0;<br />-&#x00A0;im1.getregion&#x00A0;(pixels2,&#x00A0;mask2);&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;#&#x00A0;by&#x00A0;mean&#x00A0;of&#x00A0;masked-on&#x00A0;in&#x00A0;im2
+&#x00A0;<br />-&#x00A0;print&#x00A0;pixels2
+&#x00A0;<br />[[1:5,]
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;10.0714283&#x00A0;6&#x00A0;&#x00A0;11&#x00A0;16&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;21&#x00A0;26&#x00A0;31&#x00A0;36&#x00A0;41&#x00A0;46
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;2&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;7&#x00A0;&#x00A0;12&#x00A0;17&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;22&#x00A0;27&#x00A0;32&#x00A0;37&#x00A0;42&#x00A0;47
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;3&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;8&#x00A0;&#x00A0;13&#x00A0;10.0714283&#x00A0;23&#x00A0;28&#x00A0;33&#x00A0;38&#x00A0;43&#x00A0;48
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;4&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;9&#x00A0;&#x00A0;14&#x00A0;19&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;24&#x00A0;29&#x00A0;34&#x00A0;39&#x00A0;44&#x00A0;49
+&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;5&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;10&#x00A0;15&#x00A0;20&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;25&#x00A0;30&#x00A0;35&#x00A0;40&#x00A0;45&#x00A0;50]
+                                                                     
+
+                                                                     
+</div>
+<!--l. 1132--><p class="nopar" >
+</p><!--l. 1134--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">8   </span> <a 
+ id="x1-240008"></a>Future developments</h3>
+<!--l. 1135--><p class="noindent" >In the near or more distant future LEL will be enhanced by adding new features
+and by doing optimizations. </p>
+     <ul class="itemize1">
+     <li class="itemize">Handle slices like <span 
+class="cmtt-10x-x-109">image[1:10:2, 5:] </span><br 
+class="newline" />which defines the section directly in pixel coordinates (with stride 2
+     for the first axis).
+     </li>
+     <li class="itemize">Do optimization by reordering the expression.
+     </li>
+     <li class="itemize">Do optimization by recognizing common subexpressions.</li></ul>
+    
+</body></html> 
+
+                                                                     
+
+
