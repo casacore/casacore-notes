@@ -25,9 +25,10 @@ It makes it possible to do regression testing, coverage testing, and use tools l
 valgrind in an automatic way.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
+\ifpdf
+\else
 \href{262.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\fi
 
 \tableofcontents 
 \newpage

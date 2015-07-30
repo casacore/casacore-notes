@@ -15,7 +15,10 @@ Lattice Expression Language}
 \date {2003 November 10}
 \maketitle
 %%---------------------------------------------------------------------------
+\ifpdf
+\else
 \href{223.pdf}{A pdf version of this note is available.}
+\fi
 
 \input{223.dir/LELdesc}
 \end{document}

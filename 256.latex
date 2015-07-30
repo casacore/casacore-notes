@@ -15,7 +15,10 @@
 \date {2003 February 10}
 \maketitle
 %%---------------------------------------------------------------------------
+\ifpdf
+\else
 \href{256.pdf}{A pdf version of this note is available.}
+\fi
 
 \input{256.dir/tablelock}
 \end{document}

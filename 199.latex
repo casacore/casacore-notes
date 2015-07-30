@@ -33,9 +33,10 @@ matching of two sky catalogues.
 \\A binding in C++, Python, and Glish is available.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
+\ifpdf
+\else
 \href{199.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\fi
 
 \tableofcontents 
 \newpage

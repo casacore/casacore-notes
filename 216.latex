@@ -23,7 +23,10 @@ Lattice Expression Language Implementation}
 \date {1998 January 20}
 \maketitle
 %%---------------------------------------------------------------------------
+\ifpdf
+\else
 \href{216.pdf}{A pdf version of this note is available.}
+\fi
 
 \input{216.dir/LEL}
 \end{document}

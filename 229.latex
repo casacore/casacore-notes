@@ -40,7 +40,10 @@
 \date{January 21, 2000}
 \maketitle
 
+\ifpdf
+\else
 \href{229.pdf}{A pdf version of this note is available.}
+\fi
 
 \tableofcontents 
 \section{Summary} 

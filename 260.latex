@@ -24,9 +24,10 @@ storage manager has its own files. The document describes the formats
 of all files that can be used by the Table system.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
+\ifpdf
+\else
 \href{260.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\fi
 
 \tableofcontents 
 \newpage

@@ -36,9 +36,10 @@
 \date{October 4, 1996}
 \maketitle
 
-
+\ifpdf
+\else
 \href{191.pdf}{A pdf version of this note is available.}
-
+\fi
 
 \tableofcontents
 \section{Summary}

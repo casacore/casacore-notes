@@ -15,8 +15,10 @@
 
 \maketitle
 %%---------------------------------------------------------------------------
+\ifpdf
+\else
 \href{233.pdf}{A pdf version of this note is available.}
-
+\fi
 
 \tableofcontents
       

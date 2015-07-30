@@ -15,6 +15,9 @@ AIPS++ Table System Revisited}
 \date {2003 February 3}
 \maketitle
 %%---------------------------------------------------------------------------
+\ifpdf
+\else
 \href{255.pdf}{A pdf version of this note is available.}
+\fi
 \input{255.dir/tablesystem}
 \end{document}

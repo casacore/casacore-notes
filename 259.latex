@@ -18,9 +18,10 @@ It consists of a set of standard converters and bindings to the classes.
 As much as possible the bindings are the same as in glish.
 \end{abstract}
 %%---------------------------------------------------------------------------
-%%\begin{htmlonly}
+\ifpdf
+\else
 \href{259.pdf}{A pdf version of this note is available.}
-%%\end{htmlonly}
+\fi
 
 \tableofcontents
 \newpage      
