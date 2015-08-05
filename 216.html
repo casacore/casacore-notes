@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="iso-8859-1" ?> 
+<?xml version="1.0" encoding="utf-8" ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
 "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
 <html xmlns="http://www.w3.org/1999/xhtml"  
 > 
-<head><title>NOTE 216 &#8211; Lattice Expression Language Implementation</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
-<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<!-- xhtml,mathml,fn-in,css2,css-in,html --> 
+<head><title>NOTE 216 – Lattice Expression Language Implementation</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="216.tex" /> 
-<meta name="date" content="2015-07-30 09:21:00" /> 
+<meta name="date" content="2015-08-05 15:59:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -52,12 +52,6 @@ li p.indent { text-indent: 0em }
 li p:first-child{ margin-top:0em; }  
 li p:last-child, li div:last-child { margin-bottom:0.5em; }  
 li p~ul:last-child, li p~ol:last-child{ margin-bottom:0.5em; }  
-ul.itemize1 {list-style-type: none;}  
-ul.itemize1 li.itemize:before { display: marker; marker-offset: 0.5em; content: "&#x2219; " }  
-ul.itemize2 {list-style-type: none;}  
-ul.itemize2 li.itemize:before { display: marker; marker-offset: 0.5em; content: "\protect \protect \edef OT1{OT1}\let \enc @update \relax \protect \edef cmr{cmr}\protect \edef m{m}\protect \edef n{n}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \ignorespaces \relax \protect \relax \protect \edef m{bx}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \OT 1\textendash " }  
-ul.itemize3 {list-style-type: none;}  
-ul.itemize3 li.itemize:before { display: marker; marker-offset: 0.5em; content: "* " }  
 .enumerate1 {list-style-type:decimal;}  
 .enumerate2 {list-style-type:lower-alpha;}  
 .enumerate3 {list-style-type:lower-roman;}  
@@ -164,7 +158,7 @@ div.abstract {width:100%;}
                                                                                                
                                                                                                
 
-<h2 class="titleHead">NOTE 216 &#8211; Lattice Expression Language Implementation</h2>
+<h2 class="titleHead">NOTE 216 – Lattice Expression Language Implementation</h2>
 <div class="author" ><span 
 class="cmr-12">Neil Killeen (ATNF) and Ger van Diepen (NFRA)</span></div>
 <br />
@@ -180,8 +174,8 @@ class="cmtt-10x-x-109">Lattices </span>directly from C++. The <span
 class="cmtt-10x-x-109">Lattices </span>involved in the expressions are
 iterated through tile by tile, and the expression evaluated for each pixel in the tiles. Thus there are no large
 temporary <span 
-class="cmtt-10x-x-109">Lattices</span>, and the iteration is efficient.
-</p><!--l. 10--><p class="noindent" >LEL offers many of the standard numerical and logical operators and functions (that can be applied to
+class="cmtt-10x-x-109">Lattices</span>, and the iteration is eﬃcient.
+</p><!--l. 10--><p class="noindent" >LEL oﬀers many of the standard numerical and logical operators and functions (that can be applied to
 scalars and <span 
 class="cmtt-10x-x-109">Arrays</span>), as well as some additional astronomically oriented ones. It can handle <span 
 class="cmtt-10x-x-109">Float</span>,
@@ -192,7 +186,7 @@ class="cmtt-10x-x-109">DComplex Lattices</span>, including expressions involving
 of <span 
 class="cmtt-10x-x-109">Lattices</span>. Conversion of data types is automatic, although the user can also embed explicit
 conversions.
-</p><!--l. 18--><p class="noindent" >The user can build expressions from subexpressions, finally evaluating the final expression.
+</p><!--l. 18--><p class="noindent" >The user can build expressions from subexpressions, ﬁnally evaluating the ﬁnal expression.
 </p><!--l. 21--><p class="noindent" >Throughout this document we will refer to objects of class <span 
 class="cmtt-10x-x-109">Lattice</span>. In reality, this is an abstract class and the
 real objects would be derived from it.
@@ -228,7 +222,7 @@ class="cmtt-10x-x-109">LELUnaryConst</span>, <span
 class="cmtt-10x-x-109">LELUnary</span>, and
 <span 
 class="cmtt-10x-x-109">LELUnaryBool</span>. The letter classes all inherit from <span 
-class="cmtt-10x-x-109">LELInterface </span>which defines their common interface. There is
+class="cmtt-10x-x-109">LELInterface </span>which deﬁnes their common interface. There is
 one more class, <span 
 class="cmtt-10x-x-109">LELAttribute</span>, which is a helper class containing some attribute information about the
 expression.
@@ -268,7 +262,7 @@ class="cmbx-10x-x-109">LEL Classes</span></div></td></tr><tr
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-2-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-1"  
 class="td11">Class </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-2"  
-class="td11">Source files </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-3"  
+class="td11">Source ﬁles </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-3"  
 class="td11">templation </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-4"  
 class="td11">inheritance                                                                                                                                                                                                                                              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-5"  
 class="td11">use          </td>
@@ -640,22 +634,22 @@ class="td11">                    </td>
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-1">
-&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;a;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;b;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Double&#x003E;&#x00A0;c;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;a.copyData(b+c);
+   Lattice&#x003C;Float&#x003E; a;
+ <br />   Lattice&#x003C;Float&#x003E; b;
+ <br />   Lattice&#x003C;Double&#x003E; c;
+ <br />   a.copyData(b+c);
 </div>
 <!--l. 103--><p class="nopar" >
 </p><!--l. 105--><p class="noindent" >Thus, we evaluate the sum of the <span 
 class="cmtt-10x-x-109">Lattices b </span>and <span 
-class="cmtt-10x-x-109">c </span>and fill the <span 
+class="cmtt-10x-x-109">c </span>and ﬁll the <span 
 class="cmtt-10x-x-109">Lattice a </span>with the result. Note that the result
 of <span 
 class="cmtt-10x-x-109">b+c </span>is a <span 
 class="cmtt-10x-x-109">Double Lattice </span>which will be assigned to a <span 
 class="cmtt-10x-x-109">Float Lattice</span>.
-</p><!--l. 109--><p class="noindent" >There are two distinct steps in this; the first is the creation of the expression tree. The second is the evaluation
-of the tree after its creation. Both occur at run time; the creation first, and then, via the <span 
+</p><!--l. 109--><p class="noindent" >There are two distinct steps in this; the ﬁrst is the creation of the expression tree. The second is the evaluation
+of the tree after its creation. Both occur at run time; the creation ﬁrst, and then, via the <span 
 class="cmtt-10x-x-109">copyData </span>call, the
 evaluation.
 </p><!--l. 114--><p class="noindent" >The tree is a structure which can be thought of as representing the hierarchy of operations. For our example
@@ -664,8 +658,8 @@ above, it looks like
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-2">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;+
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;b&#x00A0;&#x00A0;&#x00A0;c
+     +
+ <br />   b   c
 </div>
 <!--l. 120--><p class="nopar" >
 </p><!--l. 122--><p class="noindent" >Really, <span 
@@ -678,9 +672,9 @@ class="cmtt-10x-x-109">Lattice</span>. The tree is more accurately written as
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-3">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;+
-&#x00A0;<br />&#x00A0;&#x00A0;getLatticeValues&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;getLatticeValues
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;b&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;c
+                     +
+ <br />  getLatticeValues       getLatticeValues
+ <br />     b                          c
 </div>
 <!--l. 130--><p class="nopar" >
 </p><!--l. 132--><p class="noindent" >but we will use the short-hand tree expression style.
@@ -690,11 +684,11 @@ class="cmtt-10x-x-109">(a+sin(b)+2) / 10 </span>would be
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-4">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;/
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;10.0
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;+&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;a
-&#x00A0;<br />sin&#x00A0;&#x00A0;&#x00A0;&#x00A0;2.0
-&#x00A0;<br />b
+               /
+ <br />         +          10.0
+ <br />    +        a
+ <br />sin    2.0
+ <br />b
 </div>
 <!--l. 143--><p class="nopar" >
 </p><!--l. 145--><p class="noindent" >The tree is evaluated bottom up. Conceptually, the <span 
@@ -711,10 +705,10 @@ class="cmtt-10x-x-109">10.0</span>.
 </p>
 <h4 class="subsectionHead"><span class="titlemark">3.1 </span> <a 
  id="x1-40003.1"></a>Tree Creation</h4>
-<!--l. 155--><p class="noindent" >Let us consider the creation of the expression tree first. The <span 
+<!--l. 155--><p class="noindent" >Let us consider the creation of the expression tree ﬁrst. The <span 
 class="cmtt-10x-x-109">Lattice::copyData </span>member function expects as its
 argument a <span 
-class="cmtt-10x-x-109">Lattice</span>. Thus, the expression in the argument has to find a way to be converted to a
+class="cmtt-10x-x-109">Lattice</span>. Thus, the expression in the argument has to ﬁnd a way to be converted to a
 <span 
 class="cmtt-10x-x-109">Lattice</span>. It is the LatticeExpr class that knows how to evaluate expressions involving <span 
 class="cmtt-10x-x-109">Lattices</span>,
@@ -730,7 +724,7 @@ class="cmtt-10x-x-109">Lattice</span>.
 </p><!--l. 165--><p class="noindent" >Internally, <span 
 class="cmtt-10x-x-109">LatticeExpr </span>contains a <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>object, so let us consider class <span 
-class="cmtt-10x-x-109">LatticeExprNode </span>first.
+class="cmtt-10x-x-109">LatticeExprNode </span>ﬁrst.
 <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>exists to handle type conversions for mixed type expressions. It is a non-templated class and
 is not derived from any other class. It contains, as private data members, a variety of pointers to the class
@@ -765,26 +759,26 @@ as
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-5">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(const&#x00A0;Lattice&#x003C;Float&#x003E;&amp;&#x00A0;lattice);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(const&#x00A0;Lattice&#x003C;Double&#x003E;&amp;&#x00A0;lattice);
+   LatticeExprNode(const Lattice&#x003C;Float&#x003E;&#x0026; lattice);
+ <br />   LatticeExprNode(const Lattice&#x003C;Double&#x003E;&#x0026; lattice);
 </div>
 <!--l. 190--><p class="nopar" >
 </p><!--l. 192--><p class="noindent" >Recall that the <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>object contains private data members (<span 
 class="cmtt-10x-x-109">LELInterface </span>pointers) of many
-different types. Only the data member of the relevant type will be assigned. For example, the Float constructor
+diﬀerent types. Only the data member of the relevant type will be assigned. For example, the Float constructor
 looks like
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-6">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode::LatticeExprNode&#x00A0;(const&#x00A0;Lattice&#x003C;Float&#x003E;&amp;&#x00A0;lattice)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;:&#x00A0;donePrepare_p&#x00A0;(False),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;dtype_p&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(TpFloat),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pExprFloat_p&#x00A0;&#x00A0;(new&#x00A0;LELLattice&#x003C;Float&#x003E;&#x00A0;(lattice))
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pAttr_p&#x00A0;=&#x00A0;&amp;pExprFloat_p-&#x003E;getAttribute();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   LatticeExprNode::LatticeExprNode (const Lattice&#x003C;Float&#x003E;&#x0026; lattice)
+ <br />   : donePrepare_p (False),
+ <br />     dtype_p       (TpFloat),
+ <br />     pExprFloat_p  (new LELLattice&#x003C;Float&#x003E; (lattice))
+ <br />   {
+ <br />      pAttr_p = &#x0026;pExprFloat_p-&#x003E;getAttribute();
+ <br />   }
 </div>
 <!--l. 205--><p class="nopar" >
 </p><!--l. 207--><p class="noindent" >The constructor notes that no optimizations (see later) have been performed, and also notes
@@ -832,8 +826,8 @@ function declared as
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-7">
-&#x00A0;&#x00A0;&#x00A0;friend&#x00A0;LatticeExprNode&#x00A0;operator+&#x00A0;(const&#x00A0;LatticeExprNode&amp;&#x00A0;left,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;LatticeExprNode&amp;&#x00A0;right);
+   friend LatticeExprNode operator+ (const LatticeExprNode&#x0026; left,
+ <br />                                     const LatticeExprNode&#x0026; right);
 </div>
 <!--l. 227--><p class="nopar" >
 </p><!--l. 230--><p class="noindent" >The friend keyword makes it a globally accessible operator. Now, you can see that it takes two other
@@ -846,16 +840,16 @@ class="cmtt-10x-x-109">c</span>.
 display="inline" ><mo 
 class="MathClass-bin">+</mo></math>
 operator returns another <span 
-class="cmtt-10x-x-109">LatticeExprNode </span>object; it is defined as
+class="cmtt-10x-x-109">LatticeExprNode </span>object; it is deﬁned as
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-8">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;operator+&#x00A0;(const&#x00A0;LatticeExprNode&amp;&#x00A0;left,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;LatticeExprNode&amp;&#x00A0;right)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;LatticeExprNode::newNumBinary&#x00A0;(LELBinaryEnums::ADD,&#x00A0;left,&#x00A0;right);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   LatticeExprNode operator+ (const LatticeExprNode&#x0026; left,
+ <br />                              const LatticeExprNode&#x0026; right)
+ <br />   {
+ <br />      return LatticeExprNode::newNumBinary (LELBinaryEnums::ADD, left, right);
+ <br />   }
 </div>
 <!--l. 242--><p class="nopar" >
 </p><!--l. 244--><p class="noindent" >where the static function <span 
@@ -878,20 +872,20 @@ class="cmtt-10x-x-109">LatticeExprNode </span>from the list
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-9">
-&#x00A0;&#x00A0;&#x00A0;operator&#x00A0;LatticeExpr&#x003C;Float&#x003E;();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;operator&#x00A0;LatticeExpr&#x003C;Double&#x003E;();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;operator&#x00A0;LatticeExpr&#x003C;Complex&#x003E;();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;operator&#x00A0;LatticeExpr&#x003C;DComplex&#x003E;();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;operator&#x00A0;LatticeExpr&#x003C;Bool&#x003E;();
+   operator LatticeExpr&#x003C;Float&#x003E;();
+ <br />   operator LatticeExpr&#x003C;Double&#x003E;();
+ <br />   operator LatticeExpr&#x003C;Complex&#x003E;();
+ <br />   operator LatticeExpr&#x003C;DComplex&#x003E;();
+ <br />   operator LatticeExpr&#x003C;Bool&#x003E;();
 </div>
 <!--l. 261--><p class="nopar" >
-</p><!--l. 263--><p class="noindent" >For reasons that we don&#8217;t understand, this could not be made to work yet with a constructor of the
+</p><!--l. 263--><p class="noindent" >For reasons that we don&#x2019;t understand, this could not be made to work yet with a constructor of the
 type
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-10">
-&#x00A0;&#x00A0;&#x00A0;LatticeExpr&#x00A0;(const&#x00A0;LatticeExprNode&amp;&#x00A0;expr)
+   LatticeExpr (const LatticeExprNode&#x0026; expr)
 </div>
 <!--l. 268--><p class="nopar" >
 </p><!--l. 271--><p class="noindent" >These operators are are in reality casting operators. For example, if you had
@@ -899,9 +893,9 @@ type
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-11">
-&#x00A0;&#x00A0;&#x00A0;Double&#x00A0;x;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Int&#x00A0;i;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;x&#x00A0;=&#x00A0;(Double)i;
+   Double x;
+ <br />   Int i;
+ <br />   x = (Double)i;
 </div>
 <!--l. 278--><p class="nopar" >
 </p><!--l. 280--><p class="noindent" >the <span 
@@ -911,9 +905,9 @@ class="cmtt-10x-x-109">Double</span>. Similarly,
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-12">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;node;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExpr&#x003C;Float&#x003E;&#x00A0;expr;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;expr&#x00A0;=&#x00A0;(LatticeExpr&#x003C;Float&#x003E;)node;
+   LatticeExprNode node;
+ <br />   LatticeExpr&#x003C;Float&#x003E; expr;
+ <br />   expr = (LatticeExpr&#x003C;Float&#x003E;)node;
 </div>
 <!--l. 286--><p class="nopar" >
 </p><!--l. 288--><p class="noindent" >converts the node to the <span 
@@ -923,7 +917,7 @@ class="cmtt-10x-x-109">LatticeExprNode</span>, they expect to operate on a <span
 class="cmtt-10x-x-109">LatticeExprNode </span>object. The name of
 the operator is the same as the return type: <span 
 class="cmtt-10x-x-109">LatticeExpr&#x003C;T&#x003E; </span>This is in general a dangerous practice, as one
-gets automatic conversions that weren&#8217;t wanted sometimes. But we seem to have no choice for
+gets automatic conversions that weren&#x2019;t wanted sometimes. But we seem to have no choice for
 now.
 </p><!--l. 296--><p class="noindent" >Now, for our example, the type that <span 
 class="cmtt-10x-x-109">Lattice::copyData </span>is expecting is a <span 
@@ -934,10 +928,10 @@ class="cmtt-10x-x-109">Lattice a</span>. Therefore, the casting operator that wi
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-13">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode::operator&#x00A0;LatticeExpr&#x003C;Float&#x003E;()
-&#x00A0;<br />&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;LatticeExpr&#x003C;Float&#x003E;&#x00A0;(LatticeExprNode(makeFloat()),&#x00A0;0);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   LatticeExprNode::operator LatticeExpr&#x003C;Float&#x003E;()
+ <br />  {
+ <br />      return LatticeExpr&#x003C;Float&#x003E; (LatticeExprNode(makeFloat()), 0);
+ <br />   }
 </div>
 <!--l. 305--><p class="nopar" >
 </p><!--l. 307--><p class="noindent" >So a <span 
@@ -946,7 +940,7 @@ class="cmtt-10x-x-109">LatticeExpr </span>constructor of the form
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-14">
-&#x00A0;&#x00A0;&#x00A0;LatticeExpr&#x00A0;(const&#x00A0;LatticeExprNode&amp;&#x00A0;expr,&#x00A0;uInt&#x00A0;iDummy)
+   LatticeExpr (const LatticeExprNode&#x0026; expr, uInt iDummy)
 </div>
 <!--l. 311--><p class="nopar" >
 </p><!--l. 313--><p class="noindent" >is explicitly invoked by this casting operator. First however, the <span 
@@ -963,11 +957,11 @@ class="cmtt-10x-x-109">LatticeExprNode</span>, the constructor
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-15">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;Float&#x003E;*&#x00A0;expr);
+   LatticeExprNode(LELInterface&#x003C;Float&#x003E;* expr);
 </div>
 <!--l. 322--><p class="nopar" >
 </p><!--l. 324--><p class="noindent" >is automatically invoked. This is given to the <span 
-class="cmtt-10x-x-109">LatticeExpr </span>constructor and finally returned.
+class="cmtt-10x-x-109">LatticeExpr </span>constructor and ﬁnally returned.
 </p><!--l. 327--><p class="noindent" >Now returning to the <span 
 class="cmtt-10x-x-109">newNumBinary </span>static function above, there is another subtlety being handled. Here is
 where we handle some additional type conversion. We know that <span 
@@ -979,10 +973,10 @@ class="cmtt-10x-x-109">newNumBinary </span>static function produced a
 <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>which was automatically converted to a <span 
 class="cmtt-10x-x-109">LatticeExpr </span>object of type Float. The thing we
-didn&#8217;t see yet was how the handling of the mixed type expression <span 
+didn&#x2019;t see yet was how the handling of the mixed type expression <span 
 class="cmtt-10x-x-109">b+c </span>was dealt with by <span 
 class="cmtt-10x-x-109">newNumBinary</span>. That is,
-we don&#8217;t know yet what the type of <span 
+we don&#x2019;t know yet what the type of <span 
 class="cmtt-10x-x-109">b+c </span>was, although we know that <span 
 class="cmtt-10x-x-109">makeFloat </span>was able to handle it, whatever
 it was. So let us look inside <span 
@@ -992,34 +986,34 @@ class="cmtt-10x-x-109">newNumBinary</span>.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-16">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;LatticeExprNode::newNumBinary&#x00A0;(LELBinaryEnums::Operation&#x00A0;oper,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;LatticeExprNode&amp;&#x00A0;left,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;LatticeExprNode&amp;&#x00A0;right)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;DataType&#x00A0;dtype&#x00A0;=&#x00A0;resultDataType&#x00A0;(left.dataType(),&#x00A0;right.dataType());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;switch&#x00A0;(dtype)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;TpFloat:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;new&#x00A0;LELBinary&#x003C;Float&#x003E;&#x00A0;(oper,&#x00A0;left.makeFloat(),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;right.makeFloat());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;TpDouble:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;new&#x00A0;LELBinary&#x003C;Double&#x003E;&#x00A0;(oper,&#x00A0;left.makeDouble(),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;right.makeDouble());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;TpComplex:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;new&#x00A0;LELBinary&#x003C;Complex&#x003E;&#x00A0;(oper,&#x00A0;left.makeComplex(),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;right.makeComplex());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;TpDComplex:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;new&#x00A0;LELBinary&#x003C;DComplex&#x003E;&#x00A0;(oper,&#x00A0;left.makeDComplex(),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;right.makeDComplex());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;default:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;throw&#x00A0;(AipsError
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;("LatticeExpr:&#x00A0;Bool&#x00A0;argument&#x00A0;used&#x00A0;in&#x00A0;numerical&#x00A0;binary&#x00A0;operation"));
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;LatticeExprNode();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   LatticeExprNode LatticeExprNode::newNumBinary (LELBinaryEnums::Operation oper,
+ <br />                                                  const LatticeExprNode&#x0026; left,
+ <br />                                                  const LatticeExprNode&#x0026; right)
+ <br />   {
+ <br />      DataType dtype = resultDataType (left.dataType(), right.dataType());
+ <br />      switch (dtype) {
+ <br />      case TpFloat:
+ <br />         return new LELBinary&#x003C;Float&#x003E; (oper, left.makeFloat(),
+ <br />                                      right.makeFloat());
+ <br />      case TpDouble:
+ <br />         return new LELBinary&#x003C;Double&#x003E; (oper, left.makeDouble(),
+ <br />                                       right.makeDouble());
+ <br />      case TpComplex:
+ <br />         return new LELBinary&#x003C;Complex&#x003E; (oper, left.makeComplex(),
+ <br />                                        right.makeComplex());
+ <br />      case TpDComplex:
+ <br />         return new LELBinary&#x003C;DComplex&#x003E; (oper, left.makeDComplex(),
+ <br />                                         right.makeDComplex());
+ <br />      default:
+ <br />         throw (AipsError
+ <br />               (&#x0022;LatticeExpr: Bool argument used in numerical binary operation&#x0022;));
+ <br />      }
+ <br />      return LatticeExprNode();
+ <br />   }
 </div>
 <!--l. 365--><p class="nopar" >
 </p><!--l. 368--><p class="noindent" >This function returns an expression of one type, as the two expressions that go into it may have
-different types. Indeed, in our case, the left expression is a <span 
+diﬀerent types. Indeed, in our case, the left expression is a <span 
 class="cmtt-10x-x-109">Float </span>and the right a <span 
 class="cmtt-10x-x-109">Double</span>. The
 function <span 
@@ -1037,17 +1031,17 @@ is derived from <span
 class="cmtt-10x-x-109">LELInterface</span>. Yet, the function <span 
 class="cmtt-10x-x-109">newNumBinary </span>actually returns an object of type
 <span 
-class="cmtt-10x-x-109">LatticeExprNode</span>. So what is happening is an implicit conversion via a constructor. It&#8217;s one of the private
+class="cmtt-10x-x-109">LatticeExprNode</span>. So what is happening is an implicit conversion via a constructor. It&#x2019;s one of the private
 constructors
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-17">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;Float&#x003E;*&#x00A0;expr);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;Double&#x003E;*&#x00A0;expr);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;Complex&#x003E;*&#x00A0;expr);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;DComplex&#x003E;*&#x00A0;expr);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;Bool&#x003E;*&#x00A0;expr);
+   LatticeExprNode(LELInterface&#x003C;Float&#x003E;* expr);
+ <br />   LatticeExprNode(LELInterface&#x003C;Double&#x003E;* expr);
+ <br />   LatticeExprNode(LELInterface&#x003C;Complex&#x003E;* expr);
+ <br />   LatticeExprNode(LELInterface&#x003C;DComplex&#x003E;* expr);
+ <br />   LatticeExprNode(LELInterface&#x003C;Bool&#x003E;* expr);
 </div>
 <!--l. 390--><p class="nopar" >
 </p><!--l. 392--><p class="noindent" >that is doing the work.
@@ -1060,7 +1054,7 @@ class="cmtt-10x-x-109">copyData </span>manage to extract the result of the expre
 class="cmtt-10x-x-109">copyData </span>function
 ultimately calls the <span 
 class="cmtt-10x-x-109">Lattice </span>function <span 
-class="cmtt-10x-x-109">getSlice </span>(via an iterator) to fish out the data from its <span 
+class="cmtt-10x-x-109">getSlice </span>(via an iterator) to ﬁsh out the data from its <span 
 class="cmtt-10x-x-109">Lattice </span>argument.
 <span 
 class="cmtt-10x-x-109">getSlice </span>is therefore implemented in <span 
@@ -1084,9 +1078,9 @@ class="cmtt-10x-x-109">Float, Double </span>etc).
 Although the <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>object does know for what type it was constructed, it actually chooses the
 correct version of the <span 
-class="cmtt-10x-x-109">eval </span>function by the argument signature. This works because a buffer is included in the
+class="cmtt-10x-x-109">eval </span>function by the argument signature. This works because a buﬀer is included in the
 <span 
-class="cmtt-10x-x-109">eval </span>interface (this is where the result of the expression is put), and the buffer is of the appropriate
+class="cmtt-10x-x-109">eval </span>interface (this is where the result of the expression is put), and the buﬀer is of the appropriate
 type.
 </p><!--l. 417--><p class="noindent" >So invoking <span 
 class="cmtt-10x-x-109">eval </span>of <span 
@@ -1106,7 +1100,7 @@ class="cmtt-10x-x-109">eval </span>function actually then uses the getSlice func
 actual <span 
 class="cmtt-10x-x-109">Lattice </span>from which it was constructed (<span 
 class="cmtt-10x-x-109">b </span>or <span 
-class="cmtt-10x-x-109">c</span>) to fish out the data. The <span 
+class="cmtt-10x-x-109">c</span>) to ﬁsh out the data. The <span 
 class="cmtt-10x-x-109">LELBinary eval </span>function will
 add the numbers together.
 </p><!--l. 428--><p class="noindent" >Finally, since <span 
@@ -1121,23 +1115,23 @@ class="cmtt-10x-x-109">Lattices </span>stored.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-18">
-&#x00A0;&#x00A0;&#x00A0;virtual&#x00A0;void&#x00A0;eval&#x00A0;(Array&#x003C;T&#x003E;&amp;&#x00A0;result,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;PixelRegion&amp;&#x00A0;region)&#x00A0;const&#x00A0;=&#x00A0;0;
+   virtual void eval (Array&#x003C;T&#x003E;&#x0026; result,
+ <br />                      const PixelRegion&#x0026; region) const = 0;
 </div>
 <!--l. 436--><p class="nopar" >
 </p><!--l. 438--><p class="noindent" >The derived classes make the actual implementation. The result of the evaluation of the expression is put in the
 <span 
-class="cmtt-10x-x-109">result </span>array. If the result of the expression evaluation is known to be a scalar (figured out at tree construction
+class="cmtt-10x-x-109">result </span>array. If the result of the expression evaluation is known to be a scalar (ﬁgured out at tree construction
 time) then the <span 
 class="cmtt-10x-x-109">getScalar </span>function is used to get the value instead.
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-19">
-&#x00A0;&#x00A0;&#x00A0;virtual&#x00A0;T&#x00A0;getScalar()&#x00A0;const&#x00A0;=&#x00A0;0;
+   virtual T getScalar() const = 0;
 </div>
 <!--l. 447--><p class="nopar" >
-</p><!--l. 450--><p class="noindent" >Let&#8217;s look at <span 
+</p><!--l. 450--><p class="noindent" >Let&#x2019;s look at <span 
 class="cmtt-10x-x-109">eval </span>implementations for <span 
 class="cmtt-10x-x-109">LELBinary </span>and <span 
 class="cmtt-10x-x-109">LELLattice</span>. First, the piece for <span 
@@ -1151,31 +1145,31 @@ operator.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-20">
-&#x00A0;&#x00A0;&#x00A0;template&#x00A0;&#x003C;class&#x00A0;T&#x003E;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;void&#x00A0;LELBinary&#x003C;T&#x003E;::eval(Array&#x003C;T&#x003E;&amp;&#x00A0;result,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;PixelRegion&amp;&#x00A0;region)&#x00A0;const
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;switch(op_p)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;LELBinaryEnums::ADD&#x00A0;:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(pLeftExpr_p-&#x003E;isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pRightExpr_p-&#x003E;eval(result,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;+=&#x00A0;pLeftExpr_p-&#x003E;getScalar();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}&#x00A0;else&#x00A0;if&#x00A0;(pRightExpr_p-&#x003E;isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pLeftExpr_p-&#x003E;eval(result,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;+=&#x00A0;pRightExpr_p-&#x003E;getScalar();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}&#x00A0;else&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Array&#x003C;T&#x003E;&#x00A0;temp(result.shape());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pLeftExpr_p-&#x003E;eval(result,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pRightExpr_p-&#x003E;eval(temp,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;+=&#x00A0;temp;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;break;
+   template &#x003C;class T&#x003E;
+ <br />   void LELBinary&#x003C;T&#x003E;::eval(Array&#x003C;T&#x003E;&#x0026; result,
+ <br />                           const PixelRegion&#x0026; region) const
+ <br />   {
+ <br />      switch(op_p) {
+ <br />      case LELBinaryEnums::ADD :
+ <br />          if (pLeftExpr_p-&#x003E;isScalar()) {
+ <br />             pRightExpr_p-&#x003E;eval(result, region);
+ <br />             result += pLeftExpr_p-&#x003E;getScalar();
+ <br />          } else if (pRightExpr_p-&#x003E;isScalar()) {
+ <br />             pLeftExpr_p-&#x003E;eval(result, region);
+ <br />             result += pRightExpr_p-&#x003E;getScalar();
+ <br />          } else {
+ <br />             Array&#x003C;T&#x003E; temp(result.shape());
+ <br />             pLeftExpr_p-&#x003E;eval(result, region);
+ <br />             pRightExpr_p-&#x003E;eval(temp, region);
+ <br />             result += temp;
+ <br />          }
+ <br />          break;
 </div>
 <!--l. 474--><p class="nopar" >
 </p><!--l. 476--><p class="noindent" >Three cases are handled here: (array,array), (scalar,array) and (array,scalar). The case of (scalar,scalar) is
 handled similarly in <span 
 class="cmtt-10x-x-109">LELBinary::getScalar</span>.
-</p><!--l. 480--><p class="noindent" >The important thing to see here is that the process is recursive. Each of the left and right expressions are evaluated first,
+</p><!--l. 480--><p class="noindent" >The important thing to see here is that the process is recursive. Each of the left and right expressions are evaluated ﬁrst,
 before the <!--l. 481--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
@@ -1185,14 +1179,14 @@ operation is done. So for example, since our example is the (array,array) case, 
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-21">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Array&#x003C;T&#x003E;&#x00A0;temp(result.shape());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pLeftExpr_p-&#x003E;eval(result,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pRightExpr_p-&#x003E;eval(temp,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;+=&#x00A0;temp;
+          Array&#x003C;T&#x003E; temp(result.shape());
+ <br />          pLeftExpr_p-&#x003E;eval(result, region);
+ <br />          pRightExpr_p-&#x003E;eval(temp, region);
+ <br />          result += temp;
 </div>
 <!--l. 490--><p class="nopar" >
 </p><!--l. 493--><p class="noindent" >Both the left and right expressions are <span 
-class="cmtt-10x-x-109">LELLattice </span>objects. Evaluating them results in filling the <span 
+class="cmtt-10x-x-109">LELLattice </span>objects. Evaluating them results in ﬁlling the <span 
 class="cmtt-10x-x-109">result </span>array
 with the values from the <span 
 class="cmtt-10x-x-109">Lattice </span>in the <span 
@@ -1205,17 +1199,17 @@ class="cmtt-10x-x-109">LELLattice </span>eval function looks like
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-22">
-&#x00A0;&#x00A0;&#x00A0;template&#x00A0;&#x003C;class&#x00A0;T&#x003E;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;void&#x00A0;LELLattice&#x003C;T&#x003E;::eval(Array&#x003C;T&#x003E;&amp;&#x00A0;result,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;PixelRegion&amp;&#x00A0;region)&#x00A0;const
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;The&#x00A0;rwRef&#x00A0;function&#x00A0;will&#x00A0;make&#x00A0;a&#x00A0;copy&#x00A0;when&#x00A0;needed&#x00A0;(i.e.&#x00A0;when&#x00A0;ptr
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;contains&#x00A0;a&#x00A0;reference&#x00A0;to&#x00A0;the&#x00A0;original&#x00A0;data).
-&#x00A0;<br />
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;COWPtr&#x003C;Array&#x003C;T&#x003E;&#x00A0;&#x003E;&#x00A0;ptr;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pLattice_p-&#x003E;getSlice(ptr,&#x00A0;region.box(),&#x00A0;False);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result.reference(ptr.rwRef());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   template &#x003C;class T&#x003E;
+ <br />   void LELLattice&#x003C;T&#x003E;::eval(Array&#x003C;T&#x003E;&#x0026; result,
+ <br />                            const PixelRegion&#x0026; region) const
+ <br />   {
+ <br />   // The rwRef function will make a copy when needed (i.e. when ptr
+ <br />   // contains a reference to the original data).
+ <br />
+ <br />      COWPtr&#x003C;Array&#x003C;T&#x003E; &#x003E; ptr;
+ <br />      pLattice_p-&#x003E;getSlice(ptr, region.box(), False);
+ <br />      result.reference(ptr.rwRef());
+ <br />   }
 </div>
 <!--l. 512--><p class="nopar" >
 </p><!--l. 514--><p class="noindent" >the <span 
@@ -1226,7 +1220,7 @@ class="cmtt-10x-x-109">COWPtr </span>so
 that for say an <span 
 class="cmtt-10x-x-109">ArrayLattice</span>, the array references the data only saving a copy, unless it is actually written to.
 There is no <span 
-class="cmtt-10x-x-109">LELLattice::getScalar </span>function as it doesn&#8217;t make any sense. If you try to call it, you will throw
+class="cmtt-10x-x-109">LELLattice::getScalar </span>function as it doesn&#x2019;t make any sense. If you try to call it, you will throw
 an exception.
 </p><!--l. 523--><p class="noindent" >
 </p>
@@ -1249,7 +1243,7 @@ class="cmtt-10x-x-109">LatticeExpr&#x003C;T&#x003E;</span>
 class="cmtt-10x-x-109">Float </span>to <span 
 class="cmtt-10x-x-109">Double</span>). They are run-time conversions generated by the <span 
 class="cmtt-10x-x-109">makeXXX </span>functions.</li></ul>
-<!--l. 537--><p class="noindent" >The first type of conversion (e.g. <span 
+<!--l. 537--><p class="noindent" >The ﬁrst type of conversion (e.g. <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>to <span 
 class="cmtt-10x-x-109">LatticeExpr&#x003C;T&#x003E;</span>) is handled by the casting
 operator discussed previously. In addition, inside that casting operation are calls to functions like
@@ -1258,7 +1252,7 @@ class="cmtt-10x-x-109">LatticeExprNode::makeFloat </span>which embed an object o
 class="cmtt-10x-x-109">LELConvert </span>into the tree and then at evaluation
 time <span 
 class="cmtt-10x-x-109">LELConvert::eval </span>actually converts the data (i.e. the values of the pixels in the <span 
-class="cmtt-10x-x-109">eval </span>interface buffer
+class="cmtt-10x-x-109">eval </span>interface buﬀer
 array) between types so that the <span 
 class="cmtt-10x-x-109">LatticeExpr&#x003C;T&#x003E; T </span>type is self-consistent with the type of the <span 
 class="cmtt-10x-x-109">LELInterface</span>
@@ -1276,18 +1270,18 @@ is the implementation
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-23">
-&#x00A0;&#x00A0;&#x00A0;CountedPtr&#x003C;LELInterface&#x003C;Double&#x003E;&#x00A0;&#x003E;&#x00A0;LatticeExprNode::makeDouble()&#x00A0;const
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;switch&#x00A0;(dataType())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;TpFloat:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;new&#x00A0;LELConvert&#x003C;Double,Float&#x003E;&#x00A0;(pExprFloat_p);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;TpDouble:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;pExprDouble_p;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;default:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;throw&#x00A0;(AipsError&#x00A0;("LatticeExpr:&#x00A0;conversion&#x00A0;to&#x00A0;Double&#x00A0;not&#x00A0;possible"));
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;0;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   CountedPtr&#x003C;LELInterface&#x003C;Double&#x003E; &#x003E; LatticeExprNode::makeDouble() const
+ <br />   {
+ <br />       switch (dataType()) {
+ <br />       case TpFloat:
+ <br />           return new LELConvert&#x003C;Double,Float&#x003E; (pExprFloat_p);
+ <br />       case TpDouble:
+ <br />           return pExprDouble_p;
+ <br />       default:
+ <br />           throw (AipsError (&#x0022;LatticeExpr: conversion to Double not possible&#x0022;));
+ <br />       }
+ <br />       return 0;
+ <br />   }
 </div>
 <!--l. 568--><p class="nopar" >
 </p><!--l. 570--><p class="noindent" >So what happens is that if a type conversion is required on the <span 
@@ -1315,16 +1309,16 @@ evaluation time, not at tree construction time, when the <span
 class="cmtt-10x-x-109">eval </span>function of <span 
 class="cmtt-10x-x-109">LELConvert </span>gets called.
 <span 
-class="cmtt-10x-x-109">LELConvert::eval </span>will actually convert the data in the interface buffer between types (just by
+class="cmtt-10x-x-109">LELConvert::eval </span>will actually convert the data in the interface buﬀer between types (just by
 copying).
 </p><!--l. 583--><p class="noindent" >Let us look at the actual tree here. Imagine we have
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-24">
-&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;a;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Double&#x003E;&#x00A0;b;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;expr&#x00A0;=&#x00A0;a+b;
+   Lattice&#x003C;Float&#x003E; a;
+ <br />   Lattice&#x003C;Double&#x003E; b;
+ <br />   LatticeExprNode expr = a+b;
 </div>
 <!--l. 589--><p class="nopar" >
 </p><!--l. 591--><p class="noindent" >The tree, with all like types, would be
@@ -1332,13 +1326,13 @@ copying).
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-25">
-&#x00A0;&#x00A0;&#x00A0;+
-&#x00A0;<br />a&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;b
+   +
+ <br />a     b
 </div>
 <!--l. 596--><p class="nopar" >
 </p><!--l. 598--><p class="noindent" >Now however, because <span 
 class="cmtt-10x-x-109">a </span>and <span 
-class="cmtt-10x-x-109">b </span>are different types, we embed a conversion into the tree. In this case, the <span 
+class="cmtt-10x-x-109">b </span>are diﬀerent types, we embed a conversion into the tree. In this case, the <span 
 class="cmtt-10x-x-109">Float </span>is
 converted to a <span 
 class="cmtt-10x-x-109">Double</span>.
@@ -1346,9 +1340,9 @@ class="cmtt-10x-x-109">Double</span>.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-26">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;+
-&#x00A0;<br />conv&#x00A0;&#x00A0;&#x00A0;&#x00A0;b
-&#x00A0;<br />&#x00A0;&#x00A0;a
+     +
+ <br />conv    b
+ <br />  a
 </div>
 <!--l. 606--><p class="nopar" >
 </p><!--l. 608--><p class="noindent" >Now let us assign this result of <span 
@@ -1358,8 +1352,8 @@ class="cmtt-10x-x-109">Lattice</span>
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-27">
-&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;c;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;c.copyData(expr);
+   Lattice&#x003C;Float&#x003E; c;
+ <br />   c.copyData(expr);
 </div>
 <!--l. 613--><p class="nopar" >
 </p><!--l. 615--><p class="noindent" >The type of <span 
@@ -1372,10 +1366,10 @@ like
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-28">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;conv
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;+
-&#x00A0;<br />conv&#x00A0;&#x00A0;&#x00A0;&#x00A0;b
-&#x00A0;<br />&#x00A0;&#x00A0;a
+    conv
+ <br />     +
+ <br />conv    b
+ <br />  a
 </div>
 <!--l. 623--><p class="nopar" >
 </p><!--l. 626--><p class="noindent" >In summary, type conversions of the actual data are handled by embedding <span 
@@ -1424,15 +1418,15 @@ class="cmtt-10x-x-109">min(c) </span>is a scalar (we
 will discuss the optimization of only evaluating this once later). Evaluating <span 
 class="cmtt-10x-x-109">b+min(c) </span>means that scalar is added
 to each element of <span 
-class="cmtt-10x-x-109">b </span>so the final result is not a scalar.
+class="cmtt-10x-x-109">b </span>so the ﬁnal result is not a scalar.
 </p><!--l. 665--><p class="noindent" >The tree looks like
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-29">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;+
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;b&#x00A0;&#x00A0;&#x00A0;&#x00A0;min
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;c
+      +
+ <br />   b    min
+ <br />         c
 </div>
 <!--l. 671--><p class="nopar" >
 </p><!--l. 673--><p class="noindent" >The code handling the binary operator <!--l. 673--><math 
@@ -1452,25 +1446,25 @@ operation is
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-30">
-&#x00A0;&#x00A0;&#x00A0;template&#x00A0;&#x003C;class&#x00A0;T&#x003E;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;void&#x00A0;LELBinary&#x003C;T&#x003E;::eval(Array&#x003C;T&#x003E;&amp;&#x00A0;result,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;PixelRegion&amp;&#x00A0;region)&#x00A0;const
-&#x00A0;<br />&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;switch(op_p)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;LELBinaryEnums::ADD&#x00A0;:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(pLeftExpr_p-&#x003E;isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pRightExpr_p-&#x003E;eval(result,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;+=&#x00A0;pLeftExpr_p-&#x003E;getScalar();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}&#x00A0;else&#x00A0;if&#x00A0;(pRightExpr_p-&#x003E;isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pLeftExpr_p-&#x003E;eval(result,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;+=&#x00A0;pRightExpr_p-&#x003E;getScalar();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}&#x00A0;else&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Array&#x003C;T&#x003E;&#x00A0;temp(result.shape());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pLeftExpr_p-&#x003E;eval(result,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pRightExpr_p-&#x003E;eval(temp,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;+=&#x00A0;temp;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;break;
+   template &#x003C;class T&#x003E;
+ <br />   void LELBinary&#x003C;T&#x003E;::eval(Array&#x003C;T&#x003E;&#x0026; result,
+ <br />                           const PixelRegion&#x0026; region) const
+ <br />  {
+ <br />      switch(op_p) {
+ <br />      case LELBinaryEnums::ADD :
+ <br />          if (pLeftExpr_p-&#x003E;isScalar()) {
+ <br />             pRightExpr_p-&#x003E;eval(result, region);
+ <br />             result += pLeftExpr_p-&#x003E;getScalar();
+ <br />          } else if (pRightExpr_p-&#x003E;isScalar()) {
+ <br />             pLeftExpr_p-&#x003E;eval(result, region);
+ <br />             result += pRightExpr_p-&#x003E;getScalar();
+ <br />          } else {
+ <br />             Array&#x003C;T&#x003E; temp(result.shape());
+ <br />             pLeftExpr_p-&#x003E;eval(result, region);
+ <br />             pRightExpr_p-&#x003E;eval(temp, region);
+ <br />             result += temp;
+ <br />          }
+ <br />          break;
 </div>
 <!--l. 700--><p class="nopar" >
 </p><!--l. 703--><p class="noindent" >Here you can see that it checks the left and right arguments to see if they are scalar and acts optimally
@@ -1493,12 +1487,12 @@ like
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-31">
-&#x00A0;&#x00A0;&#x00A0;template&#x00A0;&#x003C;class&#x00A0;T&#x003E;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;T&#x00A0;LELBinary&#x003C;T&#x003E;::getScalar()&#x00A0;const
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;switch(op_p)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;LELBinaryEnums::ADD&#x00A0;:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;pLeftExpr_p-&#x003E;getScalar()&#x00A0;+&#x00A0;pRightExpr_p-&#x003E;getScalar();
+   template &#x003C;class T&#x003E;
+ <br />   T LELBinary&#x003C;T&#x003E;::getScalar() const
+ <br />   {
+ <br />      switch(op_p) {
+ <br />      case LELBinaryEnums::ADD :
+ <br />         return pLeftExpr_p-&#x003E;getScalar() + pRightExpr_p-&#x003E;getScalar();
 </div>
 <!--l. 720--><p class="nopar" >
 </p><!--l. 723--><p class="noindent" >So if we had asked for <span 
@@ -1508,9 +1502,9 @@ be
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-32">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;+
-&#x00A0;<br />&#x00A0;&#x00A0;2.0&#x00A0;&#x00A0;&#x00A0;min
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;c
+      +
+ <br />  2.0   min
+ <br />         c
 </div>
 <!--l. 730--><p class="nopar" >
 </p><!--l. 732--><p class="noindent" >and <span 
@@ -1521,12 +1515,12 @@ this expression was being used like
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-33">
-&#x00A0;&#x00A0;&#x00A0;a.copyData(2+min(c));
+   a.copyData(2+min(c));
 </div>
 <!--l. 738--><p class="nopar" >
 </p><!--l. 740--><p class="noindent" >then the <span 
 class="cmtt-10x-x-109">Lattice a </span>will have all of its pixels assigned the same scalar value that resulted from the
-expression evaluation. This final assignment decision is handled in the <span 
+expression evaluation. This ﬁnal assignment decision is handled in the <span 
 class="cmtt-10x-x-109">LatticeExprNode eval</span>
 functions.
 </p><!--l. 747--><p class="noindent" >
@@ -1538,7 +1532,7 @@ functions.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-34">
-&#x00A0;&#x00A0;&#x00A0;a.copyData(b+min(c));
+   a.copyData(b+min(c));
 </div>
 <!--l. 753--><p class="nopar" >
 </p><!--l. 755--><p class="noindent" >where the result of <span 
@@ -1562,32 +1556,32 @@ class="cmtt-10x-x-109">Float </span>version.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-35">
-&#x00A0;&#x00A0;&#x00A0;void&#x00A0;LatticeExprNode::eval&#x00A0;(Array&#x003C;Float&#x003E;&amp;&#x00A0;result,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;PixelRegion&amp;&#x00A0;region)&#x00A0;const
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;DebugAssert&#x00A0;(dataType()&#x00A0;==&#x00A0;TpFloat,&#x00A0;AipsError);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(!donePrepare_p)&#x00A0;{
-&#x00A0;<br />
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;If&#x00A0;first&#x00A0;time,&#x00A0;try&#x00A0;to&#x00A0;do&#x00A0;optimization.
-&#x00A0;<br />
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;LatticeExprNode*&#x00A0;This&#x00A0;=&#x00A0;(LatticeExprNode*)this;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;LELInterface&#x003C;Float&#x003E;::replaceScalarExpr&#x00A0;(This-&#x003E;pExprFloat_p);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;This-&#x003E;donePrepare_p&#x00A0;=&#x00A0;True;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;=&#x00A0;pExprFloat_p-&#x003E;getScalar();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}&#x00A0;else&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Array&#x003C;Float&#x003E;&#x00A0;temp(result.shape());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;pExprFloat_p-&#x003E;eval(temp,&#x00A0;region);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;result&#x00A0;=&#x00A0;temp;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   void LatticeExprNode::eval (Array&#x003C;Float&#x003E;&#x0026; result,
+ <br />                               const PixelRegion&#x0026; region) const
+ <br />   {
+ <br />      DebugAssert (dataType() == TpFloat, AipsError);
+ <br />      if (!donePrepare_p) {
+ <br />
+ <br />   // If first time, try to do optimization.
+ <br />
+ <br />         LatticeExprNode* This = (LatticeExprNode*)this;
+ <br />         LELInterface&#x003C;Float&#x003E;::replaceScalarExpr (This-&#x003E;pExprFloat_p);
+ <br />         This-&#x003E;donePrepare_p = True;
+ <br />      }
+ <br />      if (isScalar()) {
+ <br />         result = pExprFloat_p-&#x003E;getScalar();
+ <br />      } else {
+ <br />         Array&#x003C;Float&#x003E; temp(result.shape());
+ <br />         pExprFloat_p-&#x003E;eval(temp, region);
+ <br />         result = temp;
+ <br />      }
+ <br />   }
 </div>
 <!--l. 788--><p class="nopar" >
 </p><!--l. 791--><p class="noindent" >The only optimization we do at present is to replace expressions that result in a scalar by a scalar expression
 (<span 
 class="cmtt-10x-x-109">LELUnaryConst</span>).
-</p><!--l. 794--><p class="noindent" >So, the first time this function is entered, the optimization is attempted. Thereafter, the expression is just
+</p><!--l. 794--><p class="noindent" >So, the ﬁrst time this function is entered, the optimization is attempted. Thereafter, the expression is just
 evaluated. Note that the caste is necessary to convert the const <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>object to a non-const one so
 we can change it (yuck) !
@@ -1597,14 +1591,14 @@ class="cmtt-10x-x-109">LELInterface::replaceScalarExpr </span>is
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-36">
-&#x00A0;&#x00A0;&#x00A0;template&#x003C;class&#x00A0;T&#x003E;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;void&#x00A0;LELInterface&#x003C;T&#x003E;::replaceScalarExpr&#x00A0;(CountedPtr&#x003C;LELInterface&#x003C;T&#x003E;&#x00A0;&#x003E;&amp;&#x00A0;expr)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;expr-&#x003E;prepare();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(expr-&#x003E;isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;expr&#x00A0;=&#x00A0;new&#x00A0;LELUnaryConst&#x003C;T&#x003E;&#x00A0;(expr-&#x003E;getScalar());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   template&#x003C;class T&#x003E;
+ <br />   void LELInterface&#x003C;T&#x003E;::replaceScalarExpr (CountedPtr&#x003C;LELInterface&#x003C;T&#x003E; &#x003E;&#x0026; expr)
+ <br />   {
+ <br />       expr-&#x003E;prepare();
+ <br />       if (expr-&#x003E;isScalar()) {
+ <br />           expr = new LELUnaryConst&#x003C;T&#x003E; (expr-&#x003E;getScalar());
+ <br />       }
+ <br />   }
 </div>
 <!--l. 810--><p class="nopar" >
 </p><!--l. 812--><p class="noindent" >So it takes a <span 
@@ -1625,7 +1619,7 @@ replaceScalarExpr. Thus the process is recursive.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-37">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;myExpr&#x00A0;=&#x00A0;a+b;
+   LatticeExprNode myExpr = a+b;
 </div>
 <!--l. 829--><p class="nopar" >
 </p><!--l. 831--><p class="noindent" >where <span 
@@ -1636,8 +1630,8 @@ class="cmtt-10x-x-109">Float Lattices</span>. The tree is
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-38">
-&#x00A0;&#x00A0;+
-&#x00A0;<br />a&#x00A0;&#x00A0;&#x00A0;b
+  +
+ <br />a   b
 </div>
 <!--l. 836--><p class="nopar" >
 </p><!--l. 840--><p class="noindent" >After construction of the tree, the <span 
@@ -1699,7 +1693,7 @@ class="MathClass-rel">&#x003C;</mo></math>Float<!--l. 854--><math
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo> <mo 
-class="MathClass-bin">*</mo></math></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-2-3"  
+class="MathClass-bin">&lowast;</mo></math></td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-2-3"  
 class="td11">                                                                                                                                                                                           </td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-2-4"  
 class="td11">          </td>
 </tr><tr 
@@ -1805,12 +1799,12 @@ class="cmtt-10x-x-109">LatticeExprNode::eval </span>we note that we have done th
 class="cmtt-10x-x-109">a+b</span>.
 </p><!--l. 907--><p class="noindent" >The net result of all this was that nothing happened. This was because there were no scalar expressions to
 optimize.
-</p><!--l. 911--><p class="noindent" >Now let&#8217;s consider an expression where the optimization will occur. Consider the expression
+</p><!--l. 911--><p class="noindent" >Now let&#x2019;s consider an expression where the optimization will occur. Consider the expression
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-39">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;myExpr&#x00A0;=&#x00A0;a+min(b);
+   LatticeExprNode myExpr = a+min(b);
 </div>
 <!--l. 916--><p class="nopar" >
 </p><!--l. 918--><p class="noindent" >where <span 
@@ -1821,9 +1815,9 @@ class="cmtt-10x-x-109">Float Lattices</span>. The tree is
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-40">
-&#x00A0;&#x00A0;+
-&#x00A0;<br />a&#x00A0;&#x00A0;&#x00A0;min
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;b
+  +
+ <br />a   min
+ <br />     b
 </div>
 <!--l. 924--><p class="nopar" >
 </p><!--l. 926--><p class="noindent" >The min function returns a scalar - the minimum of the <span 
@@ -1835,8 +1829,8 @@ by
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-41">
-&#x00A0;&#x00A0;+
-&#x00A0;<br />a&#x00A0;&#x00A0;&#x00A0;constant
+  +
+ <br />a   constant
 </div>
 <!--l. 933--><p class="nopar" >
 </p><!--l. 936--><p class="noindent" >After construction of the tree, the <span 
@@ -1904,7 +1898,7 @@ class="MathClass-rel">&#x003C;</mo></math>Float<!--l. 953--><math
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo> <mo 
-class="MathClass-bin">*</mo></math></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-2-3"  
+class="MathClass-bin">&lowast;</mo></math></td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-2-3"  
 class="td11">                                                                                                                                                                                               </td><td  style="text-align:left; white-space:nowrap;" id="TBL-4-2-4"  
 class="td11">          </td>
 </tr><tr 
@@ -1969,7 +1963,7 @@ class="cmtt-10x-x-109">LatticeExprNode::eval</span>, <span
 class="cmtt-10x-x-109">replaceScalarExpr(myExpr.pExprFloat</span><span 
 class="cmtt-10x-x-109">_p</span>) is called. <span 
 class="cmtt-10x-x-109">replaceScalarExpr </span>calls
-the pointer passed to it in the argument list &#8221;expr&#8221; This points at the <span 
+the pointer passed to it in the argument list ”expr” This points at the <span 
 class="cmtt-10x-x-109">LELBinary </span>object
 </p><!--l. 972--><p class="noindent" >2. In <span 
 class="cmtt-10x-x-109">LELInterface::replaceScalarExpr</span>, the <span 
@@ -2058,36 +2052,36 @@ class="cmtt-10x-x-109">LatticeExprNode::eval </span>we note that we have done th
 class="cmtt-10x-x-109">a+constant</span>
 </p><!--l. 1029--><p class="noindent" >Note that the call to getScalar by the <span 
 class="cmtt-10x-x-109">LELFunction1D </span>object invokes a recursive chain as well, although it
-doesn&#8217;t go far in this case. Let&#8217;s look inside the <span 
+doesn&#x2019;t go far in this case. Let&#x2019;s look inside the <span 
 class="cmtt-10x-x-109">LELFunction1D::getScalar </span>function and see what happens
 there. The relevant piece is implemented according to
                                                                                                
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-42">
-&#x00A0;&#x00A0;&#x00A0;template&#x00A0;&#x003C;class&#x00A0;T&#x003E;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;T&#x00A0;LELFunction1D&#x003C;T&#x003E;::getScalar()&#x00A0;const
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;switch(function_p)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;case&#x00A0;LELFunctionEnums::MIN1D&#x00A0;:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(pExpr_p-&#x003E;isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;pExpr_p-&#x003E;getScalar();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Bool&#x00A0;firstTime&#x00A0;=&#x00A0;True;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;T&#x00A0;minVal&#x00A0;=&#x00A0;T();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;LatticeExpr&#x003C;T&#x003E;&#x00A0;latExpr(pExpr_p,&#x00A0;0);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;RO_LatticeIterator&#x003C;T&#x003E;&#x00A0;iter(latExpr,&#x00A0;latExpr.niceCursorShape());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;while&#x00A0;(!&#x00A0;iter.atEnd())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;T&#x00A0;minv&#x00A0;=&#x00A0;min(iter.cursor());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(firstTime&#x00A0;&#x00A0;||&#x00A0;&#x00A0;minv&#x00A0;&#x003C;&#x00A0;minVal)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;firstTime&#x00A0;=&#x00A0;False;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;minVal&#x00A0;=&#x00A0;minv;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;iter++;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;minVal;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
+   template &#x003C;class T&#x003E;
+ <br />   T LELFunction1D&#x003C;T&#x003E;::getScalar() const
+ <br />   {
+ <br />      switch(function_p) {
+ <br />      case LELFunctionEnums::MIN1D :
+ <br />      {
+ <br />         if (pExpr_p-&#x003E;isScalar()) {
+ <br />            return pExpr_p-&#x003E;getScalar();
+ <br />         }
+ <br />         Bool firstTime = True;
+ <br />         T minVal = T();
+ <br />         LatticeExpr&#x003C;T&#x003E; latExpr(pExpr_p, 0);
+ <br />         RO_LatticeIterator&#x003C;T&#x003E; iter(latExpr, latExpr.niceCursorShape());
+ <br />         while (! iter.atEnd()) {
+ <br />            T minv = min(iter.cursor());
+ <br />            if (firstTime  ||  minv &#x003C; minVal) {
+ <br />               firstTime = False;
+ <br />               minVal = minv;
+ <br />            }
+ <br />            iter++;
+ <br />         }
+ <br />         return minVal;
+ <br />      }
 </div>
 <!--l. 1058--><p class="nopar" >
 </p><!--l. 1061--><p class="noindent" >The <span 
@@ -2099,8 +2093,8 @@ class="cmtt-10x-x-109">LELLattice </span>object, which was constructed from the 
 class="cmtt-10x-x-109">Lattice</span>, <span 
 class="cmtt-10x-x-109">b</span>. First it looks to see whether the expression in hand, the <span 
 class="cmtt-10x-x-109">LELLattice </span>expression, is a scalar or not. If
-it is, it finds the value and returns. For example, if we had asked for <span 
-class="cmtt-10x-x-109">min(2.0) </span>this would happen. If it isn&#8217;t,
+it is, it ﬁnds the value and returns. For example, if we had asked for <span 
+class="cmtt-10x-x-109">min(2.0) </span>this would happen. If it isn&#x2019;t,
 then we continue on. Now again, <span 
 class="cmtt-10x-x-109">pExpr</span><span 
 class="cmtt-10x-x-109">_p </span>is pointing at a <span 
@@ -2110,7 +2104,7 @@ that is not a <span
 class="cmtt-10x-x-109">Lattice</span>; we need to get at the <span 
 class="cmtt-10x-x-109">Lattice </span>from which it was constructed. Since we are inside class
 <span 
-class="cmtt-10x-x-109">LELFunction1D</span>, we can&#8217;t get at the pointer inside the <span 
+class="cmtt-10x-x-109">LELFunction1D</span>, we can&#x2019;t get at the pointer inside the <span 
 class="cmtt-10x-x-109">LELLattice </span>class which does point at the <span 
 class="cmtt-10x-x-109">Lattice</span>.
 Thus, instead, we construct a <span 
@@ -2123,7 +2117,7 @@ class="cmtt-10x-x-109">LELLattice</span>.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-43">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;Float&#x003E;*&#x00A0;expr);
+   LatticeExprNode(LELInterface&#x003C;Float&#x003E;* expr);
 </div>
 <!--l. 1079--><p class="nopar" >
 </p><!--l. 1081--><p class="noindent" >which makes a <span 
@@ -2151,9 +2145,9 @@ class="cmtt-10x-x-109">Lattices</span>
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-44">
-&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;a;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;b;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Bool&#x003E;&#x00A0;c;
+   Lattice&#x003C;Float&#x003E; a;
+ <br />   Lattice&#x003C;Float&#x003E; b;
+ <br />   Lattice&#x003C;Bool&#x003E; c;
 </div>
 <!--l. 1100--><p class="nopar" >
 </p><!--l. 1102--><p class="noindent" >and the expression
@@ -2161,7 +2155,7 @@ class="cmtt-10x-x-109">Lattices</span>
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-45">
-&#x00A0;&#x00A0;&#x00A0;c.copyData(a&#x003E;b);
+   c.copyData(a&#x003E;b);
 </div>
 <!--l. 1106--><p class="nopar" >
 </p><!--l. 1108--><p class="noindent" >so the <span 
@@ -2215,9 +2209,9 @@ class="cmtt-10x-x-109">eval </span>function is declared as
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-46">
-&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Evaluate&#x00A0;the&#x00A0;expression&#x00A0;and&#x00A0;fill&#x00A0;the&#x00A0;result&#x00A0;array
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;virtual&#x00A0;void&#x00A0;eval&#x00A0;(Array&#x003C;T&#x003E;&amp;&#x00A0;result,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;PixelRegion&amp;&#x00A0;region)&#x00A0;const&#x00A0;=&#x00A0;0;
+   // Evaluate the expression and fill the result array
+ <br />      virtual void eval (Array&#x003C;T&#x003E;&#x0026; result,
+ <br />                         const PixelRegion&#x0026; region) const = 0;
 </div>
 <!--l. 1127--><p class="nopar" >
 </p><!--l. 1130--><p class="noindent" >This indicates that the array, <span 
@@ -2243,10 +2237,10 @@ it.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-47">
-&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Bool&#x003E;&#x00A0;a;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Bool&#x003E;&#x00A0;b;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Bool&#x003E;&#x00A0;c;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;c.copyData(a&amp;&amp;b);
+   Lattice&#x003C;Bool&#x003E; a;
+ <br />   Lattice&#x003C;Bool&#x003E; b;
+ <br />   Lattice&#x003C;Bool&#x003E; c;
+ <br />   c.copyData(a&#x0026;&#x0026;b);
 </div>
 <!--l. 1149--><p class="nopar" >
 </p><!--l. 1151--><p class="noindent" >so the <span 
@@ -2255,7 +2249,7 @@ class="cmtt-10x-x-109">True </span>if <span
 class="cmtt-10x-x-109">Lattice a </span>and <span 
 class="cmtt-10x-x-109">b </span>are <span 
 class="cmtt-10x-x-109">True</span>. This kind of operator can only be
-defined for <span 
+deﬁned for <span 
 class="cmtt-10x-x-109">Boolean Lattices</span>. Therefore the class <span 
 class="cmtt-10x-x-109">LELBinaryBool </span>is not templated and inherits from
 <span 
@@ -2268,7 +2262,7 @@ class="cmtt-10x-x-109">LELUnaryBool </span>exists to handle unary logical operat
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-48">
-&#x00A0;&#x00A0;&#x00A0;c.copyData(!a)
+   c.copyData(!a)
 </div>
 <!--l. 1163--><p class="nopar" >
 </p><!--l. 1166--><p class="noindent" >
@@ -2289,7 +2283,7 @@ class="cmtt-10x-x-109">Float,Double,Complex,DComplex</span><span
 class="cmsy-10x-x-109">} </span>exist to handle functions with an
 arbitrary number of arguments for each data type. Probably some of these could be combined into a templated
 class in the same way as the 1-argument <span 
-class="cmtt-10x-x-109">LELFunction*1D </span>classes, but there is enough difference between them
+class="cmtt-10x-x-109">LELFunction*1D </span>classes, but there is enough diﬀerence between them
 to make this worthwhile.
 </p><!--l. 1182--><p class="noindent" >Deserving of special mention for their cunning implementation are the functions, <span 
 class="cmtt-10x-x-109">nelements</span>, <span 
@@ -2309,9 +2303,9 @@ class="cmtt-10x-x-109">nelements</span></h4>
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-49">
-&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Bool&#x003E;&#x00A0;b;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Double&#x003E;&#x00A0;a;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;a.copyData(nelements(b));
+   Lattice&#x003C;Bool&#x003E; b;
+ <br />   Lattice&#x003C;Double&#x003E; a;
+ <br />   a.copyData(nelements(b));
 </div>
 <!--l. 1195--><p class="nopar" >
 </p><!--l. 1198--><p class="noindent" >Function <span 
@@ -2328,11 +2322,11 @@ class="cmtt-10x-x-109">LatticeExprNode</span>
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-50">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;nelements(const&#x00A0;LatticeExprNode&amp;&#x00A0;expr)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Block&#x003C;LatticeExprNode&#x003E;&#x00A0;arg(1,&#x00A0;expr);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;new&#x00A0;LELFunctionDouble&#x00A0;(LELFunctionEnums::NELEM,&#x00A0;arg);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   LatticeExprNode nelements(const LatticeExprNode&#x0026; expr)
+ <br />   {
+ <br />      Block&#x003C;LatticeExprNode&#x003E; arg(1, expr);
+ <br />      return new LELFunctionDouble (LELFunctionEnums::NELEM, arg);
+ <br />   }
 </div>
 <!--l. 1210--><p class="nopar" >
 </p><!--l. 1213--><p class="noindent" >The new statement creates a pointer to a <span 
@@ -2344,7 +2338,7 @@ class="cmtt-10x-x-109">LatticeExprNode </span>by the constructor
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-51">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode(LELInterface&#x003C;Double&#x003E;*&#x00A0;expr);
+   LatticeExprNode(LELInterface&#x003C;Double&#x003E;* expr);
 </div>
 <!--l. 1219--><p class="nopar" >
 </p><!--l. 1221--><p class="noindent" >Now, <span 
@@ -2357,24 +2351,24 @@ class="cmtt-10x-x-109">LELFunctionDouble::getScalar </span>is
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-52">
-&#x00A0;&#x00A0;&#x00A0;case&#x00A0;LELFunctionEnums::NELEM&#x00A0;:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(arg_p[0].isScalar())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;1;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;arg_p[0].shape().product();
+   case LELFunctionEnums::NELEM :
+ <br />       if (arg_p[0].isScalar()) {
+ <br />          return 1;
+ <br />       }
+ <br />       return arg_p[0].shape().product();
 </div>
 <!--l. 1231--><p class="nopar" >
 </p><!--l. 1233--><p class="noindent" ><span 
 class="cmtt-10x-x-109">arg</span><span 
-class="cmtt-10x-x-109">_p[0] </span>is the first element in a <span 
+class="cmtt-10x-x-109">_p[0] </span>is the ﬁrst element in a <span 
 class="cmtt-10x-x-109">Block&#x003C;LatticeExprNode&#x003E;</span>. In our example, it is a <span 
 class="cmtt-10x-x-109">LatticeExprNode </span>housing
 the <span 
-class="cmtt-10x-x-109">LELLattice </span>object that is needed to access the Lattice�Bool� (<span 
+class="cmtt-10x-x-109">LELLattice </span>object that is needed to access the Lattice¡Bool¿ (<span 
 class="cmtt-10x-x-109">b</span>). Now recall that <span 
 class="cmtt-10x-x-109">LELLattice </span>is fully
 templated, so it can of course handle any type of Lattice. But <span 
-class="cmtt-10x-x-109">LELFunctionDouble </span>doesn&#8217;t know anything at all
+class="cmtt-10x-x-109">LELFunctionDouble </span>doesn&#x2019;t know anything at all
 about the type of this Lattice in the path that is followed for this function; all type checking is bypassed. The
 statement <span 
 class="cmtt-10x-x-109">arg</span><span 
@@ -2398,15 +2392,15 @@ class="cmtt-10x-x-109">LatticeExprNode</span>. E.g.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-53">
-&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;ntrue&#x00A0;(const&#x00A0;LatticeExprNode&amp;&#x00A0;expr)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;AlwaysAssert&#x00A0;(expr.dataType()&#x00A0;==&#x00A0;TpBool,&#x00A0;AipsError);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Block&#x003C;LatticeExprNode&#x003E;&#x00A0;arg(1,&#x00A0;expr);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;new&#x00A0;LELFunctionDouble(LELFunctionEnums::NTRUE,&#x00A0;arg);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   LatticeExprNode ntrue (const LatticeExprNode&#x0026; expr)
+ <br />   {
+ <br />      AlwaysAssert (expr.dataType() == TpBool, AipsError);
+ <br />      Block&#x003C;LatticeExprNode&#x003E; arg(1, expr);
+ <br />      return new LELFunctionDouble(LELFunctionEnums::NTRUE, arg);
+ <br />   }
 </div>
 <!--l. 1258--><p class="nopar" >
-</p><!--l. 1261--><p class="noindent" >Immediately though a test is made for the type of the expression that is having the function applied to it. If it&#8217;s
+</p><!--l. 1261--><p class="noindent" >Immediately though a test is made for the type of the expression that is having the function applied to it. If it&#x2019;s
 not a <span 
 class="cmtt-10x-x-109">Bool</span>, an exception is thrown. Otherwise we proceed into <span 
 class="cmtt-10x-x-109">LELFunctionDouble </span>again. Since the
@@ -2418,27 +2412,27 @@ class="cmtt-10x-x-109">ntrue</span>
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-54">
-&#x00A0;&#x00A0;&#x00A0;switch&#x00A0;(function_p)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;case&#x00A0;LELFunctionEnums::NTRUE&#x00A0;:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;uInt&#x00A0;ntrue&#x00A0;=&#x00A0;0;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Bool&#x00A0;deleteIt;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;LatticeExpr&#x003C;Bool&#x003E;&#x00A0;latExpr(arg_p[0],&#x00A0;0);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;RO_LatticeIterator&#x003C;Bool&#x003E;&#x00A0;iter(latExpr,&#x00A0;latExpr.niceCursorShape());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;while&#x00A0;(!&#x00A0;iter.atEnd())&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;Array&#x003C;Bool&#x003E;&amp;&#x00A0;array&#x00A0;=&#x00A0;iter.cursor();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;const&#x00A0;Bool*&#x00A0;data&#x00A0;=&#x00A0;array.getStorage&#x00A0;(deleteIt);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;uInt&#x00A0;n&#x00A0;=&#x00A0;array.nelements();
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;for&#x00A0;(uInt&#x00A0;i=0;&#x00A0;i&#x003C;n;&#x00A0;i++)&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(data[i])&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;ntrue++;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;array.freeStorage&#x00A0;(data,&#x00A0;deleteIt);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;iter++;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;}
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;ntrue;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;}
+   switch (function_p) {
+ <br />   case LELFunctionEnums::NTRUE :
+ <br />   {
+ <br />      uInt ntrue = 0;
+ <br />      Bool deleteIt;
+ <br />      LatticeExpr&#x003C;Bool&#x003E; latExpr(arg_p[0], 0);
+ <br />      RO_LatticeIterator&#x003C;Bool&#x003E; iter(latExpr, latExpr.niceCursorShape());
+ <br />      while (! iter.atEnd()) {
+ <br />         const Array&#x003C;Bool&#x003E;&#x0026; array = iter.cursor();
+ <br />         const Bool* data = array.getStorage (deleteIt);
+ <br />         uInt n = array.nelements();
+ <br />         for (uInt i=0; i&#x003C;n; i++) {
+ <br />            if (data[i]) {
+ <br />               ntrue++;
+ <br />            }
+ <br />         }
+ <br />         array.freeStorage (data, deleteIt);
+ <br />         iter++;
+ <br />      }
+ <br />      return ntrue;
+ <br />   }
 </div>
 <!--l. 1289--><p class="nopar" >
 </p><!--l. 1291--><p class="noindent" >A <span 
@@ -2718,7 +2712,7 @@ class="td11">                    </td>
 </tr></table></div></div>
 <!--l. 1388--><p class="noindent" >Note that some classes are essentially non-templated specializations of others. For example, <span 
 class="cmtt-10x-x-109">LELFunctionReal1D</span>
-handles functions that couldn&#8217;t be in <span 
+handles functions that couldn&#x2019;t be in <span 
 class="cmtt-10x-x-109">LELFunction1D </span>because there was no complex version of that function (e.g.
 <span 
 class="cmtt-10x-x-109">asin</span>) so templating would fail.
@@ -2727,18 +2721,18 @@ class="cmtt-10x-x-109">asin</span>) so templating would fail.
                                                                                                
 </p>
 <div class="verbatim" id="verbatim-55">
-&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;a;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Float&#x003E;&#x00A0;b;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Double&#x003E;&#x00A0;aDouble;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Double&#x003E;&#x00A0;bDouble;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Complex&#x003E;&#x00A0;aComplex;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Complex&#x003E;&#x00A0;bComplex;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;DComplex&#x003E;&#x00A0;aDComplex;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;DComplex&#x003E;&#x00A0;bDComplex;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Bool&#x003E;&#x00A0;aBool;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Lattice&#x003C;Bool&#x003E;&#x00A0;bBool;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;Double&#x00A0;const;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;LatticeExprNode&#x00A0;expr;
+   Lattice&#x003C;Float&#x003E; a;
+ <br />   Lattice&#x003C;Float&#x003E; b;
+ <br />   Lattice&#x003C;Double&#x003E; aDouble;
+ <br />   Lattice&#x003C;Double&#x003E; bDouble;
+ <br />   Lattice&#x003C;Complex&#x003E; aComplex;
+ <br />   Lattice&#x003C;Complex&#x003E; bComplex;
+ <br />   Lattice&#x003C;DComplex&#x003E; aDComplex;
+ <br />   Lattice&#x003C;DComplex&#x003E; bDComplex;
+ <br />   Lattice&#x003C;Bool&#x003E; aBool;
+ <br />   Lattice&#x003C;Bool&#x003E; bBool;
+ <br />   Double const;
+ <br />   LatticeExprNode expr;
 </div>
 <!--l. 1410--><p class="nopar" >
 </p><!--l. 1413--><p class="noindent" >
@@ -2785,7 +2779,7 @@ class="td11">1             </td><td  style="text-align:left; white-space:nowrap;
 class="td11">expr = <!--l. 1420--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-bin">-</mo> <mi 
+class="MathClass-bin">&minus;</mo> <mi 
 >a</mi></math>            </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-4-1"  
@@ -2829,7 +2823,7 @@ class="td11">2             </td><td  style="text-align:left; white-space:nowrap;
 class="td11">expr = a<!--l. 1425--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
-class="MathClass-bin">-</mo></math>b           </td>
+class="MathClass-bin">&minus;</mo></math>b           </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-9-1"  
 class="td11">                 </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-9-2"  
@@ -2941,11 +2935,11 @@ class="td11">expr = aBool!=bBool                                                
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-19-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-19-1"  
 class="td11">                 </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-19-2"  
-class="td11">&amp;&amp;                                                                                                                                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-19-3"  
+class="td11">&#x0026;&#x0026;                                                                                                                                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-19-3"  
 class="td11">5                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-19-4"  
 class="td11">Scalar,Array</td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-19-5"  
 class="td11">2             </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-19-6"  
-class="td11">expr = Bool&amp;&amp;bBool                                                                                                                                    </td>
+class="td11">expr = Bool&#x0026;&#x0026;bBool                                                                                                                                    </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-20-1"  
 class="td11">                 </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-20-2"  
@@ -3117,11 +3111,11 @@ class="td11">expr = ceil(a)                                                     
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-40-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-40-1"  
 class="td11">                 </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-40-2"  
-class="td11">floor                                                                                                                                  </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-40-3"  
+class="td11">ﬂoor                                                                                                                                  </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-40-3"  
 class="td11">1,2                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-40-4"  
 class="td11">Scalar,Array</td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-40-5"  
 class="td11">1             </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-40-6"  
-class="td11">expr = floor(a)                                                                                                                                            </td>
+class="td11">expr = ﬂoor(a)                                                                                                                                            </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-41-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-41-1"  
 class="td11">LELFunctionFloat   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-41-2"  

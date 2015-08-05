@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="iso-8859-1" ?> 
+<?xml version="1.0" encoding="utf-8" ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
 "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
 <html xmlns="http://www.w3.org/1999/xhtml"  
 > 
 <head><title>MeasurementSet access in AIPS++ </title> 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
-<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<!-- xhtml,mathml,fn-in,css2,css-in,html --> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="238.tex" /> 
-<meta name="date" content="2015-07-30 09:22:00" /> 
+<meta name="date" content="2015-08-05 16:00:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -50,12 +50,6 @@ li p.indent { text-indent: 0em }
 li p:first-child{ margin-top:0em; }  
 li p:last-child, li div:last-child { margin-bottom:0.5em; }  
 li p~ul:last-child, li p~ol:last-child{ margin-bottom:0.5em; }  
-ul.itemize1 {list-style-type: none;}  
-ul.itemize1 li.itemize:before { display: marker; marker-offset: 0.5em; content: "&#x2219; " }  
-ul.itemize2 {list-style-type: none;}  
-ul.itemize2 li.itemize:before { display: marker; marker-offset: 0.5em; content: "\protect \protect \edef OT1{OT1}\let \enc @update \relax \protect \edef cmr{cmr}\protect \edef m{m}\protect \edef n{n}\protect \afterassignment \edef 10{345}\afterassignment \edef 12.0pt{12.0pt}\edef 1{}\let 1\def \size @update {\baselineskip 12.0pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10 {\OT 1/cmr/m/n/10 }\OT 1/cmr/m/n/10 \size @update \enc @update \ignorespaces \relax \protect \relax \protect \edef m{bx}\protect \afterassignment \edef 10{345}\afterassignment \edef 12.0pt{12.0pt}\edef 1{}\let 1\def \size @update {\baselineskip 12.0pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10 {\OT 1/cmr/m/n/10 }\OT 1/cmr/m/n/10 \size @update \enc @update \OT 1\textendash " }  
-ul.itemize3 {list-style-type: none;}  
-ul.itemize3 li.itemize:before { display: marker; marker-offset: 0.5em; content: "* " }  
 .enumerate1 {list-style-type:decimal;}  
 .enumerate2 {list-style-type:lower-alpha;}  
 .enumerate3 {list-style-type:lower-roman;}  
@@ -164,7 +158,7 @@ div.abstract {width:100%;}
 
                                                                                          
 
-<h2 class="titleHead">MeasurementSet access in AIPS++&#x00A0;</h2>
+<h2 class="titleHead">MeasurementSet access in AIPS++ </h2>
 <div class="author" ><span 
 class="cmr-12">Athol Kemball</span></div>
 <br />
@@ -190,11 +184,11 @@ href="#x1-50004" id="QQ2-1-5">Proposed revisions</a></span>
 </p>
    <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
  id="x1-20001"></a>Introduction</h3>
-<!--l. 34--><p class="noindent" >The C++ MeasurementSet (MS) access classes are fundamental to the AIPS++&#x00A0;library, and find general use in
-several areas, including data fillers, the <span 
+<!--l. 34--><p class="noindent" >The C++ MeasurementSet (MS) access classes are fundamental to the AIPS++ library, and ﬁnd general use in
+several areas, including data ﬁllers, the <span 
 class="cmtt-10">ms </span>tool and a range of data reduction applications. This note is focused
 primarily on basic MS access in synthesis at this time; it describes the design of the current classes, and
-considers their future extension and consolidation. The MS data format is described in AIPS++&#x00A0;Note
+considers their future extension and consolidation. The MS data format is described in AIPS++ Note
                                                                                          
 
                                                                                          
@@ -203,7 +197,7 @@ considers their future extension and consolidation. The MS data format is descri
 </p>
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-30002"></a>Requirements for the MS access classes</h3>
-<!--l. 44--><p class="noindent" >MeasurementSets are AIPS++&#x00A0;<span 
+<!--l. 44--><p class="noindent" >MeasurementSets are AIPS++ <span 
 class="cmtt-10">Table</span>s and their existing access classes are built closely on the <span 
 class="cmtt-10">Table </span>infrastructure.
 This assumption is implicit in the requirements listed in this section. The C++ classes used for MS access need to
@@ -221,7 +215,7 @@ class="cmbx-10">Column and row access: </span>Access to MS MAIN and sub-table ro
      <li 
   class="enumerate" id="x1-3006x3"><span 
 class="cmbx-10">Sorting and selection: </span>The ability to support bulk sorting and selection operations. MS selections
-     are expected to be expressed in a close variant of the Table Query Language (TaQL), defined elsewhere.
+     are expected to be expressed in a close variant of the Table Query Language (TaQL), deﬁned elsewhere.
      </li>
      <li 
   class="enumerate" id="x1-3008x4"><span 
@@ -256,7 +250,7 @@ class="cmbx-10">MS data objects: </span>Provision of C++ classes to model a data
 
                                                                                          
      iteration or selection, which can be operated upon by other agent classes (e.g. calibration), and passed
-     between AIPS++&#x00A0;classes and between C++ and Glish.
+     between AIPS++ classes and between C++ and Glish.
      </li>
      <li 
   class="enumerate" id="x1-3018x9"><span 
@@ -281,8 +275,8 @@ class="cmtt-10">Table </span>system  infrastructure  and  design  philosophy
      </li>
      <li 
   class="enumerate" id="x1-3026x13"><span 
-class="cmbx-10">Efficiency: </span>I/O is a critical part of astronomical data reduction performance, and efficiency is a key
-     requirement for MS access. This includes integrated I/O profiling, in both the serial and parallel case.
+class="cmbx-10">Eﬃciency: </span>I/O is a critical part of astronomical data reduction performance, and eﬃciency is a key
+     requirement for MS access. This includes integrated I/O proﬁling, in both the serial and parallel case.
      </li></ol>
 <!--l. 114--><p class="noindent" >
 </p>
@@ -308,7 +302,7 @@ class="cmtt-10">MSTable</span>
   class="enumerate" id="x1-4004x2"><span 
 class="cmbx-10">Column and row access: </span>The table column accessors are provided by <span 
 class="cmtt-10">MS*Columns</span>, and the table
-     column definitions are defined in <span 
+     column deﬁnitions are deﬁned in <span 
 class="cmtt-10">MS*Enums</span>. <span 
 class="cmtt-10">MSColumns </span>provides access to the MS as a whole. <span 
 class="cmti-10">Missing:</span>
@@ -327,7 +321,7 @@ class="cmtt-10">MSIter</span>, and in specialized
      form by reduction classes such as <span 
 class="cmtt-10">imager </span>and <span 
 class="cmtt-10">calibrater</span>, amongst others. <span 
-class="cmti-10">Missing: i) unified MS</span>
+class="cmti-10">Missing: i) uniﬁed MS</span>
      <span 
 class="cmti-10">selection  to  TaQL  converter  (partially  implemented  in  </span><span 
 class="cmtt-10">[calibrater|imager].g</span><span 
@@ -335,11 +329,11 @@ class="cmti-10">)  allowing  aliases,</span>
      <span 
 class="cmti-10">sub-table lookup, derived quantities and [0,1] indexing; ii) centralization of MS selection services in a</span>
      <span 
-class="cmti-10">utility class; and, iii) unification of </span><span 
+class="cmti-10">utility class; and, iii) uniﬁcation of </span><span 
 class="cmtt-10">MSSelector </span><span 
 class="cmti-10">GlishRecord selection syntax and a general MS selection</span>
      <span 
-class="cmti-10">syntax, including unification of </span><span 
+class="cmti-10">syntax, including uniﬁcation of </span><span 
 class="cmtt-10">MSSelector </span><span 
 class="cmti-10">keywords and </span><span 
 class="cmtt-10">MSCalEnums</span>.
@@ -374,7 +368,7 @@ class="cmtt-10">MS*Index</span>
 class="cmtt-10">ColumnsIndex</span>. <span 
 class="cmti-10">Missing: i) arbitrary, read-write keyed lookup, with</span>
      <span 
-class="cmti-10">different forms of interpolation where required; and, ii) specialized sequential iterators.</span>
+class="cmti-10">diﬀerent forms of interpolation where required; and, ii) specialized sequential iterators.</span>
      </li>
      <li 
   class="enumerate" id="x1-4012x6"><span 
@@ -400,7 +394,7 @@ class="cmtt-10">VisBuffer</span>,  but  specialized  forms  also  implemented
 class="cmtt-10">MSFlagger</span>.  <span 
 class="cmti-10">Missing:  i)  greater  MS  coverage;  ii)  optional  write-through  to  underlying  MS;  iii)</span>
      <span 
-class="cmti-10">customized frequency averaging; and, iv) re-select on buffer using standard MS selection syntax.</span>
+class="cmti-10">customized frequency averaging; and, iv) re-select on buﬀer using standard MS selection syntax.</span>
      </li>
      <li 
   class="enumerate" id="x1-4018x9"><span 
@@ -409,7 +403,7 @@ class="cmtt-10">ms </span>tool,  using  <span
 class="cmtt-10">MSSelector, MSSelUtil[2],</span>
      <span 
 class="cmtt-10">MSRange, and MSFlagger </span>primarily. <span 
-class="cmti-10">Missing: i) greater unification with </span><span 
+class="cmti-10">Missing: i) greater uniﬁcation with </span><span 
 class="cmtt-10">VisibilityIterator </span><span 
 class="cmti-10">and</span>
      <span 
@@ -441,7 +435,7 @@ class="cmtt-10">Table </span><span
 class="cmbx-10">infrastructure use: </span>It is believed that no infrastructure is implemented in the current MS
      access classes which should properly be moved to the <span 
 class="cmtt-10">Table </span>system. <span 
-class="cmti-10">Missing: i) large file support in</span>
+class="cmti-10">Missing: i) large ﬁle support in</span>
      <span 
 class="cmti-10">the </span><span 
 class="cmtt-10">Table </span><span 
@@ -449,8 +443,8 @@ class="cmti-10">system; and, ii) ability to remove existing columns held in TSM<
      </li>
      <li 
   class="enumerate" id="x1-4026x13"><span 
-class="cmbx-10">Efficiency: </span>I/O profiling curently is implemented using PABLO (UIUC). <span 
-class="cmti-10">Missing: continued profiling</span>
+class="cmbx-10">Eﬃciency: </span>I/O proﬁling curently is implemented using PABLO (UIUC). <span 
+class="cmti-10">Missing: continued proﬁling</span>
      <span 
 class="cmti-10">of computational and I/O components. </span></li></ol>
 <!--l. 206--><p class="noindent" >
@@ -470,7 +464,7 @@ class="cmtt-10">MSFlagger, MSRange</span>
      and <span 
 class="cmtt-10">MSSelector</span>. These classes do not use <span 
 class="cmtt-10">VisibilityIterator </span>or <span 
-class="cmtt-10">VisBuffer</span>, but use buffers of
+class="cmtt-10">VisBuffer</span>, but use buﬀers of
      GlishRecords to hold the data where required in C++. The proposal in this area is to isolate the
      GlishRecord interface code in a separate class called <span 
 class="cmtt-10">MSGlishData </span>(or similar), and to migrate to the use
@@ -492,10 +486,10 @@ class="cmtt-10">MSSelector</span>,
      </li>
      <li 
   class="enumerate" id="x1-5006x3"><span 
-class="cmbx-10">MSIter, VisibilityIterator, and VisBuffer: </span>The major changes to these classes include addition of
-     access to selection, and sub-table look-up. Specifically: a) add general selection to constructor, which
+class="cmbx-10">MSIter, VisibilityIterator, and VisBuﬀer: </span>The major changes to these classes include addition of
+     access to selection, and sub-table look-up. Speciﬁcally: a) add general selection to constructor, which
      uses new MSSelector; b) add sub-table lookup for current MAIN iterator interval, and propagate these
-     changes to VisIter and VisBuffer.
+     changes to VisIter and VisBuﬀer.
      </li></ol>
     
 </body></html> 

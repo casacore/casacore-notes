@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="iso-8859-1" ?> 
+<?xml version="1.0" encoding="utf-8" ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
 "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
 <html xmlns="http://www.w3.org/1999/xhtml"  
 > 
-<head><title>NOTE 233 &#8211; Guide to Measures in C++</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
-<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<!-- xhtml,mathml,fn-in,css2,css-in,html --> 
+<head><title>NOTE 233 – Guide to Measures in C++</title> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="233.tex" /> 
-<meta name="date" content="2015-07-30 09:22:00" /> 
+<meta name="date" content="2015-08-05 16:00:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -73,12 +73,6 @@ li p.indent { text-indent: 0em }
 li p:first-child{ margin-top:0em; }  
 li p:last-child, li div:last-child { margin-bottom:0.5em; }  
 li p~ul:last-child, li p~ol:last-child{ margin-bottom:0.5em; }  
-ul.itemize1 {list-style-type: none;}  
-ul.itemize1 li.itemize:before { display: marker; marker-offset: 0.5em; content: "&#x2219; " }  
-ul.itemize2 {list-style-type: none;}  
-ul.itemize2 li.itemize:before { display: marker; marker-offset: 0.5em; content: "\protect \protect \edef OT1{OT1}\let \enc @update \relax \protect \edef cmr{cmr}\protect \edef m{m}\protect \edef n{n}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \ignorespaces \relax \protect \relax \protect \edef m{bx}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \OT 1\textendash " }  
-ul.itemize3 {list-style-type: none;}  
-ul.itemize3 li.itemize:before { display: marker; marker-offset: 0.5em; content: "* " }  
 .enumerate1 {list-style-type:decimal;}  
 .enumerate2 {list-style-type:lower-alpha;}  
 .enumerate3 {list-style-type:lower-roman;}  
@@ -187,7 +181,7 @@ div.abstract {width:100%;}
 
                                                                      
 
-<h2 class="titleHead">NOTE 233 &#8211; Guide to Measures in C++</h2>
+<h2 class="titleHead">NOTE 233 – Guide to Measures in C++</h2>
 <div class="author" ><span 
 class="cmr-12">Wim Brouw</span></div><br />
 <div class="date" ><span 
@@ -204,57 +198,57 @@ href="#x1-30002" id="QQ2-1-3">Background</a></span>
 <br />   <span class="sectionToc" >3 <a 
 href="#x1-40003" id="QQ2-1-4">Conversion</a></span>
 <br />   <span class="sectionToc" >4 <a 
-href="#x1-50004" id="QQ2-1-5">Efficiency</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >4.1 <a 
+href="#x1-50004" id="QQ2-1-5">Eﬃciency</a></span>
+<br />    <span class="subsectionToc" >4.1 <a 
 href="#x1-60004.1" id="QQ2-1-6">Measure or MeasValue</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >4.2 <a 
-href="#x1-70004.2" id="QQ2-1-7">Re-use the effort of frame</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >4.3 <a 
+<br />    <span class="subsectionToc" >4.2 <a 
+href="#x1-70004.2" id="QQ2-1-7">Re-use the eﬀort of frame</a></span>
+<br />    <span class="subsectionToc" >4.3 <a 
 href="#x1-80004.3" id="QQ2-1-8">Re-use of conversion objects</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >4.4 <a 
+<br />    <span class="subsectionToc" >4.4 <a 
 href="#x1-90004.4" id="QQ2-1-9">Specialized conversion engines</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.4.1 <a 
+<br />     <span class="subsubsectionToc" >4.4.1 <a 
 href="#x1-100004.4.1" id="QQ2-1-10">EarthMagneticMachine</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.4.2 <a 
+<br />     <span class="subsubsectionToc" >4.4.2 <a 
 href="#x1-110004.4.2" id="QQ2-1-11">VelocityMachine</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >4.4.3 <a 
+<br />     <span class="subsubsectionToc" >4.4.3 <a 
 href="#x1-120004.4.3" id="QQ2-1-12">UVWMachine</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >4.5 <a 
+<br />    <span class="subsectionToc" >4.5 <a 
 href="#x1-130004.5" id="QQ2-1-13">Specifying execution details</a></span>
 <br />   <span class="sectionToc" >5 <a 
 href="#x1-140005" id="QQ2-1-14">Interface</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >5.1 <a 
+<br />    <span class="subsectionToc" >5.1 <a 
 href="#x1-150005.1" id="QQ2-1-15">Getting values from a Measure</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >5.2 <a 
+<br />    <span class="subsectionToc" >5.2 <a 
 href="#x1-160005.2" id="QQ2-1-16">Getting values from a MeasValue</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >5.3 <a 
+<br />    <span class="subsectionToc" >5.3 <a 
 href="#x1-170005.3" id="QQ2-1-17">Obtaining information from the MeasFrame</a></span>
 <br />   <span class="sectionToc" >A <a 
 href="#x1-18000A" id="QQ2-1-18">Appendix</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >A.1 <a 
+<br />    <span class="subsectionToc" >A.1 <a 
 href="#x1-19000A.1" id="QQ2-1-19">Background literature</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >A.2 <a 
+<br />    <span class="subsectionToc" >A.2 <a 
 href="#x1-20000A.2" id="QQ2-1-20">Details for individual Measures</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.1 <a 
+<br />     <span class="subsubsectionToc" >A.2.1 <a 
 href="#x1-21000A.2.1" id="QQ2-1-21">MEpoch</a></span>
                                                                      
 
                                                                      
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.2 <a 
+<br />     <span class="subsubsectionToc" >A.2.2 <a 
 href="#x1-22000A.2.2" id="QQ2-1-22">MPosition</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.3 <a 
+<br />     <span class="subsubsectionToc" >A.2.3 <a 
 href="#x1-23000A.2.3" id="QQ2-1-23">MDirection</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.4 <a 
+<br />     <span class="subsubsectionToc" >A.2.4 <a 
 href="#x1-24000A.2.4" id="QQ2-1-24">MBaseline</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.5 <a 
+<br />     <span class="subsubsectionToc" >A.2.5 <a 
 href="#x1-25000A.2.5" id="QQ2-1-25">Muvw</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.6 <a 
+<br />     <span class="subsubsectionToc" >A.2.6 <a 
 href="#x1-26000A.2.6" id="QQ2-1-26">MEarthMagnetic</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.7 <a 
+<br />     <span class="subsubsectionToc" >A.2.7 <a 
 href="#x1-27000A.2.7" id="QQ2-1-27">MFrequency</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.8 <a 
+<br />     <span class="subsubsectionToc" >A.2.8 <a 
 href="#x1-28000A.2.8" id="QQ2-1-28">MRadialVelocity</a></span>
-<br />   &#x00A0;&#x00A0;<span class="subsubsectionToc" >A.2.9 <a 
+<br />     <span class="subsubsectionToc" >A.2.9 <a 
 href="#x1-29000A.2.9" id="QQ2-1-29">MDoppler</a></span>
    </div>
 <!--l. 15--><p class="indent" >
@@ -266,16 +260,16 @@ href="#x1-29000A.2.9" id="QQ2-1-29">MDoppler</a></span>
  id="x1-20001"></a>Introduction</h3>
 <!--l. 19--><p class="noindent" >This guide gives a short overview of the background and use of the
 <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;module in C++. Detailed information can be found in the
+class="cmti-10x-x-109">Measures</span> module in C++. Detailed information can be found in the
 </p><!--l. 22--><p class="indent" >   <a 
 href="../html/group__Measures__module.html" ><span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;module</a> description, and in the individual header files of the classes
+class="cmti-10x-x-109">Measures</span> module</a> description, and in the individual header ﬁles of the classes
 in this module.
 </p><!--l. 26--><p class="indent" >   Section 2 explains what a <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;consists of, and why; section 3 discusses
-conversion; section 4 some notes on efficient use and section 5 gives the common
+class="cmti-10x-x-109">Measure</span> consists of, and why; section 3 discusses
+conversion; section 4 some notes on eﬃcient use and section 5 gives the common
 interface of <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;and their values. Appendices give some details per
+class="cmti-10x-x-109">Measures</span> and their values. Appendices give some details per
 <span 
 class="cmti-10x-x-109">Measure</span>.
 </p><!--l. 34--><p class="noindent" >
@@ -398,7 +392,7 @@ display="inline" ><mi
 >l</mi><mi 
 >d</mi></math> </dt><dd 
 class="description">
-     the earth magnetic field vector
+     the earth magnetic ﬁeld vector
      </dd><dt class="description">
 <!--l. 46--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -430,8 +424,8 @@ class="MathClass-punc">,</mo><mi
 class="MathClass-punc">,</mo><mi 
 >w</mi></math>
      coordinate: a baseline projected on some plane</dd></dl>
-<!--l. 51--><p class="indent" >   A specific <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;class is indicated with an
+<!--l. 51--><p class="indent" >   A speciﬁc <span 
+class="cmti-10x-x-109">Measure</span> class is indicated with an
 <!--l. 51--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -450,13 +444,13 @@ display="inline" ><mi
 >o</mi><mi 
 >n</mi></math>.
 </p><!--l. 54--><p class="indent" >   A <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;consists of a <span 
+class="cmti-10x-x-109">Measure</span> consists of a <span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">v</span><span 
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;and a <span 
+class="small-caps">e</span></span> and a <span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">r</span><span 
 class="small-caps">e</span><span 
@@ -472,18 +466,18 @@ class="small-caps">v</span><span
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;of a
+class="small-caps">e</span></span> of a
 <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;is a vector of double floating point numbers, in some internal
+class="cmti-10x-x-109">Measure</span> is a vector of double ﬂoating point numbers, in some internal
 format, independent of the units used to create them. The <span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">v</span><span 
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;is
+class="small-caps">e</span></span> is
 called a <span 
-class="cmti-10x-x-109">MeasValue</span>, and specific ones are indicated with the letters
+class="cmti-10x-x-109">MeasValue</span>, and speciﬁc ones are indicated with the letters
 <!--l. 58--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -513,7 +507,7 @@ class="small-caps">v</span><span
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;can be constructed in many different ways. An
+class="small-caps">e</span></span> can be constructed in many diﬀerent ways. An
 <!--l. 65--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -545,17 +539,17 @@ display="inline" ><mi
 >y</mi></math> from
 a wavelength or the wave energy.
 </p><!--l. 69--><p class="indent" >   Some <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;can often also be obtained from a catalog, especially a list of
+class="cmti-10x-x-109">Measures</span> can often also be obtained from a catalog, especially a list of
 observatories, a source list and a spectral line list. They can be obtained as:
 <br 
 class="newline" /><br 
-class="newline" />&#x00A0;      </p><div class="minipage"><div class="verbatim" id="verbatim-1">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;MDirection&#x00A0;source;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;MFrequency&#x00A0;line;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;MPosition&#x00A0;obs;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(MeasTable::Observatory(obs,&#x00A0;"ATCA"))&#x00A0;{};
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(MeasTable::Line(line,&#x00A0;"HI"))&#x00A0;{};
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;if&#x00A0;(MeasTable::Source(source,&#x00A0;"0008-421"))&#x00A0;{};
+class="newline" />       </p><div class="minipage"><div class="verbatim" id="verbatim-1">
+    MDirection source;
+ <br />    MFrequency line;
+ <br />    MPosition obs;
+ <br />    if (MeasTable::Observatory(obs, &#x0022;ATCA&#x0022;)) {};
+ <br />    if (MeasTable::Line(line, &#x0022;HI&#x0022;)) {};
+ <br />    if (MeasTable::Source(source, &#x0022;0008-421&#x0022;)) {};
 </div>
 <!--l. 82--><p class="nopar" ></p></div><br 
 class="newline" />
@@ -569,8 +563,8 @@ class="small-caps">r</span><span
 class="small-caps">e</span><span 
 class="small-caps">n</span><span 
 class="small-caps">c</span><span 
-class="small-caps">e</span></span>&#x00A0;consists of up to 3 <span 
-class="cmti-10x-x-109">fields</span>: </p>
+class="small-caps">e</span></span> consists of up to 3 <span 
+class="cmti-10x-x-109">ﬁelds</span>: </p>
      <ul class="itemize1">
      <li class="itemize">a <span 
 class="cmti-10x-x-109">reference code</span>, describing how the <span 
@@ -579,8 +573,8 @@ class="small-caps">v</span><span
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;should be interpreted. This
-     field is mandatory, and has an enumerated value (see Appendix A for the
+class="small-caps">e</span></span> should be interpreted. This
+     ﬁeld is mandatory, and has an enumerated value (see Appendix A for the
      possible codes). Examples are:
           <ul class="itemize2">
           <li class="itemize"><span 
@@ -601,19 +595,19 @@ class="small-caps">v</span><span
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;(like the <span 
+class="small-caps">e</span></span> (like the <span 
 class="cmtt-10x-x-109">MDirection::J2000</span>). In other cases the
-     information is not sufficient. An example is the <span 
+     information is not suﬃcient. An example is the <span 
 class="cmtt-10x-x-109">MDirection::AZEL</span>. If you
      have measured some <span 
 class="cmti-10x-x-109">AZEL </span>values, and are only interested in say a pointing
      model for the telescope, the <span 
-class="cmtt-10x-x-109">MDirection::AZEL </span>is sufficient information.
+class="cmtt-10x-x-109">MDirection::AZEL </span>is suﬃcient information.
      However, if you want to convert the measured <span 
 class="cmti-10x-x-109">AZEL </span>into a <span 
 class="cmti-10x-x-109">J2000 </span>right
      ascension and declination, it is necessary to know where your telescope is,
-     and what the epoch of the observation is. This can be specified
+     and what the epoch of the observation is. This can be speciﬁed
      in
      </p></li>
      <li class="itemize">a <span 
@@ -624,23 +618,23 @@ class="cmti-10x-x-109">MeasFrame </span>class object, and can contain
 
                                                                      
      <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;describing the epoch, the position on Earth, the direction in
+class="cmti-10x-x-109">Measures</span> describing the epoch, the position on Earth, the direction in
      which you are observing (for Doppler calculations), the rest frequency
      of a spectral line and a table describing the detailed orbit of a
      non-standard solar system object (like a comet). The <span 
 class="cmti-10x-x-109">frame </span>can be
-     filled with the <span 
+     ﬁlled with the <span 
 class="cmti-10x-x-109">MeasFrame </span>constructor, or with <span 
 class="cmti-10x-x-109">MeasFrame </span><span 
 class="cmtt-10x-x-109">set()</span>
      methods.
      </li>
      <li class="itemize">an optional <span 
-class="cmti-10x-x-109">offset</span>. In some cases it can be advantageous to specify an
-     offset. An example could be 0h on a specific date, with the actual
+class="cmti-10x-x-109">oﬀset</span>. In some cases it can be advantageous to specify an
+     oﬀset. An example could be 0h on a speciﬁc date, with the actual
      <span 
 class="cmti-10x-x-109">Epoch </span>only specifying the time since that point in time. Note that
-     offsets are not very useful for <span 
+     oﬀsets are not very useful for <span 
 class="cmti-10x-x-109">Directions</span>, since directions are always
      vectors of unit lengths. However, special <span 
 class="cmtt-10x-x-109">offset </span>methods exist for
@@ -655,19 +649,19 @@ class="small-caps">r</span><span
 class="small-caps">e</span><span 
 class="small-caps">n</span><span 
 class="small-caps">c</span><span 
-class="small-caps">e</span></span>&#x00A0;is created as a specialized <span 
+class="small-caps">e</span></span> is created as a specialized <span 
 class="cmti-10x-x-109">MeasRef </span>object, using the
 <span 
 class="cmtt-10x-x-109">Measure::Ref </span>alias (e.g. <span 
 class="cmtt-10x-x-109">MDirection::Ref</span>). A full reference could be:<br 
 class="newline" /><br 
-class="newline" />&#x00A0;      </p><div class="minipage"><div class="verbatim" id="verbatim-2">
-&#x00A0;&#x00A0;&#x00A0;//&#x00A0;A&#x00A0;time&#x00A0;in&#x00A0;MJD
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MEpoch&#x00A0;epoch(Quantity("50500.5d"),&#x00A0;MEpoch::UTC);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MPosition&#x00A0;obs;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MeasTable::Observatory(obs,&#x00A0;"WSRT");
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MeasFrame&#x00A0;frame(obs,&#x00A0;epoch);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MDirection::Ref&#x00A0;ref(MDirection::VENUS,&#x00A0;frame);
+class="newline" />       </p><div class="minipage"><div class="verbatim" id="verbatim-2">
+   // A time in MJD
+ <br />   MEpoch epoch(Quantity(&#x0022;50500.5d&#x0022;), MEpoch::UTC);
+ <br />   MPosition obs;
+ <br />   MeasTable::Observatory(obs, &#x0022;WSRT&#x0022;);
+ <br />   MeasFrame frame(obs, epoch);
+ <br />   MDirection::Ref ref(MDirection::VENUS, frame);
 </div>
 <!--l. 134--><p class="nopar" ></p></div>
 <!--l. 139--><p class="noindent" >
@@ -675,7 +669,7 @@ class="newline" />&#x00A0;      </p><div class="minipage"><div class="verbatim" 
    <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
  id="x1-40003"></a>Conversion</h3>
 <!--l. 141--><p class="noindent" ><span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;can be converted from one <span 
+class="cmti-10x-x-109">Measures</span> can be converted from one <span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">r</span><span 
 class="small-caps">e</span><span 
@@ -685,7 +679,7 @@ class="small-caps">r</span><span
 class="small-caps">e</span><span 
 class="small-caps">n</span><span 
 class="small-caps">c</span><span 
-class="small-caps">e</span></span>&#x00A0;into another <span 
+class="small-caps">e</span></span> into another <span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">r</span><span 
 class="small-caps">e</span><span 
@@ -718,7 +712,7 @@ class="small-caps">r</span><span
 class="small-caps">e</span><span 
 class="small-caps">n</span><span 
 class="small-caps">c</span><span 
-class="small-caps">e</span></span>&#x00A0;and a <span 
+class="small-caps">e</span></span> and a <span 
 class="cmti-10x-x-109">to </span><span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">r</span><span 
@@ -735,16 +729,16 @@ class="small-caps">e</span></span>.
                                                                      
 </p><!--l. 150--><p class="noindent" >Example: <br 
 class="newline" /><br 
-class="newline" />&#x00A0;      </p><div class="minipage"><div class="verbatim" id="verbatim-3">
-&#x00A0;&#x00A0;&#x00A0;MDirection::Convert(MDirection::Ref(MDirection::VENUS,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;frame),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MDirection::Ref(MDirection::J2000));
+class="newline" />       </p><div class="minipage"><div class="verbatim" id="verbatim-3">
+   MDirection::Convert(MDirection::Ref(MDirection::VENUS,
+ <br />                                       frame),
+ <br />                       MDirection::Ref(MDirection::J2000));
 </div>
 <!--l. 158--><p class="nopar" ></p></div><br 
 class="newline" />
 <!--l. 162--><p class="indent" >   <span 
 class="cmti-10x-x-109">Note </span>that if a <span 
-class="cmti-10x-x-109">frame </span>is necessary, it suffices to give it with either one of the
+class="cmti-10x-x-109">frame </span>is necessary, it suﬃces to give it with either one of the
 two <span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">r</span><span 
@@ -756,7 +750,7 @@ class="small-caps">e</span><span
 class="small-caps">n</span><span 
 class="small-caps">c</span><span 
 class="small-caps">e</span><span 
-class="small-caps">s</span></span>. Unless, of course, they are different for the two <span 
+class="small-caps">s</span></span>. Unless, of course, they are diﬀerent for the two <span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">r</span><span 
 class="small-caps">e</span><span 
@@ -770,8 +764,8 @@ class="small-caps">e</span><span
 class="small-caps">s</span></span>,
 like converting the <span 
 class="cmtt-10x-x-109">AZEL </span>at one telescope to that at another. The latter case (i.e.
-two different reference frames for the input and output values), is handled by
-always converting first the input value to the default for the class (e.g. <span 
+two diﬀerent reference frames for the input and output values), is handled by
+always converting ﬁrst the input value to the default for the class (e.g. <span 
 class="cmtt-10x-x-109">J2000 </span>for
 directions), and then convert this value to the appropriate output type and
 frame.
@@ -786,7 +780,7 @@ class="small-caps">r</span><span
 class="small-caps">e</span><span 
 class="small-caps">n</span><span 
 class="small-caps">c</span><span 
-class="small-caps">e</span></span>&#x00A0;can also be specified as a complete <span 
+class="small-caps">e</span></span> can also be speciﬁed as a complete <span 
 class="cmti-10x-x-109">Measure</span>. In that
 case that <span 
 class="cmcsc-10x-x-109"><span 
@@ -794,15 +788,15 @@ class="small-caps">v</span><span
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;of the <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;will act as the <span 
+class="small-caps">e</span></span> of the <span 
+class="cmti-10x-x-109">Measure</span> will act as the <span 
 class="cmti-10x-x-109">default </span><span 
 class="cmcsc-10x-x-109"><span 
 class="small-caps">v</span><span 
 class="small-caps">a</span><span 
 class="small-caps">l</span><span 
 class="small-caps">u</span><span 
-class="small-caps">e</span></span>&#x00A0;to be
+class="small-caps">e</span></span> to be
 converted.
 </p><!--l. 175--><p class="indent" >   Constructing a conversion object will set up a series of conversions that have
 to be done to get from the <span 
@@ -819,18 +813,18 @@ class="small-caps">n</span><span
 class="small-caps">c</span><span 
 class="small-caps">e</span></span>. This state-machine like
 approach is to be able to use less than the required odd 400 conversion routines
-for say 20 different allowable reference codes.
+for say 20 diﬀerent allowable reference codes.
 </p><!--l. 181--><p class="indent" >   The conversion object is executed with the () operator. The actual conversion
 done depends on the argument of the operator: </p>
      <ul class="itemize1">
      <li class="itemize"><span 
-class="cmti-10x-x-109">none</span>: use the default value of the Measure specified in the constructor
+class="cmti-10x-x-109">none</span>: use the default value of the Measure speciﬁed in the constructor
      (or using a <span 
 class="cmtt-10x-x-109">set() </span>method).
      </li>
      <li class="itemize"><span 
 class="cmti-10x-x-109">MeasValue</span>: convert it to a <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;using the <span 
+class="cmti-10x-x-109">Measure</span> using the <span 
 class="cmti-10x-x-109">from </span>reference of the
      object
      </li>
@@ -846,7 +840,7 @@ class="small-caps">r</span><span
 class="small-caps">e</span><span 
 class="small-caps">n</span><span 
 class="small-caps">c</span><span 
-class="small-caps">e</span></span>&#x00A0;has changed!), taking the
+class="small-caps">e</span></span> has changed!), taking the
      full <span 
 class="cmti-10x-x-109">Measure </span>into account (including, of course, a possible reference
      frame).</li></ul>
@@ -857,7 +851,7 @@ class="cmti-10x-x-109">Measure </span>into account (including, of course, a poss
 in the conversion object (like calculated <span 
 class="cmti-10x-x-109">Nutation</span>), or in the <span 
 class="cmti-10x-x-109">frame </span>(like e.g. the
-sidereal time of a frame MEpoch specified in UTC). This information will be
+sidereal time of a frame MEpoch speciﬁed in UTC). This information will be
 re-used if possible and feasible in subsequent conversions with the same
 conversion object or using the same frame.
 </p><!--l. 201--><p class="indent" >   It is also worth noting that <span 
@@ -874,10 +868,10 @@ used, will automatically use the new time.
 </p><!--l. 211--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
- id="x1-50004"></a>Efficiency</h3>
-<!--l. 213--><p class="noindent" >The efficiency of the use of the <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;and related classes can vary greatly. By
-using the appropriate interface, by fine-tuning with the aid of <span 
+ id="x1-50004"></a>Eﬃciency</h3>
+<!--l. 213--><p class="noindent" >The eﬃciency of the use of the <span 
+class="cmti-10x-x-109">Measures</span> and related classes can vary greatly. By
+using the appropriate interface, by ﬁne-tuning with the aid of <span 
 class="cmtt-10x-x-109">aipsrc </span>variables,
 and by making sure the caching system is used optimally, there can be a large
 reduction in resource use.
@@ -885,11 +879,11 @@ reduction in resource use.
 </p>
    <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
  id="x1-60004.1"></a>Measure or MeasValue</h4>
-<!--l. 220--><p class="noindent" >It is not always necessary to use a full-fledged <span 
-class="cmti-10x-x-109">Measure</span>. It often suffices to use a
+<!--l. 220--><p class="noindent" >It is not always necessary to use a full-ﬂedged <span 
+class="cmti-10x-x-109">Measure</span>. It often suﬃces to use a
 <span 
 class="cmti-10x-x-109">MeasValue </span>(or maybe even a <span 
-class="cmti-10x-x-109">Quantity</span>&#x00A0;or just a simple <span 
+class="cmti-10x-x-109">Quantity</span> or just a simple <span 
 class="cmti-10x-x-109">Double</span>.
 </p><!--l. 224--><p class="indent" >   As an example, consider a frequency container object: </p>
      <ul class="itemize1">
@@ -901,7 +895,7 @@ display="inline" ><mi
 >z</mi></math>,
      and that has to be passed-on as-is without any further information, a
      <span 
-class="cmti-10x-x-109">Double </span>is sufficient
+class="cmti-10x-x-109">Double </span>is suﬃcient
      </li>
      <li class="itemize">if the value you have has to be converted to some other frequency unit
      (like MHz or so) before being used, use a <span 
@@ -920,13 +914,13 @@ class="cmti-10x-x-109">MVFrequency</span>, which knows that the value
      </li>
      <li class="itemize">if  you  would  like  to  know  what  the  frequency  really  represent  (a
      spectral  rest  frequency;  a  frequency  as  observed  in  a  telescope;  a
-     frequency as would be observed from the local standard of rest; &#x2026;),
+     frequency as would be observed from the local standard of rest; &hellip;),
      and if you are going to use that information in one way or another
-     (display, conversion, archive, &#x2026;) use an <span 
+     (display, conversion, archive, &hellip;) use an <span 
 class="cmti-10x-x-109">MFrequency </span>as value container</li></ul>
 <!--l. 245--><p class="indent" >   As a rule of thumb the above could be summarised as: </p>
      <ul class="itemize1">
-     <li class="itemize">designing a user interface: be flexible, use a <span 
+     <li class="itemize">designing a user interface: be ﬂexible, use a <span 
 class="cmti-10x-x-109">Measure</span>
      </li>
      <li class="itemize">designing a hardware interface: use a <span 
@@ -941,13 +935,13 @@ class="cmti-10x-x-109">Measures</span>.
 </p><!--l. 255--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">4.2   </span> <a 
- id="x1-70004.2"></a>Re-use the effort of frame</h4>
+ id="x1-70004.2"></a>Re-use the eﬀort of frame</h4>
 <!--l. 257--><p class="noindent" >From the point of view of the programmer, a <span 
 class="cmti-10x-x-109">frame </span>is just a container
 of <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;to indicate when, where, in what direction and at what
+class="cmti-10x-x-109">Measures</span> to indicate when, where, in what direction and at what
 frequency a certain <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;was made or referred to. However, in
+class="cmti-10x-x-109">Measure</span> was made or referred to. However, in
 actual fact it is also an engine and cache for a lot of calculations.
 Imagine that you want to convert from right-ascension and declination to
 hour-angle and declination, and that you have provided an epoch in
@@ -959,7 +953,7 @@ display="inline" ><mi
 >C</mi></math>
 in the <span 
 class="cmti-10x-x-109">frame</span>. The actual conversion object will request (probably
-among other things), the sidereal time from the frame. The first
+among other things), the sidereal time from the frame. The ﬁrst
 request will set up a conversion object within the frame (from
                                                                      
 
@@ -982,13 +976,13 @@ sidereal time, and cache the result (for maybe a subsequent call). The conversio
 needs nutation, polar motion and a few other calculations. Again, all
 of these are cached for subsequent use in other calls to the frame for
 information.
-</p><!--l. 273--><p class="indent" >   Efficient use of <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;is only possible if the lifetime of a <span 
+</p><!--l. 273--><p class="indent" >   Eﬃcient use of <span 
+class="cmti-10x-x-109">Measures</span> is only possible if the lifetime of a <span 
 class="cmti-10x-x-109">frame </span>is as long
 as possible. Which suggests that in many cases a frame should be created
 at the highest level possible (maybe even globally). Re-use of a <span 
 class="cmti-10x-x-109">frame</span>,
-e.g. for a different time, is made possible by the <span 
+e.g. for a diﬀerent time, is made possible by the <span 
 class="cmtt-10x-x-109">set() </span>methods, e.g.
 <!--l. 277--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -1008,8 +1002,8 @@ which will try to minimize the re-calculations necessary. The fact that frames a
 always used internally by <span 
 class="cmti-10x-x-109">reference </span>(see earlier), which also means that any
 change made to a frame will automatically be used by any subsequent
-conversion which knows about this frame, makes in principle for an efficient
-machinery for many different purposes. However, it could also easily
+conversion which knows about this frame, makes in principle for an eﬃcient
+machinery for many diﬀerent purposes. However, it could also easily
 lead to misunderstandings. If you plan to do any special conversions, the
 detailed information provided in the various <span 
 class="cmtt-10x-x-109">Measure </span>classes should be
@@ -1022,16 +1016,16 @@ perused.
 <span 
 class="cmtt-10x-x-109">MDirection::Convert</span>) is a repository of the necessary state-machine to
 make the conversion possible, and any intermediate calculation results.
-To make efficient use of this information, the same conversion object
+To make eﬃcient use of this information, the same conversion object
 should be used if more than one conversion of the same type has to be
 done.
 </p><!--l. 296--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">4.4   </span> <a 
  id="x1-90004.4"></a>Specialized conversion engines</h4>
-<!--l. 298--><p class="noindent" >Although the official <span 
+<!--l. 298--><p class="noindent" >Although the oﬃcial <span 
 class="cmtt-10x-x-109">MeasConvert </span>objects are very versatile, using them can be
-quite a job. For that reason a set of specialized &#8220;Conversion engines&#8221; have been
+quite a job. For that reason a set of specialized “Conversion engines” have been
 put together for easy use. The three engines available at the moment are
                                                                      
 
@@ -1051,14 +1045,14 @@ class="cmti-10x-x-109">() </span>operator is used to convert a value the appropr
    <h5 class="subsubsectionHead"><span class="titlemark">4.4.1   </span> <a 
  id="x1-100004.4.1"></a>EarthMagneticMachine</h5>
 <!--l. 313--><p class="noindent" >The <span 
-class="cmti-10x-x-109">EarthMagneticMachine </span>calculates the Earth&#8217; magnetic field in a certain
-direction at a certain height above the Earth&#8217; surface.
-</p><!--l. 316--><p class="indent" >   The machine object&#8217;s constructor needs in principle: </p>
+class="cmti-10x-x-109">EarthMagneticMachine </span>calculates the Earth&#x2019; magnetic ﬁeld in a certain
+direction at a certain height above the Earth&#x2019; surface.
+</p><!--l. 316--><p class="indent" >   The machine object&#x2019;s constructor needs in principle: </p>
      <ul class="itemize1">
      <li class="itemize">a direction <span 
 class="cmti-10x-x-109">reference code </span>to be able to interpret input direction values
      </li>
-     <li class="itemize">height above the Earth&#8217; surface
+     <li class="itemize">height above the Earth&#x2019; surface
      </li>
      <li class="itemize">position (of observation point) on Earth
      </li>
@@ -1075,10 +1069,10 @@ display="inline" ><mi
 display="inline" ><mrow ><mo 
 class="MathClass-open">(</mo><mrow></mrow><mo 
 class="MathClass-close">)</mo></mrow></math>
-operator will produce the line-of-sight component of the magnetic field (see
-the header files for details). Other methods exist to get the complete
-magnetic field; the longitude of the point specified and the position on
-Earth of the point. The following example calculates the magnetic field at
+operator will produce the line-of-sight component of the magnetic ﬁeld (see
+the header ﬁles for details). Other methods exist to get the complete
+magnetic ﬁeld; the longitude of the point speciﬁed and the position on
+Earth of the point. The following example calculates the magnetic ﬁeld at
 200<!--l. 329--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -1090,26 +1084,26 @@ height at the Compact Array:
                                                                      
 </p>
    <div class="verbatim" id="verbatim-4">
-&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Define&#x00A0;a&#x00A0;time/position&#x00A0;frame
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MEpoch&#x00A0;epo(MVEpoch(MVTime(98,5,16,0.5).day()));
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MPosition&#x00A0;pos;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MeasTable::Observatory(pos,&#x00A0;"ATCA");
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MeasFrame&#x00A0;frame(epo,&#x00A0;pos);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Note&#x00A0;that&#x00A0;the&#x00A0;time&#x00A0;in&#x00A0;the&#x00A0;frame&#x00A0;can&#x00A0;be&#x00A0;changed&#x00A0;later
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Set&#x00A0;up&#x00A0;a&#x00A0;machine
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;EarthMagneticMachine&#x00A0;exec(MDirection::B1950,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Quantity(200,&#x00A0;"km"),&#x00A0;frame);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Given&#x00A0;a&#x00A0;current&#x00A0;observational&#x00A0;direction
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MDirection&#x00A0;indir(Quantity(3.25745692,&#x00A0;"rad"),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Quantity(0.040643336,"rad"),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MDirection::Ref(MDirection::B1950));
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;The&#x00A0;field&#x00A0;in&#x00A0;this&#x00A0;direction&#x00A0;is&#x00A0;calculated
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;exec.calculate(indir.getValue());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Show&#x00A0;some&#x00A0;data
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;cout&#x00A0;&#x003C;&#x003C;&#x00A0;"Parallel&#x00A0;field:&#x00A0;"&#x00A0;&#x003C;&#x003C;&#x00A0;exec.getLOSField()&#x00A0;&#x003C;&#x003C;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;"&#x00A0;nT"&#x00A0;&#x003C;&#x003C;&#x00A0;endl;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;cout&#x00A0;&#x003C;&#x003C;&#x00A0;"Sub-ionosphere&#x00A0;long:&#x00A0;"&#x00A0;&#x003C;&#x003C;&#x00A0;exec.getLong("deg")&#x00A0;&#x003C;&#x003C;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;endl;
+   // Define a time/position frame
+ <br />   MEpoch epo(MVEpoch(MVTime(98,5,16,0.5).day()));
+ <br />   MPosition pos;
+ <br />   MeasTable::Observatory(pos, &#x0022;ATCA&#x0022;);
+ <br />   MeasFrame frame(epo, pos);
+ <br />   // Note that the time in the frame can be changed later
+ <br />   // Set up a machine
+ <br />   EarthMagneticMachine exec(MDirection::B1950,
+ <br />                             Quantity(200, &#x0022;km&#x0022;), frame);
+ <br />   // Given a current observational direction
+ <br />   MDirection indir(Quantity(3.25745692, &#x0022;rad&#x0022;),
+ <br />                    Quantity(0.040643336,&#x0022;rad&#x0022;),
+ <br />                    MDirection::Ref(MDirection::B1950));
+ <br />   // The field in this direction is calculated
+ <br />   exec.calculate(indir.getValue());
+ <br />   // Show some data
+ <br />   cout &#x003C;&#x003C; &#x0022;Parallel field: &#x0022; &#x003C;&#x003C; exec.getLOSField() &#x003C;&#x003C;
+ <br />           &#x0022; nT&#x0022; &#x003C;&#x003C; endl;
+ <br />   cout &#x003C;&#x003C; &#x0022;Sub-ionosphere long: &#x0022; &#x003C;&#x003C; exec.getLong(&#x0022;deg&#x0022;) &#x003C;&#x003C;
+ <br />           endl;
 </div>
 <!--l. 352--><p class="nopar" >
 </p><!--l. 355--><p class="noindent" >
@@ -1169,7 +1163,7 @@ values.
      <ul class="itemize1">
      <li class="itemize">a frequency reference (e.g. <span 
 class="cmtt-10x-x-109">MFrequency::LSR</span>), including a possible
-     offset and frame
+     oﬀset and frame
      </li>
      <li class="itemize">preferred frequency units (e.g. <!--l. 368--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -1185,14 +1179,14 @@ display="inline" ><mi
      </li>
      <li class="itemize">velocity  reference  (e.g.  <span 
 class="cmtt-10x-x-109">MDoppler::OPTICAL</span>),  including  a  possible
-     offset
+     oﬀset
      </li>
      <li class="itemize">preferred velocity units (e.g. <!--l. 371--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >A</mi><mi 
 >U</mi><mo 
-class="MathClass-bin">&#x2215;</mo><mi 
+class="MathClass-bin">∕</mo><mi 
 >a</mi></math>)
      </li>
      <li class="itemize">the rest frequency used for the conversion, given as an <span 
@@ -1217,54 +1211,54 @@ of velocities or frequencies from a vector of Doubles.
                                                                      
 </p>
    <div class="verbatim" id="verbatim-5">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Define&#x00A0;a&#x00A0;time/position&#x00A0;frame
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MEpoch&#x00A0;epo(MVEpoch(MVTime(98,5,16,0.5).day()));
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MPosition&#x00A0;pos;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MeasTable::Observatory(pos,&#x00A0;"ATCA");
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MeasFrame&#x00A0;frame(epo,&#x00A0;pos);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Note&#x00A0;that&#x00A0;the&#x00A0;time&#x00A0;in&#x00A0;the&#x00A0;frame&#x00A0;can&#x00A0;be&#x00A0;changed&#x00A0;later
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Specify&#x00A0;the&#x00A0;frequency&#x00A0;reference
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MFrequency::Ref&#x00A0;fr(MFrequency::LSR);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Specify&#x00A0;the&#x00A0;velocity&#x00A0;reference
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MDoppler::Ref&#x00A0;vr(MDoppler::OPT);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Specify&#x00A0;the&#x00A0;default&#x00A0;units
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Unit&#x00A0;fu("eV");
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Unit&#x00A0;vu("AU/a");
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;rest&#x00A0;frequency
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MVFrequency&#x00A0;rfrq(QC::HI);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Set&#x00A0;up&#x00A0;a&#x00A0;machine&#x00A0;(no&#x00A0;conversion&#x00A0;of&#x00A0;reference&#x00A0;frame)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;VelocityMachine&#x00A0;exec(fr,&#x00A0;fu,&#x00A0;rfrq,&#x00A0;vr,&#x00A0;vu,&#x00A0;frame);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;or&#x00A0;as&#x00A0;(with&#x00A0;conversion&#x00A0;of&#x00A0;reference&#x00A0;frame&#x00A0;it
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;could&#x00A0;have&#x00A0;been)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;VelocityMachine&#x00A0;exec(fr,&#x00A0;fu,&#x00A0;rfrq,&#x00A0;MFrequency::TOPO,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;vr,&#x00A0;vu,&#x00A0;frame);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Given&#x00A0;a&#x00A0;current&#x00A0;observational&#x00A0;frequency&#x00A0;of
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;&#x00A0;&#x00A0;&#x00A0;5.87432837e-06&#x00A0;eV
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;its&#x00A0;velocity&#x00A0;will&#x00A0;be&#x00A0;(in&#x00A0;AU/yr)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;cout&#x00A0;&#x003C;&#x003C;&#x00A0;"Velocity:&#x00A0;"&#x00A0;&#x003C;&#x003C;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;exec.makeVelocity(5.87432837e-06)&#x00A0;&#x003C;&#x003C;&#x00A0;endl;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Introducing&#x00A0;an&#x00A0;offset
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MFrequency&#x00A0;foff(MVFrequency(Quantity(5.87432837e-06,
+      // Define a time/position frame
+ <br />      MEpoch epo(MVEpoch(MVTime(98,5,16,0.5).day()));
+ <br />      MPosition pos;
+ <br />      MeasTable::Observatory(pos, &#x0022;ATCA&#x0022;);
+ <br />      MeasFrame frame(epo, pos);
+ <br />      //
+ <br />      // Note that the time in the frame can be changed later
+ <br />      // Specify the frequency reference
+ <br />      MFrequency::Ref fr(MFrequency::LSR);
+ <br />      //
+ <br />      // Specify the velocity reference
+ <br />      MDoppler::Ref vr(MDoppler::OPT);
+ <br />      //
+ <br />      // Specify the default units
+ <br />      Unit fu(&#x0022;eV&#x0022;);
+ <br />      Unit vu(&#x0022;AU/a&#x0022;);
+ <br />      //
+ <br />      // Get the rest frequency
+ <br />      MVFrequency rfrq(QC::HI);
+ <br />      //
+ <br />      // Set up a machine (no conversion of reference frame)
+ <br />      VelocityMachine exec(fr, fu, rfrq, vr, vu, frame);
+ <br />      //
+ <br />      // or as (with conversion of reference frame it
+ <br />      // could have been)
+ <br />      // VelocityMachine exec(fr, fu, rfrq, MFrequency::TOPO,
+ <br />      //                      vr, vu, frame);
+ <br />      // Given a current observational frequency of
+ <br />      //    5.87432837e-06 eV
+ <br />      // its velocity will be (in AU/yr)
+ <br />      cout &#x003C;&#x003C; &#x0022;Velocity: &#x0022; &#x003C;&#x003C;
+ <br />              exec.makeVelocity(5.87432837e-06) &#x003C;&#x003C; endl;
+ <br />      //
+ <br />      // Introducing an offset
+ <br />      MFrequency foff(MVFrequency(Quantity(5.87432837e-06,
                                                                      
 
                                                                      
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;"eV")),&#x00A0;MFrequency::LSR);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;and&#x00A0;setting&#x00A0;it&#x00A0;in&#x00A0;the&#x00A0;reference,&#x00A0;and&#x00A0;regenerating
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;machine:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;fr.set(foff);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;exec.set(fr);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;the&#x00A0;following&#x00A0;will&#x00A0;give&#x00A0;the&#x00A0;same&#x00A0;result:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;cout&#x00A0;&#x003C;&#x003C;&#x00A0;"Velocity:&#x00A0;"&#x00A0;&#x003C;&#x003C;&#x00A0;exec.makeVelocity(0.0)
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x003C;&#x003C;&#x00A0;endl;
+ <br />                      &#x0022;eV&#x0022;)), MFrequency::LSR);
+ <br />      //
+ <br />      // and setting it in the reference, and regenerating
+ <br />      // machine:
+ <br />      fr.set(foff);
+ <br />      exec.set(fr);
+ <br />      //
+ <br />      // the following will give the same result:
+ <br />      cout &#x003C;&#x003C; &#x0022;Velocity: &#x0022; &#x003C;&#x003C; exec.makeVelocity(0.0)
+ <br />           &#x003C;&#x003C; endl;
 </div>
 <!--l. 429--><p class="nopar" >
 </p><!--l. 431--><p class="noindent" >
@@ -1313,11 +1307,11 @@ display="inline" ><mi
 coordinate system). If also the actual position on the sky is changed, the phase
 rotation necessary on the data is provided as well. Fringe stopping centers can be
 centered on other bodies as well (e.g. a planet). Read the caveats in the detailed
-help file.
+help ﬁle.
 </p><!--l. 443--><p class="indent" >   The constructor of the machine needs the following input: </p>
      <ul class="itemize1">
      <li class="itemize">an input <span 
-class="cmtt-10x-x-109">MDirection </span>specifying the original fringe stopping center&#8217;s
+class="cmtt-10x-x-109">MDirection </span>specifying the original fringe stopping center&#x2019;s
      position and reference frame
      </li>
      <li class="itemize">an output <span 
@@ -1366,20 +1360,20 @@ display="inline" ><mi
                                                                      
 </p>
    <div class="verbatim" id="verbatim-6">
-&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Given&#x00A0;a&#x00A0;current&#x00A0;phase&#x00A0;stopping&#x00A0;Center
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MDirection&#x00A0;indir(Quantity(3.25745692,&#x00A0;"rad"),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;Quantity(0.040643336,"rad"),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;MDirection::Ref(MDirection::B1950));
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Conversion&#x00A0;to&#x00A0;J2000&#x00A0;is&#x00A0;set&#x00A0;by:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;UVWMachine&#x00A0;uvm(MDirection::Ref(MDirection::J2000),&#x00A0;indir);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;The&#x00A0;rotation&#x00A0;matrix&#x00A0;to&#x00A0;go&#x00A0;to&#x00A0;new&#x00A0;UVW&#x00A0;is&#x00A0;obtained&#x00A0;by:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;RotMatrix&#x00A0;rm(uvm.rotationUVM());
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;If&#x00A0;an&#x00A0;UVW&#x00A0;specified:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;MVPosition&#x00A0;uvw(-739.048461,&#x00A0;-1939.10604,&#x00A0;1168.62562);
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;This&#x00A0;can&#x00A0;be&#x00A0;converted&#x00A0;by&#x00A0;e.g.:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;uvw&#x00A0;*=&#x00A0;rm;
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Or,&#x00A0;alternatively,&#x00A0;by&#x00A0;e.g.:
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;uvm.convertUVW(uvw);
+   // Given a current phase stopping Center
+ <br />   MDirection indir(Quantity(3.25745692, &#x0022;rad&#x0022;),
+ <br />                    Quantity(0.040643336,&#x0022;rad&#x0022;),
+ <br />                    MDirection::Ref(MDirection::B1950));
+ <br />   // Conversion to J2000 is set by:
+ <br />   UVWMachine uvm(MDirection::Ref(MDirection::J2000), indir);
+ <br />   // The rotation matrix to go to new UVW is obtained by:
+ <br />   RotMatrix rm(uvm.rotationUVM());
+ <br />   // If an UVW specified:
+ <br />   MVPosition uvw(-739.048461, -1939.10604, 1168.62562);
+ <br />   // This can be converted by e.g.:
+ <br />   uvw *= rm;
+ <br />   // Or, alternatively, by e.g.:
+ <br />   uvm.convertUVW(uvw);
 </div>
 <!--l. 478--><p class="nopar" >
 </p><!--l. 480--><p class="noindent" >
@@ -1387,11 +1381,11 @@ display="inline" ><mi
    <h4 class="subsectionHead"><span class="titlemark">4.5   </span> <a 
  id="x1-130004.5"></a>Specifying execution details</h4>
 <!--l. 482--><p class="noindent" >The precision of a <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;conversion can be influenced by the use of
+class="cmti-10x-x-109">Measure</span> conversion can be inﬂuenced by the use of
 <span 
-class="cmti-10x-x-109">aipsrc </span>variables. Changing the precision will influence the efficiency of the
+class="cmti-10x-x-109">aipsrc </span>variables. Changing the precision will inﬂuence the eﬃciency of the
 <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;conversion.
+class="cmti-10x-x-109">Measures</span> conversion.
 </p><!--l. 487--><p class="indent" >   Parameters that can be used are, a.o., the length of periods
 over which computations can be re-used; if it is necessary to use
 <!--l. 488--><math 
@@ -1402,7 +1396,7 @@ display="inline" ><mi
 >R</mi><mi 
 >S</mi></math>
 tables for precise calculation of time and polar motion, or that the simple model
-suffices.
+suﬃces.
 </p><!--l. 492--><p class="indent" >   A few examples: <br 
 class="newline" /><br 
 class="newline" /><!--tex4ht:inline--></p><div class="tabular"> <table id="TBL-2" class="tabular" 
@@ -1458,13 +1452,13 @@ class="td11">                        </td></tr></table></div>
 </p>
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
  id="x1-140005"></a>Interface</h3>
-<!--l. 522--><p class="noindent" >The interface to the different <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;have a large set of identical methods.
-Only when values are clearly related to a specific <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;(like e.g. a latitude)
+<!--l. 522--><p class="noindent" >The interface to the diﬀerent <span 
+class="cmti-10x-x-109">Measures</span> have a large set of identical methods.
+Only when values are clearly related to a speciﬁc <span 
+class="cmti-10x-x-109">Measure</span> (like e.g. a latitude)
 does the method to obtain not exist for e.g. a frequency. Constructors of
 <span 
-class="cmti-10x-x-109">Measures</span>&#x00A0;have often specializations (like one with a longitude and latitude for a
+class="cmti-10x-x-109">Measures</span> have often specializations (like one with a longitude and latitude for a
 direction), but they all have also standard ones. The standard ones are described
 in the
 </p><!--l. 530--><p class="indent" >   <a 
@@ -1474,7 +1468,7 @@ href="../html/classcasa_1_1Measure.html" >Measures.h</a>
    <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
  id="x1-150005.1"></a>Getting values from a Measure</h4>
 <!--l. 534--><p class="noindent" >The various value that are contained in the <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;object can be obtained by
+class="cmti-10x-x-109">Measure</span> object can be obtained by
 the following calls:
      </p><dl class="description"><dt class="description">
 <!--l. 537--><math 
@@ -1501,7 +1495,7 @@ display="inline" ><mi
 >m</mi><mi 
 >e</mi></math>
      object) from the <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;
+class="cmti-10x-x-109">Measure</span> 
      </dd><dt class="description">
                                                                      
 
@@ -1564,7 +1558,7 @@ display="inline" ><mi
 class="MathClass-open">(</mo><mrow></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> </dt><dd 
 class="description">
-     defined for some to get the data in special form (with specifiable units
+     deﬁned for some to get the data in special form (with speciﬁable units
      </dd><dt class="description">
 <!--l. 544--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -1580,7 +1574,7 @@ display="inline" ><mi
 class="MathClass-open">(</mo><mrow></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> </dt><dd 
 class="description">
-     defined for some to get the data in angle (with specifiable units)</dd></dl>
+     deﬁned for some to get the data in angle (with speciﬁable units)</dd></dl>
 <!--l. 548--><p class="indent" >   General calls are available to obtain the information contained in the
 <span 
 class="cmtt-10x-x-109">Measure::Ref </span>object:
@@ -1630,9 +1624,9 @@ display="inline" ><mi
 class="MathClass-open">(</mo><mrow></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> </dt><dd 
 class="description">
-     will return the pointer to the offset (or 0 if no offset specified)</dd></dl>
+     will return the pointer to the oﬀset (or 0 if no oﬀset speciﬁed)</dd></dl>
 <!--l. 559--><p class="indent" >   <span 
-class="cmtt-10x-x-109">set() </span>methods are available to fill in the fields in the <span 
+class="cmtt-10x-x-109">set() </span>methods are available to ﬁll in the ﬁelds in the <span 
 class="cmtt-10x-x-109">Measure::Ref</span>
 object.
 </p><!--l. 562--><p class="noindent" >
@@ -1731,48 +1725,48 @@ converted; and in this case also the position should have been put into it.
 Available information from the frame: <br 
 class="newline" /><br 
 class="newline" /><span 
-class="cmr-10">&#x00A0;</span>      </p><div class="minipage"><div class="verbatim" id="verbatim-7">
-&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;epoch&#x00A0;pointer&#x00A0;(0&#x00A0;if&#x00A0;not&#x00A0;present)
-&#x00A0;<br />&#x00A0;&#x00A0;const&#x00A0;Measure&#x00A0;*const&#x00A0;epoch()&#x00A0;const;
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;position&#x00A0;pointer&#x00A0;(0&#x00A0;if&#x00A0;not&#x00A0;present)
-&#x00A0;<br />&#x00A0;&#x00A0;const&#x00A0;Measure&#x00A0;*const&#x00A0;position()&#x00A0;const;
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;direction&#x00A0;pointer&#x00A0;(0&#x00A0;if&#x00A0;not&#x00A0;present)
-&#x00A0;<br />&#x00A0;&#x00A0;const&#x00A0;Measure&#x00A0;*const&#x00A0;direction()&#x00A0;const;
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;radial&#x00A0;velocity&#x00A0;pointer&#x00A0;(0&#x00A0;if&#x00A0;not&#x00A0;present)
-&#x00A0;<br />&#x00A0;&#x00A0;const&#x00A0;Measure&#x00A0;*const&#x00A0;radialVelocity()&#x00A0;const;
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;comet&#x00A0;pointer&#x00A0;(0&#x00A0;if&#x00A0;not&#x00A0;present)
-&#x00A0;<br />&#x00A0;&#x00A0;const&#x00A0;MeasComet&#x00A0;*const&#x00A0;comet()&#x00A0;const;
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;data&#x00A0;from&#x00A0;frame.
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Only&#x00A0;available&#x00A0;if&#x00A0;appropriate&#x00A0;measures&#x00A0;are&#x00A0;set,
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;and&#x00A0;the&#x00A0;frame&#x00A0;is&#x00A0;in&#x00A0;a&#x00A0;calculating&#x00A0;state.
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;&#x003C;group&#x003E;
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;TDB&#x00A0;in&#x00A0;days
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getTDB(Double&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;longitude&#x00A0;(in&#x00A0;rad)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getLong(Double&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;latitude&#x00A0;(in&#x00A0;rad)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getLat(Double&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;position
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getITRF(MVPosition&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;geocentric&#x00A0;position&#x00A0;(in&#x00A0;m)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getRadius(Double&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;LAST&#x00A0;(in&#x00A0;days)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getLAST(Double&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;LAST&#x00A0;(in&#x00A0;rad)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getLASTr(Double&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;J2000&#x00A0;coordinates&#x00A0;(direction&#x00A0;cosines)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getJ2000(MVDirection&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;B1950&#x00A0;coordinates&#x00A0;(direction&#x00A0;cosines)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getB1950(MVDirection&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;apparent&#x00A0;coordinates&#x00A0;(direction&#x00A0;cosines)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getApp(MVDirection&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;LSR&#x00A0;radial&#x00A0;velocity&#x00A0;(m/s)
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getLSR(Double&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;comet&#x00A0;table&#x00A0;reference&#x00A0;type
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getCometType(uInt&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Get&#x00A0;the&#x00A0;comet&#x00A0;coordinates
-&#x00A0;<br />&#x00A0;&#x00A0;Bool&#x00A0;getComet(MVPosition&#x00A0;&amp;tdb);
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;&#x003C;/group&#x003E;
+class="cmr-10"> </span>      </p><div class="minipage"><div class="verbatim" id="verbatim-7">
+  // Get the epoch pointer (0 if not present)
+ <br />  const Measure *const epoch() const;
+ <br />  // Get the position pointer (0 if not present)
+ <br />  const Measure *const position() const;
+ <br />  // Get the direction pointer (0 if not present)
+ <br />  const Measure *const direction() const;
+ <br />  // Get the radial velocity pointer (0 if not present)
+ <br />  const Measure *const radialVelocity() const;
+ <br />  // Get the comet pointer (0 if not present)
+ <br />  const MeasComet *const comet() const;
+ <br />  // Get data from frame.
+ <br />  // Only available if appropriate measures are set,
+ <br />  // and the frame is in a calculating state.
+ <br />  // &#x003C;group&#x003E;
+ <br />  // Get TDB in days
+ <br />  Bool getTDB(Double &#x0026;tdb);
+ <br />  // Get the longitude (in rad)
+ <br />  Bool getLong(Double &#x0026;tdb);
+ <br />  // Get the latitude (in rad)
+ <br />  Bool getLat(Double &#x0026;tdb);
+ <br />  // Get the position
+ <br />  Bool getITRF(MVPosition &#x0026;tdb);
+ <br />  // Get the geocentric position (in m)
+ <br />  Bool getRadius(Double &#x0026;tdb);
+ <br />  // Get the LAST (in days)
+ <br />  Bool getLAST(Double &#x0026;tdb);
+ <br />  // Get the LAST (in rad)
+ <br />  Bool getLASTr(Double &#x0026;tdb);
+ <br />  // Get J2000 coordinates (direction cosines)
+ <br />  Bool getJ2000(MVDirection &#x0026;tdb);
+ <br />  // Get B1950 coordinates (direction cosines)
+ <br />  Bool getB1950(MVDirection &#x0026;tdb);
+ <br />  // Get apparent coordinates (direction cosines)
+ <br />  Bool getApp(MVDirection &#x0026;tdb);
+ <br />  // Get LSR radial velocity (m/s)
+ <br />  Bool getLSR(Double &#x0026;tdb);
+ <br />  // Get the comet table reference type
+ <br />  Bool getCometType(uInt &#x0026;tdb);
+ <br />  // Get the comet coordinates
+ <br />  Bool getComet(MVPosition &#x0026;tdb);
+ <br />  // &#x003C;/group&#x003E;
 </div>
 <!--l. 633--><p class="nopar" >
                                                                      
@@ -1796,7 +1790,7 @@ class="cmtt-10x-x-109">MCFrame::make(frame);</span></span></span>.
 </p>
    <h4 class="subsectionHead"><span class="titlemark">A.1   </span> <a 
  id="x1-19000A.1"></a>Background literature</h4>
-<!--l. 651--><p class="noindent" >More information on the different astronomical conventions and data can be
+<!--l. 651--><p class="noindent" >More information on the diﬀerent astronomical conventions and data can be
 found in: <br 
 class="newline" />
 </p><!--l. 654--><p class="noindent" ><span 
@@ -1811,9 +1805,9 @@ display="inline" ><mn>1</mn><mn>9</mn><mn>9</mn><mn>2</mn></math>
      </li>
      <li class="itemize"><span 
 class="cmti-10x-x-109">The Astronomical Almanac for the year yyyy</span>, London: The Stationary
-     Office; Washington: U.S. Government Printing Office
+     Oﬃce; Washington: U.S. Government Printing Oﬃce
      </li>
-     <li class="itemize">the &#8220;International Celestial Reference System&#8221; <a 
+     <li class="itemize">the “International Celestial Reference System” <a 
 href="http://hpiers.obspm.fr/webiers/general/syframes/icrsf/ICRS.html" >(<!--l. 662--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -1841,7 +1835,7 @@ class="cmbx-10x-x-109">Frequency, Doppler, Velocity</span> </p>
 
                                                                      
 <!--l. 678--><p class="noindent" ><span 
-class="cmbx-10x-x-109">Magnetic field</span> </p>
+class="cmbx-10x-x-109">Magnetic ﬁeld</span> </p>
      <ul class="itemize1">
      <li class="itemize">the <!--l. 681--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -1861,7 +1855,7 @@ class="cmbx-10x-x-109">Baseline, uvw</span> </p>
    <h4 class="subsectionHead"><span class="titlemark">A.2   </span> <a 
  id="x1-20000A.2"></a>Details for individual Measures</h4>
 <!--l. 695--><p class="noindent" >In the following some comments are made per <span 
-class="cmti-10x-x-109">Measure</span>&#x00A0;type. A list is given of
+class="cmti-10x-x-109">Measure</span> type. A list is given of
 the known reference codes, and the frame information necessary to convert
 from/to each code is indicated.
 </p><!--l. 699--><p class="noindent" >
@@ -1869,7 +1863,7 @@ from/to each code is indicated.
    <h5 class="subsubsectionHead"><span class="titlemark">A.2.1   </span> <a 
  id="x1-21000A.2.1"></a>MEpoch</h5>
 <!--l. 701--><p class="noindent" >An epoch in time. Internally maintained as an absolute time as a <span 
-class="cmti-10x-x-109">Modified Julian</span>
+class="cmti-10x-x-109">Modiﬁed Julian</span>
 <span 
 class="cmti-10x-x-109">Day </span>(or a <span 
 class="cmti-10x-x-109">Greenwich Sidereal Date</span>) in two <span 
@@ -2050,12 +2044,12 @@ class="newline" />
                                                                      
 
                                                                      
-<!--l. 734--><p class="indent" >   A special code modifier <span 
+<!--l. 734--><p class="indent" >   A special code modiﬁer <span 
 class="cmtt-10x-x-109">MEpoch::RAZE </span>exist. Its result is that
 <span 
 class="cmti-10x-x-109">after </span>a conversion to a code with the <span 
 class="cmtt-10x-x-109">RAZE </span>bit set, the result will be
-truncated to integer days. Useful to find a sidereal time offset for a specific
+truncated to integer days. Useful to ﬁnd a sidereal time oﬀset for a speciﬁc
 <!--l. 737--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -2155,7 +2149,7 @@ class="newline" />
 class="cmbx-10x-x-109">of unit length</span>, indicating a direction, especially a
 direction in space (note that for the Solar system bodies the distance to the
 bodies is inherently known).
-</p><!--l. 776--><p class="indent" >   The solar system bodies&#8217; directions are <span 
+</p><!--l. 776--><p class="indent" >   The solar system bodies&#x2019; directions are <span 
 class="cmti-10x-x-109">virtual </span>directions. They have
 no value until explicitly converted to a <span 
 class="cmti-10x-x-109">real </span>coordinate system like
@@ -2170,7 +2164,7 @@ display="inline" ><mi
 >Z</mi><mi 
 >E</mi><mi 
 >L</mi></math>,
-&#x2026;<br 
+&hellip;<br 
 class="newline" /><!--tex4ht:inline--></p><div class="tabular"> <table id="TBL-5" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
 ><colgroup id="TBL-5-1g"><col 
@@ -2270,11 +2264,11 @@ class="td11"><!--l. 795--><p class="noindent" ><span
 class="cmr-10">topocentric HA/Dec</span>                         </p></td><td  style="text-align:left;" id="TBL-5-11-3"  
 class="td11"><!--l. 795--><p class="noindent" ><span 
 class="cmr-10">MEpoch    </span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span>
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span>
 <span 
 class="cmr-10">MPosition</span>         </p></td>
 </tr><tr 
@@ -2287,7 +2281,7 @@ class="cmr-10">topocentric             Az/El             (N</span>
 <!--l. 796--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 <span 
 class="cmr-10">E)</span>                                                 </p></td><td  style="text-align:left;" id="TBL-5-12-3"  
 class="td11"><!--l. 796--><p class="noindent" ><span 
@@ -2304,16 +2298,16 @@ class="cmr-10">topocentric             Az/El             (S</span>
 <!--l. 798--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 <span 
 class="cmr-10">W)</span>                                                </p></td><td  style="text-align:left;" id="TBL-5-13-3"  
 class="td11"><!--l. 798--><p class="noindent" ><span 
 class="cmr-10">MEpoch    </span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span>
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span>
 <span 
 class="cmr-10">MPosition</span>         </p></td>
 </tr><tr 
@@ -2383,11 +2377,11 @@ class="td11"><!--l. 806--><p class="noindent" ><span
 class="cmr-10">direction in ITRF Earth frame</span>           </p></td><td  style="text-align:left;" id="TBL-5-20-3"  
 class="td11"><!--l. 806--><p class="noindent" ><span 
 class="cmr-10">MEpoch    </span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span>
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span>
 <span 
 class="cmr-10">MPosition</span>         </p></td>
 </tr><tr 
@@ -2489,11 +2483,11 @@ class="td11"><!--l. 819--><p class="noindent" ><span
 class="cmr-10">any solar-system body</span>                      </p></td><td  style="text-align:left;" id="TBL-5-32-3"  
 class="td11"><!--l. 819--><p class="noindent" ><span 
 class="cmr-10">MEpoch    </span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span><span 
-class="cmr-10">&#x00A0;</span>
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span><span 
+class="cmr-10"> </span>
 <span 
 class="cmr-10">Table</span><span class="footnote-mark"><a 
 href="#fn2x0" id="fn2x0-bk"><sup class="textsuperscript">2</sup></a></span>              </p></td>
@@ -2522,7 +2516,7 @@ class="newline" /><a
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">A.2.4   </span> <a 
  id="x1-24000A.2.4"></a>MBaseline</h5>
-<!--l. 833--><p class="noindent" >A 3-dimensional vector, indicating a direction with a length (but no defined zero
+<!--l. 833--><p class="noindent" >A 3-dimensional vector, indicating a direction with a length (but no deﬁned zero
 point). In principle they are identical to the <span 
 class="cmti-10x-x-109">MDirection </span>directions. At the
 momemt the solar system bodies are not a valid baseline direction, but that
@@ -2602,7 +2596,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-6-11-"><td  style="text-align:left;" id="TBL-6-11-1"  
 class="td11"><!--l. 852--><p class="noindent" >HADEC          </p></td><td  style="text-align:left;" id="TBL-6-11-2"  
 class="td11"><!--l. 852--><p class="noindent" >topocentric HA/Dec                     </p></td><td  style="text-align:left;" id="TBL-6-11-3"  
-class="td11"><!--l. 852--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 852--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2612,7 +2606,7 @@ class="td11"><!--l. 853--><p class="noindent" >topocentric           Az/El      
 <!--l. 853--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 E)                                            </p></td><td  style="text-align:left;" id="TBL-6-12-3"  
 class="td11"><!--l. 853--><p class="noindent" >MEpoch <br 
 class="newline" />MPosition       </p></td>
@@ -2624,9 +2618,9 @@ class="td11"><!--l. 855--><p class="noindent" >topocentric           Az/El      
 <!--l. 855--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 W)                                           </p></td><td  style="text-align:left;" id="TBL-6-13-3"  
-class="td11"><!--l. 855--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 855--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2676,7 +2670,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-6-20-"><td  style="text-align:left;" id="TBL-6-20-1"  
 class="td11"><!--l. 863--><p class="noindent" >ITRF             </p></td><td  style="text-align:left;" id="TBL-6-20-2"  
 class="td11"><!--l. 863--><p class="noindent" >direction in ITRF Earth frame       </p></td><td  style="text-align:left;" id="TBL-6-20-3"  
-class="td11"><!--l. 863--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 863--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2783,7 +2777,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-7-11-"><td  style="text-align:left;" id="TBL-7-11-1"  
 class="td11"><!--l. 887--><p class="noindent" >HADEC          </p></td><td  style="text-align:left;" id="TBL-7-11-2"  
 class="td11"><!--l. 887--><p class="noindent" >topocentric HA/Dec                     </p></td><td  style="text-align:left;" id="TBL-7-11-3"  
-class="td11"><!--l. 887--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 887--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2793,7 +2787,7 @@ class="td11"><!--l. 888--><p class="noindent" >topocentric           Az/El      
 <!--l. 888--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 E)                                            </p></td><td  style="text-align:left;" id="TBL-7-12-3"  
 class="td11"><!--l. 888--><p class="noindent" >MEpoch <br 
 class="newline" />MPosition       </p></td>
@@ -2805,9 +2799,9 @@ class="td11"><!--l. 890--><p class="noindent" >topocentric           Az/El      
 <!--l. 890--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 W)                                           </p></td><td  style="text-align:left;" id="TBL-7-13-3"  
-class="td11"><!--l. 890--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 890--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2857,7 +2851,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-7-20-"><td  style="text-align:left;" id="TBL-7-20-1"  
 class="td11"><!--l. 898--><p class="noindent" >ITRF             </p></td><td  style="text-align:left;" id="TBL-7-20-2"  
 class="td11"><!--l. 898--><p class="noindent" >direction in ITRF Earth frame       </p></td><td  style="text-align:left;" id="TBL-7-20-3"  
-class="td11"><!--l. 898--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 898--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2882,17 +2876,17 @@ class="newline" />
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">A.2.6   </span> <a 
  id="x1-26000A.2.6"></a>MEarthMagnetic</h5>
-<!--l. 906--><p class="noindent" >A 3-dimensional vector: the value of the Earth&#8217; magnetic field. The model used to
-calculate the field is the International Geomagnetic Reference Field. The
+<!--l. 906--><p class="noindent" >A 3-dimensional vector: the value of the Earth&#x2019; magnetic ﬁeld. The model used to
+calculate the ﬁeld is the International Geomagnetic Reference Field. The
 <!--l. 908--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >I</mi><mi 
 >G</mi><mi 
 >R</mi><mi 
->F</mi></math> field
+>F</mi></math> ﬁeld
 is a <span 
-class="cmti-10x-x-109">virtual </span>field, without any value. It obtains its value after an explicit
+class="cmti-10x-x-109">virtual </span>ﬁeld, without any value. It obtains its value after an explicit
 conversion to a normal, real coordinate system.<br 
 class="newline" /><br 
 class="newline" /><!--tex4ht:inline--></p><div class="tabular"> <table id="TBL-8" class="tabular" 
@@ -2921,7 +2915,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-8-3-"><td  style="text-align:left;" id="TBL-8-3-1"  
 class="td11"><!--l. 918--><p class="noindent" >IGRF             </p></td><td  style="text-align:left;" id="TBL-8-3-2"  
-class="td11"><!--l. 918--><p class="noindent" >the   international   reference   field
+class="td11"><!--l. 918--><p class="noindent" >the   international   reference   ﬁeld
 model                                       </p></td><td  style="text-align:left;" id="TBL-8-3-3"  
 class="td11"><!--l. 918--><p class="noindent" >MEpoch <br 
 class="newline" />MPosition       </p></td>
@@ -2978,7 +2972,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-8-12-"><td  style="text-align:left;" id="TBL-8-12-1"  
 class="td11"><!--l. 928--><p class="noindent" >HADEC          </p></td><td  style="text-align:left;" id="TBL-8-12-2"  
 class="td11"><!--l. 928--><p class="noindent" >topocentric HA/Dec                     </p></td><td  style="text-align:left;" id="TBL-8-12-3"  
-class="td11"><!--l. 928--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 928--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -2988,7 +2982,7 @@ class="td11"><!--l. 929--><p class="noindent" >topocentric           Az/El      
 <!--l. 929--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 E)                                            </p></td><td  style="text-align:left;" id="TBL-8-13-3"  
 class="td11"><!--l. 929--><p class="noindent" >MEpoch <br 
 class="newline" />MPosition       </p></td>
@@ -3000,9 +2994,9 @@ class="td11"><!--l. 931--><p class="noindent" >topocentric           Az/El      
 <!--l. 931--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x21D2;</mo></math>
+class="MathClass-rel">&rArr;</mo></math>
 W)                                           </p></td><td  style="text-align:left;" id="TBL-8-14-3"  
-class="td11"><!--l. 931--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 931--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -3052,7 +3046,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-8-21-"><td  style="text-align:left;" id="TBL-8-21-1"  
 class="td11"><!--l. 939--><p class="noindent" >ITRF             </p></td><td  style="text-align:left;" id="TBL-8-21-2"  
 class="td11"><!--l. 939--><p class="noindent" >direction in ITRF Earth frame       </p></td><td  style="text-align:left;" id="TBL-8-21-3"  
-class="td11"><!--l. 939--><p class="noindent" >MEpoch  &#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;
+class="td11"><!--l. 939--><p class="noindent" >MEpoch       
 MPosition       </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
@@ -3188,7 +3182,7 @@ the value is in <!--l. 979--><math
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >m</mi><mo 
-class="MathClass-bin">&#x2215;</mo><mi 
+class="MathClass-bin">∕</mo><mi 
 >s</mi></math>.
 Methods are available (if the rest frequency of a spectral line is known), to
 convert the velocity to a frequency. Also, the radial velocity can be derived from
@@ -3283,10 +3277,10 @@ class="newline" />
  id="x1-29000A.2.9"></a>MDoppler</h5>
 <!--l. 1005--><p class="noindent" >The <span 
 class="cmtt-10x-x-109">MDoppler </span>class describes the radial velocity of an astronomical object in a
-variety of special astronomical &#8220;Doppler&#8221; shifts. It can be generated from quasi
+variety of special astronomical “Doppler” shifts. It can be generated from quasi
 velocities; or from a dimensionless quantity, interpreted as a fraction of the
 velocity of light.
-</p><!--l. 1011--><p class="indent" >   Conversion to a &#8220;real&#8221; radial velocity is possible with this class. In the following
+</p><!--l. 1011--><p class="indent" >   Conversion to a “real” radial velocity is possible with this class. In the following
 <!--l. 1012--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -3294,17 +3288,17 @@ display="inline" ><mi
 for <!--l. 1012--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->&#x03BD;</mi><mo 
-class="MathClass-bin">&#x2215;</mo><msub><mrow 
+>&nu;</mi><mo 
+class="MathClass-bin">∕</mo><msub><mrow 
 ><mi 
->&#x03BD;</mi></mrow><mrow 
+>&nu;</mi></mrow><mrow 
 ><mn>0</mn></mrow></msub 
 ></math>,
 where <!--l. 1012--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msub><mrow 
 ><mi 
->&#x03BD;</mi></mrow><mrow 
+>&nu;</mi></mrow><mrow 
 ><mn>0</mn></mrow></msub 
 ></math> is
 the rest frequency.<br 
@@ -3335,11 +3329,11 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-11-3-"><td  style="text-align:left;" id="TBL-11-3-1"  
 class="td11"><!--l. 1021--><p class="noindent" >RADIO           </p></td><td  style="text-align:left;" id="TBL-11-3-2"  
-class="td11"><!--l. 1021--><p class="noindent" >radio                            definition:
+class="td11"><!--l. 1021--><p class="noindent" >radio                            deﬁnition:
 <!--l. 1021--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn> <mo 
-class="MathClass-bin">-</mo> <mi 
+class="MathClass-bin">&minus;</mo> <mi 
 >F</mi></math></p></td><td  style="text-align:left;" id="TBL-11-3-3"  
 class="td11"><!--l. 1021--><p class="noindent" >             </p></td>
 </tr><tr 
@@ -3350,9 +3344,9 @@ class="td11"><!--l. 1022--><p class="noindent" >redshift:
 <!--l. 1022--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-bin">-</mo> <mn>1</mn> <mo 
+class="MathClass-bin">&minus;</mo> <mn>1</mn> <mo 
 class="MathClass-bin">+</mo> <mn>1</mn><mo 
-class="MathClass-bin">&#x2215;</mo><mi 
+class="MathClass-bin">∕</mo><mi 
 >F</mi></math></p></td><td  style="text-align:left;" id="TBL-11-4-3"  
 class="td11"><!--l. 1022--><p class="noindent" >             </p></td>
 </tr><tr 
@@ -3374,13 +3368,13 @@ class="td11"><!--l. 1024--><p class="noindent" >relativistic:
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mn>1</mn> <mo 
-class="MathClass-bin">-</mo> <msup><mrow 
+class="MathClass-bin">&minus;</mo> <msup><mrow 
 ><mi 
 >F</mi></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow><mo 
 class="MathClass-close">)</mo></mrow><mo 
-class="MathClass-bin">&#x2215;</mo><mrow ><mo 
+class="MathClass-bin">∕</mo><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mn>1</mn> <mo 
 class="MathClass-bin">+</mo> <msup><mrow 
 ><mi 
@@ -3403,7 +3397,7 @@ class="MathClass-bin">+</mo> <msup><mrow
 ><mn>2</mn></mrow></msup 
 ></mrow><mo 
 class="MathClass-close">)</mo></mrow><mo 
-class="MathClass-bin">&#x2215;</mo><mn>2</mn><mi 
+class="MathClass-bin">∕</mo><mn>2</mn><mi 
 >F</mi></math></p></td><td  style="text-align:left;" id="TBL-11-7-3"  
 class="td11"><!--l. 1025--><p class="noindent" >             </p></td>
 </tr><tr 

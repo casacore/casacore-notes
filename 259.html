@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="iso-8859-1" ?> 
+<?xml version="1.0" encoding="utf-8" ?> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1 plus MathML 2.0//EN" 
 "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
 <html xmlns="http://www.w3.org/1999/xhtml"  
 > 
 <head><title>NOTE 259: libpyrap, casacore-python converters</title> 
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" /> 
-<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<!-- xhtml,mathml,fn-in,css2,css-in,html --> 
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
+<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="259.tex" /> 
-<meta name="date" content="2015-07-30 09:23:00" /> 
+<meta name="date" content="2015-08-05 16:00:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -53,12 +53,6 @@ li p.indent { text-indent: 0em }
 li p:first-child{ margin-top:0em; }  
 li p:last-child, li div:last-child { margin-bottom:0.5em; }  
 li p~ul:last-child, li p~ol:last-child{ margin-bottom:0.5em; }  
-ul.itemize1 {list-style-type: none;}  
-ul.itemize1 li.itemize:before { display: marker; marker-offset: 0.5em; content: "&#x2219; " }  
-ul.itemize2 {list-style-type: none;}  
-ul.itemize2 li.itemize:before { display: marker; marker-offset: 0.5em; content: "\protect \protect \edef OT1{OT1}\let \enc @update \relax \protect \edef cmr{cmr}\protect \edef m{m}\protect \edef n{n}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \ignorespaces \relax \protect \relax \protect \edef m{bx}\protect \afterassignment \edef 10.95{360}\afterassignment \edef 13.6pt{13.6pt}\edef 1{}\let 1\def \size @update {\baselineskip 13.6pt\relax \baselineskip 1\baselineskip \normalbaselineskip \baselineskip \setbox \strutbox \hbox {\vrule height.7\baselineskip depth.3\baselineskip width\z @ }\let \size @update \relax }\xdef \OT 1/cmr/m/n/10.95 {\OT 1/cmr/m/n/10.95 }\OT 1/cmr/m/n/10.95 \size @update \enc @update \OT 1\textendash " }  
-ul.itemize3 {list-style-type: none;}  
-ul.itemize3 li.itemize:before { display: marker; marker-offset: 0.5em; content: "* " }  
 .enumerate1 {list-style-type:decimal;}  
 .enumerate2 {list-style-type:lower-alpha;}  
 .enumerate3 {list-style-type:lower-roman;}  
@@ -196,16 +190,16 @@ href="259.pdf" >A pdf version of this note is available.</a>
 href="#x1-20001" id="QQ2-1-2">Introduction</a></span>
 <br />   <span class="sectionToc" >2 <a 
 href="#x1-30002" id="QQ2-1-3">Converters</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >2.1 <a 
+<br />    <span class="subsectionToc" >2.1 <a 
 href="#x1-40002.1" id="QQ2-1-4">Array conversion to/from numpy and numarray</a></span>
 <br />   <span class="sectionToc" >3 <a 
 href="#x1-50003" id="QQ2-1-5">Class wrappers</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >3.1 <a 
+<br />    <span class="subsectionToc" >3.1 <a 
 href="#x1-60003.1" id="QQ2-1-6">More complicated wrappers</a></span>
-<br />   &#x00A0;<span class="subsectionToc" >3.2 <a 
+<br />    <span class="subsectionToc" >3.2 <a 
 href="#x1-70003.2" id="QQ2-1-7">Combining multiple classes</a></span>
 <br />   <span class="sectionToc" >4 <a 
-href="#x1-80004" id="QQ2-1-8">Python specifics</a></span>
+href="#x1-80004" id="QQ2-1-8">Python speciﬁcs</a></span>
 <br />   <span class="sectionToc" >5 <a 
 href="#x1-90005" id="QQ2-1-9">Building pyrap</a></span>
    </div>
@@ -216,7 +210,7 @@ href="#x1-90005" id="QQ2-1-9">Building pyrap</a></span>
  id="x1-20001"></a>Introduction</h3>
 <!--l. 5--><p class="noindent" >Since long glish bindings to the Casacore system have been in place. Quite
 recently Python bindings have been created in the general casapy framework
-using tools like CCMTools, Xerces, Xalan, and IDL. Albeit very flexible, it is
+using tools like CCMTools, Xerces, Xalan, and IDL. Albeit very ﬂexible, it is
 quite complicated and it is not straightforward to build on other systems than
 RedHat and OS-X.
 </p><!--l. 11--><p class="indent" >   Therefore an attempt has been made to make a simpler Python binding using
@@ -233,8 +227,8 @@ build time one can choose which ones should be used.
 </p>
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-30002"></a>Converters</h3>
-<!--l. 23--><p class="noindent" >Boost.Python offers a nice way to convert objects to and from Python. Ralf W.
-Grosse-Kunstleve �rwgk@yahoo.com� of <a 
+<!--l. 23--><p class="noindent" >Boost.Python oﬀers a nice way to convert objects to and from Python. Ralf W.
+Grosse-Kunstleve ¡rwgk@yahoo.com¿ of <a 
 href="http://www.lbl.gov" >Lawrence Berkeley National Laboratory</a>
 has built converters for standard STL containers. This has been extended to
 convert to/from other objects. <br 
@@ -270,7 +264,7 @@ class="cmtt-10x-x-109">casa::ValueHolder</span>
 class="cmtt-10x-x-109">casa::IterError </span>and <span 
 class="cmtt-10x-x-109">std::exception</span>)</li></ul>
 <!--l. 40--><p class="noindent" >These C++ objects can usually be created from several types of Python objects and
-are converted to a specific Python object. </p>
+are converted to a speciﬁc Python object. </p>
      <ul class="itemize1">
      <li class="itemize">A vector or IPosition object is converted to a Python list. <br 
 class="newline" />It can be constructed from the following Python objects:
@@ -345,10 +339,10 @@ class="newline" />Note that there is no support for the old Numeric package.
 </p><!--l. 106--><p class="indent" >   An Casacore array constructed from a Python array is regarded as a
 temporary object. So if possible, the Casacore array refers to the Python array
 data to avoid a needless copy. This is not possible if the element size in Python
-differs from Casacore. It is also not possible if the Python array is not
+diﬀers from Casacore. It is also not possible if the Python array is not
 contiguous (or not aligned or byte swapped). In those cases a copy is
 made.
-</p><!--l. 113--><p class="indent" >   A few more numarray/numpy specific issues are dealt with: </p>
+</p><!--l. 113--><p class="indent" >   A few more numarray/numpy speciﬁc issues are dealt with: </p>
      <ul class="itemize1">
      <li class="itemize">An  empty  N-dim  Casacore  array  (i.e.  an  array  containing  no
      elements)  is  returned  as  an  empty  N-dim  Python  array.  If  the
@@ -390,49 +384,49 @@ where XX is the name of the class.
                                                                      
 </p>
    <div class="verbatim" id="verbatim-1">
-//&#x00A0;Include&#x00A0;files&#x00A0;for&#x00A0;converters&#x00A0;being&#x00A0;used.
-&#x00A0;<br />#include&#x00A0;&#x003C;pyrap/Converters/PycExcp.h&#x003E;
-&#x00A0;<br />#include&#x00A0;&#x003C;pyrap/Converters/PycBasicData.h&#x003E;
-&#x00A0;<br />#include&#x00A0;&#x003C;pyrap/Converters/PycRecord.h&#x003E;
-&#x00A0;<br />//&#x00A0;Include&#x00A0;file&#x00A0;for&#x00A0;boost&#x00A0;python.
-&#x00A0;<br />#include&#x00A0;&#x003C;boost/python.hpp&#x003E;
-&#x00A0;<br />
-&#x00A0;<br />using&#x00A0;namespace&#x00A0;boost::python;
-&#x00A0;<br />
-&#x00A0;<br />namespace&#x00A0;casa&#x00A0;{&#x00A0;namespace&#x00A0;pyrap&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;void&#x00A0;wrap_xx()
-&#x00A0;<br />&#x00A0;&#x00A0;{
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Define&#x00A0;the&#x00A0;class;&#x00A0;"xx"&#x00A0;is&#x00A0;the&#x00A0;class&#x00A0;name&#x00A0;in&#x00A0;Python.
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;class_&#x003C;XX&#x003E;&#x00A0;("xx")
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Define&#x00A0;the&#x00A0;constructor.
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Multiple&#x00A0;constructors&#x00A0;can&#x00A0;be&#x00A0;defined.
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;They&#x00A0;have&#x00A0;to&#x00A0;have&#x00A0;different&#x00A0;number&#x00A0;of&#x00A0;arguments.
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;.def&#x00A0;(init&#x003C;&#x003E;())
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;Add&#x00A0;a&#x00A0;.def&#x00A0;line&#x00A0;for&#x00A0;each&#x00A0;function&#x00A0;to&#x00A0;be&#x00A0;wrapped.
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;An&#x00A0;arg&#x00A0;line&#x00A0;should&#x00A0;be&#x00A0;added&#x00A0;for&#x00A0;each&#x00A0;argument&#x00A0;giving
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;//&#x00A0;its&#x00A0;name&#x00A0;and&#x00A0;possibly&#x00A0;default&#x00A0;value.
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;.def&#x00A0;("func1",&#x00A0;&amp;XX::func1,
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;(boost::python::arg("arg1"),
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;boost::python::arg("arg2")=0))
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;;
-&#x00A0;<br />&#x00A0;&#x00A0;}
-&#x00A0;<br />}}
-&#x00A0;<br />
-&#x00A0;<br />BOOST_PYTHON_MODULE(_xx)
-&#x00A0;<br />{
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Register&#x00A0;the&#x00A0;conversion&#x00A0;functions.
-&#x00A0;<br />&#x00A0;&#x00A0;casa::pyrap::register_convert_excp();
-&#x00A0;<br />&#x00A0;&#x00A0;casa::pyrap::register_convert_basicdata();
-&#x00A0;<br />&#x00A0;&#x00A0;casa::pyrap::register_convert_casa_record();
-&#x00A0;<br />&#x00A0;&#x00A0;//&#x00A0;Initialize&#x00A0;the&#x00A0;wrapping.
-&#x00A0;<br />&#x00A0;&#x00A0;casa::pyrap::wrap_xx();
-&#x00A0;<br />}
+// Include files for converters being used.
+ <br />#include &#x003C;pyrap/Converters/PycExcp.h&#x003E;
+ <br />#include &#x003C;pyrap/Converters/PycBasicData.h&#x003E;
+ <br />#include &#x003C;pyrap/Converters/PycRecord.h&#x003E;
+ <br />// Include file for boost python.
+ <br />#include &#x003C;boost/python.hpp&#x003E;
+ <br />
+ <br />using namespace boost::python;
+ <br />
+ <br />namespace casa { namespace pyrap {
+ <br />  void wrap_xx()
+ <br />  {
+ <br />    // Define the class; &#x0022;xx&#x0022; is the class name in Python.
+ <br />    class_&#x003C;XX&#x003E; (&#x0022;xx&#x0022;)
+ <br />      // Define the constructor.
+ <br />      // Multiple constructors can be defined.
+ <br />      // They have to have different number of arguments.
+ <br />      .def (init&#x003C;&#x003E;())
+ <br />      // Add a .def line for each function to be wrapped.
+ <br />      // An arg line should be added for each argument giving
+ <br />      // its name and possibly default value.
+ <br />      .def (&#x0022;func1&#x0022;, &#x0026;XX::func1,
+ <br />            (boost::python::arg(&#x0022;arg1&#x0022;),
+ <br />             boost::python::arg(&#x0022;arg2&#x0022;)=0))
+ <br />    ;
+ <br />  }
+ <br />}}
+ <br />
+ <br />BOOST_PYTHON_MODULE(_xx)
+ <br />{
+ <br />  // Register the conversion functions.
+ <br />  casa::pyrap::register_convert_excp();
+ <br />  casa::pyrap::register_convert_basicdata();
+ <br />  casa::pyrap::register_convert_casa_record();
+ <br />  // Initialize the wrapping.
+ <br />  casa::pyrap::wrap_xx();
+ <br />}
 </div>
-<!--l. 175--><p class="nopar" > Python requires for each package a file <span 
+<!--l. 175--><p class="nopar" > Python requires for each package a ﬁle <span 
 class="cmtt-10x-x-109">_</span><span 
 class="cmtt-10x-x-109">_init</span><span 
 class="cmtt-10x-x-109">_</span><span 
-class="cmtt-10x-x-109">_.py</span>, so such an empty file
+class="cmtt-10x-x-109">_.py</span>, so such an empty ﬁle
 should be created as well.
                                                                      
 
@@ -445,14 +439,14 @@ should be created as well.
 order needs to be changed or because some extra Python checks are
 necessary. In such a case the class needs to be implemented in Python itself.
 <br 
-class="newline" />The C++ wrapped class name needs to get a different name, usually by
+class="newline" />The C++ wrapped class name needs to get a diﬀerent name, usually by
 preceeding it with an underscore like:
                                                                      
 
                                                                      
 </p>
    <div class="verbatim" id="verbatim-2">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;class_&#x003C;XX&#x003E;&#x00A0;("_xx")
+    class_&#x003C;XX&#x003E; (&#x0022;_xx&#x0022;)
 </div>
 <!--l. 188--><p class="nopar" > The Python class should be derived from it and implement the constructor by
 calling the constructor of _xx.
@@ -461,9 +455,9 @@ calling the constructor of _xx.
                                                                      
 </p>
    <div class="verbatim" id="verbatim-3">
-class&#x00A0;xx(_xx):
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;def&#x00A0;__init__(self):
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;_xx.__init__(self)
+class xx(_xx):
+ <br />    def __init__(self):
+ <br />        _xx.__init__(self)
 </div>
 <!--l. 195--><p class="nopar" > Now <span 
 class="cmtt-10x-x-109">xx </span>inherits all functions from <span 
@@ -474,11 +468,11 @@ Python like
                                                                      
 </p>
    <div class="verbatim" id="verbatim-4">
-&#x00A0;&#x00A0;&#x00A0;&#x00A0;def&#x00A0;func1&#x00A0;(self,&#x00A0;arg1,&#x00A0;arg2):
-&#x00A0;<br />&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;&#x00A0;return&#x00A0;self._func1&#x00A0;(arg2,&#x00A0;arg1);
+    def func1 (self, arg1, arg2):
+ <br />        return self._func1 (arg2, arg1);
 </div>
 <!--l. 201--><p class="nopar" > Note that in the wrapper the function name also needs to be preceeded by an
-underscore to make it different.
+underscore to make it diﬀerent.
 </p><!--l. 205--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
@@ -496,8 +490,8 @@ code/pyrap/apps/pycasatable) to see how to do it.
 </p><!--l. 213--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
- id="x1-80004"></a>Python specifics</h3>
-<!--l. 214--><p class="noindent" >Besides an array being in C-order, there are a few more Python specific issues.
+ id="x1-80004"></a>Python speciﬁcs</h3>
+<!--l. 214--><p class="noindent" >Besides an array being in C-order, there are a few more Python speciﬁc issues.
 </p>
      <ul class="itemize1">
      <li class="itemize">Indexing starts at 0 (vs. 1 in glish).
@@ -558,9 +552,9 @@ Casacore build. Work is underway to build it separately as a Python egg.
 class="newline" />To build it in Casacore the following has to be added to the local makedefs:
 </p>
      <ul class="itemize1">
-     <li class="itemize">Definitions for PYTHON telling the Python locations.
+     <li class="itemize">Deﬁnitions for PYTHON telling the Python locations.
      </li>
-     <li class="itemize">Definitions for BOOST telling the Boost.Python locations.
+     <li class="itemize">Deﬁnitions for BOOST telling the Boost.Python locations.
      </li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">AUXILIARY += pyrap</span></li></ul>
@@ -572,8 +566,8 @@ makedefs:
                                                                      
 </p>
    <div class="verbatim" id="verbatim-5">
-PYTHONINCD&#x00A0;+=&#x00A0;&#8217;the&#x00A0;path&#x00A0;where&#x00A0;numpy/arrayobject.h&#x00A0;can&#x00A0;be&#x00A0;found&#8217;
-&#x00A0;<br />PYTHONDEFS&#x00A0;+=&#x00A0;-DAIPS_USENUMPY
+PYTHONINCD += &#x2019;the path where numpy/arrayobject.h can be found&#x2019;
+ <br />PYTHONDEFS += -DAIPS_USENUMPY
 </div>
 <!--l. 254--><p class="nopar" > If only numpy should be supported, the last line should be replaced
 by:
@@ -582,7 +576,7 @@ by:
                                                                      
 </p>
    <div class="verbatim" id="verbatim-6">
-PYTHONDEFS&#x00A0;:=&#x00A0;-DAIPS_USENUMPY
+PYTHONDEFS := -DAIPS_USENUMPY
 </div>
 <!--l. 258--><p class="nopar" > When building pyrap, it is by default built as the shared library <span 
 class="cmtt-10x-x-109">libpyrap.so</span>
@@ -604,8 +598,8 @@ However, it is strongly advised to build it as a shared library because:
 <!--l. 276--><p class="indent" >   A package <span 
 class="cmtt-10x-x-109">pyxx </span>is built as a shared library <span 
 class="cmtt-10x-x-109">_pyxx.so </span>residing in directory
-$AIPSPATH/python$PYTHONVERSION/pyxx. All .py files are also put in this
-directory and compiled to .pyo and .pyc files.
+$AIPSPATH/python$PYTHONVERSION/pyxx. All .py ﬁles are also put in this
+directory and compiled to .pyo and .pyc ﬁles.
 </p><!--l. 281--><p class="indent" >   On Mac OS-X Python libraries have to be built as bundles. For this the local
 makedefs need to set some make variables:
                                                                      
@@ -613,11 +607,11 @@ makedefs need to set some make variables:
                                                                      
 </p>
    <div class="verbatim" id="verbatim-7">
-PYLDSOPTS&#x00A0;&#x00A0;:=&#x00A0;-bundle
-&#x00A0;<br />PYSFXSHAR&#x00A0;&#x00A0;:=&#x00A0;so
-&#x00A0;<br />SFXSHAR&#x00A0;&#x00A0;&#x00A0;&#x00A0;:=&#x00A0;dylib
-&#x00A0;<br />LDSOPTS&#x00A0;&#x00A0;&#x00A0;&#x00A0;:=&#x00A0;-dynamiclib&#x00A0;-single_module
-&#x00A0;<br />PYTHONLIBS&#x00A0;:=&#x00A0;-framework&#x00A0;Python
+PYLDSOPTS  := -bundle
+ <br />PYSFXSHAR  := so
+ <br />SFXSHAR    := dylib
+ <br />LDSOPTS    := -dynamiclib -single_module
+ <br />PYTHONLIBS := -framework Python
 </div>
 <!--l. 289--><p class="nopar" > </p> 
 </body></html> 
