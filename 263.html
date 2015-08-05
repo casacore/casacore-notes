@@ -9,7 +9,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="263.tex" /> 
-<meta name="date" content="2015-08-05 16:02:00" /> 
+<meta name="date" content="2015-08-05 16:50:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -233,9 +233,9 @@ class="phvr7t-x-x-109">(Updated: April 6, 2015)</span></div>
    </div>
 <div class="center" 
 >
-<!--l. 55--><p class="noindent" >
-</p><!--l. 56--><p class="noindent" ><a 
-href="http://www.aoc.nrao.edu/$\sim $sbhatnag/misc/msselection.pdf" >PDF
+<!--l. 57--><p class="noindent" >
+</p><!--l. 58--><p class="noindent" ><a 
+href="263.pdf" >PDF
 Version</a><span class="footnote-mark"><a 
 href="#fn1x0" id="fn1x0-bk"><sup class="textsuperscript">1</sup></a></span><a 
  id="x1-2f1"></a></p></div>
@@ -244,10 +244,10 @@ class="abstract"
 >
 <div class="center" 
 >
-<!--l. 59--><p class="noindent" >
-</p><!--l. 59--><p class="noindent" ><span 
+<!--l. 62--><p class="noindent" >
+</p><!--l. 62--><p class="noindent" ><span 
 class="phvb7t-x-x-109">Abstract</span></p></div>
-      <!--l. 60--><p class="indent" >     <span 
+      <!--l. 63--><p class="indent" >     <span 
 class="phvr7t-x-x-109">This note describes the syntax for the various expressions for selecting data from the</span>
       <span 
 class="phvr7t-x-x-109">Measurement Set, implemented in the </span><a 
@@ -266,7 +266,7 @@ class="phvr7t-x-x-109">Node (TEN) which can be used to construct a table with on
 class="phvr7t-x-x-109">level global methods to return a selected table, given the user supplied expressions, are</span>
       <span 
 class="phvr7t-x-x-109">also provided as part of this module.</span>
-      </p><!--l. 70--><p class="indent" >   <span 
+      </p><!--l. 73--><p class="indent" >   <span 
 class="phvr7t-x-x-109">Error handling is done via the C++ exception handling mechanism. The exceptions</span>
       <span 
 class="phvr7t-x-x-109">thrown by the </span><span 
@@ -300,7 +300,7 @@ class="phvr7t-x-x-109">This allows application layer code to have control on the
 class="phvr7t-x-x-109">exceptional states that may be reached during the parsing cycle.</span>
                                                                                             
                                                                                             
-      </p><!--l. 82--><p class="indent" >   <span 
+      </p><!--l. 85--><p class="indent" >   <span 
 class="phvr7t-x-x-109">The </span><span 
 class="pcrr7t-x-x-109">MSSelection</span><span 
 class="phvr7t-x-x-109"> module can also be used for other tables that follow the general</span>
@@ -436,7 +436,7 @@ href="#x1-51000C.9" id="QQ2-1-67">Example 9</a></span>
                                                                                             
    <h3 class="sectionHead"><span class="titlemark">1    </span> <a 
  id="x1-20001"></a>General Syntax</h3>
-<!--l. 93--><p class="noindent" >A <span 
+<!--l. 96--><p class="noindent" >A <span 
 class="pcrr7t-x-x-120">MSSelection</span> expression consists of a comma separated list of speciﬁcations. Speciﬁcations
 are typically strings or numbers. Strings and numbers can be mixed to form a single list. Elements
 of the list which can be converted to integers are treated as integer index speciﬁcation. Elements
@@ -444,13 +444,13 @@ which do not get parsed as numbers are treated as strings. Where appropriate, st
 matched against names. Depending upon the content of a string, it can be used as regular
 expressions or pattern. Where appropriate, physical quantities (numbers with appropriate units)
 can also be used.
-</p><!--l. 103--><p class="indent" >   A blank selection expression is interpreted as ”no selection to be applied to the MS”. Hence a
+</p><!--l. 106--><p class="indent" >   A blank selection expression is interpreted as ”no selection to be applied to the MS”. Hence a
 blank expression eﬀectively implies ”select all”.
-</p><!--l. 107--><p class="noindent" >
+</p><!--l. 110--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">1.1    </span> <a 
  id="x1-30001.1"></a>Number Format</h4>
-<!--l. 110--><p class="noindent" >Integers can be of any length (in terms of characters) and composed of the characters in the range
+<!--l. 113--><p class="noindent" >Integers can be of any length (in terms of characters) and composed of the characters in the range
 0-9. Where appropriate, negative values can be given using the &#x2019;-&#x2019; character. Floating point
 numbers can be in the standard format:
 </p>
@@ -460,61 +460,61 @@ numbers can be in the standard format:
       <li class="itemize">DIGIT. : e.g. 10.
       </li>
       <li class="itemize">.DIGIT : e.g. .56</li></ul>
-<!--l. 120--><p class="noindent" >or in the mantissa-exponent format (e.g. 10.56e-1). If a ﬂoating point number is given where only
+<!--l. 123--><p class="noindent" >or in the mantissa-exponent format (e.g. 10.56e-1). If a ﬂoating point number is given where only
 integers are expected (e.g. indexes), the ﬂoating point value is truncated to the nearest
 integer.
-</p><!--l. 124--><p class="noindent" >
+</p><!--l. 127--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">1.2    </span> <a 
  id="x1-40001.2"></a>Range Speciﬁcation</h4>
-<!--l. 126--><p class="noindent" >Range of numbers (integers or real numbers) can be given in the format
-N0<!--l. 127--><math 
+<!--l. 129--><p class="noindent" >Range of numbers (integers or real numbers) can be given in the format
+N0<!--l. 130--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>N1.
 Integer ranges are expanded into a list of integers starting from N0 (inclusive) to N1 (inclusive).
 Range of real numbers is used to select all values between N0 and N1 (including the boundaries).
 E.g.
-</p><!--l. 132--><p class="indent" >   Integer ranges:
+</p><!--l. 135--><p class="indent" >   Integer ranges:
                                                                                             
                                                                                             
 </p>
       <ul class="itemize1">
-      <li class="itemize">10<!--l. 135--><math 
+      <li class="itemize">10<!--l. 138--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>30
       implies all integers in the range [10,30]
       </li>
-      <li class="itemize">10.1<!--l. 136--><math 
+      <li class="itemize">10.1<!--l. 139--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>30.5
       implies all integers in the range [10,30]</li></ul>
-<!--l. 138--><p class="noindent" >Floating point ranges: </p>
+<!--l. 141--><p class="noindent" >Floating point ranges: </p>
       <ul class="itemize1">
-      <li class="itemize">10<!--l. 140--><math 
+      <li class="itemize">10<!--l. 143--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>30
       implies all values in the range [10.0, 30.0]
       </li>
-      <li class="itemize">10.5<!--l. 141--><math 
+      <li class="itemize">10.5<!--l. 144--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>30.7
       implies all values in the range [10.5, 30.7]
       </li>
-      <li class="itemize">1.05e1 <!--l. 142--><math 
+      <li class="itemize">1.05e1 <!--l. 145--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>
       3.07e1 implies all values in the range [10.5, 30.7]</li></ul>
-<!--l. 146--><p class="noindent" >
+<!--l. 149--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">1.3    </span> <a 
  id="x1-50001.3"></a>Units</h4>
-<!--l. 148--><p class="noindent" >Wherever appropriate, units can be optionally speciﬁed. Values with units are converted
+<!--l. 151--><p class="noindent" >Wherever appropriate, units can be optionally speciﬁed. Values with units are converted
 to the units in the Measurement Set (which uses the MKS-system). For ranges, the
 units are speciﬁed only once (at the end) and it applies to both the range boundaries.
 E.g.
@@ -522,18 +522,18 @@ E.g.
       <ul class="itemize1">
       <li class="itemize">1421.07MHz implies 1421.07e6 Hz
       </li>
-      <li class="itemize">1421<!--l. 155--><math 
+      <li class="itemize">1421<!--l. 158--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>1500MHz
       implies all frequencies in the range [1421.0, 1500.0]MHz.</li></ul>
                                                                                             
                                                                                             
-<!--l. 159--><p class="noindent" >
+<!--l. 162--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">1.4    </span> <a 
  id="x1-60001.4"></a>Strings</h4>
-<!--l. 161--><p class="noindent" >String matching can be done in three ways. Any component of a comma separated list that cannot
+<!--l. 164--><p class="noindent" >String matching can be done in three ways. Any component of a comma separated list that cannot
 be parsed as number/number range/physical quantity is treated as a regular expression or a literal
 string. If the string contains any of the &#x2019;*&#x2019;, &#x2019;<span 
 class="cmsy-10x-x-120">{</span>&#x2019;, &#x2019;<span 
@@ -551,14 +551,14 @@ link</a><span class="footnote-mark"><a
 href="#fn6x0" id="fn6x0-bk"><sup class="textsuperscript">6</sup></a></span><a 
  id="x1-6001f6"></a>)
 for details of regular expression and patterns.
-</p><!--l. 180--><p class="indent" >   Strings can include any character except the following:
+</p><!--l. 183--><p class="indent" >   Strings can include any character except the following:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-1">
    ','   ';' '&#x0022;'  '/'  ':' and NEWLINE
 </div>
-<!--l. 184--><p class="nopar" > (these are reserved characters for <span 
+<!--l. 187--><p class="nopar" > (these are reserved characters for <span 
 class="pcrr7t-x-x-120">MSSelection</span> expression syntax). Strings that do not contain
 any of the characters used to construct regular expressions or patterns are used for exact matches.
 Although it is highly discouraged to have name in the database containing the above
@@ -591,11 +591,11 @@ class="pcrr7t-x-x-120">&#x0022;⋆BAND⋆&#x0022; </span>will be used as a strin
       <li class="itemize">The string /.*BAND.*/ will be used as a regular expression. This will also match any
       string which has the string ”BAND” in it. (.* operator has the same meaning as the &#x2019;*&#x2019;
       operator of patterns).</li></ul>
-<!--l. 218--><p class="noindent" >
+<!--l. 221--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">1.5    </span> <a 
  id="x1-70001.5"></a>White Spaces (blanks in expressions)</h4>
-<!--l. 220--><p class="noindent" >In most cases, blanks are treated as white-spaces (i.e., insertion of blanks anywhere in
+<!--l. 223--><p class="noindent" >In most cases, blanks are treated as white-spaces (i.e., insertion of blanks anywhere in
 the expression has no eﬀect), except in the case of Field Selection Expressions (see
 Section <a 
 href="#x1-190004">4<!--tex4ht:ref: FIELDEXPR --></a>). Blanks are allowed as part of the ﬁeld names. Blanks around the delimiting
@@ -618,32 +618,32 @@ class="pcrr7t-x-x-120"> BB,C </span>(ﬁrst name is ”A”, second name
       is ”BB BB” and the third name is ”C”)
       </li>
       <li class="itemize">baseline=<span 
-class="pcrr7t-x-x-120">1 , 2 , 3 &#x0026; 4 , 5 , 6 ; 10 </span><!--l. 233--><math 
+class="pcrr7t-x-x-120">1 , 2 , 3 &#x0026; 4 , 5 , 6 ; 10 </span><!--l. 236--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math>
       <span 
-class="pcrr7t-x-x-120">11 &#x0026; 20 </span><!--l. 233--><math 
+class="pcrr7t-x-x-120">11 &#x0026; 20 </span><!--l. 236--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math>
       <span 
 class="pcrr7t-x-x-120">30 </span>is same as<br 
 class="newline" />baseline=<span 
-class="pcrr7t-x-x-120">1,2,3&#x0026;4,5,6;10</span><!--l. 234--><math 
+class="pcrr7t-x-x-120">1,2,3&#x0026;4,5,6;10</span><!--l. 237--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
-class="pcrr7t-x-x-120">11&#x0026;20</span><!--l. 234--><math 
+class="pcrr7t-x-x-120">11&#x0026;20</span><!--l. 237--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">30</span></li></ul>
-<!--l. 237--><p class="noindent" >
+<!--l. 240--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">2    </span> <a 
  id="x1-80002"></a>Time Selection</h3>
-<!--l. 239--><p class="noindent" >Time selection expression is a comma separated list of time speciﬁcations. Time can be speciﬁed
+<!--l. 242--><p class="noindent" >Time selection expression is a comma separated list of time speciﬁcations. Time can be speciﬁed
 in the format YYYY/MM/DD/HH:MM:SS.FF. Fields (i.e., YYYY, MM, DD, HH, MM, SS and FF),
 starting from left to right, can be omitted. Omitted ﬁelds will be replaced by context sensitive
 defaults as explained below.
@@ -651,7 +651,7 @@ defaults as explained below.
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 245--><p class="indent" >   <a 
+<!--l. 248--><p class="indent" >   <a 
  id="x1-80011"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -661,7 +661,7 @@ defaults as explained below.
 class="content">Railroad diagram for the syntax of time/time-range selection expression.</span></div><!--tex4ht:label?: x1-80011 -->
 <div class="center" 
 >
-<!--l. 247--><p class="noindent" >
+<!--l. 250--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-2" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -698,7 +698,7 @@ class="td11">             </td></tr></table></div></div>
    </div>
    <h4 class="subsectionHead"><span class="titlemark">2.1    </span> <a 
  id="x1-90002.1"></a>Syntax</h4>
-<!--l. 263--><p class="noindent" >Various forms of possible time-selection expression are listed below. T0, T1 and dT in the following
+<!--l. 266--><p class="noindent" >Various forms of possible time-selection expression are listed below. T0, T1 and dT in the following
 description are time speciﬁcations.
 </p>
       <ul class="itemize1">
@@ -706,25 +706,25 @@ description are time speciﬁcations.
 class="phvb7t-x-x-120">time</span><span 
 class="phvb7t-x-x-120"> =</span><span 
 class="phvb7t-x-x-120"> </span><span 
-class="phvb7t-x-x-120"> T0</span><!--l. 267--><math 
+class="phvb7t-x-x-120"> T0</span><!--l. 270--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="phvb7t-x-x-120">T1</span>
-      <!--l. 269--><p class="noindent" >Selects all time stamps which satisfy the following condition:
-      </p><!--l. 271--><p class="noindent" >
+      <!--l. 272--><p class="noindent" >Selects all time stamps which satisfy the following condition:
+      </p><!--l. 274--><p class="noindent" >
            </p><div class="quote">
-           <!--l. 272--><p class="noindent" >(TimeStamp <!--l. 272--><math 
+           <!--l. 275--><p class="noindent" >(TimeStamp <!--l. 275--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>=
            T0) <span 
-class="phvb7t-x-x-120">and </span>(TimeStamp <!--l. 272--><math 
+class="phvb7t-x-x-120">and </span>(TimeStamp <!--l. 275--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>=
            T1)</p></div>
-      <!--l. 275--><p class="noindent" >Fields missing in T0 are replaced by the ﬁelds in the time stamp of the ﬁrst valid selected row
+      <!--l. 278--><p class="noindent" >Fields missing in T0 are replaced by the ﬁelds in the time stamp of the ﬁrst valid selected row
       in the MS. Fields missing in T1 are replaced by the corresponding ﬁelds of T0 (after its
       defaults are set).
       </p></li>
@@ -732,37 +732,37 @@ class="MathClass-rel">&#x003C;</mo></math>=
 class="phvb7t-x-x-120">time</span><span 
 class="phvb7t-x-x-120"> =</span><span 
 class="phvb7t-x-x-120"> </span><span 
-class="phvb7t-x-x-120"> [T0</span><!--l. 280--><math 
+class="phvb7t-x-x-120"> [T0</span><!--l. 283--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="phvb7t-x-x-120">T1]</span>
-      <!--l. 282--><p class="noindent" >The edges of the range is computed using the Exposure Time. All rows with a time stamp
+      <!--l. 285--><p class="noindent" >The edges of the range is computed using the Exposure Time. All rows with a time stamp
       which satisfy the following condition are selected:
-      </p><!--l. 286--><p class="noindent" >
+      </p><!--l. 289--><p class="noindent" >
            </p><div class="quote">
-           <!--l. 287--><p class="noindent" >((TimeStamp <!--l. 287--><math 
+           <!--l. 290--><p class="noindent" >((TimeStamp <!--l. 290--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>
            T0) <span 
-class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T0) <!--l. 287--><math 
+class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T0) <!--l. 290--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
            ExposureTime/2)) <span 
 class="phvb7t-x-x-120">and</span><br 
-class="newline" />((TimeStamp <!--l. 288--><math 
+class="newline" />((TimeStamp <!--l. 291--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
            T1) <span 
-class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T1) <!--l. 288--><math 
+class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T1) <!--l. 291--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
            ExposureTime/2))</p></div>
-      <!--l. 291--><p class="noindent" >Fields missing in T0 are replaced by the ﬁelds in the time stamp of the ﬁrst valid selected row
+      <!--l. 294--><p class="noindent" >Fields missing in T0 are replaced by the ﬁelds in the time stamp of the ﬁrst valid selected row
       in the MS. Fields missing in T1 are replaced by the corresponding ﬁelds of T0 (after its
       defaults are set).
                                                                                             
@@ -772,38 +772,38 @@ class="MathClass-rel">&#x003C;</mo></math>
 class="phvb7t-x-x-120">time</span><span 
 class="phvb7t-x-x-120"> =</span><span 
 class="phvb7t-x-x-120"> </span><span 
-class="phvb7t-x-x-120"> FLOATNUMBER [T0</span><!--l. 296--><math 
+class="phvb7t-x-x-120"> FLOATNUMBER [T0</span><!--l. 299--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="phvb7t-x-x-120">T1]</span>
-      <!--l. 298--><p class="noindent" >Same as the previous expression with the edges of the range determined using the
+      <!--l. 301--><p class="noindent" >Same as the previous expression with the edges of the range determined using the
       FLOATNUMBER (in seconds of time) instead of Exposure Time. All rows with a time stamp
       which satisfy the following condition are selected:
-      </p><!--l. 303--><p class="noindent" >
+      </p><!--l. 306--><p class="noindent" >
            </p><div class="quote">
-           <!--l. 304--><p class="noindent" >((TimeStamp <!--l. 304--><math 
+           <!--l. 307--><p class="noindent" >((TimeStamp <!--l. 307--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>
            T0) <span 
-class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T0) <!--l. 304--><math 
+class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T0) <!--l. 307--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
            FLOATNUMBER)) <span 
 class="phvb7t-x-x-120">and</span><br 
-class="newline" />((TimeStamp <!--l. 305--><math 
+class="newline" />((TimeStamp <!--l. 308--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
            T1) <span 
-class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T1) <!--l. 305--><math 
+class="phvb7t-x-x-120">or </span>(abs(TimeStamp - T1) <!--l. 308--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
            FLOATNUMBER))</p></div>
-      <!--l. 308--><p class="noindent" >Fields missing in T0 are replaced by the ﬁelds in the time stamp of the ﬁrst valid selected row
+      <!--l. 311--><p class="noindent" >Fields missing in T0 are replaced by the ﬁelds in the time stamp of the ﬁrst valid selected row
       in the MS. Fields missing in T1 are replaced by the corresponding ﬁelds of T0 (after its
       defaults are set).
       </p></li>
@@ -812,7 +812,7 @@ class="phvb7t-x-x-120">time</span><span
 class="phvb7t-x-x-120"> =</span><span 
 class="phvb7t-x-x-120"> </span><span 
 class="phvb7t-x-x-120"> T0</span>
-      <!--l. 315--><p class="noindent" >All rows with time stamp that is within an integration time of T0 are selected. Integration time
+      <!--l. 318--><p class="noindent" >All rows with time stamp that is within an integration time of T0 are selected. Integration time
       is determined from the ﬁrst valid selected row (more rigorously, an average integration time
       should be computed). Default settings for the missing ﬁelds of T0 are as described in bullet
       (1) above.
@@ -822,7 +822,7 @@ class="phvb7t-x-x-120">time</span><span
 class="phvb7t-x-x-120"> =</span><span 
 class="phvb7t-x-x-120"> </span><span 
 class="phvb7t-x-x-120"> T0+dT</span>
-      <!--l. 323--><p class="noindent" >All rows with time stamp starting from T0 and ending with time value given by T0+dT are
+      <!--l. 326--><p class="noindent" >All rows with time stamp starting from T0 and ending with time value given by T0+dT are
       selected. Defaults of T0 are set as usual described in bullet (1) above. Defaults for dT are set
       from the time corresponding to MJD=0. I.e. dT is an speciﬁcation of length of time
       from nominal ”start of time” (the time stamp of the ﬁrst valid selected row of the
@@ -832,43 +832,43 @@ class="phvb7t-x-x-120"> T0+dT</span>
 class="phvb7t-x-x-120">time</span><span 
 class="phvb7t-x-x-120"> =</span><span 
 class="phvb7t-x-x-120"> </span><span 
-class="phvb7t-x-x-120"> </span><!--l. 330--><math 
+class="phvb7t-x-x-120"> </span><!--l. 333--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
 class="phvb7t-x-x-120">T0</span>
-      <!--l. 332--><p class="noindent" >Selects all times greater than T0.
+      <!--l. 335--><p class="noindent" >Selects all times greater than T0.
       </p></li>
       <li class="itemize"><span 
 class="phvb7t-x-x-120">time</span><span 
-class="phvb7t-x-x-120"> =</span><!--l. 334--><math 
+class="phvb7t-x-x-120"> =</span><!--l. 337--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
 class="phvb7t-x-x-120">T0</span>
-      <!--l. 336--><p class="noindent" >All rows with time stamp less than T0 are selected. Default settings for T0 are as
+      <!--l. 339--><p class="noindent" >All rows with time stamp less than T0 are selected. Default settings for T0 are as
       above.</p></li></ul>
                                                                                             
                                                                                             
-<!--l. 340--><p class="noindent" >
+<!--l. 343--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">3    </span> <a 
  id="x1-100003"></a>Antenna/Baseline Selection</h3>
-<!--l. 342--><p class="noindent" >This expression is used to perform baseline based selections. Baseline can be speciﬁed as a pair
+<!--l. 345--><p class="noindent" >This expression is used to perform baseline based selections. Baseline can be speciﬁed as a pair
 of antenna speciﬁcations. Since antenna speciﬁcation can itself be a list of antennas, the
 expression allows a rich selection syntax which is simple for simple selections.
-</p><!--l. 347--><p class="indent" >   ANT in the description below is a comma-separated list of antenna speciﬁcations. A baseline
+</p><!--l. 350--><p class="indent" >   ANT in the description below is a comma-separated list of antenna speciﬁcations. A baseline
 speciﬁcation is an single ANT, ANT followed by an operator or a pair of ANT separated by an
 operator. A baseline expression is single baseline speciﬁcation or a semi-colon separated list of
 baseline speciﬁcations.
-</p><!--l. 353--><p class="indent" >   The full antenna and baseline expression syntax is described in the Railroad Diagram format in
+</p><!--l. 356--><p class="indent" >   The full antenna and baseline expression syntax is described in the Railroad Diagram format in
 Table <a 
 href="#x1-100012">2<!--tex4ht:ref: Tab:RAILROAD_BASELINE --></a> and explained in the following sections.
 </p>
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 357--><p class="indent" >   <a 
+<!--l. 360--><p class="indent" >   <a 
  id="x1-100012"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -879,7 +879,7 @@ class="content">Railroad diagrams for the syntax of full baseline selection expr
 this is also referred to as “antenna selection” expression.</span></div><!--tex4ht:label?: x1-100012 -->
 <div class="center" 
 >
-<!--l. 360--><p class="noindent" >
+<!--l. 363--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-3" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -931,11 +931,11 @@ class="td11">                     </td></tr></table></div></div>
    </div>
    <h4 class="subsectionHead"><span class="titlemark">3.1    </span> <a 
  id="x1-110003.1"></a>Syntax</h4>
-<!--l. 380--><p class="noindent" >
+<!--l. 383--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.1.1    </span> <a 
  id="x1-120003.1.1"></a>Antenna Speciﬁcation</h5>
-<!--l. 382--><p class="noindent" >An ANT can be given as a single <a 
+<!--l. 385--><p class="noindent" >An ANT can be given as a single <a 
 href="#x1-60001.4">string (section 1.4)</a> (literal/pattern/regular expression), single
 integer ID, a <a 
 href="#x1-40001.2">range (section 1.2)</a> of integer IDs or a comma separated list of integers. For
@@ -953,7 +953,7 @@ class="pcrr7t-x-x-120">1,2,3 </span>corresponds to antennas <span
 class="phvb7t-x-x-120">named </span>”1”, ”2” and ”3”.
       </li>
       <li class="itemize"><span 
-class="pcrr7t-x-x-120">1</span><!--l. 397--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 400--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -963,8 +963,8 @@ class="phvb7t-x-x-120">named </span>”1”, ”2” and ”3”.
       </li>
       <li class="itemize"><span 
 class="pcrr7t-x-x-120">VLA:N⋆ </span>corresponds to all antennas who&#x2019;s name starts with ”VLA:N”.</li></ul>
-<!--l. 403--><p class="indent" >   The precise logic applied to the antenna speciﬁcation (ANT) is as follows:
-</p><!--l. 406--><p class="indent" >
+<!--l. 406--><p class="indent" >   The precise logic applied to the antenna speciﬁcation (ANT) is as follows:
+</p><!--l. 409--><p class="indent" >
       </p><ol  class="enumerate1" >
       <li 
   class="enumerate" id="x1-12002x1">If ANT is an integer index (or a list or <a 
@@ -984,11 +984,11 @@ class="pcrr7t-x-x-120">ANTENNA </span>sub-table. If no match is found, match aga
 class="pcrr7t-x-x-120">STATION </span>column is attempted.</li></ol>
                                                                                             
                                                                                             
-<!--l. 422--><p class="noindent" >
+<!--l. 425--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.1.2    </span> <a 
  id="x1-130003.1.2"></a>Antenna@Station Speciﬁcation</h5>
-<!--l. 424--><p class="noindent" >A fully qualiﬁed antenna speciﬁcation can also include the station name via the <span 
+<!--l. 427--><p class="noindent" >A fully qualiﬁed antenna speciﬁcation can also include the station name via the <span 
 class="pcrr7t-x-x-120">ANT@STATION</span>
 syntax. <span 
 class="pcrr7t-x-x-120">STATION </span>speciﬁcation follows the same rules as antenna speciﬁcation. When
@@ -1010,7 +1010,7 @@ class="pcrr7t-x-x-120">&#x0022;⋆&#x0022; </span>(i.e. <span
 class="pcrr7t-x-x-120">&#x0022;@STATION&#x0022; </span>is equivalent to
 <span 
 class="pcrr7t-x-x-120">&#x0022;⋆@STATION&#x0022;</span>).
-</p><!--l. 437--><p class="indent" >   The two forms of speciﬁcations that are interpreted diﬀerently are:
+</p><!--l. 440--><p class="indent" >   The two forms of speciﬁcations that are interpreted diﬀerently are:
       </p><ol  class="enumerate1" >
       <li 
   class="enumerate" id="x1-13002x1">List of ANT@STATION: <span 
@@ -1019,7 +1019,7 @@ class="pcrr7t-x-x-120">A1@S1, A2@S2, A3@S3,....</span>
       <li 
   class="enumerate" id="x1-13004x2">(List of ANT)@(List of STATION): <span 
 class="pcrr7t-x-x-120">(A1, A2, A3)@(S1,S2,S3)</span></li></ol>
-<!--l. 442--><p class="noindent" >First form is similar to the comma-separated list of antenna speciﬁcations used to construct the
+<!--l. 445--><p class="noindent" >First form is similar to the comma-separated list of antenna speciﬁcations used to construct the
 baseline to be selected (see Section <a 
 href="#x1-140003.1.3">3.1.3<!--tex4ht:ref: BASELINE_SPEC --></a>). The latter will select all members of the antenna list
 that are on any of the stations listed in the station list. E.g. if antenna <span 
@@ -1031,11 +1031,11 @@ class="pcrr7t-x-x-120">A1 </span>on station <span
 class="pcrr7t-x-x-120">S1 </span>will be
 selected in the ﬁrst form. Note that the second form of speciﬁcation can itself be a member of a
 comma-separated list.
-</p><!--l. 453--><p class="noindent" >
+</p><!--l. 456--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.1.3    </span> <a 
  id="x1-140003.1.3"></a>Baseline Speciﬁcation</h5>
-<!--l. 456--><p class="noindent" >A baseline speciﬁcation consists of an ANT followed by an operator or a pair of antenna
+<!--l. 459--><p class="noindent" >A baseline speciﬁcation consists of an ANT followed by an operator or a pair of antenna
 speciﬁcations separated by an operator. Operator can be one, two or three ampersands
 (<span 
 class="pcrr7t-x-x-120">'&#x0026;'</span>):
@@ -1043,7 +1043,7 @@ class="pcrr7t-x-x-120">'&#x0026;'</span>):
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 460--><p class="indent" >   <a 
+<!--l. 463--><p class="indent" >   <a 
  id="x1-140013"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -1053,7 +1053,7 @@ class="pcrr7t-x-x-120">'&#x0026;'</span>):
 class="content">Table of allowed baseline selection operators and their meaning.</span></div><!--tex4ht:label?: x1-140013 -->
 <div class="center" 
 >
-<!--l. 462--><p class="noindent" >
+<!--l. 465--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-4" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -1094,11 +1094,11 @@ class="td11">           </td></tr></table></div></div>
                                                                                             
    </div><hr class="endfloat" />
    </div>
-<!--l. 483--><p class="indent" >   Possible forms of baseline speciﬁcations are tabulated in Table <a 
+<!--l. 486--><p class="indent" >   Possible forms of baseline speciﬁcations are tabulated in Table <a 
 href="#x1-140024">4<!--tex4ht:ref: BASELINE:TAB --></a>. </p><div class="table">
                                                                                             
                                                                                             
-<!--l. 485--><p class="indent" >   <a 
+<!--l. 488--><p class="indent" >   <a 
  id="x1-140024"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -1114,7 +1114,7 @@ class="pcrr7t-x-x-120">STATION </span>in <span
 class="pcrr7t-x-x-120">ANT@STATION </span>can themselves be comma-separated lists enclosed in braces.</span></div><!--tex4ht:label?: x1-140024 -->
 <div class="center" 
 >
-<!--l. 491--><p class="noindent" >
+<!--l. 494--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-5" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -1277,23 +1277,23 @@ class="td11">               </td></tr></table></div></div>
                                                                                             
    </div><hr class="endfloat" />
    </div>
-<!--l. 535--><p class="indent" >   Formally,  baseline  speciﬁcation  is  of  the  form
+<!--l. 538--><p class="indent" >   Formally,  baseline  speciﬁcation  is  of  the  form
 <span 
-class="pcrr7t-x-x-120">[!]ANT[</span><!--l. 536--><math 
+class="pcrr7t-x-x-120">[!]ANT[</span><!--l. 539--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
-class="pcrr7t-x-x-120">OP</span><!--l. 536--><math 
+class="pcrr7t-x-x-120">OP</span><!--l. 539--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
 class="pcrr7t-x-x-120">[ANT]]</span>
 (where the parts in square brackets are optional and
-<!--l. 537--><math 
+<!--l. 540--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
-class="pcrr7t-x-x-120">OP</span><!--l. 537--><math 
+class="pcrr7t-x-x-120">OP</span><!--l. 540--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>
@@ -1303,7 +1303,7 @@ class="pcrr7t-x-x-120">'&#x0026;&#x0026;&#x0026;'</span>).
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.1.4    </span> <a 
  id="x1-150003.1.4"></a>Baseline Negation Operator</h5>
-<!--l. 543--><p class="noindent" >The negation operator <span 
+<!--l. 546--><p class="noindent" >The negation operator <span 
 class="pcrr7t-x-x-120">'!' </span>can be used to exclude a baseline speciﬁcation from the ﬁnal selection.
 The negation operator applies to the single expression only. Hence in a compound expression
 (collection of expressions separated by “;”), if a baseline speciﬁcation is negated in one expression
@@ -1322,7 +1322,7 @@ class="pcrr7t-x-x-120">!15 </span>excludes all baselines with the antenna <span
 class="phvb7t-x-x-120">named </span>”15”
       </li>
       <li class="itemize">baseline=<span 
-class="pcrr7t-x-x-120">!1</span><!--l. 556--><math 
+class="pcrr7t-x-x-120">!1</span><!--l. 559--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1337,7 +1337,7 @@ class="phvb7t-x-x-120">named </span>”1”, ”3”, ”5”,
       ”7” and ”9”
       </li>
       <li class="itemize">baseline=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 560--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 563--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1347,15 +1347,15 @@ class="phvb7t-x-x-120">named </span>between ”1” and ”10” <span
 class="phvro7t-x-x-120">except </span>those
       involving antenna <span 
 class="phvb7t-x-x-120">named </span>”5”.</li></ul>
-<!--l. 565--><p class="indent" >   Note that the negation operator <span 
+<!--l. 568--><p class="indent" >   Note that the negation operator <span 
 class="phvro7t-x-x-120">cannot </span>be applied to individual members of the antenna
 speciﬁcation/antenna list. E.g. the expression <span 
 class="pcrr7t-x-x-120">&#x0022;1,2,!5,8&#x0022; </span>is syntactically incorrect.
-</p><!--l. 569--><p class="noindent" >
+</p><!--l. 572--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.1.5    </span> <a 
  id="x1-160003.1.5"></a>Baseline negation and Regular Expression negation</h5>
-<!--l. 570--><p class="noindent" >Since antenna names in a antenna/baseline selection can be a regular expression or a pattern, one
+<!--l. 573--><p class="noindent" >Since antenna names in a antenna/baseline selection can be a regular expression or a pattern, one
 can preceed a name, pattern or regex by “&#x2019;̂&#x2019; (the regular expression negation operator) to negate
 that name. Thus
                                                                                             
@@ -1364,7 +1364,7 @@ that name. Thus
    <div class="verbatim" id="verbatim-2">
       ̂VLA:N⋆
 </div>
-<!--l. 576--><p class="nopar" > means all antennas except <span 
+<!--l. 579--><p class="nopar" > means all antennas except <span 
 class="pcrr7t-x-x-120">VLA:N⋆</span>. Note that <span 
 class="pcrr7t-x-x-120">̂VLA:N⋆ </span>and <span 
 class="pcrr7t-x-x-120">!VLA:N⋆ </span>are very diﬀerent. The ﬁrst
@@ -1374,11 +1374,11 @@ class="pcrr7t-x-x-120">̂VLA:N⋆ </span>is the same as <span
 class="pcrr7t-x-x-120">VLA:[SE]⋆</span>. The second one has all
 baselines between the antenna in the remaining arms, but also autocorr between VLA:N
 antenna.
-</p><!--l. 584--><p class="noindent" >
+</p><!--l. 587--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.1.6    </span> <a 
  id="x1-170003.1.6"></a>Examples</h5>
-<!--l. 585--><p class="noindent" >In the most common usage, an atomic ANT selects all baselines containing all the antennas in
+<!--l. 588--><p class="noindent" >In the most common usage, an atomic ANT selects all baselines containing all the antennas in
 ANT. ANT&#x0026; selects only baselines between the list of antennas in the antenna speciﬁcation.
 ANT1&#x0026;ANT2 selects baselines between antennas in ANT1 and ANT2 only. E.g.
 </p>
@@ -1391,10 +1391,10 @@ class="pcrr7t-x-x-120">1,2,3&#x0026; </span>selects baseline between antennas 1,
       </li>
       <li class="itemize">baseline=<span 
 class="pcrr7t-x-x-120">1,2,3 &#x0026; 4,5,6 </span>selects baselines between antennas 1,2,3 and 4,5,6.</li></ul>
-<!--l. 598--><p class="noindent" >Following are more examples of baseline speciﬁcation using ranges and names: </p>
+<!--l. 601--><p class="noindent" >Following are more examples of baseline speciﬁcation using ranges and names: </p>
       <ul class="itemize1">
       <li class="itemize">baseline=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 601--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 604--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1402,7 +1402,7 @@ class="pcrr7t-x-x-120">3</span>
       same as baseline=1,2,3
       </li>
       <li class="itemize">baseline=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 602--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 605--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1410,13 +1410,13 @@ class="pcrr7t-x-x-120">3&#x0026;</span>
       same as baseline=1,2,3&#x0026;
       </li>
       <li class="itemize">baseline=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 603--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 606--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">3</span>
       <span 
-class="pcrr7t-x-x-120">&#x0026; 4</span><!--l. 603--><math 
+class="pcrr7t-x-x-120">&#x0026; 4</span><!--l. 606--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1437,51 +1437,51 @@ class="phvb7t-x-x-120">named  </span>”21”  and  all  other
 class="phvro7t-x-x-120">except </span>antenna <span 
 class="phvb7t-x-x-120">named </span>”15”. I.e, baseline ”21-15” (or its conjugate,
       if present in the database) is excluded.</li></ul>
-<!--l. 613--><p class="indent" >   The full baseline selection expression is any of the examples shown above or a
+<!--l. 616--><p class="indent" >   The full baseline selection expression is any of the examples shown above or a
 semi-colon-separated list of baseline speciﬁcations. E.g.
 </p>
       <ul class="itemize1">
       <li class="itemize">baseline=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 617--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 620--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">3&#x0026;</span>
       <span 
-class="pcrr7t-x-x-120">; 4</span><!--l. 617--><math 
+class="pcrr7t-x-x-120">; 4</span><!--l. 620--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
-class="pcrr7t-x-x-120">5&#x0026;10</span><!--l. 617--><math 
+class="pcrr7t-x-x-120">5&#x0026;10</span><!--l. 620--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">15</span>
       <span 
 class="pcrr7t-x-x-120">; VLA:N⋆ &#x0026; VLA:E⋆</span></li></ul>
-<!--l. 620--><p class="noindent" >with each elements of the semi-colon separated list being interpreted as explained above.
-</p><!--l. 624--><p class="noindent" >
+<!--l. 623--><p class="noindent" >with each elements of the semi-colon separated list being interpreted as explained above.
+</p><!--l. 627--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.2    </span> <a 
  id="x1-180003.2"></a>Integers-as-names VLA Naming Convention</h4>
-<!--l. 626--><p class="noindent" >Antenna naming convention for VLA is such that the antenna names are actually valid integers
+<!--l. 629--><p class="noindent" >Antenna naming convention for VLA is such that the antenna names are actually valid integers
 converted to strings. While we feel that this is indeed a bad idea and it will be best to translate the
 VLA antenna names to something like VLA1, VLA2 in the CASA VLA ﬁller (or something that does
 reﬂect that its a name and not get confused with integer indexes), for now, to accommodate the
 VLA tradition, the following logic is used:
-</p><!--l. 634--><p class="indent" >
+</p><!--l. 637--><p class="indent" >
       </p><div class="quote">
-      <!--l. 635--><p class="noindent" ><span 
+      <!--l. 638--><p class="noindent" ><span 
 class="phvro7t-x-x-120">Just for antenna selection, a user supplied integer (or integer list) is converted to</span>
       <span 
 class="phvro7t-x-x-120">a string and matched against the antenna name. If that fails, the normal logic of</span>
       <span 
 class="phvro7t-x-x-120">using an integer as an integer and matching it with antenna index is done.</span></p></div>
-<!--l. 640--><p class="noindent" >For example, if the antenna with index 17 is named ”21”, the string <span 
+<!--l. 643--><p class="noindent" >For example, if the antenna with index 17 is named ”21”, the string <span 
 class="pcrr7t-x-x-120">&#x0022;21,VLA22&#x0022; </span>will expand into
 an antenna index list of 17,22 (assuming that the antenna named VLA22 has index
 22).
-</p><!--l. 644--><p class="indent" >   If we conclude that this style of antenna selection is indeed the way we wish to go, users should
+</p><!--l. 647--><p class="indent" >   If we conclude that this style of antenna selection is indeed the way we wish to go, users should
 be aware that the antenna selection will behave diﬀerently for telescopes other than VLA. For
 example, assuming that antenna with names ”21”,”17”, and ”11” have indices 1,2 and 3, for VLA
 only a selection string ”21,17,11” will select antenna with indices 1, 2 and 3. For other instruments
@@ -1489,51 +1489,51 @@ where this is not the naming convention, the same selection string (”21,17,11�
 with indices 21, 17, and 11.
                                                                                             
                                                                                             
-</p><!--l. 659--><p class="noindent" >
+</p><!--l. 662--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4    </span> <a 
  id="x1-190004"></a>Field Selection</h3>
-<!--l. 661--><p class="noindent" >
+<!--l. 664--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">4.1    </span> <a 
  id="x1-200004.1"></a>Syntax</h4>
-<!--l. 663--><p class="noindent" >Field speciﬁcations can be literal ﬁeld names, regular expressions or patterns. Leading and trailing
+<!--l. 666--><p class="noindent" >Field speciﬁcations can be literal ﬁeld names, regular expressions or patterns. Leading and trailing
 blanks are stripped from the user supplied ﬁeld speciﬁcations as well as from the entries of the
 NAME and ﬁeld codes before being used for matching.
-</p><!--l. 668--><p class="indent" >   Since none of the following characters are used as part of the FIELD selection
+</p><!--l. 671--><p class="indent" >   Since none of the following characters are used as part of the FIELD selection
 expressions, they can also be used as part of ﬁeld names: ”;”, ”$”, ”%”, ”!”, ”@”, and
 ”#”<span class="footnote-mark"><a 
 href="#fn7x0" id="fn7x0-bk"><sup class="textsuperscript">7</sup></a></span><a 
  id="x1-20001f7"></a>.
-</p><!--l. 675--><p class="indent" >   Fields for which the entry in the NAME column of the the FIELD sub-table match the literal ﬁeld
+</p><!--l. 678--><p class="indent" >   Fields for which the entry in the NAME column of the the FIELD sub-table match the literal ﬁeld
 name/regular expression/pattern are selected. If a ﬁeld name/regular expression/pattern fails to
 match any ﬁeld name, the given name/regular expression/pattern are matched against the ﬁeld
 code. If still no ﬁeld is selected, an exception of type MSSelectionFieldParseError is
 thrown.
-</p><!--l. 682--><p class="indent" >   Field speciﬁcations can also be give by their integer IDs. IDs can be a single ID or a <a 
+</p><!--l. 685--><p class="indent" >   Field speciﬁcations can also be give by their integer IDs. IDs can be a single ID or a <a 
 href="#x1-40001.2">range (section 1.2)</a>
-of IDs (N0<!--l. 684--><math 
+of IDs (N0<!--l. 687--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>N1).
 Field ID selection can also be done using a boolean expression. For a ﬁeld speciﬁcation of the form
-”<!--l. 685--><math 
+”<!--l. 688--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>ID”, all ﬁeld IDs greater than ID
-are selected. Similarly for ”<!--l. 686--><math 
+are selected. Similarly for ”<!--l. 689--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>ID”
 all ﬁeld IDs smaller than ID are selected.
-</p><!--l. 689--><p class="indent" >   The ﬁeld selection expression is a comma-separated list of ﬁeld speciﬁcations. E.g.
+</p><!--l. 692--><p class="indent" >   The ﬁeld selection expression is a comma-separated list of ﬁeld speciﬁcations. E.g.
 </p>
       <ul class="itemize1">
       <li class="itemize">ﬁeld=<span 
 class="pcrr7t-x-x-120">1,2,3,4 </span>selects ﬁeld IDs 1,2,3 and 4
       </li>
       <li class="itemize">ﬁeld=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 694--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 697--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1541,7 +1541,7 @@ class="pcrr7t-x-x-120">4</span>
       same as above
       </li>
       <li class="itemize">ﬁeld=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 695--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 698--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1549,13 +1549,13 @@ class="pcrr7t-x-x-120">4,</span>
       <span 
 class="pcrr7t-x-x-120">VIRGO A , 3C⋆ </span>selects ﬁeld IDs 1,2,3,4 ﬁeld named ”VIRGO A” and all ﬁelds with
       names starting with ”3C”.</li></ul>
-<!--l. 699--><p class="noindent" >
+<!--l. 702--><p class="noindent" >
 </p>
                                                                                             
                                                                                             
    <h3 class="sectionHead"><span class="titlemark">5    </span> <a 
  id="x1-210005"></a>UV Distance Selection</h3>
-<!--l. 701--><p class="noindent" >The UV-distance expression can be used to select data that lines within a given range of uv
+<!--l. 704--><p class="noindent" >The UV-distance expression can be used to select data that lines within a given range of uv
 radius. The syntax is described as a railroad diagram in Table <a 
 href="#x1-210015">5<!--tex4ht:ref: Tab:RAILROAD_UVDIST --></a> and explained in sections
 below.
@@ -1563,7 +1563,7 @@ below.
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 706--><p class="indent" >   <a 
+<!--l. 709--><p class="indent" >   <a 
  id="x1-210015"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -1573,7 +1573,7 @@ below.
 class="content">Railroad diagrams for the syntax of UV-distance selection expression.</span></div><!--tex4ht:label?: x1-210015 -->
 <div class="center" 
 >
-<!--l. 708--><p class="noindent" >
+<!--l. 711--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-6" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -1617,52 +1617,52 @@ class="td11">                   </td></tr></table></div></div>
    </div>
    <h4 class="subsectionHead"><span class="titlemark">5.1    </span> <a 
  id="x1-220005.1"></a>Syntax</h4>
-<!--l. 727--><p class="noindent" >A uv-distance speciﬁcation is given as a physical quantity (number with units in the format
+<!--l. 730--><p class="noindent" >A uv-distance speciﬁcation is given as a physical quantity (number with units in the format
 <span 
 class="pcrr7t-x-x-120">NUMBER[UNIT][:NUMBER%] </span>where syntax in square brackets is optional). This is referred to as
 UVDIST in the description below. Units are optional with the default unit being meter. Units can be
 speciﬁed as ”m”/”M” (for Mega) or ”k”/”K” (for Kilo) followed by ”m”/”M” (for meter) or
 ”lambda”/”LAMBDA” (for wavelength). User supplied values are converted to internal Measurement
 Set units using the spectral window sensitive reference frequency.
-</p><!--l. 737--><p class="indent" >   If only a single UVDIST is speciﬁed, all rows that exactly match the given UVDIST
+</p><!--l. 740--><p class="indent" >   If only a single UVDIST is speciﬁed, all rows that exactly match the given UVDIST
 are selected. When UVDIST is given as a <a 
 href="#x1-40001.2">range (section 1.2)</a> in the format
 <span 
-class="pcrr7t-x-x-120">N0</span><!--l. 740--><math 
+class="pcrr7t-x-x-120">N0</span><!--l. 743--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">N1[UNIT]</span>
 (where N0 and N1 are valid numbers), all rows corresponding to the uv-distance between N0 and
 N1 (N0 and N1 included) are selected.
-</p><!--l. 744--><p class="indent" >   Rows can also be selected via boolean expressions. When speciﬁed in the format
-”<!--l. 745--><math 
+</p><!--l. 747--><p class="indent" >   Rows can also be selected via boolean expressions. When speciﬁed in the format
+”<!--l. 748--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>UVDIST”,
 all rows with uv-distance greater than the given uv-distance (converted
 to the appropriate units) are selected. When speciﬁed in the format
-”<!--l. 747--><math 
+”<!--l. 750--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>UVDIST”,
 all rows with uv-distance less than the given uv-distance (converted to the appropriate units) are
 selected.
-</p><!--l. 751--><p class="indent" >   The <span 
+</p><!--l. 754--><p class="indent" >   The <span 
 class="pcrr7t-x-x-120">:NUMBER% </span>syntax can be used to selected rows with uv-distance within
 an equal range on either side of a given range. All rows with uv-distance between
-<!--l. 753--><math 
+<!--l. 756--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-bin">±</mo></math>N
 percent of the uv-range determined by the uv-distance expression in appropriate units are
 selected.
-</p><!--l. 756--><p class="indent" >   The full uv-distance selection expression is a comma-separated list of any of the above
+</p><!--l. 759--><p class="indent" >   The full uv-distance selection expression is a comma-separated list of any of the above
 mentioned uv-distance speciﬁcations. E.g.
 </p>
       <ul class="itemize1">
       <li class="itemize">uvdist=<span 
-class="pcrr7t-x-x-120">100Klambda </span>selects all baselines for which <!--l. 761--><math 
+class="pcrr7t-x-x-120">100Klambda </span>selects all baselines for which <!--l. 764--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msqrt><mrow><msup><mrow 
 ><mi 
@@ -1674,13 +1674,13 @@ class="MathClass-bin">+</mo> <msup><mrow
 >v</mi></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow></msqrt></math>
-      is equal to 100 K<!--l. 761--><math 
+      is equal to 100 K<!--l. 764--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >&lambda;</mi></math>.
       </li>
       <li class="itemize">uvdist=<span 
-class="pcrr7t-x-x-120">100Km </span>selects all baselines for which <!--l. 763--><math 
+class="pcrr7t-x-x-120">100Km </span>selects all baselines for which <!--l. 766--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msqrt><mrow><msup><mrow 
 ><mi 
@@ -1695,12 +1695,12 @@ class="MathClass-bin">+</mo> <msup><mrow
       is equal to 100 Km.
       </li>
       <li class="itemize">uvdist=<span 
-class="pcrr7t-x-x-120">100</span><!--l. 764--><math 
+class="pcrr7t-x-x-120">100</span><!--l. 767--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">200Klambda</span>
-      selects all baselines for which <!--l. 765--><math 
+      selects all baselines for which <!--l. 768--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msqrt><mrow><msup><mrow 
 ><mi 
@@ -1712,19 +1712,19 @@ class="MathClass-bin">+</mo> <msup><mrow
 >v</mi></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow></msqrt></math>
-      is in the range [100, 200] K<!--l. 765--><math 
+      is in the range [100, 200] K<!--l. 768--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >&lambda;</mi></math>.
                                                                                             
                                                                                             
       </li>
-      <li class="itemize">uvdist=<!--l. 766--><math 
+      <li class="itemize">uvdist=<!--l. 769--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
 class="pcrr7t-x-x-120">100Klambda</span>
-      selects all baselines for which <!--l. 767--><math 
+      selects all baselines for which <!--l. 770--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msqrt><mrow><msup><mrow 
 ><mi 
@@ -1736,17 +1736,17 @@ class="MathClass-bin">+</mo> <msup><mrow
 >v</mi></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow></msqrt></math>
-      is greater than 100 K<!--l. 767--><math 
+      is greater than 100 K<!--l. 770--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >&lambda;</mi></math>.
       </li>
-      <li class="itemize">uvdist=<!--l. 768--><math 
+      <li class="itemize">uvdist=<!--l. 771--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
 class="pcrr7t-x-x-120">100Klambda</span>
-      selects all baselines for which <!--l. 769--><math 
+      selects all baselines for which <!--l. 772--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msqrt><mrow><msup><mrow 
 ><mi 
@@ -1758,17 +1758,17 @@ class="MathClass-bin">+</mo> <msup><mrow
 >v</mi></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow></msqrt></math>
-      is less than 100 K<!--l. 769--><math 
+      is less than 100 K<!--l. 772--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >&lambda;</mi></math>.
       </li>
-      <li class="itemize">uvdist=<!--l. 770--><math 
+      <li class="itemize">uvdist=<!--l. 773--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
 class="pcrr7t-x-x-120">100Klambda:5%</span>
-      selects all baselines for which <!--l. 771--><math 
+      selects all baselines for which <!--l. 774--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msqrt><mrow><msup><mrow 
 ><mi 
@@ -1780,18 +1780,18 @@ class="MathClass-bin">+</mo> <msup><mrow
 >v</mi></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow></msqrt></math>
-      is less than 100+5 K<!--l. 771--><math 
+      is less than 100+5 K<!--l. 774--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >&lambda;</mi></math>.
       </li>
       <li class="itemize">uvdist=<span 
-class="pcrr7t-x-x-120">100</span><!--l. 772--><math 
+class="pcrr7t-x-x-120">100</span><!--l. 775--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">200Klambda:5%</span>
-      selects all baselines for which <!--l. 773--><math 
+      selects all baselines for which <!--l. 776--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msqrt><mrow><msup><mrow 
 ><mi 
@@ -1803,15 +1803,15 @@ class="MathClass-bin">+</mo> <msup><mrow
 >v</mi></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow></msqrt></math>
-      is between 100-5 and 200+10 K<!--l. 773--><math 
+      is between 100-5 and 200+10 K<!--l. 776--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >&lambda;</mi></math>.</li></ul>
-<!--l. 776--><p class="noindent" >
+<!--l. 779--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">6    </span> <a 
  id="x1-230006"></a>Frequency Selection</h3>
-<!--l. 778--><p class="noindent" >Frequency selection expression consists of two speciﬁcations separated by colon (&#x2019;:&#x2019;) in the
+<!--l. 781--><p class="noindent" >Frequency selection expression consists of two speciﬁcations separated by colon (&#x2019;:&#x2019;) in the
 form:
                                                                                             
                                                                                             
@@ -1819,21 +1819,21 @@ form:
    <div class="verbatim" id="verbatim-3">
       SPWSPEC[:FREQSPEC]
 </div>
-<!--l. 782--><p class="nopar" > where SPW is the spectral window speciﬁcation and FREQSPEC is the optional frequency
+<!--l. 785--><p class="nopar" > where SPW is the spectral window speciﬁcation and FREQSPEC is the optional frequency
 speciﬁcation for selection within the selected spectral windows. When channel speciﬁcation is
 omitted, all channels of the selected SPW are selected.
-</p><!--l. 788--><p class="indent" >   SPWSPEC and FREQSPEC allow use of semi-colon separated lists. As a result, list of
+</p><!--l. 791--><p class="indent" >   SPWSPEC and FREQSPEC allow use of semi-colon separated lists. As a result, list of
 SPWSPEC can be given in two ways: (1) a semi-colon separated list, (2) coma separated list. This
 allows simple selections to remain simple and more complex selections consistent with the syntax
 for FREQSPEC list.
-</p><!--l. 794--><p class="indent" >   The full syntax is shown in the Railroad Diagram format in Table <a 
+</p><!--l. 797--><p class="indent" >   The full syntax is shown in the Railroad Diagram format in Table <a 
 href="#x1-230016">6<!--tex4ht:ref: Tab:RAILROAD_SPW --></a> and explained in the
 following sections.
 </p>
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 797--><p class="indent" >   <a 
+<!--l. 800--><p class="indent" >   <a 
  id="x1-230016"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -1843,7 +1843,7 @@ following sections.
 class="content">Railroad diagrams for the syntax of full frequency selection expression.</span></div><!--tex4ht:label?: x1-230016 -->
 <div class="center" 
 >
-<!--l. 799--><p class="noindent" >
+<!--l. 802--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-7" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -1894,7 +1894,7 @@ class="td11">                           </td></tr></table></div></div>
    </div>
    <h4 class="subsectionHead"><span class="titlemark">6.1    </span> <a 
  id="x1-240006.1"></a>Spectral Window Speciﬁcation Syntax</h4>
-<!--l. 819--><p class="noindent" >Spectral windows (SPW) speciﬁcation can be of the following types:
+<!--l. 822--><p class="noindent" >Spectral windows (SPW) speciﬁcation can be of the following types:
       </p><ol  class="enumerate1" >
       <li 
   class="enumerate" id="x1-24002x1">an integer ID
@@ -1905,20 +1905,20 @@ href="#x1-60001.4">string (section 1.4)</a> for exact match or a regular expres
       </li>
       <li 
   class="enumerate" id="x1-24006x3">a frequency value (value with a unit).</li></ol>
-<!--l. 828--><p class="noindent" >
+<!--l. 831--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.1    </span> <a 
  id="x1-250006.1.1"></a>Selection by ID</h5>
-<!--l. 830--><p class="noindent" >SPWSPEC can be single integer, a list or a range of integers. It can also be a list of boolean
+<!--l. 833--><p class="noindent" >SPWSPEC can be single integer, a list or a range of integers. It can also be a list of boolean
 expressions involving IDs. E.g. </p>
       <ul class="itemize1">
-      <li class="itemize">spwspec=”<!--l. 833--><math 
+      <li class="itemize">spwspec=”<!--l. 836--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>ID”
       will select all SPWs with ID greater than the speciﬁed value.
       </li>
-      <li class="itemize">spwspec=”<!--l. 835--><math 
+      <li class="itemize">spwspec=”<!--l. 838--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>ID”
@@ -1931,7 +1931,7 @@ class="pcrr7t-x-x-120">1,2,3 </span>selects spectral window IDs 1,2 and 3
 class="pcrr7t-x-x-120">1;2;3 </span>same as above. This style can be used along with FREQSPEC
       </li>
       <li class="itemize">spwspec=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 840--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 843--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -1939,11 +1939,11 @@ class="pcrr7t-x-x-120">3</span>
       same as above</li></ul>
                                                                                             
                                                                                             
-<!--l. 843--><p class="noindent" >
+<!--l. 846--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.2    </span> <a 
  id="x1-260006.1.2"></a>Selection By Name</h5>
-<!--l. 845--><p class="noindent" >SPWSPEC can be a name or a list of names which will be matched against the NAME
+<!--l. 848--><p class="noindent" >SPWSPEC can be a name or a list of names which will be matched against the NAME
 column of the SPECTRAL_WINDOW. The name can be a string for literal matching, or a
 regular expression or a pattern. All SPWs that match the given name will be selected. E.g.
 </p>
@@ -1959,11 +1959,11 @@ class="pcrr7t-x-x-120">SUBBAND</span>”.
 class="pcrr7t-x-x-120">SUBBAND</span>” and
       ending with “<span 
 class="pcrr7t-x-x-120">0</span>”.</li></ul>
-<!--l. 856--><p class="noindent" >
+<!--l. 859--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.3    </span> <a 
  id="x1-270006.1.3"></a>Selection By Frequency</h5>
-<!--l. 857--><p class="noindent" >SPWSPEC can also be constructed using the reference frequency of the SPWs. The reference
+<!--l. 860--><p class="noindent" >SPWSPEC can also be constructed using the reference frequency of the SPWs. The reference
 frequency is deﬁned as the average of the frequency corresponding to the ﬁrst and the last channel
 for each SPW. A single frequency speciﬁcation is used for exact match with the reference
 frequency. A <a 
@@ -1971,14 +1971,14 @@ href="#x1-40001.2">range (section 1.2)</a> of frequencies are used to select al
 frequencies within the given range. The allowed units are Hz, KHz, MHz, GHz or THz. E.g.
 </p>
       <ul class="itemize1">
-      <li class="itemize">spwspec=”<!--l. 866--><math 
+      <li class="itemize">spwspec=”<!--l. 869--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>FREQ”
       will select all SPWs, the reference frequencies of which are greater than the given
       frequency converted to Hz.
       </li>
-      <li class="itemize">spwspec=”<!--l. 868--><math 
+      <li class="itemize">spwspec=”<!--l. 871--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>FREQ”
@@ -1990,7 +1990,7 @@ class="pcrr7t-x-x-120">327MHz </span>selects spectral window with a reference fr
       MHz
       </li>
       <li class="itemize">spwspec=<span 
-class="pcrr7t-x-x-120">327</span><!--l. 872--><math 
+class="pcrr7t-x-x-120">327</span><!--l. 875--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2008,24 +2008,24 @@ class="pcrr7t-x-x-120">1421MHz, 1422MHz, 1423MHz </span>selects  SPWs  with  ref
 class="pcrr7t-x-x-120">1421MHz; 1422MHz; 1423MHz </span>same as above. This style can be used
       along with FREQSPEC.
       </li>
-      <li class="itemize">spwspec=<!--l. 878--><math 
+      <li class="itemize">spwspec=<!--l. 881--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
 class="pcrr7t-x-x-120">327MHz</span>
       selects all spectral windows with reference frequency greater than 327.0 MHz
       </li>
-      <li class="itemize">spwspec=<!--l. 880--><math 
+      <li class="itemize">spwspec=<!--l. 883--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
 class="pcrr7t-x-x-120">327MHz</span>
       selects all spectral windows with reference frequency less than 327.0 MHz</li></ul>
-<!--l. 884--><p class="noindent" >
+<!--l. 887--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">6.2    </span> <a 
  id="x1-280006.2"></a>Channel Speciﬁcation Syntax</h4>
-<!--l. 886--><p class="noindent" >Channel speciﬁcation<span class="footnote-mark"><a 
+<!--l. 889--><p class="noindent" >Channel speciﬁcation<span class="footnote-mark"><a 
 href="#fn8x0" id="fn8x0-bk"><sup class="textsuperscript">8</sup></a></span><a 
  id="x1-28001f8"></a>
 (referred to as FREQSPEC in the following description) is a START, STOP, STEP tuple
@@ -2034,26 +2034,26 @@ increment from the ﬁrst to the last channel. The START and STOP part of the tu
 href="#x1-40001.2">range
 (section 1.2)</a> speciﬁcation for the range [START, STOP] followed by an optional STEP
 size.
-</p><!--l. 899--><p class="indent" >   START and STOP part of the tuple can be speciﬁed as a single integer or physical
+</p><!--l. 902--><p class="indent" >   START and STOP part of the tuple can be speciﬁed as a single integer or physical
 quantity or as a <a 
 href="#x1-40001.2">range (section 1.2)</a> of integers or physical quantities. A single integer
 is treated as a channel index and the tuple corresponds to [ID,ID,1]. A single physical
 quantity is matched with the exact frequency value of the channels and tuple of matched
 channel index is constructed as [ID,ID,1]. A <a 
 href="#x1-40001.2">range (section 1.2)</a> of integers given as
-N0<!--l. 906--><math 
+N0<!--l. 909--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>N1
 is used to construct a tuple [N0,N1,1]. Similarly for a range of physical quantities.
-</p><!--l. 910--><p class="indent" >   If a START,STOP part of the tuple speciﬁcation is followed by ”̂STEP”, the STEP is used as the
+</p><!--l. 913--><p class="indent" >   If a START,STOP part of the tuple speciﬁcation is followed by ”̂STEP”, the STEP is used as the
 third value of the tuple. STEP speciﬁcation is a single integer or physical quantity. E.g.
-0<!--l. 913--><math 
+0<!--l. 916--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>10̂2
 is converted to a START, STOP, STEP tuple [0,10,2].
-</p><!--l. 916--><p class="indent" >   A channel selection expression is a semi-colon separated list of channel speciﬁcations.
+</p><!--l. 919--><p class="indent" >   A channel selection expression is a semi-colon separated list of channel speciﬁcations.
 E.g.
 </p>
       <ul class="itemize1">
@@ -2063,7 +2063,7 @@ class="pcrr7t-x-x-120">1;2;3 </span>selects channels 1,2 and 3.
                                                                                             
       </li>
       <li class="itemize">chanspec=<span 
-class="pcrr7t-x-x-120">1</span><!--l. 921--><math 
+class="pcrr7t-x-x-120">1</span><!--l. 924--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2071,7 +2071,7 @@ class="pcrr7t-x-x-120">3</span>
       selects channels 1,2 and 3.
       </li>
       <li class="itemize">chanspec=<span 
-class="pcrr7t-x-x-120">0</span><!--l. 922--><math 
+class="pcrr7t-x-x-120">0</span><!--l. 925--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2083,7 +2083,7 @@ class="pcrr7t-x-x-120">1421MHz </span>selects  a  frequency  channel  correspond
       1421.0 MHz
       </li>
       <li class="itemize">chanspec=<span 
-class="pcrr7t-x-x-120">1421</span><!--l. 926--><math 
+class="pcrr7t-x-x-120">1421</span><!--l. 929--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2091,7 +2091,7 @@ class="pcrr7t-x-x-120">1500MHz</span>
       selects all channels in the range [1412.0, 1500.0] MHz
       </li>
       <li class="itemize">chanspec=<span 
-class="pcrr7t-x-x-120">1421</span><!--l. 928--><math 
+class="pcrr7t-x-x-120">1421</span><!--l. 931--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2099,13 +2099,13 @@ class="pcrr7t-x-x-120">1500MHẑ10KHz</span>
       selects all channels in the range [1421.0, 1500.0] MHz in steps of 10 KHz.
       </li>
       <li class="itemize">chanspec=<span 
-class="pcrr7t-x-x-120">1421</span><!--l. 930--><math 
+class="pcrr7t-x-x-120">1421</span><!--l. 933--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">1500MHẑ10KHz</span>
       <span 
-class="pcrr7t-x-x-120">; 0</span><!--l. 930--><math 
+class="pcrr7t-x-x-120">; 0</span><!--l. 933--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2114,11 +2114,11 @@ class="pcrr7t-x-x-120">10̂2</span>
 class="pcrr7t-x-x-120">; 20 ; 30; 40 </span>selects  all  channels  in  the  range  [1421.0,  1500.0]  MHz  in  steps
       of 10KHz, all channels with indexes in the range [0,10] in steps of 2 channels and
       channels 10, 20 and 30.</li></ul>
-<!--l. 936--><p class="noindent" >
+<!--l. 939--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">6.3    </span> <a 
  id="x1-290006.3"></a> Frequency Selection Syntax</h4>
-<!--l. 938--><p class="noindent" >The speciﬁcations for SPW and channels can be combined to form a fully qualiﬁed frequency
+<!--l. 941--><p class="noindent" >The speciﬁcations for SPW and channels can be combined to form a fully qualiﬁed frequency
 selection expression of the form SPWSPEC[:FREQSPEC] (square brackets indicate that
 :FREQSPEC is optional). A frequency selection expression is a comma-separated list of
 SPWSPEC[:FREQSPEC] speciﬁcations. Channel selections apply to all SPWs selected by the
@@ -2126,30 +2126,30 @@ SPWSPEC on the left of &#x2019;:&#x2019;. E.g.
 </p>
       <ul class="itemize1">
       <li class="itemize">freq=<span 
-class="pcrr7t-x-x-120">LBAND:1421</span><!--l. 946--><math 
+class="pcrr7t-x-x-120">LBAND:1421</span><!--l. 949--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">1500MHẑ10KHz</span>
       <span 
-class="pcrr7t-x-x-120">, 327MHz:300</span><!--l. 947--><math 
+class="pcrr7t-x-x-120">, 327MHz:300</span><!--l. 950--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">400MHz,</span>
       <span 
-class="pcrr7t-x-x-120">0</span><!--l. 947--><math 
+class="pcrr7t-x-x-120">0</span><!--l. 950--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
-class="pcrr7t-x-x-120">4:0</span><!--l. 947--><math 
+class="pcrr7t-x-x-120">4:0</span><!--l. 950--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">10̂2</span>
       <span 
 class="pcrr7t-x-x-120">, 5:20;30;40</span>
-      <!--l. 949--><p class="noindent" >selects
+      <!--l. 952--><p class="noindent" >selects
                                                                                             
                                                                                             
 </p>
@@ -2168,30 +2168,30 @@ class="pcrr7t-x-x-120">, 5:20;30;40</span>
       <li class="itemize">freq=<span 
 class="pcrr7t-x-x-120">1421Mhz;1422Mhz;1423Mhz :</span>
       <span 
-class="pcrr7t-x-x-120">0;1;2;10</span><!--l. 963--><math 
+class="pcrr7t-x-x-120">0;1;2;10</span><!--l. 966--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
-class="pcrr7t-x-x-120">20;30</span><!--l. 963--><math 
+class="pcrr7t-x-x-120">20;30</span><!--l. 966--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
-class="pcrr7t-x-x-120">100</span><!--l. 963--><math 
+class="pcrr7t-x-x-120">100</span><!--l. 966--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">10</span>
       <span 
-class="pcrr7t-x-x-120">,0</span><!--l. 963--><math 
+class="pcrr7t-x-x-120">,0</span><!--l. 966--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
-class="pcrr7t-x-x-120">3:10</span><!--l. 963--><math 
+class="pcrr7t-x-x-120">3:10</span><!--l. 966--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">30</span>
-      <!--l. 965--><p class="noindent" >selects
+      <!--l. 968--><p class="noindent" >selects
 </p>
            <ul class="itemize2">
            <li class="itemize">Channels 0, 1, 2 for SPWs with reference frequency of 1421.0, 1422.0 and 1423.0
@@ -2205,7 +2205,7 @@ class="pcrr7t-x-x-120">30</span>
            </li>
            <li class="itemize">Channels 10 to 30 in step of 1 channel for SPW IDs 0 to 3 in step of 1.</li></ul>
       </li></ul>
-<!--l. 980--><p class="indent" >   Figure <a 
+<!--l. 983--><p class="indent" >   Figure <a 
 href="#x1-290011">1<!--tex4ht:ref: FIG:SPW --></a> shows an example frequency setup to motivate the need to separate the full frequency
 selection expression into SPWSPEC and FREQSPEC parts. SPW0 covers the frequency range
 1.0–2.0 GHz with SPW1 overlapping in the range 1.6–1.7 GHz, with a reference frequency of
@@ -2218,7 +2218,7 @@ class="phvb7t-x-x-120">and</span></span> SPW1. E.g. </p>
                                                                                             
       <ul class="itemize1">
       <li class="itemize">freq= <span 
-class="pcrr7t-x-x-120">⋆ : 1.6</span><!--l. 989--><math 
+class="pcrr7t-x-x-120">⋆ : 1.6</span><!--l. 992--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2227,13 +2227,13 @@ class="pcrr7t-x-x-120">1.7GHz</span>
 class="phvro7t-x-x-120">and</span></span> SPW1 that are in the range
       </li>
       <li class="itemize">freq= <span 
-class="pcrr7t-x-x-120">1.5</span><!--l. 991--><math 
+class="pcrr7t-x-x-120">1.5</span><!--l. 994--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">1.65GHz</span>
       <span 
-class="pcrr7t-x-x-120">: 1.6</span><!--l. 991--><math 
+class="pcrr7t-x-x-120">: 1.6</span><!--l. 994--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2241,7 +2241,7 @@ class="pcrr7t-x-x-120">1.7GHz</span>
       is the same as above (selecting SPWs via reference frequency speciﬁcation)
       </li>
       <li class="itemize">freq=<span 
-class="pcrr7t-x-x-120">1.5GHz : 1.6</span><!--l. 993--><math 
+class="pcrr7t-x-x-120">1.5GHz : 1.6</span><!--l. 996--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2249,7 +2249,7 @@ class="pcrr7t-x-x-120">1.7GHz</span>
       will select all channels from <span class="underline">only</span> SPW0 that are in the range
       </li>
       <li class="itemize">freq=<span 
-class="pcrr7t-x-x-120">0 : 1.6</span><!--l. 995--><math 
+class="pcrr7t-x-x-120">0 : 1.6</span><!--l. 998--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2257,7 +2257,7 @@ class="pcrr7t-x-x-120">1.7GHz</span>
       will select all channels from <span class="underline">only</span> SPW0 that are in the range
       </li>
       <li class="itemize">freq=<span 
-class="pcrr7t-x-x-120">1.65GHz : 1.6</span><!--l. 997--><math 
+class="pcrr7t-x-x-120">1.65GHz : 1.6</span><!--l. 1000--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2265,7 +2265,7 @@ class="pcrr7t-x-x-120">1.7GHz</span>
       same as above, with SPW1 selected via integer ID
       </li>
       <li class="itemize">freq=<span 
-class="pcrr7t-x-x-120">1 : 1.6</span><!--l. 999--><math 
+class="pcrr7t-x-x-120">1 : 1.6</span><!--l. 1002--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2282,15 +2282,15 @@ src="263.dir/FreqSettingExample.png" alt="PIC"
 ><span class="id">Figure 1: </span><span  
 class="content">Frequency setup with two overlapping SPWs.</span></div><!--tex4ht:label?: x1-290011 -->
    </div><hr class="endfigure" />
-<!--l. 1012--><p class="noindent" >
+<!--l. 1015--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.3.1    </span> <a 
  id="x1-300006.3.1"></a>Notes</h5>
-<!--l. 1014--><p class="noindent" >
+<!--l. 1017--><p class="noindent" >
       </p><ol  class="enumerate1" >
       <li 
   class="enumerate" id="x1-30002x1">For channel speciﬁcations of the type <span 
-class="pcrr7t-x-x-120">N1</span><!--l. 1016--><math 
+class="pcrr7t-x-x-120">N1</span><!--l. 1019--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2306,17 +2306,17 @@ class="pcrr7t-x-x-120">N2:c0;c1;c2;c3MHz</span>
       outer limit, it is set to the available outer limit.
                                                                                             
                                                                                             
-      <!--l. 1028--><p class="noindent" >If a single channel speciﬁcation is greater than the available outer limit, an exception is
+      <!--l. 1031--><p class="noindent" >If a single channel speciﬁcation is greater than the available outer limit, an exception is
       thrown. If it is less than zero, it is set to zero.
       </p></li>
       <li 
   class="enumerate" id="x1-30006x3">For  ranges  of  physical  values,  it  is  assumed  that  the  spectral  window  sub-table&#x2019;s
       CHAN_FREQ column has ordered list of channel frequencies.</li></ol>
-<!--l. 1037--><p class="noindent" >
+<!--l. 1040--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">7    </span> <a 
  id="x1-310007"></a>Polarization Selection</h3>
-<!--l. 1039--><p class="noindent" >The structure of the Measurement Set allows independent set up for the frequency and polarization description
+<!--l. 1042--><p class="noindent" >The structure of the Measurement Set allows independent set up for the frequency and polarization description
 of the data<span class="footnote-mark"><a 
 href="#fn9x0" id="fn9x0-bk"><sup class="textsuperscript">9</sup></a></span><a 
  id="x1-31001f9"></a>.
@@ -2325,7 +2325,7 @@ hand polarizations (e.g. ”RR” and ”LL”) and some fraction of the data re
 polarization mode (e.g. ”RR”, ”LL”, ”RL”, and ”LR”). Note however that a polarization set up
 describes a spectral window and not the individual frequency channels in a spectral
 window.
-</p><!--l. 1052--><p class="indent" >   Consequently, polarization selection expressions may need to be qualiﬁed with the spectral window and
+</p><!--l. 1055--><p class="indent" >   Consequently, polarization selection expressions may need to be qualiﬁed with the spectral window and
 polarization ID speciﬁcation as well. Therefore, current the polarization selection expressions are of the type
 <span 
 class="pcrr7t-x-x-120">[SPW:]POL</span><span class="footnote-mark"><a 
@@ -2336,7 +2336,7 @@ class="pcrr7t-x-x-120">SPW </span>part of such expressions follow the syntax of 
 expression (see Section <a 
 href="#x1-220005.1">5.1<!--tex4ht:ref: SPWEXPR --></a>) – except that the channel speciﬁcations are not allowed
 here.
-</p><!--l. 1062--><p class="indent" >   As with other expressions, the polarization selection expression also consists of comma
+</p><!--l. 1065--><p class="indent" >   As with other expressions, the polarization selection expression also consists of comma
 separated list of full speciﬁcations. The separator for lists for the individual parts of the speciﬁcation
 (i.e. <span 
 class="pcrr7t-x-x-120">SPW</span>, <span 
@@ -2346,7 +2346,7 @@ etc.), either of the separators can be used (comma or semi-colon). Thus <span
 class="pcrr7t-x-x-120">&#x0022;RR;LL&#x0022; </span>is equivalent to
 <span 
 class="pcrr7t-x-x-120">&#x0022;RR,LL&#x0022;</span>.
-</p><!--l. 1070--><p class="indent" >   The <span 
+</p><!--l. 1073--><p class="indent" >   The <span 
 class="pcrr7t-x-x-120">POL </span>speciﬁcation is a semi-colon separated list of polarization products (i.e., it is a baseline
 based selection). E.g. <span 
 class="pcrr7t-x-x-120">POL </span>can be <span 
@@ -2370,11 +2370,11 @@ E.g.
       </li>
       <li class="itemize">”poln=0:RR;LL , 1:LR;RL” will select RR and LL from spectral window 0 and LR and RL
       from spectral window 1.</li></ul>
-<!--l. 1087--><p class="noindent" >
+<!--l. 1090--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">8    </span> <a 
  id="x1-320008"></a>”Scan intent” Based Selection</h3>
-<!--l. 1089--><p class="noindent" >”Scan intent” selection is based on the entries in the <span 
+<!--l. 1092--><p class="noindent" >”Scan intent” selection is based on the entries in the <span 
 class="pcrr7t-x-x-120">&#x0022;OBS</span><span 
 class="pcrr7t-x-x-120">_MODE&#x0022; </span>column of the <span 
 class="pcrr7t-x-x-120">&#x0022;STATE&#x0022;</span>
@@ -2396,7 +2396,7 @@ selection based on these intents.
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 1100--><p class="indent" >   <a 
+<!--l. 1103--><p class="indent" >   <a 
  id="x1-320017"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -2406,7 +2406,7 @@ selection based on these intents.
 class="content">Railroad diagrams for the syntax of scan-intent expression.</span></div><!--tex4ht:label?: x1-320017 -->
 <div class="center" 
 >
-<!--l. 1102--><p class="noindent" >
+<!--l. 1105--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-8" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -2436,11 +2436,11 @@ class="td11">                  </td></tr></table></div></div>
    </div>
    <h4 class="subsectionHead"><span class="titlemark">8.1    </span> <a 
  id="x1-330008.1"></a>Syntax</h4>
-<!--l. 1116--><p class="noindent" >The scan-intent selection expression is a comma-separated list of speciﬁcations. Each speciﬁcation can be
+<!--l. 1119--><p class="noindent" >The scan-intent selection expression is a comma-separated list of speciﬁcations. Each speciﬁcation can be
 a <a 
 href="#x1-60001.4">string (section 1.4)</a> , an integer or an integer <a 
 href="#x1-40001.2">range (section 1.2)</a>. As in other such expressions, a range
-<!--l. 1119--><math 
+<!--l. 1122--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mrow ><mo 
 class="MathClass-open">[</mo><mrow><mi 
@@ -2449,7 +2449,7 @@ class="MathClass-punc">,</mo><mi
 >N</mi><mn>1</mn></mrow><mo 
 class="MathClass-close">]</mo></mrow></math> can be speciﬁed
 as <span 
-class="pcrr7t-x-x-120">N0</span><!--l. 1120--><math 
+class="pcrr7t-x-x-120">N0</span><!--l. 1123--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2459,7 +2459,7 @@ href="#x1-40001.2">1.2<!--tex4ht:ref: Sec:RANGE --></a>). <a
 href="#x1-60001.4">String (section 1.4)</a> can be regular expressions or patterns or quoted-strings for
 as-is matching (see Section <a 
 href="#x1-60001.4">1.4<!--tex4ht:ref: Sec:STRINGS --></a>).
-</p><!--l. 1125--><p class="indent" >   A single scan can have multiple scan-intents represented by a comma-separated list of strings
+</p><!--l. 1128--><p class="indent" >   A single scan can have multiple scan-intents represented by a comma-separated list of strings
 like <span 
 class="pcrr7t-x-x-120">&#x0022;CALIBRATE</span><span 
 class="pcrr7t-x-x-120">_BANDPASS.UNSPECIFIED,CALIBRATE</span><span 
@@ -2474,7 +2474,7 @@ class="pcrr7t-x-x-120">scanintent=⋆CAL⋆, ⋆BAND⋆ </span>will select all s
 which have the strings <span 
 class="pcrr7t-x-x-120">&#x0022;CAL&#x0022; </span>or <span 
 class="pcrr7t-x-x-120">&#x0022;BAND&#x0022;</span>.
-</p><!--l. 1136--><p class="indent" >   To allow selection based on scan-intent components, scan-intent selection speciﬁcations can
+</p><!--l. 1139--><p class="indent" >   To allow selection based on scan-intent components, scan-intent selection speciﬁcations can
 also be ampersand-separated (<span 
 class="pcrr7t-x-x-120">'&#x0026;'</span>) list strings. Only those scans, at least one scan-intent
 components of which match <span 
@@ -2486,11 +2486,11 @@ class="pcrr7t-x-x-120">&#x0022;CAL&#x0022; </span><span
 class="phvro7t-x-x-120">and </span><span 
 class="pcrr7t-x-x-120">&#x0022;BAND&#x0022;</span>. See Section <a 
 href="#x1-340008.2">8.2<!--tex4ht:ref: Sec:SCANINTENTEXAMPLES --></a> for more examples.
-</p><!--l. 1145--><p class="noindent" >
+</p><!--l. 1148--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">8.2    </span> <a 
  id="x1-340008.2"></a>Examples</h4>
-<!--l. 1147--><p class="noindent" >Table <a 
+<!--l. 1150--><p class="noindent" >Table <a 
 href="#x1-340018">8<!--tex4ht:ref: Tab:SCANINTENT --></a> shows an example-table of scan-intents. Table <a 
 href="#x1-340029">9<!--tex4ht:ref: Tab:SCANINTENTEXPR --></a> shows a list of some scan-intent selection
 expressions and the corresponding list of selected scan numbers from Table <a 
@@ -2499,7 +2499,7 @@ href="#x1-340018">8<!--tex4ht:ref: Tab:SCANINTENT --></a>.
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 1152--><p class="indent" >   <a 
+<!--l. 1155--><p class="indent" >   <a 
  id="x1-340018"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -2509,7 +2509,7 @@ href="#x1-340018">8<!--tex4ht:ref: Tab:SCANINTENT --></a>.
 class="content">Example scan-intent table</span></div><!--tex4ht:label?: x1-340018 -->
 <div class="center" 
 >
-<!--l. 1154--><p class="noindent" >
+<!--l. 1157--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-9" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -2563,7 +2563,7 @@ class="td11">       </td></tr></table></div></div>
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 1168--><p class="indent" >   <a 
+<!--l. 1171--><p class="indent" >   <a 
  id="x1-340029"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -2574,7 +2574,7 @@ class="content">Examples of scan-intent selection expressions for intents shown 
 href="#x1-340018">8<!--tex4ht:ref: Tab:SCANINTENT --></a></span></div><!--tex4ht:label?: x1-340029 -->
 <div class="center" 
 >
-<!--l. 1171--><p class="noindent" >
+<!--l. 1174--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-10" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -2732,38 +2732,38 @@ class="td11">                     </td></tr></table></div></div>
    </div>
    <h3 class="sectionHead"><span class="titlemark">9    </span> <a 
  id="x1-350009"></a>Scan/Sub-array Selection</h3>
-<!--l. 1211--><p class="noindent" >Scan and sub-arrays selections are purely integer ID based selections. The syntax for the
+<!--l. 1214--><p class="noindent" >Scan and sub-arrays selections are purely integer ID based selections. The syntax for the
 speciﬁcation of both these is therefore identical.
-</p><!--l. 1214--><p class="noindent" >
+</p><!--l. 1217--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.1    </span> <a 
  id="x1-360009.1"></a>Syntax</h4>
-<!--l. 1216--><p class="noindent" >Scan and Sub-array selection speciﬁcation is a single integer (INT) or a <a 
+<!--l. 1219--><p class="noindent" >Scan and Sub-array selection speciﬁcation is a single integer (INT) or a <a 
 href="#x1-40001.2">range (section 1.2)</a> of
-integers(N0<!--l. 1218--><math 
+integers(N0<!--l. 1221--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>N1).
 Scans and sub-arrays can also be selected via boolean expressions of the type
-”<!--l. 1219--><math 
+”<!--l. 1222--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>INT”,
-”<!--l. 1219--><math 
+”<!--l. 1222--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>=INT”,
-”<!--l. 1219--><math 
+”<!--l. 1222--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>INT” or
-”<!--l. 1220--><math 
+”<!--l. 1223--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>=INT”<span class="footnote-mark"><a 
 href="#fn11x0" id="fn11x0-bk"><sup class="textsuperscript">11</sup></a></span><a 
  id="x1-36001f11"></a>.
-</p><!--l. 1241--><p class="indent" >   Full expression is a comma-separated list of any of the above index speciﬁcations.
+</p><!--l. 1244--><p class="indent" >   Full expression is a comma-separated list of any of the above index speciﬁcations.
 E.g.
 </p>
       <ul class="itemize1">
@@ -2771,7 +2771,7 @@ E.g.
 class="pcrr7t-x-x-120">0,1,2,3 </span>selects scan numbers 0, 1, 2 and 3
       </li>
       <li class="itemize">scan=<span 
-class="pcrr7t-x-x-120">0</span><!--l. 1246--><math 
+class="pcrr7t-x-x-120">0</span><!--l. 1249--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
@@ -2779,21 +2779,21 @@ class="pcrr7t-x-x-120">3</span>
       selects scans in the range [0,3]
       </li>
       <li class="itemize">scan=<span 
-class="pcrr7t-x-x-120">0</span><!--l. 1247--><math 
+class="pcrr7t-x-x-120">0</span><!--l. 1250--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="pcrr7t-x-x-120">3,4,5</span>
       selects scans in the range [0,3] and scans 4 and 5
       </li>
-      <li class="itemize">scan=<!--l. 1248--><math 
+      <li class="itemize">scan=<!--l. 1251--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
 class="pcrr7t-x-x-120">5</span>
       selects all scans greater than 5
       </li>
-      <li class="itemize">scan=<!--l. 1249--><math 
+      <li class="itemize">scan=<!--l. 1252--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
@@ -2801,19 +2801,19 @@ class="pcrr7t-x-x-120">5</span>
       selects all scans less than 5</li></ul>
                                                                                             
                                                                                             
-<!--l. 1252--><p class="noindent" >
+<!--l. 1255--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">10    </span> <a 
  id="x1-3700010"></a>Using <span 
 class="pcrr7t-x-x-120">MSSelection</span> expressions in TaQL</h3>
-<!--l. 1253--><p class="noindent" >The <span 
+<!--l. 1256--><p class="noindent" >The <span 
 class="pcrr7t-x-x-120">MSSelection</span> module can be thought of as a compiler which compiles expressions written in
 MSSelection syntax into TaQL code. The module therefore can also be supplied pure-TaQL
 expressions which are used as-is along with any of the <span 
 class="pcrr7t-x-x-120">MSSelection</span> expressions. Internally, the
 pure-TaQL expression will be treated as just another <span 
 class="pcrr7t-x-x-120">MSSelection</span> expression.
-</p><!--l. 1259--><p class="indent" >   While it is natual to be able to use TaQL expressions via the <span 
+</p><!--l. 1262--><p class="indent" >   While it is natual to be able to use TaQL expressions via the <span 
 class="pcrr7t-x-x-120">MSSelection</span> module for
 selection on an MS, it is also possible to embed <span 
 class="pcrr7t-x-x-120">MSSelection</span> expressions in TaQL
@@ -2826,19 +2826,19 @@ following
    <div class="verbatim" id="verbatim-4">
  select from MS where mscal.baseline('sel1') || mscal.baseline('sel2')
 </div>
-<!--l. 1265--><p class="nopar" > <span 
+<!--l. 1268--><p class="nopar" > <span 
 class="pcrr7t-x-x-120">sel1 </span>and <span 
 class="pcrr7t-x-x-120">sel2 </span>can be <span 
 class="pcrr7t-x-x-120">MSSelection</span> <a 
 href="#x1-100003">baseline (section 3)</a>. Other types of selection are also
 similarly possible (e.g. selection on Time, Frequency, Scan, etc.) via TaQL.
-</p><!--l. 1271--><p class="indent" >
+</p><!--l. 1274--><p class="indent" >
                                                                                             
                                                                                             
 </p>
    <h3 class="sectionHead"><span class="titlemark">A    </span> <a 
  id="x1-38000A"></a>Appendix: API Note - General Error Handling</h3>
-<!--l. 1275--><p class="noindent" >The <span 
+<!--l. 1278--><p class="noindent" >The <span 
 class="pcrr7t-x-x-120">MSSelection</span> sub-system reports errors via the C++ exception mechanism.
 <a 
 href="http://casa.nrao.edu/active/docs/doxygen/html/classcasa_1_1MSSelectionError.html" ><span 
@@ -2869,7 +2869,7 @@ MSSelection module.</span></div><!--tex4ht:label?: x1-380022 -->
                                                                                             
                                                                                             
    </div><hr class="endfigure" />
-<!--l. 1308--><p class="indent" >   All parsing errors are reported by throwing the <span 
+<!--l. 1311--><p class="indent" >   All parsing errors are reported by throwing the <span 
 class="pcrr7t-x-x-120">MSSelection</span><span 
 class="cmsy-10x-x-120">{</span><span 
 class="pcrr7t-x-x-120">Time, Spw,</span>
@@ -2879,11 +2879,11 @@ class="cmsy-10x-x-120">}</span><span
 class="pcrr7t-x-x-120">ParseError</span>
 exception. All other forms of errors (e.g. illegal <a 
 href="#x1-40001.2">range (section 1.2)</a> speciﬁcation
-N0<!--l. 1312--><math 
+N0<!--l. 1315--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math>N1
-where N0 <!--l. 1312--><math 
+where N0 <!--l. 1315--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>
@@ -2895,7 +2895,7 @@ class="pcrr7t-x-x-120">Time, Spw, Field,</span>
 class="pcrr7t-x-x-120">UvDist, Antenna, Scan, Subarray,Poln,State</span><span 
 class="cmsy-10x-x-120">}</span><span 
 class="pcrr7t-x-x-120">Error</span>.
-</p><!--l. 1316--><p class="indent" >   Hence, to catch all errors thrown from the <span 
+</p><!--l. 1319--><p class="indent" >   Hence, to catch all errors thrown from the <span 
 class="pcrr7t-x-x-120">MSSelection</span> sub-system, catch the
 <span 
 class="pcrr7t-x-x-120">MSSelectionError </span>object. For more speciﬁc exception handling, catch the more qualiﬁed
@@ -2903,7 +2903,7 @@ MSSelection*Error objects. For catching only parsing errors, catch the MSSelecti
 object. As is obvious, any un-caught exception from the <span 
 class="pcrr7t-x-x-120">MSSelection</span> sub-system will be caught
 in the AipsError catch block.
-</p><!--l. 1323--><p class="indent" >   The exceptional error message consists of a human understandable one-line description of the
+</p><!--l. 1326--><p class="indent" >   The exceptional error message consists of a human understandable one-line description of the
 error, the string which caused the error and the possible location in the string of the erroneous
 character. E.g.
                                                                                             
@@ -2912,11 +2912,11 @@ character. E.g.
    <div class="verbatim" id="verbatim-5">
  Spw Expression: No match found for &#x0022;LBAN&#x0022; (near char. 4 in string &#x0022;LBAN&#x0022;)
 </div>
-<!--l. 1329--><p class="nopar" >
+<!--l. 1332--><p class="nopar" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">A.1    </span> <a 
  id="x1-39000A.1"></a>Installing Error Handlers</h4>
-<!--l. 1333--><p class="noindent" >The normal (default) behavior of the parsers is to throw an exception when an error
+<!--l. 1336--><p class="noindent" >The normal (default) behavior of the parsers is to throw an exception when an error
 is encountered during parsing cycle or in the rule-resolution code. However there
 are cases where instead of throwing an exception, the errors must be collected
 as they occur and resolution of the error done at the end of the parsing cycle. In the
@@ -2933,7 +2933,7 @@ handle errors in the <span
 class="pcrr7t-x-x-120">MSSelection</span> module. The default error handler that comes pre-installed
 simply throws an exception of the appropriate kind when an error is encountered, recreating the
 normal behaviour of the C++ exception handling mechanism.
-</p><!--l. 1346--><p class="indent" >   To collect errors (and the error messages generated in the process) as they occur
+</p><!--l. 1349--><p class="indent" >   To collect errors (and the error messages generated in the process) as they occur
 for later resolution, the client-side code can install a specialization of the error handler
 of type <span 
 class="pcrr7t-x-x-120">MSSelectionLogError</span>, a derivative of the <span 
@@ -2941,7 +2941,7 @@ class="pcrr7t-x-x-120">MSSelectionErrorHandler</span>,
 using the <span 
 class="pcrr7t-x-x-120">MSSelection::setErrorHandler() </span>method, as shown in the Listing <a 
 href="#x1-39002r1">1<!--tex4ht:ref: FIG:EHCODE --></a>.
-</p><!--l. 1352-->
+</p><!--l. 1355-->
 <a 
  id="x1-39003"></a>
 <br /> <div class="caption" 
@@ -3174,23 +3174,23 @@ class="pcrr7t-">observationStr</span><span
 class="pcrr7t-">);</span>
    
    </div>
-<!--l. 1368--><p class="indent" >   At the appropriate place in the client code, a call to <span 
+<!--l. 1371--><p class="indent" >   At the appropriate place in the client code, a call to <span 
 class="pcrr7t-x-x-120">MSSelectionErrorHandler::reportError()</span>
 can be made to display the collected error messages as warning messages. This behavior can be
 changed in a specialization of the <span 
 class="pcrr7t-x-x-120">MSSelectionErrorHandler </span>class by overloading the
 <span 
 class="pcrr7t-x-x-120">reportError </span>method.
-</p><!--l. 1374--><p class="indent" >   This mechanism of error handling is currently available for ANTENNA and STATE (a.k.a. “intent
+</p><!--l. 1377--><p class="indent" >   This mechanism of error handling is currently available for ANTENNA and STATE (a.k.a. “intent
 selection”) selection expressions only.
-</p><!--l. 1377--><p class="indent" >
+</p><!--l. 1380--><p class="indent" >
                                                                                             
                                                                                             
 </p>
    <h3 class="sectionHead"><span class="titlemark">B    </span> <a 
  id="x1-40000B"></a>Appendix: API Note - Using the <span 
 class="pcrr7t-x-x-120">MSSelection </span>module for other MS-like Tables</h3>
-<!--l. 1381--><p class="noindent" >The <span 
+<!--l. 1384--><p class="noindent" >The <span 
 class="pcrr7t-x-x-120">MSSelection</span> module was originally written to provide a higher-level, simpler language called
 STaQL (Simpler TaQL) speciﬁcally for applying selection on Measurement Sets. Parsers in the
 MSSelection module compile the various STaQL expressions and emit the equivalent tree of Table
@@ -3198,7 +3198,7 @@ Expression Nodes (TEN), which is then used by the <span
 class="pcrr7t-x-x-120">MeasurementSet </span>class to generate a
 selected Table containing rows from the original Table for which the supplied TEN evaluates to
 True.
-</p><!--l. 1389--><p class="indent" >   The information required to compile the STaQL expressions is derived from various sub-tables
+</p><!--l. 1392--><p class="indent" >   The information required to compile the STaQL expressions is derived from various sub-tables
 of the Measurement Set format (e.g. the <span 
 class="pcrr7t-x-x-120">ANTENNA </span>sub-table, <span 
 class="pcrr7t-x-x-120">SPECTRAL</span><span 
@@ -3217,7 +3217,7 @@ Measurement Set) where <span
 class="phvro7t-x-x-120">most </span>of the main-table entries are references to the rows of sub-tables.
 The information that these main-table entries represent resides in these much smaller
 sub-tables.
-</p><!--l. 1404--><p class="indent" >   Since there may be minor diﬀerences in the details of the target databases (e.g.
+</p><!--l. 1407--><p class="indent" >   Since there may be minor diﬀerences in the details of the target databases (e.g.
 names of the sub-tables, or even absence of some required sub-tables which can
 be generated on-the-ﬂy), the <span 
 class="pcrr7t-x-x-120">MSSelection</span> module provides an interface to the
@@ -3256,14 +3256,14 @@ base-class.</span></div><!--tex4ht:label?: x1-400023 -->
                                                                                             
                                                                                             
    </div><hr class="endfigure" />
-<!--l. 1425--><p class="indent" >   For using the <span 
+<!--l. 1428--><p class="indent" >   For using the <span 
 class="pcrr7t-x-x-120">MSSelection</span> module on the Measurement Sets, the <span 
 class="pcrr7t-x-x-120">MSInterface </span>object can
 be constructed from the <span 
 class="pcrr7t-x-x-120">MeasurementSet </span>object and passed to the <span 
 class="pcrr7t-x-x-120">MSSelection</span> object as
 shown in Listing <a 
-href="#x1-40003r2">2<!--tex4ht:ref: LIST:MSCODE --></a>. </p><!--l. 1429-->
+href="#x1-40003r2">2<!--tex4ht:ref: LIST:MSCODE --></a>. </p><!--l. 1432-->
 <a 
  id="x1-40004"></a>
 <br /> <div class="caption" 
@@ -3512,7 +3512,7 @@ class="pcrr7t-">observationStr</span><span
 class="pcrr7t-">);</span>
    
    </div>
-<!--l. 1446--><p class="indent" >   Another method of using the <span 
+<!--l. 1449--><p class="indent" >   Another method of using the <span 
 class="pcrr7t-x-x-120">MSSelection</span> class is to set the individual expressions, get the
 TEN via the <span 
 class="pcrr7t-x-x-120">MSSelection::toTableExprNode() </span>method and ﬁnally use the global method
@@ -3530,7 +3530,7 @@ instead.
  id="x1-41000B.1"></a>Using <span 
 class="pcrr7t-x-x-120">MSSelection</span> for <span 
 class="pcrr7t-x-x-120">CalTables</span></h4>
-<!--l. 1457--><p class="noindent" >The <span 
+<!--l. 1460--><p class="noindent" >The <span 
 class="pcrr7t-x-x-120">MSSelection</span> module can be used for selection on
 <a 
 href="http://casa.nrao.edu/active/docs/doxygen/html/classcasa_1_1CalTable.html" ><span 
@@ -3540,7 +3540,7 @@ href="#fn15x0" id="fn15x0-bk"><sup class="textsuperscript">15</sup></a></span><a
 which are implemented in the synthesis module of the CASA package, via the interface object of
 type <span 
 class="pcrr7t-x-x-120">CTInterface</span>.
-</p><!--l. 1461--><p class="indent" >   To use the <span 
+</p><!--l. 1464--><p class="indent" >   To use the <span 
 class="pcrr7t-x-x-120">MSSelection</span> module for selection on <span 
 class="pcrr7t-x-x-120">(New)CalTable </span>object, the only diﬀerence
 from the code snippet above, is that a <span 
@@ -3559,7 +3559,7 @@ object supplied via the <span
 class="pcrr7t-x-x-120">MSSelection::toTableExprNode() </span>method which returns the tree of
 TENs. The tree can then be used to get a selected CalTable as shown in Listing <a 
 href="#x1-41002r3">3<!--tex4ht:ref: LIST:CTCODE --></a>.
-</p><!--l. 1471-->
+</p><!--l. 1474-->
 <a 
  id="x1-41003"></a>
 <br /> <div class="caption" 
@@ -3770,7 +3770,7 @@ class="pcrr7t-">&#x0022;</span><span
 class="pcrr7t-">);</span>
    
    </div>
-<!--l. 1489--><p class="indent" >
+<!--l. 1492--><p class="indent" >
                                                                                             
                                                                                             
 </p>
@@ -3779,7 +3779,7 @@ class="pcrr7t-">);</span>
    <div class="table">
                                                                                             
                                                                                             
-<!--l. 1492--><p class="indent" >   <a 
+<!--l. 1495--><p class="indent" >   <a 
  id="x1-4200110"></a></p><hr class="float" /><div class="float" 
 >
                                                                                             
@@ -3789,7 +3789,7 @@ class="pcrr7t-">);</span>
 class="content">Summary of the MS used</span></div><!--tex4ht:label?: x1-4200110 -->
 <div class="center" 
 >
-<!--l. 1494--><p class="noindent" >
+<!--l. 1497--><p class="noindent" >
 </p>
 <div class="tabular"> <table id="TBL-11" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -3899,8 +3899,8 @@ class="td11">       </td></tr></table></div></div>
  <br />UV in meters = []
  <br />Number selected rows: 99819
 </div>
-<!--l. 1540--><p class="nopar" >
-</p><!--l. 1542--><p class="noindent" >
+<!--l. 1543--><p class="nopar" >
+</p><!--l. 1545--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.2    </span> <a 
  id="x1-44000C.2"></a>Example 2</h4>
@@ -3936,8 +3936,8 @@ class="td11">       </td></tr></table></div></div>
  <br />UV in meters = []
  <br />Number selected rows: 2376
 </div>
-<!--l. 1573--><p class="nopar" >
-</p><!--l. 1575--><p class="noindent" >
+<!--l. 1576--><p class="nopar" >
+</p><!--l. 1578--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.3    </span> <a 
  id="x1-45000C.3"></a>Example 3</h4>
@@ -3974,8 +3974,8 @@ class="td11">       </td></tr></table></div></div>
  <br />UV in meters = []
  <br />Number selected rows: 0
 </div>
-<!--l. 1606--><p class="nopar" >
-</p><!--l. 1608--><p class="noindent" >
+<!--l. 1609--><p class="nopar" >
+</p><!--l. 1611--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.4    </span> <a 
  id="x1-46000C.4"></a>Example 4</h4>
@@ -4010,8 +4010,8 @@ class="td11">       </td></tr></table></div></div>
  <br />UV in meters = []
  <br />Number selected rows: 1188
 </div>
-<!--l. 1637--><p class="nopar" >
-</p><!--l. 1640--><p class="noindent" >
+<!--l. 1640--><p class="nopar" >
+</p><!--l. 1643--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.5    </span> <a 
  id="x1-47000C.5"></a>Example 5</h4>
@@ -4046,8 +4046,8 @@ class="td11">       </td></tr></table></div></div>
  <br />UV in meters = []
  <br />Number selected rows: 198
 </div>
-<!--l. 1669--><p class="nopar" >
-</p><!--l. 1671--><p class="noindent" >
+<!--l. 1672--><p class="nopar" >
+</p><!--l. 1674--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.6    </span> <a 
  id="x1-48000C.6"></a>Example 6</h4>
@@ -4072,8 +4072,8 @@ class="td11">       </td></tr></table></div></div>
  <br />###AipsError: Antenna Expression: Parse error at or near '$' (near
  <br />char. 7 in string &#x0022;1~3 &#x0026; $~6&#x0022;)
 </div>
-<!--l. 1690--><p class="nopar" >
-</p><!--l. 1692--><p class="noindent" >
+<!--l. 1693--><p class="nopar" >
+</p><!--l. 1695--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.7    </span> <a 
  id="x1-49000C.7"></a>Example 7</h4>
@@ -4108,8 +4108,8 @@ class="td11">       </td></tr></table></div></div>
  <br />UVRange = [0, 5000] lambda
  <br />Number selected rows: 33
 </div>
-<!--l. 1721--><p class="nopar" >
-</p><!--l. 1723--><p class="noindent" >
+<!--l. 1724--><p class="nopar" >
+</p><!--l. 1726--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.8    </span> <a 
  id="x1-50000C.8"></a>Example 8</h4>
@@ -4145,8 +4145,8 @@ class="td11">       </td></tr></table></div></div>
  <br />UVRange = [0, 5000] lambda
  <br />Number selected rows: 33
 </div>
-<!--l. 1753--><p class="nopar" >
-</p><!--l. 1755--><p class="noindent" >
+<!--l. 1756--><p class="nopar" >
+</p><!--l. 1758--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">C.9    </span> <a 
  id="x1-51000C.9"></a>Example 9</h4>
@@ -4176,41 +4176,37 @@ class="td11">       </td></tr></table></div></div>
  <br />token '-' (near char. 12 in string &#x0022;25/22:40:0 - 26/03:30:0&#x0022;)
  <br />(Did you know we use &#x0022;~&#x0022; as the range operator (for a good reason)?)
 </div>
-<!--l. 1779--><p class="nopar" >
+<!--l. 1782--><p class="nopar" >
 </p>
                                                                                             
                                                                                             
-   <div class="footnotes"><!--l. 56--><p class="noindent" ><span class="footnote-mark"><a 
+   <div class="footnotes"><!--l. 58--><p class="noindent" ><span class="footnote-mark"><a 
 href="#fn1x0-bk" id="fn1x0"><sup class="textsuperscript">1</sup></a></span><span 
-class="phvr7t-">http://www.aoc.nrao.edu/</span><!--l. 56--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" > <mo 
-class="MathClass-rel">&sim;</mo></math><span 
-class="phvr7t-">sbhatnag/misc/msselection.pdf</span></p>
-<!--l. 62--><p class="indent" >      <span class="footnote-mark"><a 
+class="phvr7t-">263.pdf</span></p>
+<!--l. 65--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn2x0-bk" id="fn2x0"><sup class="textsuperscript">2</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 
 class="phvr7t-">_1MSSelection.html</span></p>
-<!--l. 72--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 75--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn3x0-bk" id="fn3x0"><sup class="textsuperscript">3</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 
 class="phvr7t-">_1MSSelectionError.html</span></p>
-<!--l. 77--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 80--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn4x0-bk" id="fn4x0"><sup class="textsuperscript">4</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 
 class="phvr7t-">_1MSSelectionErrorHandler.html</span></p>
-<!--l. 84--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 87--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn5x0-bk" id="fn5x0"><sup class="textsuperscript">5</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 
 class="phvr7t-">_1CalTable.html</span></p>
-<!--l. 177--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 180--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn6x0-bk" id="fn6x0"><sup class="textsuperscript">6</sup></a></span><span 
 class="phvr7t-">http://www.regular-expressions.info</span></p>
-<!--l. 673--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 676--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn7x0-bk" id="fn7x0"><sup class="textsuperscript">7</sup></a></span><span 
 class="phvr7t-">In case users loose their patience with the NRAO Observation Preparation Tool (NRAO OPT) and start giving</span>
 <span 
@@ -4218,7 +4214,7 @@ class="phvr7t-">ﬁeld names like “</span><span
 class="pcrr7t-">@#!$%;</span><span 
 class="phvr7t-">”, to them we can say “...we understand.” </span><span 
 class="umvs-"> </span></p>
-<!--l. 891--><p class="indent" >   <span class="footnote-mark"><a 
+<!--l. 894--><p class="indent" >   <span class="footnote-mark"><a 
 href="#fn8x0-bk" id="fn8x0"><sup class="textsuperscript">8</sup></a></span><span 
 class="phvro7t-">The </span><span 
 class="pcrr7t-">MSSelection</span><span 
@@ -4229,14 +4225,14 @@ class="phvro7t-">START,STOP,STEP tuples. No channel based selection is actually 
 class="phvro7t-">passed to the application program layer and the interpretation of the tuples for actual selection depends on the</span>
 <span 
 class="phvro7t-">application programmer.</span></p>
-<!--l. 1045--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 1048--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn9x0-bk" id="fn9x0"><sup class="textsuperscript">9</sup></a></span><span 
 class="phvr7t-">The combined main-table descriptor for spectral windows and polarization is the Data Description ID (DDID).</span>
 <span 
 class="phvr7t-">DDID represents a two-level indirection based on the the Spectral Window and Polarization sub-tables (which are the</span>
 <span 
 class="phvr7t-">real astrophysically relevant parameters of the database).</span></p>
-<!--l. 1057--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 1060--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn10x0-bk" id="fn10x0"><sup class="textsuperscript">10</sup></a></span><span 
 class="phvr7t-">A full speciﬁcation of the type </span><span 
 class="pcrr7t-">[[POLID:][SPWID:]POL </span><span 
@@ -4244,30 +4240,30 @@ class="phvr7t-">or </span><span
 class="pcrr7t-">[DDID::]POL </span><span 
 class="phvr7t-">will be implemented in</span>
 <span 
-class="phvr7t-">future.</span></p><!--l. 1239--><p class="indent" > <span class="footnote-mark"><a 
+class="phvr7t-">future.</span></p><!--l. 1242--><p class="indent" > <span class="footnote-mark"><a 
 href="#fn11x0-bk" id="fn11x0"><sup class="textsuperscript">11</sup></a></span><span 
 class="phvro7t-">Programmers note: </span><span 
 class="phvr7t-">The getScanList() (getSubArrayList() for sub-arrays) method will return the list generated from INT,INT,...</span>
 <span 
-class="phvr7t-">or INT</span><!--l. 1239--><math 
+class="phvr7t-">or INT</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&sim;</mo></math><span 
 class="phvr7t-">INT or</span>
 <span 
-class="phvr7t-">”</span><!--l. 1239--><math 
+class="phvr7t-">”</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
 class="phvr7t-">INT” speciﬁcation. For</span>
 <span 
-class="phvr7t-">”</span><!--l. 1239--><math 
+class="phvr7t-">”</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
 class="phvr7t-">INT” speciﬁcation, the returned list</span>
 <span 
-class="phvr7t-">will be number from INT part of ”</span><!--l. 1239--><math 
+class="phvr7t-">will be number from INT part of ”</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
@@ -4278,11 +4274,11 @@ class="phvr7t-">up to the maxScans (maxArrays for sub-arrays) set via MSSelectio
 class="phvr7t-">(MSSelection::setMaxArray() for sub-arrays). The default value of maxScans/maxArrays is</span>
 <span 
 class="pcrr7t-">std::standard</span><span 
-class="pcrr7t-">_limits</span><!--l. 1239--><math 
+class="pcrr7t-">_limits</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
-class="pcrr7t-">int</span><!--l. 1239--><math 
+class="pcrr7t-">int</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
@@ -4292,7 +4288,7 @@ class="phvr7t-">(i.e. the maximum value an integer can take on a machine). It is
 <span 
 class="phvr7t-">there is no eﬃcient way of generating a list of SCAN/ARRAY IDs present in the data and</span>
 <span 
-class="phvr7t-">”</span><!--l. 1239--><math 
+class="phvr7t-">”</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
@@ -4304,7 +4300,7 @@ class="phvr7t-">generated using the MSRange class -</span>
 <span 
 class="phvr7t-">but I think it can be quite expensive. So if it is necessary to know the precise list of scans selected using the</span>
 <span 
-class="phvr7t-">”</span><!--l. 1239--><math 
+class="phvr7t-">”</span><!--l. 1242--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
@@ -4316,22 +4312,22 @@ class="phvr7t-">the list from MSRange and the list from MSSelection.getScanList(
 <span 
 class="phvr7t-">of two CASA vectors can be done using the set</span><span 
 class="phvr7t-">_intersection() global method in MSSelectionTools.h).</span>
-</p><!--l. 1276--><p class="indent" >      <span class="footnote-mark"><a 
+</p><!--l. 1279--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn12x0-bk" id="fn12x0"><sup class="textsuperscript">12</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 
 class="phvr7t-">_1MSSelectionError.html</span></p>
-<!--l. 1339--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 1342--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn13x0-bk" id="fn13x0"><sup class="textsuperscript">13</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 
 class="phvr7t-">_1MSSelectionErrorHandler.html</span></p>
-<!--l. 1409--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 1412--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn14x0-bk" id="fn14x0"><sup class="textsuperscript">14</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 
 class="phvr7t-">_1MSSelectableTable.html</span></p>
-<!--l. 1457--><p class="indent" >      <span class="footnote-mark"><a 
+<!--l. 1460--><p class="indent" >      <span class="footnote-mark"><a 
 href="#fn15x0-bk" id="fn15x0"><sup class="textsuperscript">15</sup></a></span><span 
 class="phvr7t-">http://casa.nrao.edu/active/docs/doxygen/html/classcasa</span><span 
 class="phvr7t-">_1</span><span 

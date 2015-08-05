@@ -8,4 +8,5 @@ all: 191.html 199.html 216.html 223.html 224.html 229.html 233.html 238.html 255
 %.html: %.latex
 	export TEXINPUTS=.:$*.dir/: && \
 	htlatex $< "xhtml,mathml,fn-in,css-in, charset=utf-8" " -cunihtf -utf8" && \
-	htlatex $< "xhtml,mathml,fn-in,css-in, charset=utf-8" " -cunihtf -utf8" 
+	htlatex $< "xhtml,mathml,fn-in,css-in, charset=utf-8" " -cunihtf -utf8" && \
+	if [ "$<" = "263.latex" ]; then sed -i.bak "s/\"\(.*\).png/\"263.dir\/\1.png/" 263.html; fi

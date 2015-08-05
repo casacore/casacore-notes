@@ -52,9 +52,12 @@
 \date{June 15, 2007\\{\small (Updated: April 6, 2015)}}
 \maketitle
 \normalsize
+\ifpdf
+\else
 \begin{center}
   \PDFVersion
 \end{center}
+\fi
 
 \begin{abstract}
   This note describes the syntax for the various expressions for
