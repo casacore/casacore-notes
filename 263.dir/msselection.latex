@@ -42,7 +42,7 @@
 \newcommand{\MSSelectionErrorHandler} {\htmladdnormallinkfoot{{\tt MSSelectionErrorHandler}}{http://casa.nrao.edu/active/docs/doxygen/html/classcasa\_1\_1MSSelectionErrorHandler.html}}
 \newcommand{\CalTables} {\htmladdnormallinkfoot{{\tt CalTables}}{http://casa.nrao.edu/active/docs/doxygen/html/classcasa\_1\_1CalTable.html}}
 \newcommand{\MSSelectableTable} {\htmladdnormallinkfoot{{\tt MSSelectableTable}}{http://casa.nrao.edu/active/docs/doxygen/html/classcasa\_1\_1MSSelectableTable.html}}
-\newcommand{\PDFVersion} {\htmladdnormallinkfoot{PDF Version}{http://www.aoc.nrao.edu/$\sim$sbhatnag/misc/msselection.pdf}}
+\newcommand{\PDFVersion} {\htmladdnormallinkfoot{PDF Version}{263.pdf}}
 
 %\def\myhyperref#1#2{\hyperref[{#1}]{{#2} {(section \ref{{#1}})}}}
 
