@@ -2,11 +2,11 @@
 %%----------------------------------------------------------------------------
 \documentclass[11pt]{article}
 \usepackage[colorlinks]{hyperref}
-\setlength{\textwidth}{6.5in}
-\setlength{\evensidemargin}{0.0in}
-\setlength{\oddsidemargin}{0.0in}
-\setlength{\textheight}{8.5in}
-\setlength{\topmargin}{0.0in}
+\setlength{\textheight}{23.0cm}
+\setlength{\textwidth}{17.00cm}
+\setlength{\topmargin}{-1.0cm}
+\setlength{\oddsidemargin}{0.1cm}
+\setlength{\evensidemargin}{0.1cm}
 
 %%-----------------------------------------------------------------------------
 %% See 'A Guide to Latex', Kopka & Daly, Addison-Wesley, section 3.2.4
@@ -17,7 +17,7 @@
 \title{NOTE 199 --
 Table Query Language}
 \author {Ger van Diepen, ASTRON Dwingeloo}
-\date {2013 Aug 19}
+\date {2015 Jul 29}
 \maketitle
 \begin{abstract}
 The Table Query Language (TaQL) is an SQL-like high level language to
@@ -27,10 +27,11 @@ array data. It has inherent support for masked arrays, units,
 and astronomical coordinates.
 It has a very rich set of functions (like cone search and
 array reduction) making it very suitable for astronomical
-applications. It also has full support of nested queries.
+applications. User defined functions can be added easily.
+It also has full support of grouping/aggregation and nested queries.
 An operation that can be expressed in a single function is the
 matching of two sky catalogues.
-\\A binding in C++, Python, and Glish is available.
+\\It can be used from C++, Python, and any shell.
 \end{abstract}
 %%---------------------------------------------------------------------------
 \ifpdf

@@ -7,11 +7,17 @@ pronounce it as tackle)) makes it possible to select
 rows from an arbitrary table based on the contents of its
 columns and keywords. It supports arbitrary complex
 expressions including units, extended regular expressions, and many
-functions. User defined functions written in C++ are also supported.
+functions. User defined functions written in C++ or Python are supported.
 TaQL also makes sorting and column selection possible.
 Furthermore TaQL has commands to create a table and to modify data
 in a table.
 
+The first sections of this document explain the syntax and show the options.
+The last sections show the interface to TaQL using Python or C++.
+The Python interface makes it possible to embed Python
+variables and expressions in a TaQL command.
+
+\subsection{TaQL vs SQL}
 TaQL is modeled after SQL and contains most of SQL's
 functionality. Some familiarity with SQL makes it easier to understand
 the TaQL syntax.
@@ -29,7 +35,7 @@ table are modified.
 \item A very rich set of mathematical and other functions.
 \item Any operand can be a scalar or an N-dimensional array.
 Many reduction functions can be applied to arrays.
-\item Arrays can optionally be masked.
+\item Arrays can optionally be masked (not operational yet).
 \item Full support of units and automatic conversion of units.
 \item Support of various types of patterns/regular expressions and
 maximum string distances (Levensthein (aka Edit) distance).
@@ -40,8 +46,10 @@ maximum string distances (Levensthein (aka Edit) distance).
 Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
 \item Limited support for joins (only implicit joins on row number).
-\item In the SELECT command GROUPBY and HAVING are not supported yet.
-\item The COUNT command exists to count the occurrences of column values.
+\item Many more aggregate functions.
+\item The COUNT command exists to count the occurrences of column
+  values. Although it can still be used, this command is obsolete now 
+  GROUPBY is fully supported.
 \item The CALC command exists to
 calculate an arbitrary expression (including subqueries) on a
 table. This can be useful to derive values from a table (e.g. the
@@ -51,16 +59,13 @@ desk calculator.
 example the order of array axes. Therefore it is possible to set the
 language style to be used.
 \item The language can be extended by means of User Defined
-  Functions. Some standard UDFs exist to deal with measure conversions
+  Functions, possibly implemented in Python.
+  Some standard UDFs exist to deal with measure conversions
   (for directions, epochs, positions, and stokes).
 \end{itemize}
 TaQL has a keyword that makes it possible to time the various parts of
 a TaQL command.
 
-The first sections of this document explain the syntax and show the options.
-The last sections show the interface to TaQL using Python or C++.
-The Python interface makes it possible to embed Python
-variables and expressions in a TaQL command.
 
 \section{TaQL Commands}
 \subsection{Command summary}
@@ -71,8 +76,12 @@ syntax, but indicate the optional parts of the commands.
 \begin{itemize}
 \item selection
 \begin{verbatim}
-  SELECT [[DISTINCT] column_list] [INTO table [AS type]]
-    FROM table_list [WHERE expression]
+  SELECT [[DISTINCT] expression_list]
+    [INTO table [AS type]]
+    FROM table_list
+    [WHERE expression]
+    [GROUPBY expression_list]
+    [HAVING expression]
     [ORDERBY [DISTINCT] sort_list]
     [LIMIT expression] [OFFSET expression]
     [GIVING table [AS type] | set]
@@ -91,6 +100,8 @@ table list.
 
 \item addition
 \begin{verbatim}
+  INSERT INTO table_list SET column=expr, column=expr, ...
+or
   INSERT INTO table_list [(column_list)] VALUES (expr_list)
 or
   INSERT INTO table_list [(column_list)] SELECT_command
@@ -110,8 +121,11 @@ in the table list.
 \begin{verbatim}
   COUNT [column_list] FROM table_list [WHERE ...]
 \end{verbatim}
-It can be used to count occurrences of column values. It is similar to
-the GROUPBY clause in SQL which is not impemented yet.
+It can be used to count occurrences of column values. Although the
+command can still be used, it is basically
+obsolete because the same (and more) can be achieved with the GROUPBY
+clause and aggregate functions in the SELECT command.
+\\Furthermore, usually GROUPBY is faster.
 
 \item calculation
 \begin{verbatim}
@@ -132,15 +146,15 @@ The commands and verbs in the commands are
 case-insensitive, but case is important in string values and
 in names of columns and keywords. Whitespace (blanks and tabs) can
 be used at will.
-\\\htmlref{Section 6 (Modifying a table)}{TAQL:MODIFYING} explains the
+\\\htmlref{Section 7 (Modifying a table)}{TAQL:MODIFYING} explains the
 UPDATE, INSERT, and DELETE commands in more detail. The CREATE TABLE command is
-explained in \htmlref{section 7 (Creating a table)}{TAQL:CREATETABLE}.
-\\\htmlref{Section 8 (Counting in a table)}{TAQL:COUNTING}
+explained in \htmlref{section 8 (Creating a table)}{TAQL:CREATETABLE}.
+\\\htmlref{Section 9 (Counting in a table)}{TAQL:COUNTING}
 explains the COUNT command in more detail.
-\\\htmlref{Section 9 (Calculations on a table)}{TAQL:CALCULATING}
+\\\htmlref{Section 10 (Calculations on a table)}{TAQL:CALCULATING}
 explains the CALC command in more detail.
 
-\subsection{Using a style}
+\subsection{\label{TAQL:USINGSTYLE}Using a style}
 TaQL can be used from different languages, in particular Python and
 Glish. Each has its own conventions breaking down into three important
 categories: 
@@ -162,6 +176,13 @@ The possible (case-independent) values are:
 \item \texttt{PYTHON} which is equivalent to \texttt{BASE0,ENDEXCL,CORDER}
 \item \texttt{GLISH} which is equivalent to \texttt{BASE1,ENDINCL,FORTRANORDER}
 \end{itemize}
+The following values are also possible and are described in the next subsections.
+\begin{itemize}
+\item \texttt{synonym=libname} to define a synonym for a user defined
+  library.
+\item \texttt{TRACE} or \texttt{NOTRACE} to (un)set tracing.
+\item \texttt{TIME} or \texttt{NOTIME} to (un)set timing.
+\end{itemize}
 If multiple values are given for a category, the last one will be used.
 The default style used is \texttt{GLISH}, which is the way TaQL always
 worked before this feature was introduced.
@@ -177,11 +198,30 @@ reversed (data will not be transposed).
 The style feature has to be used with care. A given TaQL statement will
 behave differently when used with another style.
 
-\subsection{Timing}
-It is possible to time a TaQL command by giving the case-insensitive
-keyword \texttt{TIME} after the optional style keywords described
-above. If given, the total execution time and the times needed for various parts of the
-TaQL command will be shown on stdout. For example:
+\subsubsection{UDF library synonyms}
+The style clause can also be used to define synonyms for the
+library names of \htmlref{user defined  functions}{TAQL:UDF}. For example:
+\begin{verbatim}
+  using style mscal=derivedmscal
+\end{verbatim}
+defines the synonym \texttt{mscal}. Synonyms make it
+easier (i.e., less typing) to specify user defined functions.
+\\Note that the synonym in the example above is automatically defined
+by TaQL as well as the synonym \texttt{py} for \texttt{pytaql}.
+
+\subsubsection{Tracing}
+It is possible to get tracing output during the execution of a TaQL
+command by using the case-insensitive value \texttt{TRACE} in the
+\texttt{using style} command. 
+
+\subsubsection{Timing}
+It is possible to time a TaQL command by using the case-insensitive
+value \texttt{TIME} in the \texttt{using style} command. 
+For historical reasons it is also possible to use the the case-insensitive
+keyword \texttt{TIME} before or after the optional style command.
+
+Timing shows the total execution time and the times needed for various parts of the
+TaQL command on stdout. For example:
 \begin{verbatim}
 time select distinct ANTENNA1,ANTENNA2
 from ~/3C343.MS where any(FLAG)'
@@ -203,7 +243,7 @@ TaQL uses the following words as part of its language.
   DELETE        DESC     DISTINCT  DMINFO
   EXCEPT        EXISTS
   F             FALSE    FROM
-  GIVING        GROUPBY
+  GIVING        GROUPBY  GROUPBYROLLUP
   HAVING
   IN            INCONE   INSERT    INTERSECT  INTO
   JOIN
@@ -226,20 +266,20 @@ The reserved words cannot directly be used as
 \htmlref{column name}{TAQL:COLUMNS},
 \htmlref{keyword name}{TAQL:KEYWORDS}, or 
 \htmlref{unit}{TAQL:UNITS}.
-However, a reserved word can be used by escaping it with a backslash like
+However, a reserved word can be used that way by escaping it with a backslash like
 \verb+\+\texttt{AS}. When reading further, the meaning of
 \begin{verbatim}
      \IN  \in  IN [3mm,4mm]
    column unit IN    set
 \end{verbatim}
-might come clear. It means: use unit \texttt{in} (inch) for column
+might become clear. It means: use unit \texttt{in} (inch) for column
 \texttt{IN} and test if it is in the given set. 
 \\Note this is unlike SQL where quotes have to be used to use a
 reserved word as a column name.
 
 \section{Selection from a table}
 The SELECT is the main TaQL command. It can be used to select a subset
-of rows and/or columns from a table or to generate new columns based
+of rows and/or columns from a table and to generate new columns based
 on expressions.
 
 As explained above, the result of a selection is usually a reference
@@ -256,26 +296,74 @@ original table.
 
 The various parts of the SELECT command are explained in the following
 sections.
-\\Although the clauses column\_list, WHERE, ORDERBY, LIMIT, and OFFSET
-are optional,
-at least one of them has to be used. Otherwise no operation is
-performed on the primary table (which makes no sense).
-Note that the GIVING clause with a value set is seen as an operation
-as well.
 
 There is no explicit JOIN clause, but it is possible to
 equi-join tables on row number.
-Such tables have to have the same number of rows.
+Such tables must have the same number of rows.
 \\One can also join , for example, the main table of a
 MeasurementSet with a subtable like the ANTENNA table using a
 \htmlref{subquery}{TAQL:SUBQUERIES}.
-\\Joins are explained further in \htmlref{section 5}{TAQL:JOIN}.
+\\Joins are explained further in \htmlref{section 6.1}{TAQL:JOIN}.
+
+\subsection{SELECT command overview}
+The SELECT command consists of various clauses of which most are
+optional. The full command looks ia as follows where the optional
+parts are shown in square brackets.
+\begin{verbatim}
+  SELECT [[DISTINCT] column_list]
+    [INTO table [AS type]]
+    FROM table_list
+    [WHERE expression]
+    [GROUPBY expression_list]
+    [HAVING expression]
+    [ORDERBY [DISTINCT] sort_list]
+    [LIMIT expression] [OFFSET expression]
+    [GIVING table [AS type] | set]
+\end{verbatim}
+The clauses are executed in a somewhat different order.
+\begin{enumerate}
+\item FROM to define the tables to be used.
+\item WHERE to select the rows.
+\item GROUPBY to group selected rows.
+\item SELECT to fill select columns used in HAVING or ORDERBY
+\item HAVING to select groups.
+\item SELECT to fill the remaining select columns.
+\item ORDERBY to sort the result.
+\item LIMIT/OFFSET to ignore entries in the sorted result.
+\item GIVING/INTO to store the final result.
+\end{enumerate}
+All clauses are explained in full detail in the subsequent sections.
+
+\subsubsection{Column/keyword lookup}
+Expressions in the various clauses will normally use column names to
+select, sort, or group a table. It is also possible to use table
+keywords or column keywords by giving their names.
+Furthermore, it is possible to use a column,
+created in the SELECT clause, in the HAVING and ORDERBY clauses. This
+can save time in both specifying and executing the command, because
+a possibly complicated expression can be used to create such a column. If such
+columns are used, that part of the SELECT is executed before HAVING.
+
+\paragraph*{}
+TaQL uses the following lookup scheme for column/keyword names.
+\begin{enumerate}
+\item If preceeded by a shorthand (like in \texttt{t0.DATA}), the name
+  is looked up in the corresponding table.
+\item If not preceeded by a shorthand, a name is first looked up in
+  the select columns. If not found, the name is looked up in the first
+  table given in FROM.
+\item A name is first looked up as a column in a table. If not found,
+  it is looked up as a table keyword.
+\end{enumerate}
+See the discussion of \htmlref{column names}{TAQL:COLUMNS}
+and \htmlref{keyword names}{TAQL:KEYWORDS} for more details.
+
 
 \subsection{\label{TAQL:COLUMNLIST}SELECT column\_list}
 Columns to be selected can be given as
 a comma-separated list with names of columns that have to be
-selected from the primary table in the table\_list (see below).
-If no column\_list is given, all columns will be selected.
+selected from the tables in the table\_list (see below).
+If no column\_list is given, all columns of the first table will be selected.
 It results in a so-called reference table. Optionally a
 selected column can be given another name in the reference
 table using \texttt{AS name} (where AS is optional).
@@ -284,13 +372,13 @@ For example:
   select TIME,ANTENNA1,ANTENNA2,DATA from 3C343.MS
   select TIME,ANTENNA1,ANTENNA2,MODEL_DATA AS DATA from 3C343.MS
 \end{verbatim}
-It is possible to change the data type of a column by specifying a
-data type (see below) after the new column name. Giving a data type
-(even if the same as the existing one) counts as an expression,
-thus results in the generation of a plain table.
+It is possible to preceed a column name with a table shorthand. If not
+given, a column will be looked up in the first table. Note that if
+equally named columns from different tables are used, one has to get a
+new name, otherwise a 'duplicate name' error will occur.
 For example:
 \begin{verbatim}
-  select MODEL_DATA AS DATA FCOMPLEX from 3C343.MS
+  select t0.DATA, t1.DATA as DATA1 from 3C343.MS t0, 3C343_1.MS t1
 \end{verbatim}
 
 Apart from giving exact column names, it is also possible to use
@@ -324,6 +412,7 @@ does select the \texttt{CORRECTED\_DATA} column.
 \\Note it is not possible to change the name or data type of
 wildcarded columns.
 
+\paragraph*{}
 It is also possible to use expressions in the column list to create
 new columns based on the contents of other columns. When doing this,
 the resulting table is a plain table (because a reference table
@@ -335,7 +424,7 @@ After the name a \htmlref{data type string}{TAQL:DATATYPESTRING} can
 be given for the new column. If no data type is given, the expression
 data type is used.
 \begin{verbatim}
-  select max(ANTENNA1,ANTENNA2) AS ANTENNA INT from 3C343
+  select max(ANTENNA1,ANTENNA2) AS ANTENNA from 3C343
   select means(DATA,1) from 3C343
 \end{verbatim}
 Note that unit conversion can be (part of) an expression. For example:
@@ -345,12 +434,27 @@ Note that unit conversion can be (part of) an expression. For example:
 to store the time in unit \texttt{d} (days). Units are discussed in
 \htmlref{section 4.9}{TAQL:UNITS}.
 
+It is possible to change the data type of a column by specifying a
+data type (see below) after the new column name. Giving a data type
+(even if the same as the existing one) counts as an expression,
+thus results in the generation of a plain table.
+For example:
+\begin{verbatim}
+  select MODEL_DATA AS DATA FCOMPLEX from 3C343.MS
+\end{verbatim}
+
 Note that for subqueries the GIVING clause offers a
 better (faster) way of specifying a result expression. It also makes it
 possible to use intervals.
 
-If a column\_list is given and if all columns are scalars, the
-column\_list can be preceeded by the word DISTINCT.
+Special aggregate functions (e.g., \texttt{gmin}) exist to calculate
+an aggregated value (minimum in this example) per group of rows where
+the grouping is defined by the GROUPBY clause. The entire column is a
+single group if no GROUPBY is given. Aggregation is discussed in more
+detail in \htmlref{section 5}{TAQL:AGGREGATION}.
+
+If a column\_list is given and if all columns (and/or expressions) are
+scalars, the column\_list can be preceeded by the word DISTINCT.
 It means that the result is made unique by removing the rows
 with duplicate values in the columns of the column\_list.
 Instead of DISTINCT the synonym NODUPLICATES or UNIQUE can also
@@ -408,7 +512,7 @@ path specification and environment variables or the UNIX
 character can be escaped with a backslash or the table name can be
 enclosed in single or double quotes.
 \\The first table in the list is the primary
-table and is used for all columns in the other clauses.
+table and is used for column names not preceeded by a shorthand.
 Usually only one table is used in which case the list consists
 of only one table name. E.g.
 \begin{verbatim}
@@ -430,12 +534,17 @@ E.g.
 As shown in the example above a qualifying name (\verb+othertable.+)
 can be used in the WHERE
 clause to specify from which table a keyword has to be taken.
+\\A table name can be followed by a shorthand name that can be used as
+qualifying name. If no shorthand is given, it defaults to the table
+name.
+
+\paragraph*{}
 If no qualifying name is given, the keyword (or column) is taken
 from the primary table (i.e., the first table in the table\_list).
-This means that qualifying names are only needed in special cases.
-The qualifying name can not contain special characters like a slash.
+It means that qualifying names are only needed in special cases.
+Note that a qualifying name can not contain special characters like a slash.
 Therefore a table\_name needs an explicit shorthand alias
-if it contains special characters.
+if it contains special characters and if it will be used to qualifiy columns.
 
 Multiple table lists can also be used to join the tables on row
 number. E.g.
@@ -443,10 +552,11 @@ number. E.g.
   SELECT FROM mytable t1,othertable t2
     WHERE not all(near(t1.data, t2.data))
 \end{verbatim}
-Such a command could be used to check if the data in mytable is about
-equal to the data in othertable. It checks if both tables have the
+Such a command could be used to check if the data in \texttt{mytable} is about
+equal to the data in \texttt{othertable}. TaQL will check if both tables have the
 same number of rows.
 
+\paragraph*{}
 The full table\_list syntax is:
 \\
 \texttt{table\_name1 [shorthand1], table\_name2 [shorthand2], etc.}
@@ -466,6 +576,7 @@ Similar to SQL and OQL the shorthand can also be given using
 Note that if using \texttt{IN}, the shorthand has to preceed
 the table name. It can be seen as an iterator variable.
 
+\paragraph*{}
 There are four special ways to specify a table:
 \begin{enumerate}
 
@@ -502,7 +613,7 @@ given, only primary tables are taken into account.
 Opening a subtable using a path name like \texttt{my.ms/ANTENNA}
 will fail if \texttt{my.ms} is a reference table instead of the
 original table.
-Therefore the path of a subtable can be given using colons instead of
+Therefore the path of a subtable should be given using colons instead of
 slashes like \texttt{my.ms::ANTENNA} which is a slight extension of
 specifying table names in the previous bullet.
 \\In this way a subtable can always be found, no matter where it is located.
@@ -559,10 +670,46 @@ is selected if the expression is true for the values in that row.
 The syntax of the expression is explained
 in a \htmlref{section 4}{TAQL:EXPRESSIONS}.
 
+\subsection{\label{TAQL:GROUPBY}GROUPBY group\_list}
+It defines how rows have to be grouped. Usually a result per group
+will be calculated using aggregate functions.
+A group consists of all rows for which the columns (or expressions)
+given in the group\_list have the same value.
+The (aggregate) expressions in the SELECT clause are calculated for
+the entire group. In this way one can get, for example, the mean XX amplitude
+and the number of time slots per baseline like:
+\begin{verbatim}
+  SELECT ANTENNA1,ANTENNA2,GMEAN(AMPLITUDE(DATA[,0])),GCOUNT()
+         FROM my.ms GROUPBY ANTENNA1,ANTENNA2
+\end{verbatim} 
+It results in a table containing {\it nbaseline} rows with in each row
+the antenna ids, mean amplitude, and number of rows.
+\\If no aggregate function is used for a column, the value of the last
+row in the group is used. Note that in this example ANTENNA1 and
+ANTENNA2 are the same for the entire group. However, if TIME was also
+selected, only the last time would be part of the result.
+\\Note that each expression in the group\_list has to result in a scalar
+value of type bool, integer, double, date, or string.
+\\Aggregate functions are discussed in more detail in
+   \htmlref{section 5}{TAQL:AGGREGATION}. 
+
+\subsection{\label{TAQL:HAVING}HAVING expression}
+This clause can be used to select specific groups. Only the groups
+(defined by GROUPBY) are selected for which the HAVING 
+expression is true. 
+\\Note that HAVING can be given without GROUPBY, although that will
+hardly ever be useful. If no GROUPBY is given, but the SELECT
+statement contains an aggregate function, the result is a single
+group.
+HAVING cannot be used if neither GROUPBY nor SELECT aggregate
+functions are used.
+\\It is discussed in more detail in \htmlref{section 5}{TAQL:AGGREGATION}.
+
 \subsection{\label{TAQL:ORDERBY}ORDERBY sort\_list}
 It defines the order in which the result of the selection
 has to be sorted. The sort\_list is a comma separated list of
-expressions.
+expressions. It operates on the output of the SELECT, thus after a
+possible GROUPBY and HAVING clause is executed.
 \\The sort\_list can be preceeded by the word \texttt{ASC} or
 \texttt{DESC} indicating if the given expressions are by
 default sorted in ascending or descending order (default is ASC).
@@ -594,8 +741,8 @@ E.g.
   ORDERBY DESC col1, col2 ASC, col3
   ORDERBY NODUPLICATES uvw[1] DESC
   ORDERBY square(uvw[1]) + square(uvw[2])
-  ORDERBY datetime(col)      incorrect data type
-  ORDERBY mjd(datetime(col)) is correct
+  ORDERBY datetime(col)       # incorrect data type
+  ORDERBY mjd(datetime(col))  # is correct
 \end{verbatim}
 
 \subsection{LIMIT/OFFSET expression}
@@ -714,7 +861,7 @@ However, arrays of Regex are not possible.
 \\If an operand or function argument with a non-matching data type
 is used, TaQL will do the following automatic conversions:
 \\- from Integer to Double or Complex.
-\\- from Integer or Double to Complex.
+\\- from Double to Complex.
 \\- from String or Double to DateTime.
 
 In this document some special data types are used when describing the functions.
@@ -1001,8 +1148,8 @@ can be given (in any order):
 \end{verbatim}
   \item A more convenient way is to specify it directly. Since this
     makes use of the delimiters space, - or /, it conflicts with the
-    expression grammar as such. However, such conflicts can be
-    solved by using whitespace in a expression and it is believed
+    expression grammar as such. However, possible conflicts can be
+    solved by using whitespace in an expression and it is believed
     that in practice the convenience surpasses the possible
     conflicts.
     \\A large subset of the MVTime formats is supported.
@@ -1010,13 +1157,12 @@ can be given (in any order):
     or \texttt{date-time}, where the time part (including
     the space, -, or / delimiter) is optional.
     The possible date formats are:
-    \\- YYYY/MM/DD or DD-MM-YYYY
+    \\- YYYY/MM/DD, YYYY-MM-DD, or DD-MM-YYYY where DD and MM must
+    be 2 digits and YYYY 4 digits.
     \\- DD-MMMMMMMM-YY where the - is optional and MMMMMMM is the
-    case-insensitive name of the month (at least 3 letters).
-    \\- YYYY//DDD or DDD--YYYY where DDD is the day number in
-    the year.
-    \\In the DMY format, 2000 is added if year$<$50 and
-    1900 is added if 50$<=$year$<$100.
+    case-insensitive name of the month (at least 3 letters). 
+    DD can be 1 or 2 digits and YY 1 to 4 digits. 2000 is added if YY$<$50 and
+    1900 is added if 50$<=$YY$<$100.
     \\If MM$>$12, YYYY will be incremented accordingly.
     \\The general time format in a DateTime constant is:
     \\- hh:mm:ss.s
@@ -1024,11 +1170,10 @@ can be given (in any order):
     for the first colon and \textbf{m} or \textbf{M} for the second.
     Trailing parts can be omitted. E.g.
 \begin{verbatim}
-  10-2-97
   10-02-1997
   10-February-97
   10feb97
-  1997/2/10          are all identical
+  1997/02/10         are all identical
 
   1May96/3:          : (or h) is mandatory
   1May96-3:0
@@ -1049,11 +1194,11 @@ exception of regular expressions.
 \htmlref{set}{TAQL:SETS}. When needed such a set is automatically
 transformed to an array. E.g.
 \begin{verbatim}
-  [1:10]
+  [0:10]
   ['str1', 'str2', 'str3']
   'str' + ['1', '2', '3']
 \end{verbatim}
-The first example results in an integer array of 10 elements with values 1..10.
+The first example results in an integer array of 10 elements with values 0..9.
 The others result in a string array of 3 elements. The second version already
 shows that strings can be concatenated (as explained further on).
 
@@ -1063,8 +1208,8 @@ argument as a scalar, srt, or another array. The shape is given in the latter
 arguments as scalars or as a set. The array is initialized to the
 values given which are wrapped if the array has more elements.
 \begin{verbatim}
-  array([1:10],10,4)
-  array([1:10], [10,4])
+  array([1:11],10,4)
+  array([1:11], [10,4])
   array(F,shape(DATA))
 \end{verbatim}
 The first examples create an array with shape [10,4] containing the values
@@ -1073,6 +1218,9 @@ The latter results in a boolean array having the same
 shape as the DATA array and filled with False.
 
 \subsubsection{Masked Arrays}
+NOTE: This section is for a future version of TaQL. It has not been fully
+implemented yet.
+
 An array can have an optional mask. Similar to numpy's masked
 array, a mask value True means that the value is masked off, thus not
 taken into account in reduction functions like calculating the mean.
@@ -1100,23 +1248,16 @@ The first example applies the FLAG column in a MeasurementSet to the
 DATA column.
 The second example masks off high DATA values.
 
-The function \texttt{arraydata}, \texttt{arraymask}, and \texttt{flatten}
+The functions \texttt{arraydata}, \texttt{arraymask}, and \texttt{flatten}
 can be used to get the array data or mask. The last one flattens the
 array to a vector while removing all masked elements.
 
 
 \subsection{\label{TAQL:COLUMNS}Table Columns}
 A table column can be used in a query by giving its name in the
-expression.
-Note that only columns in the primary table can be handled directly.
-A column in another table can be used via a subquery. E.g.
-\begin{verbatim}
-  SELECT FROM tab WHERE col >
-        mean([SELECT othercol FROM othertab])
-\end{verbatim}
-An expression has to contain at least one column, since columns
-are the only variable part in it. That is, a row can only be selected
-or sorted by means of the column values in each row.
+expression, possibly qualified with a table shorthand name.
+\\If, for example, the WHERE expression does not contain a column
+name, the expression will be a constant one and be a single row.
 
 A column can contain a scalar or an array value of any data type
 supported by the table system. It will be mapped to the available TaQL
@@ -1148,6 +1289,20 @@ using the dot operator; e.g. \texttt{col.fld} means use field
 in itself.
 \\Alas records in columns are not really supported yet. One can specify
 fields, but thereafter an error message will be given.
+
+\subsubsection{Referring to SELECT columns}
+Usually a column used in an expression will be a column in one of
+the tables specified in the FROM clause. However, it is possible to
+also use a column created in the SELECT clause in expressions given in
+the HAVING or ORDERBY clause.
+In fact, a column name not preceeded by a table shorthand, is first
+looked up in the SELECT columns and thereafter in the first FROM table.
+
+It can be advantageous to use a SELECT column if that column
+is an expression; it saves both typing and execution time.
+ because that
+expression is executed only once.
+Will only fill the referred columns first.
 
 \subsection{\label{TAQL:KEYWORDS}Table Keywords}
 It is possible to use table or column keywords, which can have
@@ -1477,7 +1632,7 @@ Units can be given as follows:
   5 'km/h' + 1 'm/s'      is 8.6 km/h
   iif(F,3min,30sec)       is 0.5 min
 \end{verbatim}
- \item Similarly operands of comparison operators and arguments of
+ \item Similarly, operands of comparison operators and arguments of
 	comparison functions (like \texttt{near}) are converted to
 	the unit of the first operand or argument with a unit.
  \item The result of a multiplication and division is a compound unit
@@ -1846,7 +2001,7 @@ They are meant for an array, but can also be used for a scalar.
     Return minimum of all elements.
   \item[] \texttt{real MAX(real)}\\
     Return maximum of all elements.
-  \item[] \texttt{double MEAN(real)}\\
+  \item[] \texttt{dnumeric MEAN(numeric)}\\
     Return mean of all elements.
   \item[] \texttt{double VARIANCE(real)}\\
     Return variance (the sum of
@@ -1906,7 +2061,7 @@ They can only be used for arrays, thus not for scalars.
     Return minimum of elements.
   \item[] \texttt{real MAXS(real)}\\
     Return maximum of elements.
-  \item[] \texttt{double MEANS(real)}\\
+  \item[] \texttt{dnumeric MEANS(numeric)}\\
     Return mean of elements.
   \item[] \texttt{double VARIANCES(real)}\\
     Return variance (the sum of
@@ -1952,7 +2107,7 @@ if it does not fit integrally.
     Return minimum of elements.
   \item[] \texttt{double BOXEDMAX(real)}\\
     Return maximum of elements.
-  \item[] \texttt{double BOXEDMEAN(real)}\\
+  \item[] \texttt{dnumeric BOXEDMEAN(numeric)}\\
     Return mean of elements.
   \item[] \texttt{double BOXEDVARIANCE(real)}\\
     Return variance (the sum of
@@ -1994,7 +2149,7 @@ window can be applied) are set to 0 (or false).
     Return minimum of elements.
   \item[] \texttt{double RUNNINGMAX(real)}\\
     Return maximum of elements.
-  \item[] \texttt{double RUNNINGMEAN(real)}\\
+  \item[] \texttt{dnumeric RUNNINGMEAN(numeric)}\\
     Return mean of elements.
   \item[] \texttt{double RUNNINGVARIANCE(real)}\\
     Return variance (the sum of
@@ -2089,6 +2244,86 @@ below. They can operate on scalars and arrays.
     If the operand is a scalar, it returns a 1-dim array with 1 element.
 \end{description}
 
+\subsubsection{\label{TAQL:AGGRFUNC}Aggregate functions}
+The\texttt{gxxx} aggregate functions calculate an aggregated value
+for all rows in a group, usually defined with a GROUPBY clause.
+They can only be used in the SELECT and the HAVING clause. Currently,
+they can only be used for scalar columns or expressions.
+\\Most functions reduce the group values (also if arrays) to a scalar
+value, but the last two really aggregate the values and return an array. 
+\\Note that the function names differ from their SQL counterparts;
+they all have the prefix \texttt{g}, because TaQL functions like
+\texttt{max} already exist for array operations.
+
+\begin{description}
+  \item[] \texttt{integer GCOUNT(), integer GCOUNT(*)}\\
+    Return the number of rows per group.
+  \item[] \texttt{integer GCOUNT(columnname)}\\
+    Return the number of rows per group for which the column has a
+    value. Note that a column containing variable sized arrays can
+    contain empty cells.
+  \item \texttt{anytype GFIRST(anytype)}\\
+      Return the first value of the group.
+  \item \texttt{anytype GLAST(anytype)}\\
+      Return the last value of the group.
+      \\Note this function is implicitly used if an expression without
+      aggregate function is used in a group.
+  \item[] \texttt{bool GANY(bool)}\\
+    Is any element true?
+  \item[] \texttt{bool GALL(bool)}\\
+    Are all elements true?
+  \item[] \texttt{integer GNTRUE(bool)}\\
+    Return number of true elements.
+  \item[] \texttt{integer GNFALSE(bool)}\\
+    Return number of false elements.
+  \item[] \texttt{numeric GSUM(numeric)}\\
+    Return sum of all elements.
+  \item[] \texttt{numeric GSUMSQUARE(numeric), numeric GSUMSQR(numeric)}\\
+    Return sum of all squared elements.
+  \item[] \texttt{numeric GPRODUCT(numeric)}\\
+    Return product of all elements.
+  \item[] \texttt{real GMIN(real)}\\
+    Return minimum of all elements.
+  \item[] \texttt{real GMAX(real)}\\
+    Return maximum of all elements.
+  \item[] \texttt{dnumeric GMEAN(numeric)}\\
+    Return mean of all elements.
+  \item[] \texttt{double GVARIANCE(real)}\\
+    Return variance (the sum of
+    \\\texttt{(a(i) - mean(a))**2/(nelements(a) - 1)}.
+  \item[] \texttt{double GSTDDEV(real)}\\
+    Return standard deviation (the square root of the variance).
+  \item[] \texttt{double GAVDEV(real)}\\
+    Return average deviation. (the sum of
+    \\\texttt{abs(a[i] - mean(a))/nelements(a)}.
+  \item[] \texttt{double GRMS(real)}\\
+    Return root-mean-squares. (the square root of the sum of
+    \\\texttt{(a(i)**2)/nelements(a)}.
+  \item[] \texttt{double GMEDIAN(real)}\\
+    Return median (the middle element).
+    If the array has an even number of elements, the mean of
+    the two middle elements is returned.
+  \item[] \texttt{double GFRACTILE(real, doublescalar fraction)}\\
+    Return the value of the element at the given fraction.
+    Fraction 0.5 is the same as the median.
+  \item[] \texttt{double GHIST(real, intscalar nbin, realscalar start,
+    realscalar end)}\\
+    Return the histogram of the data using the given number of bins.
+    
+    The histogram contains an extra bin at the beginning and the end
+    for the outliers. 
+  \item[] \texttt{anytypearray GAGGR(anytype)}\\
+    Return an array containing the concatenated values. Thus if the
+    column contains scalar values, the result is a vector. Otherwise
+    it is an array whose dimensionality is one higher.
+    \\Note that this function can be very useful for array, because it
+    makes it possible to use partial reduction functions like
+    \texttt{medians}. In this way the medians along the group axis can
+    be calculated. 
+  \item[] \texttt{integerarray GROWID()}\\
+    Return the row numbers of the rows in the group.
+\end{description}
+
 \subsubsection{Miscellaneous functions}
 \begin{description}
   \item[] \texttt{bool ISDEFINED(anytype)}\\
@@ -2112,7 +2347,7 @@ below. They can operate on scalars and arrays.
     useful for returning the result of a selection of a subtable
     of a Casacore measurement set
     (see also \htmlref{subqueries in section 4.11}{TAQL:SUBQUERIES}
-    and \htmlref{examples in section 9}{TAQL:SELEXAMPLES}).
+    and \htmlref{examples in section 11.1}{TAQL:SELEXAMPLES}).
   \item[] \texttt{double RAND()}\\
     Return (per table row) a uniformly distributed random number
     between 0 and 1 using a Multiplicative Linear Congruential Generator.
@@ -2272,30 +2507,57 @@ In this way one can get a better indication how close sources are to
 the cone centers.
 
 \subsubsection{\label{TAQL:UDF}User defined functions}
-User defined functions (UDF) have to exist in a dynamically loadable
+User defined functions (UDF) have to reside in a dynamically loadable
 library. In TaQL the name of a UDF consists of the name of the
-library (without  lib prefix and extension) followed by a dot and the function name.
+library (without lib prefix and extension) followed by a dot and the function name.
 For example:
 \begin{verbatim}
-  derivedmscal.pa1
+  mscal.pa1()
 \end{verbatim}
 denotes function \texttt{pa1} in shared library
-\texttt{libderivedmscal.so} or \texttt{libcasa\_derivedmscal.so}. On
-OS-X the extension \texttt{.dylib} is used.
-\\The library and function name are case-insensitive.
+\texttt{libderivedmscal.so} or \texttt{libcasa\_derivedmscal.so}. For
+OS-X the extension \texttt{.dylib} can also be used.
+\\The shared library name must be fully lowercase, but the UDF name is
+case-insensitive. 
 
- In section
+In the \htmlref{\texttt{USING STYLE}}{TAQL:USINGSTYLE} clause it is
+possible to define synonyms for the UDF library names. By default,
+\texttt{mscal} is defined as a synonym for \texttt{derivedmscal} and
+\texttt{py} as a synonym for \texttt{pytaql}.
+
+Usually a UDF will operate on the arguments given to the function and
+will not itself operate on a table given in a query command.
+However, some UDFs (most notably the \texttt{mscal} ones) do not have
+arguments, but operate directly in a specific way on a table. Normally
+they use the first table given in the FROM clause, but the UDF name
+can be preceeded by a table shorthand \ref{TAQL:TABLE_LIST} to specify
+another table. For example:
+\begin{verbatim}
+  select t1.mscal.ha1(), t2.mscal.ha1() from my1.ms t1, my2.ms t2
+\end{verbatim}
+to get the hourangle from two different tables.
+Of course, both tables need to have the same number of rows.
+\\Note that UDFs not directly operating on a table, will ignore a shorthand.
+
+In section
 \htmlref{Writing user defined functions}{TAQL:UDFWRITE} it is
 explained how to write user defined functions.
 
 \subsubsection{\label{TAQL:MSFUNC}Special MeasurementSet functions}
 The casacore package comes with several predefined UDFs in library
-\texttt{libcasa\_derivedmscal}. The functions can be used on a
-MeasurementSet or a CASA calibration table (both old and new format). 
-All angles are returned in radians.
+\texttt{libcasa\_derivedmscal}. It contains four groups of UDFs,
+all operating on a MeasurementSet and several on a CASA calibration
+table (both old and new format).  
+\\Although the library is called \texttt{derivedmscal}, for ease of
+use it is possible to use the synonym \texttt{mscal}. 
+
+\paragraph*{}
+{\bf Get derived values}
+\\The first group calculates derived values like hourangle and azimuth
+for the first or second antenna of a baseline. 
 For calibration tables, where a row contains a single antenna, 
 functions like PA1 are the same as PA2. 
-\\For ease of use it is possible to use the alias \texttt{mscal}.
+All angles are returned in radians.
 \begin{description}
   \item[] \texttt{double MSCAL.HA()}\\
     gives the hourangle of the array center (observatory position).
@@ -2323,13 +2585,26 @@ functions like PA1 are the same as PA2.
     gives the azimuth/elevation of ANTENNA1.
   \item[] \texttt{doublearray MSCAL.AZEL2()}\\
     gives the azimuth/elevation of ANTENNA2.
-  \item[] \texttt{doublearray MSCAL.UVW()}\\
-    gives the UVW coordinates in J2000 (in meters).
+  \item[] \texttt{doublearray MSCAL.NEWUVW()}\\
+    gives the 3-vector of UVW coordinates in J2000 in meters. It recalculates
+    them, thus does not return the UVW coordinates stored in the MeasurementSet.
+  \item[] \texttt{doublearray MSCAL.NEWUVWWVL()}\\
+    gives the 3-vector of calculated UVW coordinates in J2000 in wavelengths for
+    the reference frequency of the appropriate spectral window.
+  \item[] \texttt{doublearray MSCAL.NEWUVWWVLS()}\\
+    gives the nfreq*3-matrix of calculated UVW coordinates in J2000 in wavelengths for
+    all channel frequencies of the appropriate spectral window.
+  \item[] \texttt{doublearray MSCAL.UVWWVL()}\\
+    gives the 3-vector of stored UVW coordinates in wavelengths for
+    the reference frequency of the appropriate spectral window.
+  \item[] \texttt{doublearray MSCAL.UVWWVLS()}\\
+    gives the nfreq*3-matrix of stored UVW coordinates in wavelengths for
+    all channel frequencies of the appropriate spectral window.
 \end{description}
 By default all these functions will use the direction given in column PHASE\_DIR
 of the FIELD subtable. It is possible to use another column by giving
-its name as a string argument (e.g., 'HA(DELAY\_DIR)'). 
-\\It is also possible to use an explicit direction which
+its name as a string argument (e.g., HA('DELAY\_DIR')). 
+\\Except for the last 2 functions, it is possible to use an explicit direction which
 must be given as [RA,DEC] in J2000 or as a case-insensitive name of a planetary object
 (as defined by the casacore Measures).
 For example:
@@ -2337,8 +2612,8 @@ For example:
    derivedmscal.azel1([5h23m32.76, 10d15m56.49])
    derivedmscal.azel1('MOON')
 \end{verbatim} 
-These examples give the azimuth and elevation of the given directions for each
-selected row in the MeasurementSet, thus using the position of ANTENNA1 and the
+The examples above give the azimuth and elevation of the given directions for each
+selected row in the MeasurementSet, using the position of ANTENNA1 and the
 times in these rows. 
 
 If a string value is given, it is first tried as a planetary object.
@@ -2352,7 +2627,8 @@ For example:
 means that column SUN in the FIELD table has to be used.
 
 \paragraph*{}
-The \texttt{STOKES} function makes it possible to convert the Stokes
+{\bf Stokes conversion}
+\\The \texttt{STOKES} function makes it possible to convert the Stokes
 parameters of a DATA column in a MeasurementSet, for instance from
 linear or circular to iquv. It is also possible to convert the weights
 or flags, i.e., to combine them in the same way as the data would be combined.
@@ -2387,25 +2663,74 @@ creates a table with column CIRCDATA containing the circular
 polarization data.
 
 \paragraph*{}
-The \texttt{BASELINE} function makes it possible to do selection on
+{\bf CASA style selection}
+\\The \texttt{BASELINE} function makes it possible to do selection on
 baselines in a MeasurementSet or CalTable using the special
-\htmladdnormallink{ CASA baseline selection syntax}
-{http://www.aoc.nrao.edu/~sbhatnag/misc/msselection/msselection.html}
+CASA selection syntax described in \htmladdnormallink{note 263}{263.html}
+Similar functions \texttt{TIME, FIELD, SCAN, SPW, UVDIST, STATE, OBS}, and
+\texttt{ARRAY} select on the corresponding fields. 
+All functions return a Bool value telling if it matches or not.
 \begin{verbatim}
   select from my.ms where mscal.baseline('RT[2-4]')
 \end{verbatim}
-selects the baselines containing an antenna whose name matches the pattern in the
-function argument. Note that autocorrelations are not selected this
-way.
+selects the cross-correlation baselines containing an antenna whose
+name matches the pattern in the function argument.
 
-Similar functions \texttt{TIME, FIELD, SCAN, SPW, UVDIST, STATE, OBS}, and
-\texttt{ARRAY} use the CASA selection syntax to select on
-the corresponding fields.
-The aforementioned document also describes these syntaxes. For
-example:
+\paragraph*{}
+{\bf Get values from a subtable}
+\\Several functions exist to get information like the name of an antenna
+from the subtable for each row in the main table. Basically they do a
+join of the main table and a subtable. For example:
 \begin{verbatim}
-  select from my.ms where mscal.field('1~4')
+  select mscal.ant1name(), mscal.ant2name() from my.ms
 \end{verbatim}
+gets the names of the antennae used in each baseline.
+
+The following functions can be used:
+\begin{description}
+  \item[] \texttt{double MSCAL.ANT1NAME()}\\
+    gives the name of ANTENNA1.
+  \item[] \texttt{double MSCAL.ANT2NAME()}\\
+    gives the name of ANTENNA2.
+  \item[] \texttt{double MSCAL.ANT1COL(ColumnName)}\\
+    gives for ANTENNA1 the value in the given column (in quotes) in
+    the ANTENNA subtable.
+  \item[] \texttt{double MSCAL.ANT2COL(ColumnName)}\\
+    gives for ANTENNA2 the value in the given column (in quotes) in
+    the ANTENNA subtable.
+  \item[] \texttt{double MSCAL.STATECOL(ColumnName)}\\
+    gives for STATE\_ID the value in the given column (in quotes) in
+    the STATE subtable.
+  \item[] \texttt{double MSCAL.OBSCOL(ColumnName)}\\
+    gives for OBSERVATION\_ID the value in the given column (in quotes) in
+    the OBSERVATION subtable.
+  \item[] \texttt{double MSCAL.SPWCOL(ColumnName)}\\
+    gives for DATA\_DESC\_ID the value in the given column (in quotes) in
+    the SPECTRAL\_WINDOW subtable.
+  \item[] \texttt{double MSCAL.POLCOL(ColumnName)}\\
+    gives for DATA\_DESC\_ID the value in the given column (in quotes) in
+    the POLARIZATION subtable.
+  \item[] \texttt{double MSCAL.FIELDCOL(ColumnName)}\\
+    gives for FIELD\_ID the value in the given column (in quotes) in
+    the FIELD subtable.
+  \item[] \texttt{double MSCAL.PROCCOL(ColumnName)}\\
+    gives for PROCESSOR\_ID the value in the given column (in quotes) in
+    the PROCESSOR subtable.
+  \item[] \texttt{double MSCAL.SUBCOL(SubtableName, ColumnName, idcolumn)}\\
+    gives for the (integer) id-column the value in the given column in
+    the given subtable. This is the most common form and can be used
+    to join any table with a subtable.
+\end{description}
+Note that the following are equivalent. The first versions are
+shorthands for the latter ones.
+\begin{verbatim}
+ mscal.ant1name()
+ mscal.ant1col('NAME')
+ mscal.subcol('ANTENNA', 'NAME', ANTENNA1)
+\end{verbatim}
+In the last example the id-column must be given as such, thus must not
+be a string.
+
 
 \subsubsection{\label{TAQL:MEASFUNC}Special Measures functions}
 These functions make it possible to convert measures like directions,
@@ -2618,9 +2943,16 @@ mean).
          FROM ~/GER1.MS 
 \end{verbatim}
 This example shows how a subquery is used to join the main table of a
-MeasurementSet with its ANTENNA subtable. The subquery returns a list
+MeasurementSet and its ANTENNA subtable. The subquery returns a list
 with the names of all antennae, which subsequently is indexed with the
 antenna number to get the antenna name for each row in the main table.
+
+\begin{verbatim}
+  SELECT mscal.ant1name() from ~/GER1.MS
+\end{verbatim}
+is a newer and easier way to obtain the name of ANTENNA1. It makes use
+of the new user defined functions in \texttt{derivedmscal} which can do an
+implicit join of a MeasurementSet and its subtables.
 
 \begin{verbatim}
   SELECT FROM maintable WHERE time IN
@@ -2675,7 +3007,7 @@ However, below a even nicer solution is given.
 The time range problem above can be solved elegantly by using
 a set as the result of the subquery. Instead of a table name,
 it is possible to give an expression in the GIVING clause (as mentioned
-in \htmlref{section 3.8}{TAQL:GIVING}). E.g.
+in \htmlref{section 3.10}{TAQL:GIVING}). E.g.
 \begin{verbatim}
   select from MY.MS where TIME in
       [select FROM OTHERTABLE where WINDSPEED < 5
@@ -2747,21 +3079,96 @@ from the WSRT for the coming 30 days.
 \end{enumerate}
 
 
+\section{\label{TAQL:AGGREGATION}Aggregation, GROUPBY, HAVING}
+Similar to SQL it is possible to do aggregation and grouping in TaQL
+and to do selection on the groups using the HAVING clause.
+
+\subsection{Aggregation and GROUPBY}
+One or more aggregated values
+can be calculated for a group defined by the GROUPBY clause.
+The aggregate functions described in 
+\htmlref{section 4.10.13}{TAQL:AGGRFUNC} can be used.
+For example:
+\begin{verbatim}
+  SELECT ANTENNA1, ANTENNA2, gcount(), sqrt(sumsqr(UVW[:2]))
+      FROM my.ms GROUPBY ANTENNA1,ANTENNA2
+\end{verbatim}
+\texttt{gcount} counts the number of rows per baseline and shows the
+baseline length.
+\\Often only the GROUPBY columns and aggregated values are part of the
+SELECT clause, but the example shows that other values (here the
+baseline length) can also be selected. Non-aggregated values get the
+values in the last row of a group. 
+
+Usually aggregated values and GROUPBY are used jointly, but it is
+possible to leave out one of them. If GROUPBY is not given, the entire
+table is a single group. For example: 
+\begin{verbatim}
+  SELECT gcount() from my.ms
+\end{verbatim}
+does not have groups, thus shows the total number of rows in the MS.
+\begin{verbatim}
+  SELECT ANTENNA1,ANTENNA2 from my.ms GROUPBY ANTENNA1,ANTENNA2
+\end{verbatim}
+does not use aggregate functions, but shows the unique baselines in
+the MS. Apart from the order, it has the same result as
+\begin{verbatim}
+  SELECT ANTENNA1,ANTENNA2 from my.ms ORDERBY UNIQUE ANTENNA1,ANTENNA2
+\end{verbatim}
+but is somewhat faster.
+
+In the examples above a sole aggregate function is used, but it is
+also possible to use it in an expression. Similarly, an expression can
+be used in the GROUPBY. For example:
+\begin{verbatim}
+  select ctod(gmean(TIME)), gcount() from ~/data/GER.MS
+    groupby round((TIME -
+      [select gmin(TIME) from ~/data/GER.MS][0])/INTERVAL/5)
+\end{verbatim}
+groups the MS in chunks of 5 time slots. Note that the nested query
+gets the TIME of the first time slot. The result is a set, hence the 0th element
+has to be taken.
+
+Note that an aggregate function can only be used in the SELECT and
+HAVING clause, so TaQL will give an error message if used elsewhere.
+
+\subsection{HAVING}
+The HAVING clause can be used to select specific groups. For example:
+\begin{verbatim}
+  SELECT TIME, gmax(amplitude(DATA)) from my.ms GROUPBY TIME
+      HAVING gmax(amplitude(DATA)) > 100
+\end{verbatim}
+groups by time, but only selects the groups for which the maximum
+amplitude of the DATA is more than 100.
+\\Similar to WHERE, any expression can be used in HAVING, but the
+result has to be a bool scalar value.
+
+As shown in the example, HAVING
+will normally use aggregate functions, but it is not strictly
+needed. However, selections without an aggregate function could
+as well be done in the WHERE clause.
+\\Usually HAVING will be used in combination with GROUPBY, but it can
+be used without. It can also be used without an aggregate function in
+the SELECT. However, it is an error if both are omitted.
+
+
 \section{Some further remarks}
 \subsection{\label{TAQL:JOIN}Joining tables}
 As discussed in some previous sections it is possible to join tables
 on row number. Two examples show how to do it.
 
+\subsubsection{Join on row number}
 \begin{verbatim}
   SELECT FROM mytable t1,othertable t2
-    WHERE not all(near(t1.data, t2.data))
+    WHERE not all(near(t1.DATA, t2.DATA))
 \end{verbatim}
-This command can be used to check if the data in mytable is about
-equal to the data in othertable. Both tables have to have the
+This command can be used to check if the data in \texttt{mytable} is about
+equal to the data in \texttt{othertable}. Both tables have to have the
 same number of rows.
-\\The join is done on row number, thus the data of the same rows are
-compared.
+\\The join is done on row number, thus the data in each pair of
+corresponding rows are compared.
 
+\subsubsection{Join using an indexed subquery}
 \begin{verbatim}
   SELECT [SELECT NAME FROM ::ANTENNA][ANTENNA1]
          FROM ~/GER1.MS 
@@ -2773,8 +3180,37 @@ antenna number to get the antenna name for each row in the main table.
 \\The join is done using the ANTENNA1 column which gives the row
 number in the subtable, thus the index in the subquery result.
 
+\subsubsection{Join using a subquery set}
+\begin{verbatim}
+  SELECT FROM ~/GER1.MS WHERE ANTENNA1 IN
+         [SELECT ROWID() FROM ::ANTENNA WHERE NAME ~ p/CS*/]
+\end{verbatim}
+This example shows another way to use a subquery for a  join of the
+main table of a MeasurementSet with its ANTENNA subtable. 
+It selects all baselines for which the first station is a core station.
+The subquery returns a set containing the ids of the core stations,
+which is used to select the correct stations in the main table.
+
+\subsubsection{Join using derivedmscal}
+Several UDFs in the \texttt{derivedmscal} library make it possible to
+easily join a MeasuementSet or CASA Calibration Table with a subtable like
+ANTENNA or SPECTRAL\_WINDOW. These functions know which columns to use
+making the join straightforward like in
+\begin{verbatim}
+  SELECT mscal.ant1name(), mscal.ant2name() from ~/GER1.MS
+\end{verbatim}
+The library also contain the more general SUBCOL function making it
+possible to join any table with a subtable. For example:
+\begin{verbatim}
+  SELECT mscal.subcol('NAMES','NAME',NAMEID) from obs.parmdb
+\end{verbatim}
+to get the parameter name for a LOFAR ParmDB table. A ParmDB table has
+a subtable NAMES containing the NAME and other info of a
+parameter. The column NAME\_ID is used to reference that subtable.
+
+
 \subsection{Optimization}
-A lot of development work can be done to improve the query optimization.
+A lot of development work could be done to improve the query optimization.
 At this stage only a few simple optimizations are done.
 \begin{itemize}
 \item Constant subexpressions are calculated only once. E.g.
@@ -2787,7 +3223,13 @@ intervals are combined and eliminated. E.g.
    sumsqr(DIRECTION[1])>0 giving [TIME-INTERVAL/2=:=TIME+INTERVAL/2]]
 \end{verbatim}
 can generate many identical or overlapping intervals. They are
-sorted and combined where possible to make the set as small as possible.
+sorted and combined where possible to make the set as small as
+possible.
+\item If the righthand side of the IN operator is a single value, IN
+  is turned into ==.
+\item If the righthand side of the IN operator is a set of integer
+  values with a min-max range of <=1024*1024, that set is turned into
+  a boolean vector to get linear lookup time.
 \end{itemize}
 
 TaQL does not recognize common subexpressions nor does it attempt to
@@ -2957,12 +3399,26 @@ following could be used:
     
 
 \subsection{INSERT}
-The \texttt{INSERT} command adds rows to the table. It can take two forms:
+The \texttt{INSERT} command adds rows to the table. It can take three forms:
 \begin{verbatim}
+  INSERT INTO table_list SET column=expr, column=expr, ...
   INSERT INTO table_list [(column_list)] VALUES (expr_list)
   INSERT INTO table_list [(column_list)] SELECT_command
 \end{verbatim}
-The first form adds one row to the table and puts the values given in
+The first and second form are basically equivalent, but differ in syntax. The
+first form has the same syntax as the UPDATE command, while the second
+form is the SQL syntax making it possible to leave out the column
+names (see below).
+\\The first form adds one row to the table and puts the values given in
+the expressions into the columns.
+\\For example:
+\begin{verbatim}
+  INSERT INTO my.ms SET ANTENNA1=0, ANTENNA2=1
+\end{verbatim}
+adds one row, puts 0 in ANTENNA1 and 1 in ANTENNA2.
+
+\paragraph*{}
+The second form adds one row to the table and puts the values given in
 the expression list into the columns given in the column list.
 If the column list is not given, it defaults to all stored columns in
 the table in the order as they appear in the table description.
@@ -2984,7 +3440,8 @@ to the column data type and unit.
 \end{verbatim}
 adds one row, puts 0 in ANTENNA1 and 1 in ANTENNA2.
 
-The second form evaluates the SELECT command and copies the rows
+\paragraph*{}
+The third form evaluates the SELECT command and copies the rows
 found in the selection to the table being modified (which is given
 in the INTO part).
 The columns used in the modified table are defined in the column list.
@@ -3090,8 +3547,11 @@ have to be bound to the data manager.
 
 
 \section{\label{TAQL:COUNTING}Counting in a table}
-TaQL does not have a GROUPBY command (yet). However, it has a command
-that can be used to count the number of occurrences in a table.
+Before TaQL had the GROUPBY command, the COUNT command could be used
+instead of the \htmlref{\texttt{gcount} aggregate function}{TAQL:AGGRFUNC} 
+to count the number of occurrences in a table.
+\\For backward compatibility this command can still be used, but its
+usage is discouraged.
 
 The exact syntax is:
 \begin{verbatim}
@@ -3405,9 +3865,6 @@ great advantage that it also works on FITS and Miriad images.
   \item[] \texttt{ calc 7-Apr-2007 - 20-Nov-1979 }
       \\calculates the number of days between these dates.
 
-  \item[] \texttt{ calc (1-1-2006 - 1-1-1950)\%365 }
-      \\calculates the number of leap days in this time span.
-
   \item[] \texttt{ calc sum([select from MY.MS giving [ntrue(FLAG)]]) }
       \\determines the total number of flags set in the measurement set.
 
@@ -3433,6 +3890,77 @@ great advantage that it also works on FITS and Miriad images.
         thus the frequency axis.
 
 \end{description}
+
+\subsection{\label{TAQL:AGGREXAMPLES}Aggregation/groupby examples}
+\begin{description}
+  \item[] \texttt{ select gcount(*) from my.ms }
+      \\counts the number of rows in the table.
+
+  \item[] \texttt{ select TIME, gcount(*) from my.ms groupby TIME }
+      \\counts the number of rows (usually number of baselines) per time slot.
+
+  \item[] \texttt{ select ANTENNA1,ANTENNA2,gfirst(TIME),glast(TIME),gcount() }
+    \\\texttt{ from my.ms groupby ANTENNA1,ANTENNA2 }
+      \\counts the number of rows (usually number of time slots) and
+      shows the first and last time per baseline.
+
+  \item[] \texttt{ select gmean(DATA) from my.ms }
+    \\\texttt{ groupby int((TIME - [select TIME from my.ms limit1][0]) / INTERVAL / 10)) }
+      \\ calculates the average of DATA for every 10 time slots. Note it
+      also averages in frequency and polarization. The following example
+      shows how to average each frequency channel and polarization.
+
+  \item[] \texttt{ select boxedmean(gaggr(DATA), 10, 4) from my.ms }
+    \\\texttt{ groupby int((TIME - [select TIME from my.ms limit1][0]) / INTERVAL / 10)) }
+      \\ calculates the average of DATA per polarization for every 10
+      time slots and 4 frequency channels. Note it it first combines
+      the data of each 10 time slots in a single array, after which
+      the \texttt{boxedmean} function is used to average every
+      [10,4,1] box.
+\end{description}
+
+
+\subsubsection{Obtaining the flux density from visibility data}
+The Miriad program \texttt{uvflux} estimates the source I flux density and its standard deviation at the phase center without having to make an image. 
+A single, not too complicated TaQL command (courtesy Dijkema, Heald)
+provides the same functionality on a MeasurementSet. 
+For LOFAR it is best to use baselines with a length between 5 and 10 km.
+The command shows various aspects of TaQL that are explained below. 
+The numbers at the beginning of the lines point to the text following
+the example. 
+\begin{verbatim}
+4.    select gstddev(SUMMED) as STDVALS,
+4.           gmean(SUMMED) as MEANVALS,
+4.           gcount(SUMMED) as NVALS
+3.    from (select gmean(
+1.                  sum(iif(FLAG[,0:4:3], 0, abs(DATA[,0:4:3])))
+1.                   / nfalse(FLAG[,::3])
+3.                 ) as SUMMED
+            from ~/data/GER.MS
+2.          where mscal.baseline('5km~10km’) && !all(FLAG)
+3.          groupby TIME)
+\end{verbatim}
+A subquery is used to get the average flux (I = 0.5*(XX+YY)) per time
+slot.
+\begin{enumerate}
+\item For each baseline it gets the mean of the channels. Note that it 
+  uses \texttt{sum/n} to ignore flagged visibilities. The \texttt{iif} function
+  tells to use 0 for them. Also note that XX is the 1st and YY the 4th
+  polarisation, hence [0:4:3] (or [::3]) indexes these polarisations. 
+  Once masked arrays are supported by TaQL, it could be written as:
+  \texttt{  mean(DATA[,::3][FLAG[,::3]])}
+\item It only uses the baselines with lengths between 5 and 10 km
+  where not all visibilities are flagged. Note that a \texttt{mscal}
+  user defined function is used for the baseline selection as described
+  in secion \ref{TAQL:MSFUNC}.
+\item Thereafter the average flux per time slot is determined in the
+  subquery using the \texttt{gmean} aggregation and GROUPBY functionality. The
+  result is an intermediate table with one column called SUMMED and a row per time slot. 
+\item Finally, the outer query uses aggregate functions to calculate
+  the overall mean, standard deviation, and number of time slots from
+  the result of the subquery. The
+  final result is a table with 1 row and 3 columns. 
+\end{enumerate}
 
 
 \section{\label{TAQL:GLISHPC}Interface to TaQL}
@@ -3662,12 +4190,19 @@ UDF. Furthermore one can look at class
 that contains the UDFs described in subsection
 \htmlref{User defined functions}{TAQL:MSFUNC}.
 
+It is possible to write a UDF that operates on an individual
+expression and returns the result. It is, however, also possible to
+write a UDF acting as an aggregate function. In that case it will
+return a result based on the values of all rows in a group.
+See the desription of the \htmlref{GROUPBY clause}{TAQL:GROUPBY} for
+more information on the GROUPBY clause and aggregate functions.
+
 Note that a class can contain multiple UDFs as done in UDFMSCal.
 Also note that a single UDF can operate on multiple data types which
 is similar to a function like \texttt{min} that can operate on scalars
 and arrays of different data types.
 
-TaQL finds a UDF by looking in a dictionary that maps the UDF name
+TaQL finds a UDF by looking in a dictionary mapping the UDF name
 to a function constructing an object of the UDF class. If not found,
 it tries to load the shared library with the lowercase name of the library part
 of the UDF (like in \texttt{derivedmscal.pa1}). If the load is successful, it calls an
@@ -3676,21 +4211,169 @@ functions in the library to the dictionary. The description of the
 \htmladdnormallink{UDFBase}{../html/classcasa_1_1UDFBase.html}
 class shows how this should be done.
 
+\subsection{\label{TAQL:UDFPYTHON}UDFs in Python}
+NOTE: This section is for a future version of TaQL. It has not been
+fully implemented yet.
+
+For performance reasons User Defined Functions will usually be
+implemented in C++. It is, however, possible to implement them in
+Python, both regular functions and aggregation functions. This can be
+done by means of the \texttt{pytaql} module of casacore.
+
+A UDF has to be implemented in Python by subclassing
+\texttt{pytaqlbase}, that can be imported from \texttt{casacore.python}. 
+The subclass has to implement a few functions, some are optional.
+The functions are called in the order given below.
+
+\begin{itemize}
+ \item \texttt{\_\_init\_\_(self)}\\
+  The class constructor must call the \_\_init\_\_ function of the
+  superclass.
+ \item \texttt{needTable(self)}\\
+  This optional function tells if the UDF needs the Table object of
+  the table being queried.
+  If True is returned, the function setTable is called thereafter.
+  The Table object can be used by UDFs needing extra info
+  (e.g., keywords) from the table being queried or from its subtables
+  (comparable to derivedmscal). 
+  It requires the import of \texttt{pyrap.tables} at the beginning of
+  the UDF script.
+ \item \texttt{setTable(self, tab)}\\
+  This function makes it possible to keep the Table object. It must be
+  implemented if \texttt{needTable} returns True.
+  The object should be kept like:
+\begin{verbatim}
+    self.tab = pyrap.tables.table (tab, _oper=3)
+\end{verbatim}
+  
+ \item \texttt{setup(self, valuetypes, datatypes, units)}\\
+  This function is called once at the beginning. It gets the value
+  types, data types, and units of the function arguments. The length of the
+  sequences tells the number of arguments. 
+\begin{verbatim}
+ valuetypes  int seq   value type of each argument
+                       0=scalar 1=array 2=set
+ datatypes   int seq   data type of each argument
+                       0=bool 1=int 2=float 3=complex
+                       4=string 6=date
+ units       strings   unit of each argument (empty=no unit)
+\end{verbatim}
+  The UDF should check if the argument types are correct and determine
+  the result type.
+  It has to return a dict containing the following fields:
+\begin{verbatim}
+ ndim      int       dimensionality of result
+                     -1=scalar 0=unknown
+ shape     int seq   shape (if fixed, otherwise empty sequence)
+ dtype     int       data type of result
+ unit      string    optional unit of result
+ isaggr    bool      True = UDF is aggregate function
+\end{verbatim}
+
+ \item \texttt{getValue(self, argValues, rownr)}\\
+  This function must return the function value for the given argument
+  values. It is only called if \texttt{setup} does not set \texttt{isaggr=True}.
+  Normally the \texttt{rownr} argument is not needed, but it could be
+  used to obtain special info from the Table object for that row.
+ \item \texttt{getAggrValue(self, rownrs)}\\
+  This function must return the value of the aggregate function for the given rows.
+  The argument values are not passed, because their sizes may exhaust
+  memory. Instead the list of row numbers in the aggregation group
+  are given. For each row the following function must be called to
+  get a list of the argument values for that row.
+\begin{verbatim}
+    getArgValues(self, rownr)
+\end{verbatim}
+
+\end{itemize}
+Such a UDF can be called in TaQL like \texttt{py.module.class} where
+the class defaults to the module name.
+\\An example of UDFs in Python is given below. The first one is a
+regular UDF, the second one an aggregate UDF.
+\begin{verbatim}
+# tpytaql.py: Test script for pytaqlbase
+
+from casacore.pytaqlbase import pytaqlbase
+##import pyrap.tables as pt
+
+class tpytaql(pytaqlbase):
+    """
+    A test (and example) for a pytaql UDF.
+    It returns the sum of the values in the argument.
+    """
+
+    def __init__(self):
+        """ The constructor must call the __init__ in the base class. """
+        pytaqlbase.__init__(self)
+
+    def setup(self, valuetypes, datatypes, units):
+        """ Setup the pytaql object. """
+        if len(valuetypes) != 1:
+            raise ValueError("UDF tpytaql should have exactly 1 argument")
+        self.isScalar = valuetypes[0]==0
+        return {'ndim':0, 'dtype':datatypes[0], 'unit':units[0]}
+
+    def getValue(self, argValues, rownr):
+        """ Get the value of the function for the given table row. """
+        if self.isScalar:
+            return argValues[0];
+        return argValues[0].sum()    # sum of numpy array
+
+
+
+class tpytaqlaggr(pytaqlbase):
+    """
+    A test (and example) for a pytaql aggregation UDF.
+    It returns the difference of the total of both arguments.
+    """
+
+    def __init__(self):
+        """ The constructor must call the __init__ in the base class. """
+        pytaqlbase.__init__(self)
+
+## The following functions show how to get and keep a Table object.
+## Note the import of pyrap.tables is also required.
+##    def needTable(self):
+##        return True
+##    def setTable(self, tab):
+##        self.tab = pt.table(tab, _oper=3)
+##        print "nrows",self.tab.nrows()
+
+    def setup(self, valuetypes, datatypes, units):
+        """ Setup the pytaql object. """
+        if len(valuetypes) != 2:
+            raise ValueError("tpytaqlaggr UDF should have exactly 2 arguments")
+        self.isScalar0 = valuetypes[0]==0
+        self.isScalar1 = valuetypes[1]==0
+        return {'ndim':0, 'dtype':datatypes[0],
+                'unit':units[0], 'isaggr':True}
+
+    def getAggrValue(self, rownrs):
+        """ Get the value of the aggregate function for the given table rows. """
+        v = 0;
+        for rownr in rownrs:
+            argValues = self.getArgValues (rownr);
+            if self.isScalar0:
+                v += argValues[0];
+            else:
+                v += argValues[0].sum()
+            if self.isScalar1:
+                v -= argValues[1];
+            else:
+                v -= argValues[1].sum()
+        return v
+\end{verbatim}
+
+
 \section{Possible future developments}
 In the near or far future TaQL can be enhanced by adding new
 features and by doing optimizations.
 \begin{itemize}
-  \item Implement the GROUP BY and  HAVING clause, possibly with
-    ROLLUP and CUBE.
+  \item Add ROLLUP/CUBE to the GROUPBY clause.
+  \item Implement the OVER/PARTITION clause.
   \item Add explicit JOIN clause (probably only equi-joins).
   \item Add UNION, INTERSECTION, and DIFFERENCE.
-  \item Add masked arrays.
-  \item Optimize by removing an \texttt{IN} node if the righthand
-    operand is empty. This cannot be done if the lefthand operand
-    is variable shaped.
   \item Handle invalid subexpressions (e.g. exceeding array bounds)
     as undefined values
     which can be tested with the function ISDEFINED.
-  \item Optimize IN if righthand is an integer bounded set by turning
-    it into a boolean vector.
 \end{itemize}
