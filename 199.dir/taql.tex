@@ -96,7 +96,7 @@ for more information on subqueries).
     [WHERE ...] [ORDERBY ...] [LIMIT ...] [OFFSET ...]
 \end{verbatim}
 It can be used to update data in (a subset of) the first table in the
-table list. 
+first table list. 
 
 \item addition
 \begin{verbatim}
@@ -2199,7 +2199,7 @@ below. They can operate on scalars and arrays.
 
 \subsubsection{Array creation functions}
 \begin{description}
-  \item[] \texttt{anytypearray ARRAY(anytype,shape)}\\
+  \item[] \texttt{ anytypearray ARRAY(anytype,shape)}\\
     This function creates an unmasked array of the given type and shape.
     The shape is given in the last argument(s).
     It can be given in two ways:
@@ -2213,6 +2213,23 @@ below. They can operate on scalars and arrays.
     reset to its beginning and the process continues.
     \\Note that a masked array can be created from an (unmasked) array and a mask
     using the brackets operator like \texttt{ARRAY[MASK]}.
+  \item[] \texttt{anytypearray RESIZE(anytypearray,shape[,mode])}\\
+    This function resizes an array to the given shape and copies the
+    values. The optional \texttt{mode} argument determines how the values are
+    copied. If the argument is not given, the new shape is arbitrary
+    and the dimensionality can change. The values are copied to the same index in the
+    new array. If an axis gets larger, the new values are set to 0
+    (or an empty string).
+    \\If mode is given, the new shape is much more restricted. The
+    dimensionality cannot change and each axis has to be a
+    multiple of the old one. If \texttt{mode=0}, copying the values is
+    done in an upsampling way. E.g., if a new axis is twice the length
+    of the old one, values 1,2,3 are copied as 1,1,2,2,3,3. A good use case is
+    applying the flags of averaged data to the original data. 
+    If \texttt{mode=1}, the values in the example above are copied
+    repeatedly as 1,2,3,1,2,3.
+    By giving the mode as a set, it is possible to specify the mode
+    per axis, but that is quite esoteric. 
   \item[] \texttt{anytypearray TRANSPOSE(anytypearray[,axes])}\\
     This function transposes an N-dim array. If no axes
     are given, the array is fully transposed (thus all axes are
@@ -2229,8 +2246,8 @@ below. They can operate on scalars and arrays.
     diagonals of each XY-plane can be taken. The default for firstaxis
     is 0.
     \\The \texttt{diag} argument tells which diagonal has to be
-    taken. The default 0 means the main diagonal. A value <0 means
-    below the main diagonal, while >0 means above the main diagonal.
+    taken. The default 0 means the main diagonal. A negative value means
+    below the main diagonal, while positive means above the main diagonal.
  \item[] \texttt{anytypearray ARRAYDATA(anytype)}\\
     This function returns the array without a mask, thus removes the mask.
     If the operand is a scalar, it returns a 1-dim array with 1 element.
@@ -2245,22 +2262,46 @@ below. They can operate on scalars and arrays.
 \end{description}
 
 \subsubsection{\label{TAQL:AGGRFUNC}Aggregate functions}
-The\texttt{gxxx} aggregate functions calculate an aggregated value
+The \texttt{GXXX} aggregate functions calculate an aggregated value
 for all rows in a group, usually defined with a GROUPBY clause.
-They can only be used in the SELECT and the HAVING clause. Currently,
-they can only be used for scalar columns or expressions.
-\\Most functions reduce the group values (also if arrays) to a scalar
-value, but the last two really aggregate the values and return an array. 
-\\Note that the function names differ from their SQL counterparts;
-they all have the prefix \texttt{g}, because TaQL functions like
-\texttt{max} already exist for array operations.
+For example, when grouping in TIME, an aggregate function like
+\texttt{GNTRUE(FLAG)} counts per time slot the number of flagged data
+points. 
+Aggregate functions can only be used in the SELECT and the HAVING clause. 
+\\Most functions listed below reduce the values in a group to a scalar
+value, also if the value in a row is an array (as in the GNTRUE
+example above). The arrays in a group can have different shapes.
+
+However, there are several aggregate functions returning an array.
+The last three functions (GHIST, GAGGR, and GROWID) return an array.
+Furthermore, most scalar functions have a plural form (e.g., GNTRUES) returning an
+array. They are described at the end of this section.
+
+Note that the aggregate function names differ from their SQL counterparts;
+they all have the prefix \texttt{G}, because TaQL functions like
+\texttt{MAX} already exist for array operations. This naming scheme
+also makes it more clear which TaQL functions are aggregate functions.
+
+A technical detail is how aggregate functions are
+implemented. TaQL walks sequentially through a table. Non-lazy
+functions operate directly on the value in a row making the table
+access purely sequential. It requires that the results of all groups
+are held in memory. For some functions, in particular GAGGR, this
+could lead to a very high memory usage. Therefore, some functions are
+implemented in a lazy way. They 
+keep the row numbers of a group and access the data when the
+aggregated result of a group is needed. In this way only the data of a
+single group needs to be held in memory, but the access to the table
+might be non-sequential making it somewhat slower.
+Currently, only GAGGR and the User Defined aggregate Functions are
+implemented in a lazy way. 
 
 \begin{description}
   \item[] \texttt{integer GCOUNT(), integer GCOUNT(*)}\\
     Return the number of rows per group.
   \item[] \texttt{integer GCOUNT(columnname)}\\
     Return the number of rows per group for which the column has a
-    value. Note that a column containing variable sized arrays can
+    value. Note that only a column containing variable sized arrays can
     contain empty cells.
   \item \texttt{anytype GFIRST(anytype)}\\
       Return the first value of the group.
@@ -2309,20 +2350,37 @@ they all have the prefix \texttt{g}, because TaQL functions like
   \item[] \texttt{double GHIST(real, intscalar nbin, realscalar start,
     realscalar end)}\\
     Return the histogram of the data using the given number of bins.
-    
     The histogram contains an extra bin at the beginning and the end
-    for the outliers. 
-  \item[] \texttt{anytypearray GAGGR(anytype)}\\
-    Return an array containing the concatenated values. Thus if the
+    for the outliers. If the rows in the group contain arrays, they
+    can have variable shapes.
+  \item[] \texttt{anytypearray GAGGR(anytype), anytypearray GSTACK(anytype)}\\
+    Stack the row values in a group to form an array where the row is
+    the slowest varying axis (similar to numpy's dstack). Thus if the
     column contains scalar values, the result is a vector. Otherwise
-    it is an array whose dimensionality is one higher.
-    \\Note that this function can be very useful for array, because it
+    it is an array whose dimensionality is one higher. It requires
+    that all arrays in a group have the same shape.
+    \\Note that this function can be very useful for arrays, because it
     makes it possible to use partial reduction functions like
-    \texttt{medians}. In this way the medians along the group axis can
-    be calculated. 
+    \texttt{medians} to calculate the medians along arbitrary axes.
   \item[] \texttt{integerarray GROWID()}\\
     Return the row numbers of the rows in the group.
 \end{description}
+Most functions above have a plural counterpart. They calculate the aggregated
+value per array index, thus the result has the same shape as the
+arrays in the group. Similar to function GAGGR, they require that all
+arrays in a group have the same shape. 
+\\For instance, for a MeasurementSet the expression
+\texttt{GMEANS(DATA)} calculates the mean in a group per channel/polarization.
+Not only it is a shorthand for \texttt{MEANS(GAGGR(DATA), 0)}, but it
+usually works faster because, unlike GAGGR, it is non-lazy.
+\\The functions available are:
+\begin{verbatim}
+  GANYS   GALLS       GNTRUES   GNFALSES
+  GMINS   GMAXS
+  GSUMS   GPRODUCTS   GSUMSQRS  GSUMSQUARES
+  GMEANS  GVARIANCES  GSTDDEVS  GRMSS
+\end{verbatim}
+
 
 \subsubsection{Miscellaneous functions}
 \begin{description}
@@ -3001,7 +3059,7 @@ clause. E.g.
       WHERE any(time >= [SELECT starttime FROM tmptab]
              && time <= [SELECT endtime FROM tmptab])
 \end{verbatim}
-However, below a even nicer solution is given. 
+However, below an even nicer solution is given. 
 
 \item
 The time range problem above can be solved elegantly by using
@@ -3327,11 +3385,16 @@ exit with an error message.
 
 \subsection{UPDATE}
 \begin{verbatim}
-  UPDATE table_list SET update_list [WHERE ...] [ORDERBY ...]
-                                    [LIMIT ...] [OFFSET ...]
+  UPDATE table SET update_list [FROM table_list]
+                               [WHERE ...] [ORDERBY ...]
+                               [LIMIT ...] [OFFSET ...]
 \end{verbatim}
-updates all or some rows in the first table of the table list. Other
-tables can be used in clauses like SET and WHERE.
+updates all or some rows in the first table. More input
+tables can be given in the FROM clause and used in clauses like SET and
+WHERE. Unlike SQL it is possible to specify more tables in the
+UPDATE part which is the same as specifying them in the FROM
+clause. However, using the FROM clause makes it more clear that only
+the first table is updated.
 \\\texttt{update\_list}
 is a comma-separated list of \texttt{column=expression} parts.
 Each part tells to update the given column using the
@@ -3344,10 +3407,13 @@ to make the antenna numbers zero-based if accidently they were
 written one-based.
 
 \begin{verbatim}
+  UPDATE this.ms set DATA=t2.DATA, FLAG=t2.FLAG
+                 FROM that.ms t2
+                 where all(FLAG)
   UPDATE this.ms, that.ms t2 set DATA=t2.DATA, FLAG=t2.FLAG
-                     where all(FLAG)
+                             where all(FLAG)
 \end{verbatim}
-to copy the DATA and FLAG column of that.ms to this.ms for rows where
+are equivalent. They copy the DATA and FLAG column of that.ms to this.ms for rows where
 all data are flagged. Note the use of the shorthand (alias) \texttt{t2}.
 
 If an array gets an array value, the shape of the array can be
@@ -3389,12 +3455,12 @@ can {\bf not} do:
 \begin{verbatim}
   UPDATE vla.ms SET ANTENNA1=ANTENNA2, ANTENNA2=ANTENNA1
 \end{verbatim}
-TaQL does not have temporary variables to solve the problem. However, the
-following could be used:
+To solve this problem a temporary table (in this case in memory) can
+be used to save the value of e.g. ANTENNA1: 
 \begin{verbatim}
-  UPDATE vla.ms SET ANTENNA1=ANTENNA1+ANTENNA2,
-                    ANTENNA2=ANTENNA1-ANTENNA2,  #A2 is old A1
-                    ANTENNA1=ANTENNA1-ANTENNA2   #A1 is old A2
+  UPDATE my.ms
+      set ANTENNA1 = ANTENNA2, ANTENNA2 = orig.ANTENNA1
+      FROM [select ANTENNA1 from my.ms giving as memory] orig
 \end{verbatim}
     
 

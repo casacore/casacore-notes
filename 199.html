@@ -9,7 +9,7 @@
 <meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="199.tex" /> 
-<meta name="date" content="2015-08-13 11:49:00" /> 
+<meta name="date" content="2015-09-07 10:00:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -516,7 +516,7 @@ href="#x1-730004.11">section 4.11</a> for more information on subqueries).
        UPDATE table_list SET update_list [FROM table_list]
       <br />    [WHERE ...] [ORDERBY ...] [LIMIT ...] [OFFSET ...]
 </div>
-     <!--l. 97--><p class="nopar" > It can be used to update data in (a subset of) the ﬁrst table in the table list.
+     <!--l. 97--><p class="nopar" > It can be used to update data in (a subset of) the ﬁrst table in the ﬁrst table list.
      </p></li>
      <li class="itemize">addition
                                                                                             
@@ -3677,7 +3677,7 @@ class="newline" />Convert the value to a bool. A numeric type (or date) results 
 <!--l. 2201--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
-class="description"><span 
+class="description">  <span 
 class="cmtt-10x-x-109">anytypearray ARRAY(anytype,shape)</span><br 
 class="newline" />This function creates an unmasked array of the given type and shape. The shape is given in the
      last argument(s). It can be given in two ways: <br 
@@ -3695,13 +3695,30 @@ class="cmtt-10x-x-109">ARRAY[MASK]</span>.
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
+class="cmtt-10x-x-109">anytypearray RESIZE(anytypearray,shape[,mode])</span><br 
+class="newline" />This function resizes an array to the given shape and copies the values. The optional <span 
+class="cmtt-10x-x-109">mode</span>
+     argument determines how the values are copied. If the argument is not given, the new shape is
+     arbitrary and the dimensionality can change. The values are copied to the same index in the
+     new array. If an axis gets larger, the new values are set to 0 (or an empty string). <br 
+class="newline" />If mode is given, the new shape is much more restricted. The dimensionality cannot change
+     and each axis has to be a multiple of the old one. If <span 
+class="cmtt-10x-x-109">mode=0</span>, copying the values is done in an
+                                                                                            
+                                                                                            
+     upsampling way. E.g., if a new axis is twice the length of the old one, values 1,2,3 are copied as
+     1,1,2,2,3,3. A good use case is applying the ﬂags of averaged data to the original data. If <span 
+class="cmtt-10x-x-109">mode=1</span>,
+     the values in the example above are copied repeatedly as 1,2,3,1,2,3. By giving the mode as a
+     set, it is possible to specify the mode per axis, but that is quite esoteric.
+     </dd><dt class="description">
+ </dt><dd 
+class="description"><span 
 class="cmtt-10x-x-109">anytypearray TRANSPOSE(anytypearray[,axes])</span><br 
 class="newline" />This function transposes an N-dim array. If no axes are given, the array is fully transposed (thus
      all axes are reversed). Axes can be speciﬁed meaning that those axes will become the ﬁrst axes
      in the output array. Non-given axes follow thereafter in their natural order. <br 
 class="newline" />A possible mask is transposed as well.
-                                                                                            
-                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3715,7 +3732,7 @@ class="cmtt-10x-x-109">firstaxis+1</span>.
      0. <br 
 class="newline" />The <span 
 class="cmtt-10x-x-109">diag </span>argument tells which diagonal has to be taken. The default 0 means the main diagonal.
-     A value ¡0 means below the main diagonal, while ¿0 means above the main diagonal.
+     A negative value means below the main diagonal, while positive means above the main diagonal.
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3734,21 +3751,39 @@ class="description"><span
 class="cmtt-10x-x-109">anytypearray FLATTEN(anytype)</span><br 
 class="newline" />This function ﬂattens an N-dim array to a 1-dim array keeping the unmasked elements only. If
      the operand is a scalar, it returns a 1-dim array with 1 element.</dd></dl>
-<!--l. 2247--><p class="noindent" >
+<!--l. 2264--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">4.10.13   </span> <a 
  id="x1-610004.10.13"></a>Aggregate functions</h5>
-<!--l. 2248--><p class="noindent" >The<span 
-class="cmtt-10x-x-109">gxxx </span>aggregate functions calculate an aggregated value for all rows in a group, usually deﬁned with a
-GROUPBY clause. They can only be used in the SELECT and the HAVING clause. Currently, they can only
-be used for scalar columns or expressions. <br 
-class="newline" />Most functions reduce the group values (also if arrays) to a scalar value, but the last two really aggregate the
-values and return an array. <br 
-class="newline" />Note that the function names diﬀer from their SQL counterparts; they all have the preﬁx <span 
-class="cmtt-10x-x-109">g</span>, because TaQL
-functions like <span 
-class="cmtt-10x-x-109">max </span>already exist for array operations.
-</p><!--l. 2258--><p class="indent" >
+<!--l. 2265--><p class="noindent" >The <span 
+class="cmtt-10x-x-109">GXXX </span>aggregate functions calculate an aggregated value for all rows in a group, usually deﬁned with a
+GROUPBY clause. For example, when grouping in TIME, an aggregate function like <span 
+class="cmtt-10x-x-109">GNTRUE(FLAG) </span>counts
+per time slot the number of ﬂagged data points. Aggregate functions can only be used in the SELECT and
+the HAVING clause. <br 
+class="newline" />Most functions listed below reduce the values in a group to a scalar value, also if the value in a
+row is an array (as in the GNTRUE example above). The arrays in a group can have diﬀerent
+shapes.
+                                                                                            
+                                                                                            
+</p><!--l. 2275--><p class="indent" >   However, there are several aggregate functions returning an array. The last three functions (GHIST,
+GAGGR, and GROWID) return an array. Furthermore, most scalar functions have a plural form (e.g.,
+GNTRUES) returning an array. They are described at the end of this section.
+</p><!--l. 2280--><p class="indent" >   Note that the aggregate function names diﬀer from their SQL counterparts; they all have the preﬁx <span 
+class="cmtt-10x-x-109">G</span>,
+because TaQL functions like <span 
+class="cmtt-10x-x-109">MAX </span>already exist for array operations. This naming scheme also makes it more
+clear which TaQL functions are aggregate functions.
+</p><!--l. 2285--><p class="indent" >   A technical detail is how aggregate functions are implemented. TaQL walks sequentially through a
+table. Non-lazy functions operate directly on the value in a row making the table access purely
+sequential. It requires that the results of all groups are held in memory. For some functions, in
+particular GAGGR, this could lead to a very high memory usage. Therefore, some functions are
+implemented in a lazy way. They keep the row numbers of a group and access the data when the
+aggregated result of a group is needed. In this way only the data of a single group needs to be held
+in memory, but the access to the table might be non-sequential making it somewhat slower.
+Currently, only GAGGR and the User Deﬁned aggregate Functions are implemented in a lazy
+way.
+</p><!--l. 2299--><p class="indent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3758,15 +3793,13 @@ class="newline" />Return the number of rows per group.
  </dt><dd 
 class="description"><span 
 class="cmtt-10x-x-109">integer GCOUNT(columnname)</span><br 
-class="newline" />Return the number of rows per group for which the column has a value. Note that a column
+class="newline" />Return the number of rows per group for which the column has a value. Note that only a column
      containing variable sized arrays can contain empty cells.
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
 class="cmtt-10x-x-109">anytype GFIRST(anytype)</span><br 
 class="newline" />Return the ﬁrst value of the group.
-                                                                                            
-                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3794,6 +3827,8 @@ class="newline" />Return number of true elements.
 class="description"><span 
 class="cmtt-10x-x-109">integer GNFALSE(bool)</span><br 
 class="newline" />Return number of false elements.
+                                                                                            
+                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3831,8 +3866,6 @@ class="cmtt-10x-x-109">double GVARIANCE(real)</span><br
 class="newline" />Return variance (the sum of <br 
 class="newline" /><span 
 class="cmtt-10x-x-109">(a(i) - mean(a))**2/(nelements(a) - 1)</span>.
-                                                                                            
-                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3863,31 +3896,55 @@ class="newline" />Return median (the middle element). If the array has an even n
 class="description"><span 
 class="cmtt-10x-x-109">double GFRACTILE(real, doublescalar fraction)</span><br 
 class="newline" />Return the value of the element at the given fraction. Fraction 0.5 is the same as the median.
+                                                                                            
+                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
 class="cmtt-10x-x-109">double GHIST(real, intscalar nbin, realscalar start, realscalar end)</span><br 
-class="newline" />Return the histogram of the data using the given number of bins.
-     <!--l. 2313--><p class="noindent" >The histogram contains an extra bin at the beginning and the end for the outliers.
-     </p></dd><dt class="description">
+class="newline" />Return the histogram of the data using the given number of bins. The histogram contains an
+     extra bin at the beginning and the end for the outliers. If the rows in the group contain arrays,
+     they can have variable shapes.
+     </dd><dt class="description">
  </dt><dd 
 class="description"><span 
-class="cmtt-10x-x-109">anytypearray GAGGR(anytype)</span><br 
-class="newline" />Return an array containing the concatenated values. Thus if the column contains scalar values,
-     the result is a vector. Otherwise it is an array whose dimensionality is one higher. <br 
-class="newline" />Note that this function can be very useful for array, because it makes it possible to use partial
+class="cmtt-10x-x-109">anytypearray GAGGR(anytype), anytypearray GSTACK(anytype)</span><br 
+class="newline" />Stack the row values in a group to form an array where the row is the slowest varying axis
+     (similar to numpy&#x2019;s dstack). Thus if the column contains scalar values, the result is a vector.
+     Otherwise it is an array whose dimensionality is one higher. It requires that all arrays in a group
+     have the same shape. <br 
+class="newline" />Note that this function can be very useful for arrays, because it makes it possible to use partial
      reduction functions like <span 
-class="cmtt-10x-x-109">medians</span>. In this way the medians along the group axis can be calculated.
+class="cmtt-10x-x-109">medians </span>to calculate the medians along arbitrary axes.
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
 class="cmtt-10x-x-109">integerarray GROWID()</span><br 
 class="newline" />Return the row numbers of the rows in the group.</dd></dl>
-<!--l. 2327--><p class="noindent" >
+<!--l. 2368--><p class="noindent" >Most functions above have a plural counterpart. They calculate the aggregated value per array index, thus the
+result has the same shape as the arrays in the group. Similar to function GAGGR, they require that all
+arrays in a group have the same shape. <br 
+class="newline" />For instance, for a MeasurementSet the expression <span 
+class="cmtt-10x-x-109">GMEANS(DATA) </span>calculates the mean in a group per
+channel/polarization. Not only it is a shorthand for <span 
+class="cmtt-10x-x-109">MEANS(GAGGR(DATA), 0)</span>, but it usually works faster
+because, unlike GAGGR, it is non-lazy. <br 
+class="newline" />The functions available are:
+                                                                                            
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-66">
+  GANYS   GALLS       GNTRUES   GNFALSES
+ <br />  GMINS   GMAXS
+ <br />  GSUMS   GPRODUCTS   GSUMSQRS  GSUMSQUARES
+ <br />  GMEANS  GVARIANCES  GSTDDEVS  GRMSS
+</div>
+<!--l. 2382--><p class="nopar" >
+</p><!--l. 2385--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">4.10.14   </span> <a 
  id="x1-620004.10.14"></a>Miscellaneous functions</h5>
-<!--l. 2328--><p class="noindent" >
+<!--l. 2386--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3895,8 +3952,6 @@ class="cmtt-10x-x-109">bool ISDEFINED(anytype)</span><br
 class="newline" />Return false if the value in the current row is undeﬁned. Is useful to test if a cell in a column
      with variable shaped arrays contains an array. It can also be used to test if a ﬁeld in a record is
      deﬁned.
-                                                                                            
-                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3929,6 +3984,8 @@ class="newline" />Return the row number in the original table. This is especiall
 href="#x1-730004.11">subqueries in section 4.11</a> and
      <a 
 href="#x1-9400011.1">examples in section 11.1</a>).
+                                                                                            
+                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3966,8 +4023,6 @@ class="cmtt-10x-x-109">double ANGULARDISTANCEX(arg1,arg2)</span><br
 class="newline" />Same as above, but the result is a 2-dim array giving the distance between each position in
      the ﬁrst argument and each position in the second argument. Only if both arguments contain a
      single position, the result is a scalar.
-                                                                                            
-                                                                                            
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -3982,20 +4037,20 @@ class="cmtt-10x-x-109">arg2</span>. <br
 class="newline" />If one of the input arrays has a mask, the output array will also have a mask. Each output mask
      element value is the logical OR of the condition mask element value and the mask value of the
      element taken from arg1 or arg2.</dd></dl>
-<!--l. 2395--><p class="noindent" >
+<!--l. 2453--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">4.10.15   </span> <a 
  id="x1-630004.10.15"></a>Cone search functions</h5>
-<!--l. 2396--><p class="noindent" >Cone search functions make it possible to test if a source is within a given distance of a given sky position.
+<!--l. 2454--><p class="noindent" >Cone search functions make it possible to test if a source is within a given distance of a given sky position.
 The expression
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-66">
+   <div class="verbatim" id="verbatim-67">
   cos(0d1m) &#x003C; sin(52deg) * sin(DEC) +
  <br />              cos(52deg) * cos(DEC) * cos(3h30m - RA)
 </div>
-<!--l. 2401--><p class="nopar" > could be used to test if sources with their sky position deﬁned in columns <span 
+<!--l. 2459--><p class="nopar" > could be used to test if sources with their sky position deﬁned in columns <span 
 class="cmtt-10x-x-109">RA </span>and <span 
 class="cmtt-10x-x-109">DEC </span>are within 1 arcmin of
 the given sky position. <br 
@@ -4003,7 +4058,7 @@ class="newline" />The cone search functions implement this expression making lif
 also operate on arrays of positions, searching in multiple cones can be done simultaneously. That makes it
 possible to ﬁnd matching source positions in two catalogues as shown in an example at the end of this
 section.
-</p><!--l. 2412--><p class="indent" >   The arguments of all functions are described below. All of them have to be given in radians. However,
+</p><!--l. 2470--><p class="indent" >   The arguments of all functions are described below. All of them have to be given in radians. However,
 usually one does not need to bother because TaQL makes it possible to specify positions in many formats
 automatically converted to radians.
      </p><dl class="description"><dt class="description">
@@ -4049,7 +4104,7 @@ class="newline" />For example: <br
 class="newline" /><span 
 class="cmtt-10x-x-109">[12h13m54, -5.3.34, 1h2m3, 4.5.6], 0d1m </span>is the same as the second <span 
 class="cmtt-10x-x-109">CONES </span>example above.</dd></dl>
-<!--l. 2448--><p class="noindent" >The following cone search functions are available.
+<!--l. 2506--><p class="noindent" >The following cone search functions are available.
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -4098,7 +4153,7 @@ class="description"><span
 class="cmtt-10x-x-109">bool CONES(SOURCES,CONEPOS,RADII)</span><br 
 class="newline" />It does the same as above. However, the result is a 3-dim array with the radii as the most rapidly
      varying axis, cones as the next axis, and sources as the slowest axis.</dd></dl>
-<!--l. 2479--><p class="noindent" >Please note that <span 
+<!--l. 2537--><p class="noindent" >Please note that <span 
 class="cmtt-10x-x-109">ANYCONE(SOURCE,CONES) </span>does the same as <span 
 class="cmtt-10x-x-109">any(CONES(SOURCE,CONES))</span>, but is faster because it
 stops as soon as a cone is found. <br 
@@ -4108,12 +4163,12 @@ sources in the same catalogue (within a radius of 10 arcseconds):
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-67">
+   <div class="verbatim" id="verbatim-68">
   CALC CONES([RA,DEC],
  <br />             [SELECT FROM table.cat GIVING [RA,DEC]], 0d0m10)
  <br />     FROM table.cat
 </div>
-<!--l. 2489--><p class="nopar" > Note that in this example the SELECT clause returns an array with positions which are used as the cone
+<!--l. 2547--><p class="nopar" > Note that in this example the SELECT clause returns an array with positions which are used as the cone
 centers. So each source in the catalogue is tested against every source. It makes it an N-square operation,
 thus potentially very expensive. The result is a 4-dim boolean array with shape (in glish style)
 <span 
@@ -4125,28 +4180,28 @@ class="newline" />The query can be done with multiple radii, for example also wi
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-68">
+   <div class="verbatim" id="verbatim-69">
   CALC CONES([RA,DEC],
  <br />       [SELECT FROM table.cat GIVING [RA,DEC]], [0d0m1, 0d0m10, 0d1m])
  <br />     FROM table.cat
 </div>
-<!--l. 2504--><p class="nopar" > resulting in an array with glish shape <span 
+<!--l. 2562--><p class="nopar" > resulting in an array with glish shape <span 
 class="cmtt-10x-x-109">[3,nrow,1,nrow]</span>. In this way one can get a better indication how
 close sources are to the cone centers.
-</p><!--l. 2509--><p class="noindent" >
+</p><!--l. 2567--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">4.10.16   </span> <a 
  id="x1-640004.10.16"></a>User deﬁned functions</h5>
-<!--l. 2510--><p class="noindent" >User deﬁned functions (UDF) have to reside in a dynamically loadable library. In TaQL the name of a UDF
+<!--l. 2568--><p class="noindent" >User deﬁned functions (UDF) have to reside in a dynamically loadable library. In TaQL the name of a UDF
 consists of the name of the library (without lib preﬁx and extension) followed by a dot and the function
 name. For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-69">
+   <div class="verbatim" id="verbatim-70">
   mscal.pa1()
 </div>
-<!--l. 2516--><p class="nopar" > denotes function <span 
+<!--l. 2574--><p class="nopar" > denotes function <span 
 class="cmtt-10x-x-109">pa1 </span>in shared library <span 
 class="cmtt-10x-x-109">libderivedmscal.so </span>or <span 
 class="cmtt-10x-x-109">libcasa</span><span 
@@ -4154,7 +4209,7 @@ class="cmtt-10x-x-109">_derivedmscal.so</span>. For OS-X the
 extension <span 
 class="cmtt-10x-x-109">.dylib </span>can also be used. <br 
 class="newline" />The shared library name must be fully lowercase, but the UDF name is case-insensitive.
-</p><!--l. 2523--><p class="indent" >   In the <a 
+</p><!--l. 2581--><p class="indent" >   In the <a 
 href="#x1-60002.2"><span 
 class="cmtt-10x-x-109">USING STYLE</span></a> clause it is possible to deﬁne synonyms for the UDF library names. By default, <span 
 class="cmtt-10x-x-109">mscal</span>
@@ -4162,7 +4217,7 @@ is deﬁned as a synonym for <span
 class="cmtt-10x-x-109">derivedmscal </span>and <span 
 class="cmtt-10x-x-109">py </span>as a synonym for <span 
 class="cmtt-10x-x-109">pytaql</span>.
-</p><!--l. 2528--><p class="indent" >   Usually a UDF will operate on the arguments given to the function and will not itself operate on a table
+</p><!--l. 2586--><p class="indent" >   Usually a UDF will operate on the arguments given to the function and will not itself operate on a table
 given in a query command. However, some UDFs (most notably the <span 
 class="cmtt-10x-x-109">mscal </span>ones) do not have arguments, but
 operate directly in a speciﬁc way on a table. Normally they use the ﬁrst table given in the FROM clause,
@@ -4172,19 +4227,19 @@ example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-70">
+   <div class="verbatim" id="verbatim-71">
   select t1.mscal.ha1(), t2.mscal.ha1() from my1.ms t1, my2.ms t2
 </div>
-<!--l. 2537--><p class="nopar" > to get the hourangle from two diﬀerent tables. Of course, both tables need to have the same number of rows.
+<!--l. 2595--><p class="nopar" > to get the hourangle from two diﬀerent tables. Of course, both tables need to have the same number of rows.
 <br 
 class="newline" />Note that UDFs not directly operating on a table, will ignore a shorthand.
-</p><!--l. 2542--><p class="indent" >   In section <a 
+</p><!--l. 2600--><p class="indent" >   In section <a 
 href="#x1-11100013">Writing user deﬁned functions</a> it is explained how to write user deﬁned functions.
-</p><!--l. 2546--><p class="noindent" >
+</p><!--l. 2604--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">4.10.17   </span> <a 
  id="x1-650004.10.17"></a>Special MeasurementSet functions</h5>
-<!--l. 2547--><p class="noindent" >The casacore package comes with several predeﬁned UDFs in library <span 
+<!--l. 2605--><p class="noindent" >The casacore package comes with several predeﬁned UDFs in library <span 
 class="cmtt-10x-x-109">libcasa</span><span 
 class="cmtt-10x-x-109">_derivedmscal</span>. It contains
 four groups of UDFs, all operating on a MeasurementSet and several on a CASA calibration table (both old
@@ -4194,7 +4249,7 @@ class="cmtt-10x-x-109">derivedmscal</span>, for ease of use it is possible to us
 <span 
 class="cmtt-10x-x-109">mscal</span>.
 </p>
-<!--l. 2554--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 2612--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-660004.10.17"></a></span>
    <span 
 class="cmbx-10x-x-109">Get derived values </span><br 
@@ -4300,7 +4355,7 @@ class="description"><span
 class="cmtt-10x-x-109">doublearray MSCAL.UVWWVLS()</span><br 
 class="newline" />gives the nfreq*3-matrix of stored UVW coordinates in wavelengths for all channel frequencies
      of the appropriate spectral window.</dd></dl>
-<!--l. 2604--><p class="noindent" >By default all these functions will use the direction given in column PHASE_DIR of the FIELD subtable. It is
+<!--l. 2662--><p class="noindent" >By default all these functions will use the direction given in column PHASE_DIR of the FIELD subtable. It is
 possible to use another column by giving its name as a string argument (e.g., HA(&#x2019;DELAY_DIR&#x2019;)).
 <br 
 class="newline" />Except for the last 2 functions, it is possible to use an explicit direction which must be given as [RA,DEC] in
@@ -4309,24 +4364,24 @@ example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-71">
+   <div class="verbatim" id="verbatim-72">
    derivedmscal.azel1([5h23m32.76, 10d15m56.49])
  <br />   derivedmscal.azel1(&#x2019;MOON&#x2019;)
 </div>
-<!--l. 2614--><p class="nopar" > The examples above give the azimuth and elevation of the given directions for each selected row in the
+<!--l. 2672--><p class="nopar" > The examples above give the azimuth and elevation of the given directions for each selected row in the
 MeasurementSet, using the position of ANTENNA1 and the times in these rows.
-</p><!--l. 2619--><p class="indent" >   If a string value is given, it is ﬁrst tried as a planetary object. Theoretically it is possible that a column
+</p><!--l. 2677--><p class="indent" >   If a string value is given, it is ﬁrst tried as a planetary object. Theoretically it is possible that a column
 has the same name as a planetary object. In such a case the name can be escaped by a backslash to indicate
 that a column name is meant. For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-72">
+   <div class="verbatim" id="verbatim-73">
    derivedmscal.azel1(&#x2019;\SUN&#x2019;)
 </div>
-<!--l. 2626--><p class="nopar" > means that column SUN in the FIELD table has to be used.
+<!--l. 2684--><p class="nopar" > means that column SUN in the FIELD table has to be used.
 </p>
-<!--l. 2629--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 2687--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-670004.10.17"></a></span>
    <span 
 class="cmbx-10x-x-109">Stokes conversion </span><br 
@@ -4349,7 +4404,7 @@ class="newline" />combines the weights.
 class="description"><span 
 class="cmtt-10x-x-109">boolarray MSCAL.STOKES(boolarray, string)</span><br 
 class="newline" />combines the ﬂags.</dd></dl>
-<!--l. 2643--><p class="noindent" >In all cases the case-insensitive string argument deﬁnes the output Stokes axes. It must be a comma separated
+<!--l. 2701--><p class="noindent" >In all cases the case-insensitive string argument deﬁnes the output Stokes axes. It must be a comma separated
 list of Stokes names. All values deﬁned in the casacore class <span 
 class="cmtt-10x-x-109">Stokes </span>are possible. Most important are:
 </p>
@@ -4374,16 +4429,16 @@ class="newline" />IQUV or STOKES means I,Q,U,V.
      <li class="itemize">PFLINEAR is the linear polarization fraction (Plinear/I)
      </li>
      <li class="itemize">PANGLE is the linear polarization angle (0.5*arctan(U/Q)) (in radians)</li></ul>
-<!--l. 2657--><p class="noindent" >If not given, the string argument defaults to &#x2019;IQUV&#x2019;. For example:
+<!--l. 2715--><p class="noindent" >If not given, the string argument defaults to &#x2019;IQUV&#x2019;. For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-73">
+   <div class="verbatim" id="verbatim-74">
   select mscal.stokes(DATA,&#x2019;circ&#x2019;) as CIRCDATA from my.ms
 </div>
-<!--l. 2661--><p class="nopar" > creates a table with column CIRCDATA containing the circular polarization data.
+<!--l. 2719--><p class="nopar" > creates a table with column CIRCDATA containing the circular polarization data.
 </p>
-<!--l. 2665--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 2723--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-680004.10.17"></a></span>
    <span 
 class="cmbx-10x-x-109">CASA style selection </span><br 
@@ -4399,13 +4454,13 @@ if it matches or not.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-74">
+   <div class="verbatim" id="verbatim-75">
   select from my.ms where mscal.baseline(&#x2019;RT[2-4]&#x2019;)
 </div>
-<!--l. 2675--><p class="nopar" > selects the cross-correlation baselines containing an antenna whose name matches the pattern in the function
+<!--l. 2733--><p class="nopar" > selects the cross-correlation baselines containing an antenna whose name matches the pattern in the function
 argument.
 </p>
-<!--l. 2679--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 2737--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-690004.10.17"></a></span>
    <span 
 class="cmbx-10x-x-109">Get values from a subtable </span><br 
@@ -4414,11 +4469,11 @@ main table. Basically they do a join of the main table and a subtable. For examp
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-75">
+   <div class="verbatim" id="verbatim-76">
   select mscal.ant1name(), mscal.ant2name() from my.ms
 </div>
-<!--l. 2686--><p class="nopar" > gets the names of the antennae used in each baseline.
-</p><!--l. 2689--><p class="indent" >   The following functions can be used:
+<!--l. 2744--><p class="nopar" > gets the names of the antennae used in each baseline.
+</p><!--l. 2747--><p class="indent" >   The following functions can be used:
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -4482,35 +4537,35 @@ class="description"><span
 class="cmtt-10x-x-109">double MSCAL.SUBCOL(SubtableName, ColumnName, idcolumn)</span><br 
 class="newline" />gives for the (integer) id-column the value in the given column in the given subtable. This is the
      most common form and can be used to join any table with a subtable.</dd></dl>
-<!--l. 2724--><p class="noindent" >Note that the following are equivalent. The ﬁrst versions are shorthands for the latter ones.
+<!--l. 2782--><p class="noindent" >Note that the following are equivalent. The ﬁrst versions are shorthands for the latter ones.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-76">
+   <div class="verbatim" id="verbatim-77">
  mscal.ant1name()
  <br /> mscal.ant1col(&#x2019;NAME&#x2019;)
  <br /> mscal.subcol(&#x2019;ANTENNA&#x2019;, &#x2019;NAME&#x2019;, ANTENNA1)
 </div>
-<!--l. 2730--><p class="nopar" > In the last example the id-column must be given as such, thus must not be a string.
-</p><!--l. 2735--><p class="noindent" >
+<!--l. 2788--><p class="nopar" > In the last example the id-column must be given as such, thus must not be a string.
+</p><!--l. 2793--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">4.10.18   </span> <a 
  id="x1-700004.10.18"></a>Special Measures functions</h5>
-<!--l. 2736--><p class="noindent" >These functions make it possible to convert measures like directions, epochs, and positions from one
+<!--l. 2794--><p class="noindent" >These functions make it possible to convert measures like directions, epochs, and positions from one
 reference frame to another. All conversions supported by casacore&#x2019;s <a 
 href="../html/group__Measures__module.html" >Measures</a> are possible. For
 example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-77">
+   <div class="verbatim" id="verbatim-78">
   meas.galactic (-6h52m36.7, 34d25m56.1, &#x0022;J2000&#x0022;)
  <br />  meas.azel (&#x0022;MOON&#x0022;, date(), &#x0022;WSRT&#x0022;)
 </div>
-<!--l. 2745--><p class="nopar" > The ﬁrst example converts a J2000 position to galactic coordinates. The second example gives the moon&#x2019;s
+<!--l. 2803--><p class="nopar" > The ﬁrst example converts a J2000 position to galactic coordinates. The second example gives the moon&#x2019;s
 azimuth/elevation at the WSRT at the current date/time.
 </p>
-<!--l. 2750--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 2808--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-710004.10.18"></a></span>
    The following basic functions are available. Most functions return double angle values with unit rad. Only
 the RISESET function returns date/time values. <br 
@@ -4542,7 +4597,7 @@ class="description"><span
 class="cmtt-10x-x-109">doublearray MEAS.POS(toref, position)</span><br 
 class="newline" />converts a position to the reference type given by the &#x2019;toref&#x2019; string.<br 
 class="newline" />Function name MEAS.POSITION can be used as well.</dd></dl>
-<!--l. 2775--><p class="indent" >   For ease of use several specialized functions are deﬁned with an implicit &#x2019;toref&#x2019; argument.
+<!--l. 2833--><p class="indent" >   For ease of use several specialized functions are deﬁned with an implicit &#x2019;toref&#x2019; argument.
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description"><span 
@@ -4605,12 +4660,12 @@ class="newline" />converts a position to ITRF coordinates.
 class="description"><span 
 class="cmtt-10x-x-109">doublearray MEAS.WGS(toref, position)</span><br 
 class="newline" />converts a position to WGS84 coordinates.</dd></dl>
-<!--l. 2806--><p class="noindent" >The name of the last two functions can have a suﬃx indicating how positions are returned. <br 
+<!--l. 2864--><p class="noindent" >The name of the last two functions can have a suﬃx indicating how positions are returned. <br 
 class="newline" />- XYZ means as x,y,z <br 
 class="newline" />- LL or LONLAT means as lon,lat <br 
 class="newline" />- H or HEIGHT means as height It defaults to XYZ.
 </p>
-<!--l. 2813--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 2871--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-720004.10.18"></a></span>
    The function arguments can be given in a variety of ways. </p>
                                                                                             
@@ -4634,20 +4689,20 @@ class="newline" />The names are case-insensitive.
           <li class="itemize">As a double array with an even number of elements giving ra/dec or longitude/latitude
           of one or more directions. It can be a constant array, but it can also be a column or an
           expression using a column.</li></ul>
-     <!--l. 2837--><p class="noindent" >If a column or a column slice is given, the reference type stored in the column keywords will be
+     <!--l. 2895--><p class="noindent" >If a column or a column slice is given, the reference type stored in the column keywords will be
      recognized. In other cases the reference type should be given in the next string argument. If not given,
      it defaults to J2000. <br 
 class="newline" />For example:
                                                                                             
                                                                                             
 </p>
-     <div class="verbatim" id="verbatim-78">
+     <div class="verbatim" id="verbatim-79">
        [&#x2019;MOON&#x2019;,&#x2019;sun&#x2019;, &#x2019;venus&#x2019;]            # 3 planetary objects
       <br />  12h23m17.5, 23d56m43.8, &#x2019;B1950&#x2019;    # 2 scalar constants (as B1950)
       <br />  [12h23m17.5, 23d56m43.8]           # constant array (default J2000)
       <br />  PHASE_DIR[0,]                      # 1st direction in given column
 </div>
-     <!--l. 2847--><p class="nopar" >
+     <!--l. 2905--><p class="nopar" >
      </p></li>
      <li class="itemize">&#x2019;epoch&#x2019; gives one or more epochs to use. Similar to directions the reference type is taken from the
      column keywords or can be given in the next argument. It defaults to UTC. <br 
@@ -4660,17 +4715,17 @@ class="newline" />Epochs can be given in three ways:
           <li class="itemize">As  a  scalar  or  array  containing  String  values  representing  date/time.  They  will
           automatically be converted to DateTime values using function <span 
 class="cmtt-10x-x-109">datetime</span>.</li></ul>
-     <!--l. 2861--><p class="noindent" >For example:
+     <!--l. 2919--><p class="noindent" >For example:
                                                                                             
                                                                                             
 </p>
-     <div class="verbatim" id="verbatim-79">
+     <div class="verbatim" id="verbatim-80">
        datetime()                         # current date/time
       <br />  &#x2019;today&#x2019;                            # current date/time
       <br />  [select unique TIME from my.ms]    # all times from some MS
       <br />  9Oct2011/12:00:00, &#x2019;UTC&#x2019;           # given UTC time
 </div>
-     <!--l. 2867--><p class="nopar" > Note that in the last example &#x2019;UTC&#x2019; is not necessary, because it is the default.
+     <!--l. 2925--><p class="nopar" > Note that in the last example &#x2019;UTC&#x2019; is not necessary, because it is the default.
      </p></li>
      <li class="itemize">&#x2019;position&#x2019; gives one or more directions to use. They can be given as x,y,z or as lon,lat with an
      optional height. Usually the unit of the ﬁrst value deﬁnes if x,y,z or lon,lat is used. It is,
@@ -4687,13 +4742,13 @@ class="cmtt-10x-x-109">datetime</span>.</li></ul>
           <li class="itemize">As two constant double arrays giving lonlat and height of one or more positions. The array
           sizes have to match (thus the size of the lonlat array must be twice the size of the height
           array).</li></ul>
-     <!--l. 2888--><p class="noindent" >If needed, the reference type (with optional suﬃx) can be given in the next argument. The reference
+     <!--l. 2946--><p class="noindent" >If needed, the reference type (with optional suﬃx) can be given in the next argument. The reference
      type defaults to ITRF if xyz is used, otherwise to WGS. <br 
 class="newline" />For example:
                                                                                             
                                                                                             
 </p>
-     <div class="verbatim" id="verbatim-80">
+     <div class="verbatim" id="verbatim-81">
        &#x2019;WSRT&#x2019;                             # WSRT position
       <br />  5deg, 52deg                        # 2 scalar constants (WGS84)
       <br />  (5deg, 52deg]                      # same, but as array
@@ -4703,49 +4758,49 @@ class="newline" />For example:
       <br />  [41.84m, 4.835, 55.722], &#x2019;WGS&#x2019;     # xyz as array (WGS84)
       <br />  POSITION                           # POSITION column
 </div>
-     <!--l. 2901--><p class="nopar" ></p></li></ul>
-<!--l. 2903--><p class="noindent" >A few more elaborate examples are given below.
+     <!--l. 2959--><p class="nopar" ></p></li></ul>
+<!--l. 2961--><p class="noindent" >A few more elaborate examples are given below.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-81">
+   <div class="verbatim" id="verbatim-82">
   meas.last (date(&#x2019;15Oct2011/15:34&#x2019;), 5deg, 52deg)
  <br />  meas.last (date(&#x2019;15Oct2011/15:34&#x2019;), 5deg, 52deg) d
 </div>
-<!--l. 2907--><p class="nopar" > It calculates the local apparent sidereal time for the given date and position. Note that the ﬁrst
+<!--l. 2965--><p class="nopar" > It calculates the local apparent sidereal time for the given date and position. Note that the ﬁrst
 example returns the value in seconds, while the second returns it in days (because unit &#x2019;d&#x2019; was
 given).
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-82">
+   <div class="verbatim" id="verbatim-83">
   meas.azel (&#x0022;JUPITER&#x0022;, [select unique TIME from ~/GER1.MS],
  <br />            [&#x0022;WSRT&#x0022;,&#x0022;VLA&#x0022;])
 </div>
-<!--l. 2914--><p class="nopar" > It calculates Jupiter&#x2019;s azimuth/elevation for WSRT and VLA for all times returned by the subquery (see
+<!--l. 2972--><p class="nopar" > It calculates Jupiter&#x2019;s azimuth/elevation for WSRT and VLA for all times returned by the subquery (see
 next section for subqueries).
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-83">
+   <div class="verbatim" id="verbatim-84">
   calc meas.b1950(PHASE_DIR[0,]) from ~/GER1.MS/FIELD&#x2019;
 </div>
-<!--l. 2919--><p class="nopar" > It converts the PHASE_DIR directions in the FIELD table to B1950. Note that no frame information is
+<!--l. 2977--><p class="nopar" > It converts the PHASE_DIR directions in the FIELD table to B1950. Note that no frame information is
 needed for such a conversion.
-</p><!--l. 2924--><p class="noindent" >
+</p><!--l. 2982--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">4.11   </span> <a 
  id="x1-730004.11"></a>Subqueries</h4>
-<!--l. 2925--><p class="noindent" >As in SQL it is possible to create a set from a subquery. A subquery has the same syntax as a main query,
+<!--l. 2983--><p class="noindent" >As in SQL it is possible to create a set from a subquery. A subquery has the same syntax as a main query,
 but has to be enclosed in square brackets or parentheses. Basically it looks like:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-84">
+   <div class="verbatim" id="verbatim-85">
   SELECT FROM maintable WHERE time IN
  <br />      [SELECT time FROM othertable WHERE windspeed &#x003C; 5]
 </div>
-<!--l. 2931--><p class="nopar" > The subquery on <span 
+<!--l. 2989--><p class="nopar" > The subquery on <span 
 class="cmtt-10x-x-109">othertable </span>results in a constant set containing the times for which the windspeed
 matches. Subsequently the main query is executed and selects all rows from the main table with times in that
 set. Note that like other bounded sets this set is transformed to a constant array, so it is possible to apply
@@ -4753,64 +4808,64 @@ functions to it (e.g. min, mean).
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-85">
+   <div class="verbatim" id="verbatim-86">
   SELECT [SELECT NAME FROM ::ANTENNA][ANTENNA1]
  <br />         FROM ~/GER1.MS
 </div>
-<!--l. 2944--><p class="nopar" > This example shows how a subquery is used to join the main table of a MeasurementSet and
+<!--l. 3002--><p class="nopar" > This example shows how a subquery is used to join the main table of a MeasurementSet and
 its ANTENNA subtable. The subquery returns a list with the names of all antennae, which
 subsequently is indexed with the antenna number to get the antenna name for each row in the main
 table.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-86">
+   <div class="verbatim" id="verbatim-87">
   SELECT mscal.ant1name() from ~/GER1.MS
 </div>
-<!--l. 2952--><p class="nopar" > is a newer and easier way to obtain the name of ANTENNA1. It makes use of the new user
+<!--l. 3010--><p class="nopar" > is a newer and easier way to obtain the name of ANTENNA1. It makes use of the new user
 deﬁned functions in <span 
 class="cmtt-10x-x-109">derivedmscal </span>which can do an implicit join of a MeasurementSet and its
 subtables.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-87">
+   <div class="verbatim" id="verbatim-88">
   SELECT FROM maintable WHERE time IN
  <br />      [SELECT time FROM othertable WHERE windspeed &#x003C;
  <br />           mean([SELECT windspeed FROM othertable])]
 </div>
-<!--l. 2961--><p class="nopar" > This example contains another subquery to get all windspeeds and to take the mean of them. So
+<!--l. 3019--><p class="nopar" > This example contains another subquery to get all windspeeds and to take the mean of them. So
 the ﬁrst subquery selects all times where the windspeed is less than the average windspeed.
 <br 
 class="newline" />A subquery result should contain only one column, otherwise an exception is thrown.
-</p><!--l. 2968--><p class="indent" >   It may happen that a subquery has to be executed twice because 2 columns from the other table are
+</p><!--l. 3026--><p class="indent" >   It may happen that a subquery has to be executed twice because 2 columns from the other table are
 needed. E.g.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-88">
+   <div class="verbatim" id="verbatim-89">
   SELECT FROM maintable WHERE any(time &#x003E;=
  <br />      [SELECT starttime FROM othertable WHERE windspeed &#x003C; 5]
  <br />                               &#x0026;&#x0026; time &#x003C;=
  <br />      [SELECT endtime FROM othertable WHERE windspeed &#x003C; 5])
 </div>
-<!--l. 2975--><p class="nopar" > In this case the other table contains the time range for each windspeed. For big tables it is expensive to
+<!--l. 3033--><p class="nopar" > In this case the other table contains the time range for each windspeed. For big tables it is expensive to
 execute the subquery twice. A better solution is to store the result of the subquery in a temporary table and
 reuse it.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-89">
+   <div class="verbatim" id="verbatim-90">
   SELECT FROM othertable WHERE windspeed &#x003C; 5 GIVING tmptab
  <br />  SELECT FROM maintable WHERE any(time &#x003E;=
  <br />      [SELECT starttime FROM tmptab]
  <br />                               &#x0026;&#x0026; time &#x003C;=
  <br />      [SELECT endtime FROM tmptab])
 </div>
-<!--l. 2986--><p class="nopar" > However, this has the disadvantage that the table <span 
+<!--l. 3044--><p class="nopar" > However, this has the disadvantage that the table <span 
 class="cmtt-10x-x-109">tmptab </span>still exists after the query and has to be deleted
 explictly by the user. Below a better solution for this problem is shown.
-</p><!--l. 2991--><p class="indent" >   TaQL has a few extensions to support tables better, in particular the Casacore measurement
+</p><!--l. 3049--><p class="indent" >   TaQL has a few extensions to support tables better, in particular the Casacore measurement
 sets.
      </p><ol  class="enumerate1" >
      <li 
@@ -4820,13 +4875,13 @@ class="cmtt-10x-x-109">SELECT </span>expression in
 class="cmtt-10x-x-109">FROM </span>clause. E.g.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-90">
+     <div class="verbatim" id="verbatim-91">
        SELECT FROM maintable,
       <br />      [SELECT FROM othertable WHERE windspeed &#x003C; 5] tmptab
       <br />      WHERE any(time &#x003E;= [SELECT starttime FROM tmptab]
       <br />             &#x0026;&#x0026; time &#x003C;= [SELECT endtime FROM tmptab])
 </div>
-     <!--l. 3003--><p class="nopar" > However, below a even nicer solution is given.
+     <!--l. 3061--><p class="nopar" > However, below an even nicer solution is given.
      </p></li>
      <li 
   class="enumerate" id="x1-73004x2">The time range problem above can be solved elegantly by using a set as the result of the subquery.
@@ -4835,12 +4890,12 @@ class="cmtt-10x-x-109">FROM </span>clause. E.g.
 href="#x1-270003.10">section 3.10</a>). E.g.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-91">
+     <div class="verbatim" id="verbatim-92">
        select from MY.MS where TIME in
       <br />      [select FROM OTHERTABLE where WINDSPEED &#x003C; 5
       <br />           giving [TIME-INTERVAL/2 =:= TIME+INTERVAL/2]]
 </div>
-     <!--l. 3015--><p class="nopar" > The set expression in the GIVING clause is ﬁlled with the results from the subquery and used in the
+     <!--l. 3073--><p class="nopar" > The set expression in the GIVING clause is ﬁlled with the results from the subquery and used in the
      main query. So if the subquery results in 5 rows, the resulting set contains 5 intervals. Thereafter the
      resulting intervals are sorted and combined where possible. In this way the minimum number of
      intervals have to be examined by the main query.
@@ -4854,11 +4909,11 @@ class="cmtt-10x-x-109">:: </span>part has to be given, otherwise the
      name is treated as an ordinary table name. E.g.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-92">
+     <div class="verbatim" id="verbatim-93">
        select from MY.MS where TIME in
       <br />      [select TIME from ::WEATHER where WINDSPEED &#x003C; 5]
 </div>
-     <!--l. 3033--><p class="nopar" > In this example the other table is a subtable of table <span 
+     <!--l. 3091--><p class="nopar" > In this example the other table is a subtable of table <span 
 class="cmtt-10x-x-109">my.ms</span>. Its name is given by keyword <span 
 class="cmtt-10x-x-109">WEATHER </span>of
      <span 
@@ -4872,12 +4927,12 @@ class="cmtt-10x-x-109">ROWID() </span>can be used to return the row number as th
      E.g.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-93">
+     <div class="verbatim" id="verbatim-94">
        select from MY.MS where DATA_DESC_ID in
       <br />      [select from ::DATA_DESCRIPTION where
       <br />         SPECTRAL_WINDOW_ID in [0,2,4] giving [ROWID()]]
 </div>
-     <!--l. 3047--><p class="nopar" > Note that the function <span 
+     <!--l. 3105--><p class="nopar" > Note that the function <span 
 class="cmtt-10x-x-109">ROWNUMBER </span>cannot be used here, because it will give the row number in the
      selection and not (as <span 
 class="cmtt-10x-x-109">ROWID </span>does) the row number in the original table. Furthermore, <span 
@@ -4889,13 +4944,13 @@ class="cmtt-10x-x-109">ROWID </span>gives a
   class="enumerate" id="x1-73010x5">Select if any channel has a UV distance ¡ 100 wavelengths.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-94">
+     <div class="verbatim" id="verbatim-95">
        select from MY.MS where any(sqrt(sumsqr(UVW[:2])) / c() *
       <br />      [select CHAN_FREQ from ::SPECTRAL_WINDOW][DATA_DESC_ID,]
       <br />         &#x003C; 100)
       <br />
 </div>
-     <!--l. 3062--><p class="nopar" > In a MeasurementSet the UVW coordinates are stored in meters, so they have to be multiplied with
+     <!--l. 3120--><p class="nopar" > In a MeasurementSet the UVW coordinates are stored in meters, so they have to be multiplied with
      the frequency and divided by speed of light to get them in wavelengths. <br 
 class="newline" />Because TaQL has no proper join operation, it is not possible to select directly on the
      DATA_DESC_ID. However, using a nested query and indexing the result with the DATA_DESC_ID
@@ -4907,181 +4962,181 @@ class="newline" />Because TaQL has no proper join operation, it is not possible 
      30 days.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-95">
+     <div class="verbatim" id="verbatim-96">
        calc angdist(meas.app(&#x2019;SUN&#x2019;,  date()+[0:31], &#x2019;WSRT&#x2019;),
       <br />               meas.app(&#x2019;MOON&#x2019;, date()+[0:31], &#x2019;WSRT&#x2019;))
 </div>
-     <!--l. 3078--><p class="nopar" ></p></li></ol>
-<!--l. 3082--><p class="noindent" >
+     <!--l. 3136--><p class="nopar" ></p></li></ol>
+<!--l. 3140--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
  id="x1-740005"></a>Aggregation, GROUPBY, HAVING</h3>
-<!--l. 3083--><p class="noindent" >Similar to SQL it is possible to do aggregation and grouping in TaQL and to do selection on the groups using
+<!--l. 3141--><p class="noindent" >Similar to SQL it is possible to do aggregation and grouping in TaQL and to do selection on the groups using
 the HAVING clause.
-</p><!--l. 3086--><p class="noindent" >
+</p><!--l. 3144--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
  id="x1-750005.1"></a>Aggregation and GROUPBY</h4>
-<!--l. 3087--><p class="noindent" >One or more aggregated values can be calculated for a group deﬁned by the GROUPBY clause. The
+<!--l. 3145--><p class="noindent" >One or more aggregated values can be calculated for a group deﬁned by the GROUPBY clause. The
 aggregate functions described in <a 
 href="#x1-610004.10.13">section 4.10.13</a> can be used. For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-96">
+   <div class="verbatim" id="verbatim-97">
   SELECT ANTENNA1, ANTENNA2, gcount(), sqrt(sumsqr(UVW[:2]))
  <br />      FROM my.ms GROUPBY ANTENNA1,ANTENNA2
 </div>
-<!--l. 3095--><p class="nopar" > <span 
+<!--l. 3153--><p class="nopar" > <span 
 class="cmtt-10x-x-109">gcount </span>counts the number of rows per baseline and shows the baseline length. <br 
 class="newline" />Often only the GROUPBY columns and aggregated values are part of the SELECT clause, but the example
 shows that other values (here the baseline length) can also be selected. Non-aggregated values get the values
 in the last row of a group.
-</p><!--l. 3103--><p class="indent" >   Usually aggregated values and GROUPBY are used jointly, but it is possible to leave out one of them. If
+</p><!--l. 3161--><p class="indent" >   Usually aggregated values and GROUPBY are used jointly, but it is possible to leave out one of them. If
 GROUPBY is not given, the entire table is a single group. For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-97">
+   <div class="verbatim" id="verbatim-98">
   SELECT gcount() from my.ms
 </div>
-<!--l. 3108--><p class="nopar" > does not have groups, thus shows the total number of rows in the MS.
-                                                                                            
-                                                                                            
-</p>
-   <div class="verbatim" id="verbatim-98">
-  SELECT ANTENNA1,ANTENNA2 from my.ms GROUPBY ANTENNA1,ANTENNA2
-</div>
-<!--l. 3112--><p class="nopar" > does not use aggregate functions, but shows the unique baselines in the MS. Apart from the order, it has the
-same result as
+<!--l. 3166--><p class="nopar" > does not have groups, thus shows the total number of rows in the MS.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-99">
-  SELECT ANTENNA1,ANTENNA2 from my.ms ORDERBY UNIQUE ANTENNA1,ANTENNA2
+  SELECT ANTENNA1,ANTENNA2 from my.ms GROUPBY ANTENNA1,ANTENNA2
 </div>
-<!--l. 3117--><p class="nopar" > but is somewhat faster.
-</p><!--l. 3120--><p class="indent" >   In the examples above a sole aggregate function is used, but it is also possible to use it in an expression.
-Similarly, an expression can be used in the GROUPBY. For example:
+<!--l. 3170--><p class="nopar" > does not use aggregate functions, but shows the unique baselines in the MS. Apart from the order, it has the
+same result as
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-100">
-  select ctod(gmean(TIME)), gcount() from ~/data/GER.MS
- <br />    groupby round((TIME -
- <br />      [select gmin(TIME) from ~/data/GER.MS][0])/INTERVAL/5)
+  SELECT ANTENNA1,ANTENNA2 from my.ms ORDERBY UNIQUE ANTENNA1,ANTENNA2
 </div>
-<!--l. 3127--><p class="nopar" > groups the MS in chunks of 5 time slots. Note that the nested query gets the TIME of the ﬁrst time slot.
-The result is a set, hence the 0th element has to be taken.
-</p><!--l. 3132--><p class="indent" >   Note that an aggregate function can only be used in the SELECT and HAVING clause, so TaQL will give
-an error message if used elsewhere.
-</p><!--l. 3135--><p class="noindent" >
-</p>
-   <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
- id="x1-760005.2"></a>HAVING</h4>
-<!--l. 3136--><p class="noindent" >The HAVING clause can be used to select speciﬁc groups. For example:
+<!--l. 3175--><p class="nopar" > but is somewhat faster.
+</p><!--l. 3178--><p class="indent" >   In the examples above a sole aggregate function is used, but it is also possible to use it in an expression.
+Similarly, an expression can be used in the GROUPBY. For example:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-101">
+  select ctod(gmean(TIME)), gcount() from ~/data/GER.MS
+ <br />    groupby round((TIME -
+ <br />      [select gmin(TIME) from ~/data/GER.MS][0])/INTERVAL/5)
+</div>
+<!--l. 3185--><p class="nopar" > groups the MS in chunks of 5 time slots. Note that the nested query gets the TIME of the ﬁrst time slot.
+The result is a set, hence the 0th element has to be taken.
+</p><!--l. 3190--><p class="indent" >   Note that an aggregate function can only be used in the SELECT and HAVING clause, so TaQL will give
+an error message if used elsewhere.
+</p><!--l. 3193--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
+ id="x1-760005.2"></a>HAVING</h4>
+<!--l. 3194--><p class="noindent" >The HAVING clause can be used to select speciﬁc groups. For example:
+                                                                                            
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-102">
   SELECT TIME, gmax(amplitude(DATA)) from my.ms GROUPBY TIME
  <br />      HAVING gmax(amplitude(DATA)) &#x003E; 100
 </div>
-<!--l. 3140--><p class="nopar" > groups by time, but only selects the groups for which the maximum amplitude of the DATA is more than
+<!--l. 3198--><p class="nopar" > groups by time, but only selects the groups for which the maximum amplitude of the DATA is more than
 100. <br 
 class="newline" />Similar to WHERE, any expression can be used in HAVING, but the result has to be a bool scalar
 value.
-</p><!--l. 3146--><p class="indent" >   As shown in the example, HAVING will normally use aggregate functions, but it is not strictly needed.
+</p><!--l. 3204--><p class="indent" >   As shown in the example, HAVING will normally use aggregate functions, but it is not strictly needed.
 However, selections without an aggregate function could as well be done in the WHERE clause.
 <br 
 class="newline" />Usually HAVING will be used in combination with GROUPBY, but it can be used without. It can
 also be used without an aggregate function in the SELECT. However, it is an error if both are
 omitted.
-</p><!--l. 3155--><p class="noindent" >
+</p><!--l. 3213--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
  id="x1-770006"></a>Some further remarks</h3>
-<!--l. 3156--><p class="noindent" >
+<!--l. 3214--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">6.1   </span> <a 
  id="x1-780006.1"></a>Joining tables</h4>
-<!--l. 3157--><p class="noindent" >As discussed in some previous sections it is possible to join tables on row number. Two examples show how to
+<!--l. 3215--><p class="noindent" >As discussed in some previous sections it is possible to join tables on row number. Two examples show how to
 do it.
-</p><!--l. 3160--><p class="noindent" >
+</p><!--l. 3218--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.1   </span> <a 
  id="x1-790006.1.1"></a>Join on row number</h5>
                                                                                             
                                                                                             
-   <div class="verbatim" id="verbatim-102">
+   <div class="verbatim" id="verbatim-103">
   SELECT FROM mytable t1,othertable t2
  <br />    WHERE not all(near(t1.DATA, t2.DATA))
 </div>
-<!--l. 3164--><p class="nopar" > This command can be used to check if the data in <span 
+<!--l. 3222--><p class="nopar" > This command can be used to check if the data in <span 
 class="cmtt-10x-x-109">mytable </span>is about equal to the data in <span 
 class="cmtt-10x-x-109">othertable</span>. Both
 tables have to have the same number of rows. <br 
 class="newline" />The join is done on row number, thus the data in each pair of corresponding rows are compared.
-</p><!--l. 3171--><p class="noindent" >
+</p><!--l. 3229--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.2   </span> <a 
  id="x1-800006.1.2"></a>Join using an indexed subquery</h5>
                                                                                             
                                                                                             
-   <div class="verbatim" id="verbatim-103">
+   <div class="verbatim" id="verbatim-104">
   SELECT [SELECT NAME FROM ::ANTENNA][ANTENNA1]
  <br />         FROM ~/GER1.MS
 </div>
-<!--l. 3175--><p class="nopar" > This example shows how a subquery is used to join the main table of a MeasurementSet with its
+<!--l. 3233--><p class="nopar" > This example shows how a subquery is used to join the main table of a MeasurementSet with its
 ANTENNA subtable. The subquery returns a list with the names of all antennae, which subsequently
 is indexed with the antenna number to get the antenna name for each row in the main table.
 <br 
 class="newline" />The join is done using the ANTENNA1 column which gives the row number in the subtable, thus the index
 in the subquery result.
-</p><!--l. 3183--><p class="noindent" >
+</p><!--l. 3241--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.3   </span> <a 
  id="x1-810006.1.3"></a>Join using a subquery set</h5>
                                                                                             
                                                                                             
-   <div class="verbatim" id="verbatim-104">
+   <div class="verbatim" id="verbatim-105">
   SELECT FROM ~/GER1.MS WHERE ANTENNA1 IN
  <br />         [SELECT ROWID() FROM ::ANTENNA WHERE NAME ~ p/CS*/]
 </div>
-<!--l. 3187--><p class="nopar" > This example shows another way to use a subquery for a join of the main table of a MeasurementSet with its
+<!--l. 3245--><p class="nopar" > This example shows another way to use a subquery for a join of the main table of a MeasurementSet with its
 ANTENNA subtable. It selects all baselines for which the ﬁrst station is a core station. The subquery returns
 a set containing the ids of the core stations, which is used to select the correct stations in the main
 table.
-</p><!--l. 3194--><p class="noindent" >
+</p><!--l. 3252--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.4   </span> <a 
  id="x1-820006.1.4"></a>Join using derivedmscal</h5>
-<!--l. 3195--><p class="noindent" >Several UDFs in the <span 
+<!--l. 3253--><p class="noindent" >Several UDFs in the <span 
 class="cmtt-10x-x-109">derivedmscal </span>library make it possible to easily join a MeasuementSet or CASA
 Calibration Table with a subtable like ANTENNA or SPECTRAL_WINDOW. These functions know which
 columns to use making the join straightforward like in
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-105">
+   <div class="verbatim" id="verbatim-106">
   SELECT mscal.ant1name(), mscal.ant2name() from ~/GER1.MS
 </div>
-<!--l. 3201--><p class="nopar" > The library also contain the more general SUBCOL function making it possible to join any table with a
+<!--l. 3259--><p class="nopar" > The library also contain the more general SUBCOL function making it possible to join any table with a
 subtable. For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-106">
+   <div class="verbatim" id="verbatim-107">
   SELECT mscal.subcol(&#x2019;NAMES&#x2019;,&#x2019;NAME&#x2019;,NAMEID) from obs.parmdb
 </div>
-<!--l. 3206--><p class="nopar" > to get the parameter name for a LOFAR ParmDB table. A ParmDB table has a subtable NAMES
+<!--l. 3264--><p class="nopar" > to get the parameter name for a LOFAR ParmDB table. A ParmDB table has a subtable NAMES
 containing the NAME and other info of a parameter. The column NAME_ID is used to reference that
 subtable.
-</p><!--l. 3212--><p class="noindent" >
+</p><!--l. 3270--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
  id="x1-830006.2"></a>Optimization</h4>
-<!--l. 3213--><p class="noindent" >A lot of development work could be done to improve the query optimization. At this stage only a few simple
+<!--l. 3271--><p class="noindent" >A lot of development work could be done to improve the query optimization. At this stage only a few simple
 optimizations are done. </p>
      <ul class="itemize1">
      <li class="itemize">Constant subexpressions are calculated only once. E.g. <br 
@@ -5093,20 +5148,20 @@ class="cmtt-10x-x-109">sin(180/pi) </span>is evaluated once.
      E.g.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-107">
+     <div class="verbatim" id="verbatim-108">
        select from GER.MS where TIME in [select from ::POINTING where
       <br />   sumsqr(DIRECTION[1])&#x003E;0 giving [TIME-INTERVAL/2=:=TIME+INTERVAL/2]]
 </div>
-     <!--l. 3224--><p class="nopar" > can generate many identical or overlapping intervals. They are sorted and combined where possible to
+     <!--l. 3282--><p class="nopar" > can generate many identical or overlapping intervals. They are sorted and combined where possible to
      make the set as small as possible.
      </p></li>
      <li class="itemize">If the righthand side of the IN operator is a single value, IN is turned into ==.
      </li>
      <li class="itemize">If the righthand side of the IN operator is a set of integer values with a min-max range of ¡=1024*1024,
      that set is turned into a boolean vector to get linear lookup time.</li></ul>
-<!--l. 3235--><p class="indent" >   TaQL does not recognize common subexpressions nor does it attempt to optimize the query. It means
+<!--l. 3293--><p class="indent" >   TaQL does not recognize common subexpressions nor does it attempt to optimize the query. It means
 that the user can optimize a query by specifying the expression carefully. When using operator
-<!--l. 3238--><math 
+<!--l. 3296--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
 class="MathClass-rel">∣</mo><mo 
@@ -5114,7 +5169,7 @@ class="MathClass-rel">∣</mo></math> or &#x0026;&#x0026;,
 attention should be paid to the contents of the left and right branches. Both operators evaluate the right
 branch only if needed, so if possible the left branch should be the shortest one, i.e., the fastest to
 evaluate.
-</p><!--l. 3244--><p class="indent" >   The user should also use functions, operators, and subqueries in a careful way. </p>
+</p><!--l. 3302--><p class="indent" >   The user should also use functions, operators, and subqueries in a careful way. </p>
      <ul class="itemize1">
      <li class="itemize"><span 
 class="cmtt-10x-x-109">SQUARE(COL) </span>is (much) faster than <span 
@@ -5133,7 +5188,7 @@ class="cmtt-10x-x-109">0.5 </span>or <span
 class="cmtt-10x-x-109">POW(COL,0.5)</span>
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">SQUARE(U) + SQUARE(V) </span><!--l. 3256--><math 
+class="cmtt-10x-x-109">SQUARE(U) + SQUARE(V) </span><!--l. 3314--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
@@ -5142,7 +5197,7 @@ class="cmtt-10x-x-109">1000</span><span class="obeylines-h"><span class="verb"><
 class="cmtt-10x-x-109">**</span></span></span><span 
 class="cmtt-10x-x-109">2 </span>is considerably faster than <br 
 class="newline" /><span 
-class="cmtt-10x-x-109">SQRT(SQUARE(U) + SQUARE(V)) </span><!--l. 3258--><math 
+class="cmtt-10x-x-109">SQRT(SQUARE(U) + SQUARE(V)) </span><!--l. 3316--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
@@ -5151,7 +5206,7 @@ class="cmtt-10x-x-109">1000</span>, because the <span
 class="cmtt-10x-x-109">SQRT </span>function does not need to be evaluated for each row.
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">TIME IN [</span><!--l. 3262--><math 
+class="cmtt-10x-x-109">TIME IN [</span><!--l. 3320--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>0</mn> <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
@@ -5159,13 +5214,13 @@ class="MathClass-punc">:</mo><mo
 class="MathClass-rel">&#x003C;</mo> <mn>4</mn></math><span 
 class="cmtt-10x-x-109">]</span>
      is faster than <span 
-class="cmtt-10x-x-109">TIME</span><!--l. 3263--><math 
+class="cmtt-10x-x-109">TIME</span><!--l. 3321--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
 class="cmtt-10x-x-109">0</span>
      <span 
-class="cmtt-10x-x-109">&#x0026;&#x0026; TIME</span><!--l. 3263--><math 
+class="cmtt-10x-x-109">&#x0026;&#x0026; TIME</span><!--l. 3321--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
@@ -5175,40 +5230,40 @@ class="cmtt-10x-x-109">4</span>,
      <li class="itemize">Returning a column from a subquery can be done directly or as a set. E.g.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-108">
+     <div class="verbatim" id="verbatim-109">
        SELECT FROM maintable WHERE time IN
       <br />      [SELECT time FROM othertable WHERE windspeed &#x003C; 5]
 </div>
-     <!--l. 3272--><p class="nopar" > could also be expressed as
-                                                                                            
-                                                                                            
-</p>
-     <div class="verbatim" id="verbatim-109">
-       SELECT FROM maintable WHERE time IN
-      <br />      [SELECT FROM othertable WHERE windspeed &#x003C; 5 GIVING [time]]
-</div>
-     <!--l. 3277--><p class="nopar" > The latter (as a set) is slower. So, if possible, the column should be returned directly. This is also easier
-     to write. <br 
-class="newline" />An even more important optimization for this query is writing it as:
+     <!--l. 3330--><p class="nopar" > could also be expressed as
                                                                                             
                                                                                             
 </p>
      <div class="verbatim" id="verbatim-110">
        SELECT FROM maintable WHERE time IN
+      <br />      [SELECT FROM othertable WHERE windspeed &#x003C; 5 GIVING [time]]
+</div>
+     <!--l. 3335--><p class="nopar" > The latter (as a set) is slower. So, if possible, the column should be returned directly. This is also easier
+     to write. <br 
+class="newline" />An even more important optimization for this query is writing it as:
+                                                                                            
+                                                                                            
+</p>
+     <div class="verbatim" id="verbatim-111">
+       SELECT FROM maintable WHERE time IN
       <br />      [SELECT DISTINCT time FROM othertable WHERE windspeed &#x003C; 5]
 </div>
-     <!--l. 3284--><p class="nopar" > Using the DISTINCT qualiﬁer has the eﬀect that duplicates are removed which often results in a much
+     <!--l. 3342--><p class="nopar" > Using the DISTINCT qualiﬁer has the eﬀect that duplicates are removed which often results in a much
      smaller set.
      </p></li>
      <li class="itemize">Testing if a subquery contains at least N elements can be done in two ways:
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-111">
+     <div class="verbatim" id="verbatim-112">
        count([select column from table where expression]) &#x003E;= N
       <br />and
       <br />  exists (select from table where expression limit N)
 </div>
-     <!--l. 3295--><p class="nopar" > The second form is by far the best, because in that case the subquery will stop the matching process as
+     <!--l. 3353--><p class="nopar" > The second form is by far the best, because in that case the subquery will stop the matching process as
      soon as N matching rows are found. The ﬁrst form will do the subquery for the entire table.
      <br 
 class="newline" />Furthermore in the ﬁrst form a column has to be selected, which is not needed in the second
@@ -5220,12 +5275,12 @@ class="cmtt-10x-x-109">ANY </span>can be used to test if an element in an array 
      E.g.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-112">
+     <div class="verbatim" id="verbatim-113">
        WHERE any(arraycolumn == value)
       <br />and
       <br />  WHERE value IN arraycolumn
 </div>
-     <!--l. 3309--><p class="nopar" > give the same result. Operator <span 
+     <!--l. 3367--><p class="nopar" > give the same result. Operator <span 
 class="cmtt-10x-x-109">IN </span>is faster because it stops when it ﬁnds a match. If using <span 
 class="cmtt-10x-x-109">ANY </span>all
      elements are compared ﬁrst and thereafter <span 
@@ -5233,26 +5288,29 @@ class="cmtt-10x-x-109">ANY </span>tests the resulting bool array.
      </p></li>
      <li class="itemize">It was already shown in the <a 
 href="#x1-460004.8">section 4.8</a> that indexing arrays should be done with care.</li></ul>
-<!--l. 3321--><p class="noindent" >
+<!--l. 3379--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">7   </span> <a 
  id="x1-840007"></a>Modifying a table</h3>
-<!--l. 3322--><p class="noindent" >Usually TaQL will be used to get a subset from a table. However, as described in the ﬁrst sections, it
+<!--l. 3380--><p class="noindent" >Usually TaQL will be used to get a subset from a table. However, as described in the ﬁrst sections, it
 can also be used to change the contents of a table using the UPDATE, INSERT, or DELETE
 command. Note that a table has to be writable, otherwise those commands exit with an error
 message.
-</p><!--l. 3328--><p class="noindent" >
+</p><!--l. 3386--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">7.1   </span> <a 
  id="x1-850007.1"></a>UPDATE</h4>
                                                                                             
                                                                                             
-   <div class="verbatim" id="verbatim-113">
-  UPDATE table_list SET update_list [WHERE ...] [ORDERBY ...]
- <br />                                    [LIMIT ...] [OFFSET ...]
+   <div class="verbatim" id="verbatim-114">
+  UPDATE table SET update_list [FROM table_list]
+ <br />                               [WHERE ...] [ORDERBY ...]
+ <br />                               [LIMIT ...] [OFFSET ...]
 </div>
-<!--l. 3332--><p class="nopar" > updates all or some rows in the ﬁrst table of the table list. Other tables can be used in clauses like SET and
-WHERE. <br 
+<!--l. 3391--><p class="nopar" > updates all or some rows in the ﬁrst table. More input tables can be given in the FROM clause and used in
+clauses like SET and WHERE. Unlike SQL it is possible to specify more tables in the UPDATE part which is
+the same as specifying them in the FROM clause. However, using the FROM clause makes it more clear that
+only the ﬁrst table is updated. <br 
 class="newline" /><span 
 class="cmtt-10x-x-109">update</span><span 
 class="cmtt-10x-x-109">_list </span>is a comma-separated list of <span 
@@ -5261,87 +5319,90 @@ column using the expression. Both scalar and array columns are supported. E.g.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-114">
+   <div class="verbatim" id="verbatim-115">
   UPDATE vla.ms SET ANTENNA1=ANTENNA1-1, ANTENNA2=ANTENNA2-1
 </div>
-<!--l. 3342--><p class="nopar" > to make the antenna numbers zero-based if accidently they were written one-based.
-                                                                                            
-                                                                                            
-</p>
-   <div class="verbatim" id="verbatim-115">
-  UPDATE this.ms, that.ms t2 set DATA=t2.DATA, FLAG=t2.FLAG
- <br />                     where all(FLAG)
-</div>
-<!--l. 3349--><p class="nopar" > to copy the DATA and FLAG column of that.ms to this.ms for rows where all data are ﬂagged. Note the use
-of the shorthand (alias) <span 
-class="cmtt-10x-x-109">t2</span>.
-</p><!--l. 3353--><p class="indent" >   If an array gets an array value, the shape of the array can be changed (provided it is allowed for that
-table column). Arrays can also be updated with a scalar value causing all elements in the array to be set to
-that scalar value.
-</p><!--l. 3358--><p class="indent" >   It is also possible to update part of an array using <a 
-href="#x1-460004.8">array indexing</a>. E.g.
+<!--l. 3405--><p class="nopar" > to make the antenna numbers zero-based if accidently they were written one-based.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-116">
+  UPDATE this.ms set DATA=t2.DATA, FLAG=t2.FLAG
+ <br />                 FROM that.ms t2
+ <br />                 where all(FLAG)
+ <br />  UPDATE this.ms, that.ms t2 set DATA=t2.DATA, FLAG=t2.FLAG
+ <br />                             where all(FLAG)
+</div>
+<!--l. 3415--><p class="nopar" > are equivalent. They copy the DATA and FLAG column of that.ms to this.ms for rows where all data are
+ﬂagged. Note the use of the shorthand (alias) <span 
+class="cmtt-10x-x-109">t2</span>.
+</p><!--l. 3419--><p class="indent" >   If an array gets an array value, the shape of the array can be changed (provided it is allowed for that
+table column). Arrays can also be updated with a scalar value causing all elements in the array to be set to
+that scalar value.
+</p><!--l. 3424--><p class="indent" >   It is also possible to update part of an array using <a 
+href="#x1-460004.8">array indexing</a>. E.g.
+                                                                                            
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-117">
   UPDATE vla.ms SET FLAG[1,1]=T
  <br />  UPDATE vla.ms SET FLAG[1,]=T
  <br />  UPDATE vla.ms SET FLAG=F
 </div>
-<!--l. 3364--><p class="nopar" > The ﬁrst example sets only a single array element, while the second one sets an entire row in the array. The
+<!--l. 3430--><p class="nopar" > The ﬁrst example sets only a single array element, while the second one sets an entire row in the array. The
 second and third example show it is possible to set an array to a scalar value.
-</p><!--l. 3369--><p class="indent" >   Type promotion and demotion will be done as much as possible. For example, an integer column can get
+</p><!--l. 3435--><p class="indent" >   Type promotion and demotion will be done as much as possible. For example, an integer column can get
 the value of a double expression (the result will be truncated). <br 
 class="newline" />Unit conversion will be done as needed. Thus if a column and its expression have diﬀerent units, the
 expression result is automatically converted to the column&#x2019;s unit. Of course, the units must be of the same
 type to be able to convert the data.
-</p><!--l. 3377--><p class="indent" >   Note that if multiple <span 
+</p><!--l. 3443--><p class="indent" >   Note that if multiple <span 
 class="cmtt-10x-x-109">column=expression </span>parts are given, the columns are changed in the order as
 speciﬁed in the update-list. It means that if an updated column is used in an expression for a later column,
 the new value is used when evaluating the expression. E.g. in
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-117">
+   <div class="verbatim" id="verbatim-118">
   UPDATE vla.ms SET DATA=DATA+1, SUMD=sum(DATA)
 </div>
-<!--l. 3384--><p class="nopar" > the <span 
+<!--l. 3450--><p class="nopar" > the <span 
 class="cmtt-10x-x-109">SUMD </span>update uses the new <span 
 class="cmtt-10x-x-109">DATA </span>values.
-</p><!--l. 3387--><p class="indent" >   Thus to swap the values of the ANTENNA1 and ANTENNA2 column, one can <span 
+</p><!--l. 3453--><p class="indent" >   Thus to swap the values of the ANTENNA1 and ANTENNA2 column, one can <span 
 class="cmbx-10x-x-109">not </span>do:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-118">
+   <div class="verbatim" id="verbatim-119">
   UPDATE vla.ms SET ANTENNA1=ANTENNA2, ANTENNA2=ANTENNA1
 </div>
-<!--l. 3391--><p class="nopar" > TaQL does not have temporary variables to solve the problem. However, the following could be
-used:
-                                                                                            
-                                                                                            
-</p>
-   <div class="verbatim" id="verbatim-119">
-  UPDATE vla.ms SET ANTENNA1=ANTENNA1+ANTENNA2,
- <br />                    ANTENNA2=ANTENNA1-ANTENNA2,  #A2 is old A1
- <br />                    ANTENNA1=ANTENNA1-ANTENNA2   #A1 is old A2
-</div>
-<!--l. 3398--><p class="nopar" >
-</p><!--l. 3401--><p class="noindent" >
-</p>
-   <h4 class="subsectionHead"><span class="titlemark">7.2   </span> <a 
- id="x1-860007.2"></a>INSERT</h4>
-<!--l. 3402--><p class="noindent" >The <span 
-class="cmtt-10x-x-109">INSERT </span>command adds rows to the table. It can take three forms:
+<!--l. 3457--><p class="nopar" > To solve this problem a temporary table (in this case in memory) can be used to save the value of e.g.
+ANTENNA1:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-120">
+  UPDATE my.ms
+ <br />      set ANTENNA1 = ANTENNA2, ANTENNA2 = orig.ANTENNA1
+ <br />      FROM [select ANTENNA1 from my.ms giving as memory] orig
+</div>
+<!--l. 3464--><p class="nopar" >
+</p><!--l. 3467--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">7.2   </span> <a 
+ id="x1-860007.2"></a>INSERT</h4>
+<!--l. 3468--><p class="noindent" >The <span 
+class="cmtt-10x-x-109">INSERT </span>command adds rows to the table. It can take three forms:
+                                                                                            
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-121">
   INSERT INTO table_list SET column=expr, column=expr, ...
  <br />  INSERT INTO table_list [(column_list)] VALUES (expr_list)
  <br />  INSERT INTO table_list [(column_list)] SELECT_command
 </div>
-<!--l. 3407--><p class="nopar" > The ﬁrst and second form are basically equivalent, but diﬀer in syntax. The ﬁrst form has the same syntax
+<!--l. 3473--><p class="nopar" > The ﬁrst and second form are basically equivalent, but diﬀer in syntax. The ﬁrst form has the same syntax
 as the UPDATE command, while the second form is the SQL syntax making it possible to leave out the
 column names (see below). <br 
 class="newline" />The ﬁrst form adds one row to the table and puts the values given in the expressions into the columns.
@@ -5350,12 +5411,12 @@ class="newline" />For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-121">
+   <div class="verbatim" id="verbatim-122">
   INSERT INTO my.ms SET ANTENNA1=0, ANTENNA2=1
 </div>
-<!--l. 3417--><p class="nopar" > adds one row, puts 0 in ANTENNA1 and 1 in ANTENNA2.
+<!--l. 3483--><p class="nopar" > adds one row, puts 0 in ANTENNA1 and 1 in ANTENNA2.
 </p>
-<!--l. 3420--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 3486--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-870007.2"></a></span>
    The second form adds one row to the table and puts the values given in the expression list into the
 columns given in the column list. If the column list is not given, it defaults to all stored columns in the table
@@ -5372,12 +5433,12 @@ class="newline" />For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-122">
+   <div class="verbatim" id="verbatim-123">
   INSERT INTO my.ms (ANTENNA1,ANTENNA2) VALUES (0,1)
 </div>
-<!--l. 3440--><p class="nopar" > adds one row, puts 0 in ANTENNA1 and 1 in ANTENNA2.
+<!--l. 3506--><p class="nopar" > adds one row, puts 0 in ANTENNA1 and 1 in ANTENNA2.
 </p>
-<!--l. 3443--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 3509--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-880007.2"></a></span>
    The third form evaluates the SELECT command and copies the rows found in the selection to the table
 being modiﬁed (which is given in the INTO part). The columns used in the modiﬁed table are deﬁned in the
@@ -5388,77 +5449,77 @@ class="newline" />For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-123">
+   <div class="verbatim" id="verbatim-124">
   INSERT INTO my.ms select FROM my.ms
 </div>
-<!--l. 3454--><p class="nopar" > appends all rows and columns of <span 
+<!--l. 3520--><p class="nopar" > appends all rows and columns of <span 
 class="cmtt-10x-x-109">my.ms </span>to itself. Please note that only the original number of rows is
 copied.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-124">
+   <div class="verbatim" id="verbatim-125">
   INSERT INTO my.ms (ANTENNA1,ANTENNA2) select ANTENNA2,ANTENNA1
  <br />   FROM other.ms WHERE ANTENNA1&#x003E;0
 </div>
-<!--l. 3460--><p class="nopar" > copies rows from <span 
-class="cmtt-10x-x-109">other.ms </span>where ANTENNA1<!--l. 3461--><math 
+<!--l. 3526--><p class="nopar" > copies rows from <span 
+class="cmtt-10x-x-109">other.ms </span>where ANTENNA1<!--l. 3527--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>0.
 It swaps the values of ANTENNA1 and ANTENNA2. All other columns are not written, thus may contain
 rubbish.
-</p><!--l. 3465--><p class="noindent" >
+</p><!--l. 3531--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">7.3   </span> <a 
  id="x1-890007.3"></a>DELETE</h4>
                                                                                             
                                                                                             
-   <div class="verbatim" id="verbatim-125">
+   <div class="verbatim" id="verbatim-126">
   DELETE FROM table_list
  <br />    [WHERE ...] [ORDERBY ...] [LIMIT ...] [OFFSET ...]
 </div>
-<!--l. 3469--><p class="nopar" > deletes some or all rows from a table.
-                                                                                            
-                                                                                            
-</p>
-   <div class="verbatim" id="verbatim-126">
-  DELETE FROM my.ms WHERE ANTENNA1&#x003E;13 OR ANTENNA2&#x003E;13
-</div>
-<!--l. 3473--><p class="nopar" > deletes the rows matching the WHERE expression. <br 
-class="newline" />If no selection is done, all rows will be deleted. <br 
-class="newline" />It is possible to specify more than one table in the FROM clause to be able to use, for example,
-keywords from other tables. Rows will be deleted from the ﬁrst table mentioned in the FROM
-part.
-</p><!--l. 3480--><p class="noindent" >
-</p>
-   <h3 class="sectionHead"><span class="titlemark">8   </span> <a 
- id="x1-900008"></a>Creating a new table</h3>
-<!--l. 3481--><p class="noindent" >TaQL can be used to create a new table. The data managers to be used can be given in full
-detail.
-</p><!--l. 3484--><p class="indent" >   The syntax is:
+<!--l. 3535--><p class="nopar" > deletes some or all rows from a table.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-127">
+  DELETE FROM my.ms WHERE ANTENNA1&#x003E;13 OR ANTENNA2&#x003E;13
+</div>
+<!--l. 3539--><p class="nopar" > deletes the rows matching the WHERE expression. <br 
+class="newline" />If no selection is done, all rows will be deleted. <br 
+class="newline" />It is possible to specify more than one table in the FROM clause to be able to use, for example,
+keywords from other tables. Rows will be deleted from the ﬁrst table mentioned in the FROM
+part.
+</p><!--l. 3546--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">8   </span> <a 
+ id="x1-900008"></a>Creating a new table</h3>
+<!--l. 3547--><p class="noindent" >TaQL can be used to create a new table. The data managers to be used can be given in full
+detail.
+</p><!--l. 3550--><p class="indent" >   The syntax is:
+                                                                                            
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-128">
   CREATE TABLE tablename colspec DMINFO datamans
 </div>
-<!--l. 3487--><p class="nopar" > The columns are deﬁned in the <span 
+<!--l. 3553--><p class="nopar" > The columns are deﬁned in the <span 
 class="cmtt-10x-x-109">colspec </span>part. If not given, an empty table is created. <br 
 class="newline" />Data managers can be deﬁned in the <span 
 class="cmtt-10x-x-109">datamans </span>part.
-</p><!--l. 3492--><p class="indent" >   The <span 
+</p><!--l. 3558--><p class="indent" >   The <span 
 class="cmtt-10x-x-109">colspec </span>part can optionally be enclosed in square brackets or parentheses (for SQL
 compatibility). It is a comma separated list of column speciﬁcations. Each speciﬁcation looks
 like:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-128">
+   <div class="verbatim" id="verbatim-129">
   columnname datatype [NDIM=n, SHAPE=[d1,d2,...], UNIT=&#x2019;s&#x2019;,
  <br />                       DMTYPE=&#x2019;s&#x2019;,DMGROUP=&#x2019;s&#x2019;,COMMENT=&#x2019;s&#x2019;]
 </div>
-<!--l. 3499--><p class="nopar" > The possible data type strings are given in <a 
+<!--l. 3565--><p class="nopar" > The possible data type strings are given in <a 
 href="#x1-290004.1">section 4.1</a>. The part enclosed in square brackets is optional. Zero
 or more of these keywords can be used. It makes it possible to deﬁne array columns and/or default
 data manager to be used. The square brackets are optional if only one such keyword is used.
@@ -5485,7 +5546,7 @@ class="newline" />It has a string value, thus quotes have to be used.
      <li class="itemize"><span 
 class="cmtt-10x-x-109">DMTYPE, DMGROUP </span>are rather speciﬁc and are for the expert user. <br 
 class="newline" />They have a string value, thus quotes have to be used.</li></ul>
-<!--l. 3525--><p class="indent" >   The <span 
+<!--l. 3591--><p class="indent" >   The <span 
 class="cmtt-10x-x-109">dataman </span>part makes it possible for the expert user to deﬁne the data managers to be used by
 columns. It is a comma separated list of data manager speciﬁcations looking like the output of the
 <span 
@@ -5494,12 +5555,12 @@ example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-129">
+   <div class="verbatim" id="verbatim-130">
   dminfo [NAME=&#x0022;ISM1&#x0022;,TYPE=&#x0022;IncrementalStMan&#x0022;,COLUMNS=[&#x0022;col1&#x0022;]],
  <br />         [NAME=&#x0022;SSM1&#x0022;,TYPE=&#x0022;StandardStMan&#x0022;,
  <br />          SPEC=[BUCKETSIZE=1000],COLUMNS=[&#x0022;col2&#x0022;,&#x0022;col3&#x0022;]]
 </div>
-<!--l. 3535--><p class="nopar" > The case of the keyword names used (e.g. NAME) is important. They have to be given in uppercase. The
+<!--l. 3601--><p class="nopar" > The case of the keyword names used (e.g. NAME) is important. They have to be given in uppercase. The
 following keywords can be given: <br 
 class="newline" /><span 
 class="cmtt-10x-x-109">NAME </span>deﬁnes the unique name of the data manager. <br 
@@ -5511,114 +5572,114 @@ speciﬁc. If shapes have to be given here, they always have to be in casacore f
 TaQL has no knowledge about these internals. <br 
 class="newline" /><span 
 class="cmtt-10x-x-109">COLUMNS </span>is a list of column names deﬁning all columns that have to be bound to the data manager.
-</p><!--l. 3549--><p class="noindent" >
+</p><!--l. 3615--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">9   </span> <a 
  id="x1-910009"></a>Counting in a table</h3>
-<!--l. 3550--><p class="noindent" >Before TaQL had the GROUPBY command, the COUNT command could be used instead of the <a 
+<!--l. 3616--><p class="noindent" >Before TaQL had the GROUPBY command, the COUNT command could be used instead of the <a 
 href="#x1-610004.10.13"><span 
 class="cmtt-10x-x-109">gcount</span>
 aggregate function</a> to count the number of occurrences in a table. <br 
 class="newline" />For backward compatibility this command can still be used, but its usage is discouraged.
-</p><!--l. 3556--><p class="indent" >   The exact syntax is:
-                                                                                            
-                                                                                            
-</p>
-   <div class="verbatim" id="verbatim-130">
-  COUNT column-list FROM table-list [WHERE expression]
-</div>
-<!--l. 3559--><p class="nopar" > It counts the number of rows for each unique tuple in the column list of the table (after the possible
-WHERE selection is done). For example:
+</p><!--l. 3622--><p class="indent" >   The exact syntax is:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-131">
-  COUNT TIME FROM my.ms
+  COUNT column-list FROM table-list [WHERE expression]
 </div>
-<!--l. 3565--><p class="nopar" > counts the number of rows per timestamp.
+<!--l. 3625--><p class="nopar" > It counts the number of rows for each unique tuple in the column list of the table (after the possible
+WHERE selection is done). For example:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-132">
-  COUNT ANTENNA1,ANTENNA2 FROM my.ms
+  COUNT TIME FROM my.ms
 </div>
-<!--l. 3569--><p class="nopar" > counts the number of rows per baseline.
-</p><!--l. 3572--><p class="indent" >   As in the other TaQL commands a column in the column list can be any expression, but that will be
-slower than straight columns.
-</p><!--l. 3575--><p class="noindent" >
-</p>
-   <h3 class="sectionHead"><span class="titlemark">10   </span> <a 
- id="x1-9200010"></a>Calculations on a table</h3>
-<!--l. 3576--><p class="noindent" >TaQL can be used to get derived values from a table by means of an expression. The expression can result in
-any data type and value type. For example, if the expression uses an array column, the result
-might be a vector of arrays (an array for each row). If the expression uses a scalar column, the
-result might be a vector of scalars or even a single scalar if a reduction function like SUM is
-used.
-</p><!--l. 3583--><p class="indent" >   The exact syntax is:
+<!--l. 3631--><p class="nopar" > counts the number of rows per timestamp.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-133">
+  COUNT ANTENNA1,ANTENNA2 FROM my.ms
+</div>
+<!--l. 3635--><p class="nopar" > counts the number of rows per baseline.
+</p><!--l. 3638--><p class="indent" >   As in the other TaQL commands a column in the column list can be any expression, but that will be
+slower than straight columns.
+</p><!--l. 3641--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">10   </span> <a 
+ id="x1-9200010"></a>Calculations on a table</h3>
+<!--l. 3642--><p class="noindent" >TaQL can be used to get derived values from a table by means of an expression. The expression can result in
+any data type and value type. For example, if the expression uses an array column, the result
+might be a vector of arrays (an array for each row). If the expression uses a scalar column, the
+result might be a vector of scalars or even a single scalar if a reduction function like SUM is
+used.
+</p><!--l. 3649--><p class="indent" >   The exact syntax is:
+                                                                                            
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-134">
   CALC expression [FROM table_list]
 </div>
-<!--l. 3586--><p class="nopar" > The part in square brackets can be omitted if no column is (directly) used in the expression. The examples
+<!--l. 3652--><p class="nopar" > The part in square brackets can be omitted if no column is (directly) used in the expression. The examples
 will make clear what that means. <br 
 class="newline" />The following syntax is still available for backward compatibility:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-134">
+   <div class="verbatim" id="verbatim-135">
   CALC FROM table_list CALC expression
 </div>
-<!--l. 3592--><p class="nopar" >
-                                                                                            
-                                                                                            
-</p>
-   <div class="verbatim" id="verbatim-135">
-  CALC 1in cm
-</div>
-<!--l. 3596--><p class="nopar" > is a simple expression not using a table. It shows how the CALC command can be used as a desk calculator
-to convert 1 inch to cm.
+<!--l. 3658--><p class="nopar" >
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-136">
-  CALC mean(column1+column2) FROM mytable
+  CALC 1in cm
 </div>
-<!--l. 3602--><p class="nopar" > gives a vector of scalars containing the mean per row.
+<!--l. 3662--><p class="nopar" > is a simple expression not using a table. It shows how the CALC command can be used as a desk calculator
+to convert 1 inch to cm.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-137">
+  CALC mean(column1+column2) FROM mytable
+</div>
+<!--l. 3668--><p class="nopar" > gives a vector of scalars containing the mean per row.
+                                                                                            
+                                                                                            
+</p>
+   <div class="verbatim" id="verbatim-138">
   CALC sum([SELECT FROM mytable GIVING [mean(column1+column2)]])
 </div>
-<!--l. 3607--><p class="nopar" > gives a single scalar giving the sum of the means in each row. Note that in this command the CALC
+<!--l. 3673--><p class="nopar" > gives a single scalar giving the sum of the means in each row. Note that in this command the CALC
 command does not need the FROM clause, because it does not use a column itself. Columns are only used in
 the nested query which has a FROM clause itself.
-</p><!--l. 3613--><p class="noindent" >
+</p><!--l. 3679--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">11   </span> <a 
  id="x1-9300011"></a>Examples</h3>
-<!--l. 3614--><p class="noindent" >
+<!--l. 3680--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">11.1   </span> <a 
  id="x1-9400011.1"></a>Selection examples</h4>
-<!--l. 3615--><p class="noindent" >Some examples are given starting with simple ones.
+<!--l. 3681--><p class="noindent" >Some examples are given starting with simple ones.
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">11.1.1   </span> <a 
  id="x1-9500011.1.1"></a>Reference table results</h5>
-<!--l. 3617--><p class="noindent" >The result of the following queries is a reference table, because no expressions have been given in the
+<!--l. 3683--><p class="noindent" >The result of the following queries is a reference table, because no expressions have been given in the
 column-list. This will be the most common case when using TaQL.
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description">  <span 
-class="cmtt-10x-x-109">SELECT FROM mytable WHERE column1 </span><!--l. 3621--><math 
+class="cmtt-10x-x-109">SELECT FROM mytable WHERE column1 </span><!--l. 3687--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>
      <span 
 class="cmtt-10x-x-109">0  </span><br 
-class="newline" />selects the rows in which the value of column1 <!--l. 3622--><math 
+class="newline" />selects the rows in which the value of column1 <!--l. 3688--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>
@@ -5631,7 +5692,7 @@ class="newline" />selects 2 columns from the table.
      </dd><dt class="description">
  </dt><dd 
 class="description">  <span 
-class="cmtt-10x-x-109">SELECT column0,column1 FROM mytable WHERE column1</span><!--l. 3627--><math 
+class="cmtt-10x-x-109">SELECT column0,column1 FROM mytable WHERE column1</span><!--l. 3693--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
@@ -5643,7 +5704,7 @@ class="newline" />is a combination of the previous selections.
 class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM [SELECT FROM mytable ORDERBY column0 DESC]  </span><br 
 class="newline" /> <span 
-class="cmtt-10x-x-109">WHERE rownumber()</span><!--l. 3631--><math 
+class="cmtt-10x-x-109">WHERE rownumber()</span><!--l. 3697--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
@@ -5664,7 +5725,7 @@ class="newline" />is a more elegant solution using the newer LIMIT clause.
 class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM mytable ORDERBY column0 DESC GIVING outtable  </span><br 
 class="newline" /> <span 
-class="cmtt-10x-x-109">SELECT FROM outtable WHERE rownumber()</span><!--l. 3638--><math 
+class="cmtt-10x-x-109">SELECT FROM outtable WHERE rownumber()</span><!--l. 3704--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
@@ -5748,19 +5809,19 @@ class="newline" />selects all rows where the DATA columns in both tables are not
 class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM mytable WHERE </span><br 
 class="newline" /> <span 
-class="cmtt-10x-x-109">cos(0d1m) </span><!--l. 3689--><math 
+class="cmtt-10x-x-109">cos(0d1m) </span><!--l. 3755--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
      <span 
 class="cmtt-10x-x-109">sin(52deg) * sin(DEC) + cos(52deg) * cos(DEC) * cos(3h30m - RA)  </span><br 
 class="newline" />selects observations with an equatorial position (in say J2000) inside a cone with a radius of 1
-     arcmin around (3h30m, 52deg). To ﬁnd them the condition DISTANCE<!--l. 3692--><math 
+     arcmin around (3h30m, 52deg). To ﬁnd them the condition DISTANCE<!--l. 3758--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
 class="MathClass-rel">=</mo></math>RADIUS
-     must be fulﬁlled, which is equivalent to COS(RADIUS)<!--l. 3693--><math 
+     must be fulﬁlled, which is equivalent to COS(RADIUS)<!--l. 3759--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
@@ -5799,7 +5860,7 @@ class="description">  <span
 class="cmtt-10x-x-109">select from MY.MS where TIME in </span><br 
 class="newline" /><span 
 class="cmtt-10x-x-109">[select from ::SOURCE where REST</span><span 
-class="cmtt-10x-x-109">_FREQUENCY </span><!--l. 3710--><math 
+class="cmtt-10x-x-109">_FREQUENCY </span><!--l. 3776--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
@@ -5864,11 +5925,11 @@ class="newline" /><span
 class="cmtt-10x-x-109">from MS/FIELD </span>where ... is the ﬁndcone argument list given in the previous example. 1 is added
      to cope with the case that no cone matches. <br 
 class="newline" />Note that the conversion to int is done to circumvent a small bug in TaQL.</dd></dl>
-<!--l. 3754--><p class="noindent" >
+<!--l. 3820--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">11.1.2   </span> <a 
  id="x1-9600011.1.2"></a>Plain table results</h5>
-<!--l. 3755--><p class="noindent" >The following examples result in a plain table, thus in a deep copy of the query results, because the
+<!--l. 3821--><p class="noindent" >The following examples result in a plain table, thus in a deep copy of the query results, because the
 column-list contains an expression or a data type.
      </p><dl class="description"><dt class="description">
  </dt><dd 
@@ -5905,11 +5966,11 @@ class="cmtt-10x-x-109">MEANS(DATA,2) </span>should
      </dd></dl>
                                                                                             
                                                                                             
-<!--l. 3784--><p class="noindent" >
+<!--l. 3850--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">11.2   </span> <a 
  id="x1-9700011.2"></a>Modiﬁcation examples</h4>
-<!--l. 3785--><p class="noindent" >
+<!--l. 3851--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description">  <span 
@@ -5950,32 +6011,32 @@ class="newline" /><span
 class="cmtt-10x-x-109">values (1,0,F) </span><br 
 class="newline" />adds a row to the DATA_DESCRIPTION subtable and initializes it.
      </dd></dl>
-<!--l. 3808--><p class="noindent" >
+<!--l. 3874--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">11.2.1   </span> <a 
  id="x1-9800011.2.1"></a>Applying running median to an image</h5>
-<!--l. 3809--><p class="noindent" >The following piece of Python code shows how a running median can be applied to an Casacore
+<!--l. 3875--><p class="noindent" >The following piece of Python code shows how a running median can be applied to an Casacore
 image.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-138">
+   <div class="verbatim" id="verbatim-139">
   t1 = tablecommand (&#x2019;update my.imgd set map =
  <br />                         map - runningmedian(map,25,25)&#x2019;)
 </div>
-<!--l. 3814--><p class="nopar" > First the image is copied and thereafter the running medians are subtracted from the data in the copy. It
+<!--l. 3880--><p class="nopar" > First the image is copied and thereafter the running medians are subtracted from the data in the copy. It
 uses a half window size of 25x25, thus the full window is 51x51. <br 
 class="newline" />When doing this, one should take care that in case of a spectral line cube the image is not too large,
 otherwise it won&#x2019;t ﬁt in memory. If too large, it should be done in chunks like:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-139">
+   <div class="verbatim" id="verbatim-140">
   t1 = tablecommand (&#x2019;update my.imgd set map[,,sc:ec,] =
  <br />                         map[,,sc:ec,] -
  <br />                         runningmedian(map[,,sc:ec,],25,25)&#x2019;)
 </div>
-<!--l. 3825--><p class="nopar" > where <span 
+<!--l. 3891--><p class="nopar" > where <span 
 class="cmtt-10x-x-109">sc </span>and <span 
 class="cmtt-10x-x-109">ec </span>are the start and end frequency channel. In this example it is assumed that the axes of the
 image are RA, DEC, freq, Stokes. <br 
@@ -5983,11 +6044,11 @@ class="newline" />Note that <span
 class="cmtt-10x-x-109">imagecalc </span>is used to copy the image. It might also be done with table functions, but <span 
 class="cmtt-10x-x-109">imagecalc</span>
 has the great advantage that it also works on FITS and Miriad images.
-</p><!--l. 3834--><p class="noindent" >
+</p><!--l. 3900--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">11.3   </span> <a 
  id="x1-9900011.3"></a>Table creation examples</h4>
-<!--l. 3835--><p class="noindent" >
+<!--l. 3901--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description">  <span 
@@ -6020,11 +6081,11 @@ class="newline" /> <span
 class="cmtt-10x-x-109">SPEC=[DEFAULTTILESHAPE=[4,32,64]],   COLUMNS=[&#x2019;colarr&#x2019;]] </span><br 
 class="newline" />creates  a  table  of  1  array  column  with  the  given  shape.  The  column  is  stored  with  the
      TiledColumnStMan storage manager using the given settings.</dd></dl>
-<!--l. 3860--><p class="noindent" >
+<!--l. 3926--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">11.4   </span> <a 
  id="x1-10000011.4"></a>Calculation examples</h4>
-<!--l. 3861--><p class="noindent" >
+<!--l. 3927--><p class="noindent" >
                                                                                             
                                                                                             
      </p><dl class="description"><dt class="description">
@@ -6048,14 +6109,14 @@ class="description">  <span
 class="cmtt-10x-x-109">calc mean(abs(DATA))  </span><br 
 class="newline" /> <span 
 class="cmtt-10x-x-109">from [select from MY.MS where ANTENNA1==0]</span>
-     <!--l. 3874--><p class="noindent" >calculates for each row the mean of the data for the selected subset of the measurement set.
+     <!--l. 3940--><p class="noindent" >calculates for each row the mean of the data for the selected subset of the measurement set.
      </p></dd><dt class="description">
  </dt><dd 
 class="description">  <span 
 class="cmtt-10x-x-109">calc mean([select from MY.MS where ANTENNA1==0  </span><br 
 class="newline" /><span 
 class="cmtt-10x-x-109">giving [mean(abs(DATA))]])</span>
-     <!--l. 3880--><p class="noindent" >looks like the previous example. It, however, calculates the mean of the mean of the data in each
+     <!--l. 3946--><p class="noindent" >looks like the previous example. It, however, calculates the mean of the mean of the data in each
      row for the selected subset of the measurement set.
      </p></dd><dt class="description">
  </dt><dd 
@@ -6064,16 +6125,16 @@ class="cmtt-10x-x-109">calc max([select from MY.MS where isdefined(DATA)  </span
 class="newline" /> <span 
 class="cmtt-10x-x-109">giving [max(abs(VIDEO</span><span 
 class="cmtt-10x-x-109">_POINT-MEANS(DATA,0)))]])</span>
-     <!--l. 3887--><p class="noindent" >shows the maximum absolute diﬀerence between VIDEO_POINT of each correlation and the
+     <!--l. 3953--><p class="noindent" >shows the maximum absolute diﬀerence between VIDEO_POINT of each correlation and the
      mean of the DATA for that correlation. Note that the 2 indicates averaging over the ﬁrst axis,
      thus the frequency axis.
 </p>
      </dd></dl>
-<!--l. 3894--><p class="noindent" >
+<!--l. 3960--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">11.5   </span> <a 
  id="x1-10100011.5"></a>Aggregation/groupby examples</h4>
-<!--l. 3895--><p class="noindent" >
+<!--l. 3961--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description">  <span 
@@ -6113,11 +6174,11 @@ class="newline" />calculates the average of DATA per polarization for every 10 t
      Note it it ﬁrst combines the data of each 10 time slots in a single array, after which the <span 
 class="cmtt-10x-x-109">boxedmean</span>
      function is used to average every [10,4,1] box.</dd></dl>
-<!--l. 3923--><p class="noindent" >
+<!--l. 3989--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">11.5.1   </span> <a 
  id="x1-10200011.5.1"></a>Obtaining the ﬂux density from visibility data</h5>
-<!--l. 3924--><p class="noindent" >The Miriad program <span 
+<!--l. 3990--><p class="noindent" >The Miriad program <span 
 class="cmtt-10x-x-109">uvflux </span>estimates the source I ﬂux density and its standard deviation at the phase
 center without having to make an image. A single, not too complicated TaQL command (courtesy
 Dijkema, Heald) provides the same functionality on a MeasurementSet. For LOFAR it is best to use
@@ -6127,7 +6188,7 @@ example.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-140">
+   <div class="verbatim" id="verbatim-141">
 4.    select gstddev(SUMMED) as STDVALS,
  <br />4.           gmean(SUMMED) as MEANVALS,
  <br />4.           gcount(SUMMED) as NVALS
@@ -6139,7 +6200,7 @@ example.
  <br />2.          where mscal.baseline(&#x2019;5km~10km) &#x0026;&#x0026; !all(FLAG)
  <br />3.          groupby TIME)
 </div>
-<!--l. 3942--><p class="nopar" > A subquery is used to get the average ﬂux (I = 0.5*(XX+YY)) per time slot.
+<!--l. 4008--><p class="nopar" > A subquery is used to get the average ﬂux (I = 0.5*(XX+YY)) per time slot.
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-102002x1">For each baseline it gets the mean of the channels. Note that it uses <span 
@@ -6167,22 +6228,22 @@ class="cmtt-10x-x-109">gmean</span>
   class="enumerate" id="x1-102008x4">Finally,  the  outer  query  uses  aggregate  functions  to  calculate  the  overall  mean,  standard
      deviation, and number of time slots from the result of the subquery. The ﬁnal result is a table
      with 1 row and 3 columns.</li></ol>
-<!--l. 3966--><p class="noindent" >
+<!--l. 4032--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">12   </span> <a 
  id="x1-10300012"></a>Interface to TaQL</h3>
-<!--l. 3967--><p class="noindent" >User and a programmer interfaces to TaQL are available. The program <span 
+<!--l. 4033--><p class="noindent" >User and a programmer interfaces to TaQL are available. The program <span 
 class="cmtt-10x-x-109">taql </span>and some Python and
 Glish functions form the user interface, while C++ classes and functions form the programmer
 interface.
                                                                                             
                                                                                             
-</p><!--l. 3972--><p class="noindent" >
+</p><!--l. 4038--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.1   </span> <a 
  id="x1-10400012.1"></a>Python interface <span 
 class="cmtt-10x-x-109">pyrap</span></h4>
-<!--l. 3973--><p class="noindent" >The main TaQL interface in Python is formed by the <a 
+<!--l. 4039--><p class="noindent" >The main TaQL interface in Python is formed by the <a 
 href="../../../pyrap/docs/pyrap_tables.html#pyrap.tables.table.query" ><span 
 class="cmtt-10x-x-109">query</span></a> function in module <a 
 href="../../../pyrap/docs/pyrap_tables.html" ><span 
@@ -6193,7 +6254,7 @@ function. E.g.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-141">
+   <div class="verbatim" id="verbatim-142">
    tab = table(&#x2019;mytable&#x2019;)
  <br />   seltab1 = tab.query (&#x2019;column1 &#x003E; 0&#x2019;)
  <br />   seltab2 = seltab1.query (query=&#x2019;column2&#x003E;5&#x2019;,
@@ -6201,7 +6262,7 @@ function. E.g.
  <br />                            columns=&#x2019;column1,column2&#x2019;,
  <br />                            name=&#x2019;result.tab&#x2019;)
 </div>
-<!--l. 3987--><p class="nopar" > The ﬁrst command opens the table <span 
+<!--l. 4053--><p class="nopar" > The ﬁrst command opens the table <span 
 class="cmtt-10x-x-109">mytable</span>. The second command does a simple query resulting in a
 temporary table. That temporary table is used in the next command resulting in a persistent table. The
 latter function call is transformed to the TaQL command: <br 
@@ -6214,7 +6275,7 @@ class="cmtt-10x-x-109">seltab1</span>. <br
 class="newline" />Note that the <span 
 class="cmtt-10x-x-109">name </span>argument generates the <span 
 class="cmtt-10x-x-109">GIVING </span>part to make the result persistent.
-</p><!--l. 3999--><p class="indent" >   The functions <span 
+</p><!--l. 4065--><p class="indent" >   The functions <span 
 class="cmtt-10x-x-109">sort </span>and <span 
 class="cmtt-10x-x-109">select </span>exist as convenience functions for a query consisting of a sort or
 column selection only. Both functions have an optional second <span 
@@ -6223,12 +6284,12 @@ persistent.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-142">
+   <div class="verbatim" id="verbatim-143">
    t1 = tab.sort (&#x2019;time&#x2019;)
  <br />   t1 = tab.select (&#x2019;column1,column2&#x2019;)
 </div>
-<!--l. 4006--><p class="nopar" >
-</p><!--l. 4008--><p class="indent" >   The <span 
+<!--l. 4072--><p class="nopar" >
+</p><!--l. 4074--><p class="indent" >   The <span 
 class="cmtt-10x-x-109">calc </span>function can be used to execute a TaQL <span 
 class="cmtt-10x-x-109">calc </span>command on the current table. The result can be
 kept in a variable. For example, the following returns a vector containing the median of the <span 
@@ -6237,11 +6298,11 @@ each table row:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-143">
+   <div class="verbatim" id="verbatim-144">
   med = t.calc (&#x2019;median(DATA)&#x2019;)
 </div>
-<!--l. 4014--><p class="nopar" >
-</p><!--l. 4016--><p class="indent" >   It is possible to embed Python variables and expressions in a TaQL command using the syntax
+<!--l. 4080--><p class="nopar" >
+</p><!--l. 4082--><p class="indent" >   It is possible to embed Python variables and expressions in a TaQL command using the syntax
 <span 
 class="cmtt-10x-x-109">$variable </span>and <span 
 class="cmtt-10x-x-109">$(expression)</span>. A variable can be a standard numeric or string scalar or vector. It
@@ -6250,7 +6311,7 @@ E.g
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-144">
+   <div class="verbatim" id="verbatim-145">
   from pyrap.tables import *
  <br />  tab = table(&#x2019;mytable&#x2019;)
  <br />  coldata = tab.getcol (&#x2019;col&#x2019;);
@@ -6259,34 +6320,34 @@ E.g
  <br />  seltab2 = tab.query (&#x2019;col &#x003E; $(sum(coldata)/len(coldata))&#x2019;)
  <br />  seltab3 = tab.query (&#x2019;col &#x003E; mean([SELECT col from $tab])&#x2019;)
 </div>
-<!--l. 4030--><p class="nopar" > These three queries give the same result. <br 
+<!--l. 4096--><p class="nopar" > These three queries give the same result. <br 
 class="newline" />The substitution mechanism is described in more detail in <a 
 href="../../../pyrap/docs/pyrap_util.html" >pyrap.util</a>.
-</p><!--l. 4035--><p class="indent" >   The other function that can be used is <a 
+</p><!--l. 4101--><p class="indent" >   The other function that can be used is <a 
 href="../../../pyrap/docs/pyrap_tables.html#pyrap.tables.taql" >taql</a> (or its synonym <span 
 class="cmtt-10x-x-109">tablecommand</span>). The full TaQL command has
 to be given to that command. The result is a table object. E.g.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-145">
+   <div class="verbatim" id="verbatim-146">
   t = taql(&#x2019;select from GER.MS where ANTENNA1==1&#x2019;);
 </div>
-<!--l. 4042--><p class="nopar" >
-</p><!--l. 4044--><p class="indent" >   By default, these commands will use the Python style for a TaQL statement. The <span 
+<!--l. 4108--><p class="nopar" >
+</p><!--l. 4110--><p class="indent" >   By default, these commands will use the Python style for a TaQL statement. The <span 
 class="cmtt-10x-x-109">style </span>argument can be
 used to choose another style.
-</p><!--l. 4048--><p class="noindent" >
+</p><!--l. 4114--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.2   </span> <a 
  id="x1-10500012.2"></a>Interface to Glish</h4>
-<!--l. 4049--><p class="noindent" >The Glish interface is formed by script <span 
+<!--l. 4115--><p class="noindent" >The Glish interface is formed by script <span 
 class="cmtt-10x-x-109">table.g</span>. By default, it will use the Glish style for a TaQL statement.
 For example:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-146">
+   <div class="verbatim" id="verbatim-147">
   include &#x2019;table.g&#x2019;
  <br />  tab := table(&#x2019;mytable&#x2019;)
  <br />  seltab1 := tab.query (&#x2019;column1 &#x003E; 0&#x2019;)
@@ -6298,13 +6359,13 @@ For example:
  <br />                    style=&#x2019;&#x2019;);    # use default (glish) style
  <br />  med := t.calc (&#x2019;median(DATA)&#x2019;)
 </div>
-<!--l. 4064--><p class="nopar" >
-</p><!--l. 4066--><p class="noindent" >
+<!--l. 4130--><p class="nopar" >
+</p><!--l. 4132--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.3   </span> <a 
  id="x1-10600012.3"></a>Program <span 
 class="cmtt-10x-x-109">taql</span></h4>
-<!--l. 4067--><p class="noindent" >The program <span 
+<!--l. 4133--><p class="noindent" >The program <span 
 class="cmtt-10x-x-109">taql </span>makes it possible to execute TaQL commands from the shell. <br 
 class="newline" />The ﬁrst way to run it is by giving the TaQL command as a single (quoted) argument. It will execute the
 command and exit. <br 
@@ -6341,18 +6402,18 @@ class="newline" />Note that if an unknown varname is given, it is treated as a T
      error.</li></ul>
                                                                                             
                                                                                             
-<!--l. 4093--><p class="noindent" >If columns are selected in the TaQL command, their values are printed. Epoch, position, and direction measures
+<!--l. 4159--><p class="noindent" >If columns are selected in the TaQL command, their values are printed. Epoch, position, and direction measures
 are printed in a formatted way. Also the result of CALC commands is printed. Otherwise only the number of
 selected (or updated or deleted) rows is printed.
-</p><!--l. 4099--><p class="noindent" >
+</p><!--l. 4165--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.4   </span> <a 
  id="x1-10700012.4"></a>C++ interface</h4>
-<!--l. 4100--><p class="noindent" >The C++ programmer can use TaQL commands and expressions at various levels,
+<!--l. 4166--><p class="noindent" >The C++ programmer can use TaQL commands and expressions at various levels,
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.4.1   </span> <a 
  id="x1-10800012.4.1"></a>TaQL query string</h5>
-<!--l. 4102--><p class="noindent" >The function <span 
+<!--l. 4168--><p class="noindent" >The function <span 
 class="cmtt-10x-x-109">tableCommand </span>in <a 
 href="../html/classcasa_1_1TableParse.html" >TableParse.h</a> can be used to execute a TaQL command. The result is a <a 
 href="../html/classcasa_1_1Table.html" >Table</a>
@@ -6360,25 +6421,25 @@ object. E.g.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-147">
+   <div class="verbatim" id="verbatim-148">
   Table seltab1 = tableCommand
  <br />         (&#x0022;select from mytable where column1&#x003E;0&#x0022;);
  <br />  Table seltab2 = tableCommand
  <br />         (&#x0022;select column1,column2 from $1 where column2&#x003E;5&#x0022;
  <br />          &#x0022; orderby time giving result.tab&#x0022;, seltab1);
 </div>
-<!--l. 4114--><p class="nopar" > These examples do the same as the Glish ones shown above. <br 
+<!--l. 4180--><p class="nopar" > These examples do the same as the Glish ones shown above. <br 
 class="newline" />Note that in the second function call the table name <span 
 class="cmtt-10x-x-109">$1 </span>is replaced by the object <span 
 class="cmtt-10x-x-109">seltab1 </span>passed to the
 function. <br 
 class="newline" />There is no style argument, so if an explicit style is needed it should be the ﬁrst part of the TaQL statement.
 Note that no style defaults to the Glish style.
-</p><!--l. 4123--><p class="noindent" >
+</p><!--l. 4189--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.4.2   </span> <a 
  id="x1-10900012.4.2"></a>Expression string</h5>
-<!--l. 4124--><p class="noindent" >The function <span 
+<!--l. 4190--><p class="noindent" >The function <span 
 class="cmtt-10x-x-109">parse </span>in <a 
 href="../html/classcasa_1_1RecordGram.html" >RecordGram.h</a> can be used to parse a TaQL expression. The result is a
 <a 
@@ -6386,17 +6447,17 @@ href="../html/classcasa_1_1ExprNode.html" >TableExprNode</a> object that can be 
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-148">
+   <div class="verbatim" id="verbatim-149">
   Table tab(&#x0022;mytable&#x0022;);
  <br />  TableExprNode expr = RecordGram::parse (tab, &#x0022;column1&#x003E;0&#x0022;);
  <br />  Table seltab1 = tab(expr);
 </div>
-<!--l. 4134--><p class="nopar" > The example above does the same as the ﬁrst example in the previous section. There are, however, better
+<!--l. 4200--><p class="nopar" > The example above does the same as the ﬁrst example in the previous section. There are, however, better
 ways to use this functionality.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-149">
+   <div class="verbatim" id="verbatim-150">
   Table tab(&#x0022;somename&#x0022;);
  <br />  TableExprNode expr = RecordGram::parse (tab, &#x0022;ANTENNA1=1&#x0022;);
  <br />  for (uInt row=0; row&#x003C;tab.nrow(); ++row) {
@@ -6405,25 +6466,25 @@ ways to use this functionality.
  <br />    }
  <br />  }
 </div>
-<!--l. 4145--><p class="nopar" > The example above shows a boolean scalar expression, but it can also be a numeric expression or an array
+<!--l. 4211--><p class="nopar" > The example above shows a boolean scalar expression, but it can also be a numeric expression or an array
 expression as shown in the example below. Note that TaQL expression results have data type Bool, Int64,
 Double, DComplex, String, or MVTime.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-150">
+   <div class="verbatim" id="verbatim-151">
   TableExprNode expr = RecordGram::parse (tab, &#x0022;abs(DATA)&#x0022;);
  <br />  Array&#x003C;Double&#x003E; data;
  <br />  for (uInt row=0; row&#x003C;tab.nrow(); ++row) {
  <br />    expr.get (row, data);
  <br />  }
 </div>
-<!--l. 4157--><p class="nopar" >
-</p><!--l. 4159--><p class="noindent" >
+<!--l. 4223--><p class="nopar" >
+</p><!--l. 4225--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.4.3   </span> <a 
  id="x1-11000012.4.3"></a>Expression classes</h5>
-<!--l. 4160--><p class="noindent" >The other expression interface is a true C++ interface having the advantage that C++ variables can be used
+<!--l. 4226--><p class="noindent" >The other expression interface is a true C++ interface having the advantage that C++ variables can be used
 directly. Class <a 
 href="../html/classcasa_1_1Table.html" >Table</a> contains functions to sort a table or to select columns or rows. When selecting rows class
 <a 
@@ -6433,53 +6494,53 @@ class="cmtt-10x-x-109">Table</span>. E.g.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-151">
+   <div class="verbatim" id="verbatim-152">
   Int limit = 0;
  <br />  Table tab (&#x0022;mytable&#x0022;);
  <br />  Table seltab = tab(tab.col(&#x0022;column1&#x0022;) &#x003E; limit);
 </div>
-<!--l. 4173--><p class="nopar" > does the same as the ﬁrst example shown above. See classes <a 
+<!--l. 4239--><p class="nopar" > does the same as the ﬁrst example shown above. See classes <a 
 href="../html/classcasa_1_1Table.html" >Table</a>, <a 
 href="../html/classcasa_1_1TableExprNode.html" >TableExprNode</a>, and <a 
 href="../html/classcasa_1_1TableExprNodeSet.html" >TableExprNodeSet</a>
 for more information on how to construct a WHERE expression.
-</p><!--l. 4183--><p class="noindent" >
+</p><!--l. 4249--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">13   </span> <a 
  id="x1-11100013"></a>Writing user deﬁned functions</h3>
-<!--l. 4184--><p class="noindent" >A user deﬁned function has to be written as a class in C++ derived from the abstract base class
+<!--l. 4250--><p class="noindent" >A user deﬁned function has to be written as a class in C++ derived from the abstract base class
 <a 
 href="../html/classcasa_1_1UDFBase.html" >UDFBase</a>. The documentation of this base class describes how to write a UDF. Furthermore
 one can look at class <a 
 href="../html/classcasa_1_1UDFMSCal.html" >UDFMSCal</a> that contains the UDFs described in subsection <a 
 href="#x1-650004.10.17">User deﬁned
 functions</a>.
-</p><!--l. 4193--><p class="indent" >   It is possible to write a UDF that operates on an individual expression and returns the result. It is,
+</p><!--l. 4259--><p class="indent" >   It is possible to write a UDF that operates on an individual expression and returns the result. It is,
 however, also possible to write a UDF acting as an aggregate function. In that case it will return a result
 based on the values of all rows in a group. See the desription of the <a 
 href="#x1-230003.6">GROUPBY clause</a> for more information
 on the GROUPBY clause and aggregate functions.
-</p><!--l. 4200--><p class="indent" >   Note that a class can contain multiple UDFs as done in UDFMSCal. Also note that a single UDF can
+</p><!--l. 4266--><p class="indent" >   Note that a class can contain multiple UDFs as done in UDFMSCal. Also note that a single UDF can
 operate on multiple data types which is similar to a function like <span 
 class="cmtt-10x-x-109">min </span>that can operate on scalars and arrays
 of diﬀerent data types.
-</p><!--l. 4205--><p class="indent" >   TaQL ﬁnds a UDF by looking in a dictionary mapping the UDF name to a function constructing an
+</p><!--l. 4271--><p class="indent" >   TaQL ﬁnds a UDF by looking in a dictionary mapping the UDF name to a function constructing an
 object of the UDF class. If not found, it tries to load the shared library with the lowercase name of the
 library part of the UDF (like in <span 
 class="cmtt-10x-x-109">derivedmscal.pa1</span>). If the load is successful, it calls an initialization
 function in the shared library that should add all UDF functions in the library to the dictionary. The
 description of the <a 
 href="../html/classcasa_1_1UDFBase.html" >UDFBase</a> class shows how this should be done.
-</p><!--l. 4214--><p class="noindent" >
+</p><!--l. 4280--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">13.1   </span> <a 
  id="x1-11200013.1"></a>UDFs in Python</h4>
-<!--l. 4215--><p class="noindent" >NOTE: This section is for a future version of TaQL. It has not been fully implemented yet.
-</p><!--l. 4218--><p class="indent" >   For performance reasons User Deﬁned Functions will usually be implemented in C++. It is, however,
+<!--l. 4281--><p class="noindent" >NOTE: This section is for a future version of TaQL. It has not been fully implemented yet.
+</p><!--l. 4284--><p class="indent" >   For performance reasons User Deﬁned Functions will usually be implemented in C++. It is, however,
 possible to implement them in Python, both regular functions and aggregation functions. This can be done
 by means of the <span 
 class="cmtt-10x-x-109">pytaql </span>module of casacore.
-</p><!--l. 4223--><p class="indent" >   A UDF has to be implemented in Python by subclassing <span 
+</p><!--l. 4289--><p class="indent" >   A UDF has to be implemented in Python by subclassing <span 
 class="cmtt-10x-x-109">pytaqlbase</span>, that can be imported from
 <span 
 class="cmtt-10x-x-109">casacore.python</span>. The subclass has to implement a few functions, some are optional. The functions are
@@ -6511,10 +6572,10 @@ class="cmtt-10x-x-109">needTable </span>returns
      True. The object should be kept like:
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-152">
+     <div class="verbatim" id="verbatim-153">
          self.tab = pyrap.tables.table (tab, _oper=3)
 </div>
-     <!--l. 4247--><p class="nopar" >
+     <!--l. 4313--><p class="nopar" >
      </p></li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">setup(self, valuetypes, datatypes, units)</span><br 
@@ -6522,7 +6583,7 @@ class="newline" />This function is called once at the beginning. It gets the val
      function arguments. The length of the sequences tells the number of arguments.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-153">
+     <div class="verbatim" id="verbatim-154">
       valuetypes  int seq   value type of each argument
       <br />                       0=scalar 1=array 2=set
       <br /> datatypes   int seq   data type of each argument
@@ -6530,12 +6591,12 @@ class="newline" />This function is called once at the beginning. It gets the val
       <br />                       4=string 6=date
       <br /> units       strings   unit of each argument (empty=no unit)
 </div>
-     <!--l. 4260--><p class="nopar" > The UDF should check if the argument types are correct and determine the result type. It has to
+     <!--l. 4326--><p class="nopar" > The UDF should check if the argument types are correct and determine the result type. It has to
      return a dict containing the following ﬁelds:
                                                                                             
                                                                                             
 </p>
-     <div class="verbatim" id="verbatim-154">
+     <div class="verbatim" id="verbatim-155">
       ndim      int       dimensionality of result
       <br />                     -1=scalar 0=unknown
       <br /> shape     int seq   shape (if fixed, otherwise empty sequence)
@@ -6543,7 +6604,7 @@ class="newline" />This function is called once at the beginning. It gets the val
       <br /> unit      string    optional unit of result
       <br /> isaggr    bool      True = UDF is aggregate function
 </div>
-     <!--l. 4271--><p class="nopar" >
+     <!--l. 4337--><p class="nopar" >
      </p></li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">getValue(self, argValues, rownr)</span><br 
@@ -6562,13 +6623,13 @@ class="newline" />This function must return the value of the aggregate function 
      argument values for that row.
                                                                                             
                                                                                             
-     <div class="verbatim" id="verbatim-155">
+     <div class="verbatim" id="verbatim-156">
          getArgValues(self, rownr)
 </div>
-     <!--l. 4286--><p class="nopar" >
+     <!--l. 4352--><p class="nopar" >
 </p>
      </li></ul>
-<!--l. 4289--><p class="noindent" >Such a UDF can be called in TaQL like <span 
+<!--l. 4355--><p class="noindent" >Such a UDF can be called in TaQL like <span 
 class="cmtt-10x-x-109">py.module.class </span>where the class defaults to the module name.
 <br 
 class="newline" />An example of UDFs in Python is given below. The ﬁrst one is a regular UDF, the second one an aggregate
@@ -6576,7 +6637,7 @@ UDF.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim" id="verbatim-156">
+   <div class="verbatim" id="verbatim-157">
 # tpytaql.py: Test script for pytaqlbase
  <br />
  <br />from casacore.pytaqlbase import pytaqlbase
@@ -6651,12 +6712,12 @@ UDF.
  <br />                v -= argValues[1].sum()
  <br />        return v
 </div>
-<!--l. 4365--><p class="nopar" >
-</p><!--l. 4368--><p class="noindent" >
+<!--l. 4431--><p class="nopar" >
+</p><!--l. 4434--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">14   </span> <a 
  id="x1-11300014"></a>Possible future developments</h3>
-<!--l. 4369--><p class="noindent" >In the near or far future TaQL can be enhanced by adding new features and by doing optimizations.
+<!--l. 4435--><p class="noindent" >In the near or far future TaQL can be enhanced by adding new features and by doing optimizations.
 </p>
      <ul class="itemize1">
      <li class="itemize">Add ROLLUP/CUBE to the GROUPBY clause.
