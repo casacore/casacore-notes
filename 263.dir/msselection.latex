@@ -998,8 +998,8 @@ from SPW0 \underline{\bf and} SPW1. E.g.
   from \underline{only} SPW0 that are in the range
 \item freq={\tt 0 : 1.6$\sim$1.7GHz} will select all channels
   from \underline{only} SPW0 that are in the range
-\item freq={\tt 1.65GHz : 1.6$\sim$1.7GHz} same as above, with SPW1
-  selected via integer ID
+\item freq={\tt 1.65GHz : 1.6$\sim$1.7GHz} will select all channels
+  from \underline{only} SPW1 which is selected via frequecy specification
 \item freq={\tt 1 : 1.6$\sim$1.7GHz} same as above, with SPW1
   selected via integer ID
 
