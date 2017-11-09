@@ -5,6 +5,7 @@
 \setlength{\textwidth}{6.5in}
 \setlength{\evensidemargin}{0.0in}
 \setlength{\oddsidemargin}{0.0in}
+\setlength\parindent{0.0in}
 \parskip=5truept
 \newcommand{\nc}{$N_c$}
 \newcommand{\nr}{$N_r$}
@@ -15,6 +16,7 @@
 \newcommand{\defline}[1]{\cline{1-5}
 \multicolumn{5}{|l|}{#1} \\
 \cline{1-5}}
+
 \newcommand{\definetable}[2]
 {
 	\vfill\newpage
@@ -59,6 +61,13 @@ This section contains a description of the changes proposed for each
 table in the MS definition. A full definition of the v3.0 MS format is
 given in Section~\ref{sec:layout}.
 
+\begin{itemize}
+\item Add explicit primary keys.
+\item Support versioning of DATA, WEIGHTS and FLAG columns. Remove SIGMA, SIGMA\_SPECTRUM.
+\item Remove FLAG\_ROW, WEIGHT columns, make spectral information (FLAG, WEIGHT\_SPECTRUM) information non-optional.
+\item Formalize combinations of MeasurementSets (``Multi-MS'') for parallel processing.
+\end{itemize}
+
 \newpage
 \section{MS v3.0 layout}\label{sec:layout}
 
@@ -91,11 +100,6 @@ STATE   & State information & STATE\_ID \\
 \end{tabular}
 
 \par
-Note that there are two types of subtables. For the first, simpler
-type, the key (ID) is the row number in the subtable. 
-Examples are FIELD, SPECTRAL\_WINDOW, OBSERVATION
-and PROCESSOR. For the second, the key is a collection of parameters,
-usually including TIME. Examples are FEED, SOURCE, SYSCAL, WEATHER.
 
 Note that all optional columns are indicated in italics and in parentheses.
 
@@ -132,26 +136,15 @@ STATE\_ID & Int   &          &              & State id.\\
 {\it (BASELINE\_REF)} &  Bool  &     &      & Reference antenna \\
 UVW       &   Double(3) &      m   & UVW  & UVW coordinates \\
 {\it (UVW2)} &  Double(3) &      m   & UVW  & UVW (baseline 2) \\
-}
-
-
-\definetable{MAIN table: continued}
-{
 \defline{\em Data}
 {\it (DATA)}    &    Complex(\nc, \nf) &  & & Complex visibility
 matrix (synthesis arrays)\\
-{\it (FLOAT\_DATA)} & Float(\nc, \nf) & & & Float data matrix
-(single dish) \\
 {\it (VIDEO\_POINT)} & Complex(\nc) & & & Video point \\
 {\it (LAG\_DATA)} & Complex(\nc, \nl) & & & Correlation function \\
-SIGMA   &    Float(\nc) &  & & Estimated rms noise for single channel \\ 
-{\it (SIGMA\_SPECTRUM)}   &    Float(\nc, \nfs) &  & & Estimated rms noise \\ 
-WEIGHT   &    Float(\nc) &  & & Weight for whole data matrix \\ 
 {\it (WEIGHT\_SPECTRUM)}   &    Float(\nc, \nfs) &  & & Weight for each channel\\ 
 \defline{\em Flag information}
 FLAG    &    Bool(\nc, \nfs) &  &   &  Cumulative data flags \\ 
 FLAG\_CATEGORY & Bool(\nc, \nfs, \ncat) & & & Flag categories \\
-FLAG\_ROW &    Bool  &  &   &  The row flag \\ 
 }
 \begin{description}
 \item[Notes:]
@@ -244,7 +237,7 @@ False for ANTENNA2).
    direction of increasing longitude coordinate) also determines the sign of
    the phase of the recorded data.
 
-\item[DATA, FLOAT\_DATA, LAG\_DATA] At least one of these columns
+\item[DATA, LAG\_DATA] At least one of these columns
 should be present in a given MeasurementSet. In special cases one or
 more could be present (e.g., single dish data used in synthesis
 imaging or a mix of auto and crosscorrelations on a multi-feed single
@@ -291,6 +284,8 @@ True. See Section 3.1.8 for further details.
 \definetable{ANTENNA: Antenna characteristics}
 {
 \defline{\bf Columns}
+\defline{\em Key}
+ANTENNA\_ID & Int & & & Antenna ID \\
 \defline{\em Data}
 NAME &       String &  & &  Antenna name \\
 STATION &        String & & &  Station name \\
@@ -509,6 +504,7 @@ parallactic angle in the sky domain.
 \definetable{FIELD: Field positions for each source}{
 \defline{\bf Columns}
 \defline{\em Key}
+FIELD\_ID & Int & & & Field ID \\
 \defline{\em Data}  
 NAME &       String &    &      & Name of field \\
 CODE &       String &    &      & Special characteristics of field \\
@@ -690,6 +686,8 @@ project-wide format.
 
 \definetable{OBSERVATION: Observation information}{
 \defline{\bf Columns}
+\defline{\em Key}
+OBSERVATION\_ID & Int & & & Observation ID\\
 \defline{\em Data}  
 TELESCOPE\_NAME &      String &    &      & Telescope name\\
 TIME\_RANGE       &     Double(2) & s & EPOCH & Start, end times\\
@@ -760,7 +758,7 @@ TRACKING & Bool & & & True if on-position \\
 
 \item[Notes:] This table contains information concerning the primary
 pointing direction of each antenna as a function of time. Note that
-the pointing offsets for inidividual feeds on a given antenna are
+the pointing offsets for individual feeds on a given antenna are
 specified in the FEED sub-table with respect to this pointing direction.
 
 \item[ANTENNA\_ID] Antenna identifier, as specified by ANTENNA$n$ in MAIN.
@@ -810,6 +808,8 @@ the source, i.e. offset-pointing is not being used.
 
 \definetable{POLARIZATION: Polarization setup information}{
 \defline{\bf Columns}
+\defline{\em Key}
+POLARIZATION\_ID & Int & & & Polarization id.\\
 \defline{\em Data description columns}
 NUM\_CORR   &     Int  &           &        & \# correlations\\
 \defline{\em Data}  
@@ -844,6 +844,8 @@ but does not imply the flagging of any DATA in MAIN.
 
 \definetable{PROCESSOR: Processor information}{
 \defline{\bf Columns}
+\defline{\em Key}
+PROCESSOR\_ID & Int & & & Processor ID \\
 \defline{\em Data}
 TYPE            & String & & & Processor type \\
 SUB\_TYPE & String & & & Processor sub-type\\
@@ -963,6 +965,8 @@ further pulsar-specific properties if the source is a pulsar.
 
 \definetable{SPECTRAL\_WINDOW: Spectral window description}{
 \defline{\bf Columns}
+\defline{\em Key}
+SPECTRAL\_WINDOW\_ID & Int & & & Spectral window id. \\
 \defline{\em Data description columns}
 NUM\_CHAN   &     Int  &           &        & \# spectral channels \\
 \defline{\em Data}  
@@ -1064,6 +1068,8 @@ subset).
 
 \definetable{STATE: State information}{
 \defline{\bf Columns}
+\defline{\em Key}
+STATE\_ID & Int & & & State id. \\
 \defline{\em Data}  
 SIG   &     Bool  &           &        & Signal \\
 REF   &     Bool  &           &        & Reference \\
