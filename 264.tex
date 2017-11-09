@@ -66,6 +66,7 @@ given in Section~\ref{sec:layout}.
 \item Support versioning of DATA, WEIGHTS and FLAG columns. Remove SIGMA, SIGMA\_SPECTRUM.
 \item Remove FLAG\_ROW, WEIGHT columns, make spectral information (FLAG, WEIGHT\_SPECTRUM) information non-optional.
 \item Formalize combinations of MeasurementSets (``Multi-MS'') for parallel processing.
+\item Remove DATA\_DESC\_ID.
 \end{itemize}
 
 \newpage
@@ -80,7 +81,6 @@ are tabulated below.  Optional sub-tables are shown in italics.
 \multicolumn{3}{|c|}{\bf Subtables}\\ \cline{1-3}
 \multicolumn{1}{|c|}{Table}&\multicolumn{1}{|c|}{Contents}&\multicolumn{1}{|c|}{Keys}\\ \cline{1-3}
 ANTENNA& Antenna characteristics & ANTENNA\_ID \\
-DATA\_DESCRIPTION & Data description & DATA\_DESC\_ID\\
 ({\it DOPPLER}) & Doppler tracking & DOPPLER\_ID, SOURCE\_ID \\
 FEED  &          Feed characteristics & FEED\_ID, ANTENNA\_ID, TIME, SPECTRAL\_WINDOW\_ID \\
 FIELD  &         Field position & FIELD\_ID  \\
@@ -119,7 +119,8 @@ ANTENNA2  &      Int    &          &              & Second antenna \\
 FEED1  &      Int       &          &              & Feed on ANTENNA1 \\
 FEED2  &      Int       &          &              & Feed on ANTENNA2 \\
 {\it (FEED3)} & Int       &          &              & Feed on ANTENNA3 \\
-DATA\_DESC\_ID  &  Int   &          &        & Data desc. id.\\
+SPECTRAL\_WINDOW\_ID  &  Int   &          &        & Spectral window id.\\
+POLARIZATION\_ID & Int & & Polarization id.\\
 PROCESSOR\_ID  & Int   &          &        & Processor id.\\
 {\it (PHASE\_ID)} & Int &               &         & Phase id.\\
 FIELD\_ID  &      Int   &          &        & Field id.\\
@@ -143,8 +144,7 @@ matrix (synthesis arrays)\\
 {\it (LAG\_DATA)} & Complex(\nc, \nl) & & & Correlation function \\
 {\it (WEIGHT\_SPECTRUM)}   &    Float(\nc, \nfs) &  & & Weight for each channel\\ 
 \defline{\em Flag information}
-FLAG    &    Bool(\nc, \nfs) &  &   &  Cumulative data flags \\ 
-FLAG\_CATEGORY & Bool(\nc, \nfs, \ncat) & & & Flag categories \\
+FLAG    &    Bool(\nc, \nfs) &  &   &  Cumulative data flags \\
 }
 \begin{description}
 \item[Notes:]
@@ -166,18 +166,17 @@ ANTENNA2", to indicate sorting in in time-baseline order.
 
 \item[TIME\_EXTRA\_PREC] Extra time precision.
 
-\item[ANTENNA$n$] Antenna number ($\geq 0$), and a direct index into
-the ANTENNA sub-table $rownr$. For $n > 2$, triple-product data
-are implied.
+\item[ANTENNA$n$] Antenna number ($\geq 0$), and an index into
+the ANTENNA sub-table. For $n > 2$, triple-product data are implied.
 
 \item[FEED$n$] Feed number ($\geq 0$). For $n > 2$, triple-product
 data are implied.
 
-\item[DATA\_DESC\_ID] Data description identifier ($\geq 0$), and
-a direct index into the DATA\_DESCRIPTION sub-table $rownr$.
+\item[SPECTRAL\_WINDOW\_ID] Spectral window identifier ($\geq 0$), an
+index into the SPECTRAL\_WINDOW sub-table.
 
-\item[PROCESSOR\_ID] Processor indentifier ($\geq 0$), and a direct
-index into the PROCESSOR sub-table $rownr$.
+\item[PROCESSOR\_ID] Processor indentifier ($\geq 0$), and an
+index into the PROCESSOR sub-table.
 
 \item[PHASE\_ID] Switching phase identifier ($\geq 0$)
 
@@ -195,8 +194,8 @@ may be measured for a limited number of pulse phase bins. The pulse
 phase bins are described in the PULSAR sub-table and indexed by this
 bin number.
 
-\item[PULSAR\_GATE\_ID] Pulsar gate identifier ($\geq 0)$, and a direct
-index into the PULSAR\_GATE sub-table $rownr$. 
+\item[PULSAR\_GATE\_ID] Pulsar gate identifier ($\geq 0)$, and an
+index into the PULSAR\_GATE sub-table. 
 
 \item[SCAN\_NUMBER] Arbitrary scan number to identify data taken in
 the same logical scan. Not required to be unique.
@@ -266,8 +265,7 @@ spectrum should be used in preference to the WEIGHT, when available.
 
 \item[FLAG] An array of Boolean values with the same shape as DATA
 (see the DATA item above) representing the cumulative flags applying
-to this data matrix, as specified in FLAG\_CATEGORY. Data are flagged
-bad if the FLAG array element is True.
+to this data matrix. Data are flagged bad if the FLAG array element is True.
 
 \item[FLAG\_CATEGORY] An array of flag matrices with the same shape as
 DATA, but indexed by category. The category identifiers are specified
@@ -276,8 +274,6 @@ attached to the FLAG\_CATEGORY column and thus shared by all rows in
 the MeasurementSet. The cumulative effect of these flags is reflected
 in column FLAG. Data are flagged bad if the FLAG array element is
 True. See Section 3.1.8 for further details.
-
-\item[FLAG\_ROW] True if the entire row is flagged.
 
 \end{description}
 
@@ -297,13 +293,11 @@ DISH\_DIAMETER &  Double &  m  &      & Diameter of dish\\
 {\it (ORBIT\_ID)}    &    Int & & &  Orbit id. \\
 {\it (MEAN\_ORBIT)}  &    Double(6) & & & Mean Keplerian elements\\
 {\it (PHASED\_ARRAY\_ID)} & Int   &  & &   Phased array id.\\
-\defline{Flag information}
-FLAG\_ROW & Bool & & & Row flag\\
 }
 \begin{description}
 
 \item[Notes:] This sub-table contains the global antenna properties
-for each antenna in the MS. It is indexed directly from MAIN via
+for each antenna in the MS. It is indexed from MAIN via
 ANTENNA$n$.
 
 \item[NAME] Antenna name (e.g. "NRAO\_140")
@@ -347,40 +341,6 @@ standard convention (Flatters 1998):
 \item[PHASED\_ARRAY\_ID] Phased array identifier. Points to a
 PHASED\_ARRAY sub-table which points back to multiple entries in the
 ANTENNA sub-table and contains information on how they are combined.
-
-\item[FLAG\_ROW] Boolean flag to indicate the validity of this
-entry. Set to True for an invalid row. This does not imply any
-flagging of the data in MAIN, but is necessary as the ANTENNA index in
-MAIN points directly into the ANTENNA sub-table. Thus FLAG\_ROW can be
-used to delete an antenna entry without re-ordering the ANTENNA
-indices throughout the MS.
-
-\end{description}
-
-\definetable{DATA\_DESCRIPTION: Data description table}{
-\defline{\bf Columns}
-\defline{\em Data}
-SPECTRAL\_WINDOW\_ID & Int & & & Spectral window id.\\
-POLARIZATION\_ID & Int & & & Polarization id.\\
-{\it (LAG\_ID)} & Int & & & Lag fn. id.\\
-\defline{\em Flags}
-FLAG\_ROW & Bool & & & Row flag.\\
-}
-\begin{description}
-
-\item[Notes:] This table define the shape of the associated DATA array
-in MAIN, and in indexed directly by DATA\_DESC\_ID.
-
-\item[SPECTRAL\_WINDOW\_ID] Spectral window identifier.
-
-\item[POLARIZATION\_ID] Polarization identifier ($\geq 0$); direct
-index into the POLARIZATION sub-table.
-
-\item[LAG\_ID] Lag function identifier ($\geq 0$), and a direct index
-into the LAG sub-table $rownr$.
-
-\item[FLAG\_ROW] True if the row does not contain valid data; does not
-imply flagging in MAIN.
 
 \end{description}
 
@@ -515,8 +475,6 @@ PHASE\_DIR    &      Double(2, NUM\_POLY+1)  &      rad   &     DIRECTION & Phas
 REFERENCE\_DIR &      Double(2, NUM\_POLY+1)  &      rad   &     DIRECTION & Reference center \\
 SOURCE\_ID &      Int    &    &      & Index in Source table\\
 {\it (EPHEMERIS\_ID)} &   Int    &    &      & Ephemeris id.\\
-\defline{Flags}
-FLAG\_ROW & Bool & & & Row flag\\
 }
 \begin{description}
 
@@ -556,54 +514,8 @@ value of $-1$ indicates there is no corresponding source defined.
 which defines the ephemeris used to compute the field position. Useful
 for moving, near-field objects, where the ephemeris may be revised over time.
 
-\item[FLAG\_ROW] True if data in this row are invalid, else False. Does not
-imply flagging in MAIN.
-
 \end{description}
 
-\definetable{FLAG\_CMD: Flag commands}{
-\defline{\bf Columns}
-\defline{\em Key}
-TIME      &    Double   &   s  &  EPOCH & Mid-point of interval \\
-INTERVAL  &    Double   &   s  &        & Time interval \\
-\defline{\em Data}  
-TYPE      &    String   &      &        & FLAG or UNFLAG\\
-REASON    &    String   &      &        & Flag reason\\
-LEVEL     &    Int      &      &        & Flag level\\
-SEVERITY  &    Int      &      &        & Severity code\\
-APPLIED   &    Bool     &      &        & True if applied in MAIN\\
-COMMAND   & String  &      &        & Flag command\\
-}
-\begin{description}
-
-\item[Notes:] The FLAG\_CMD sub-table defines global flagging commands
-which apply to the data in MAIN, as described in Section 3.1.8.
-
-\item[TIME] Mid-point of the time interval to which this flagging
-command applies. Required to use the same TIME Measure reference as
-used in MAIN.
-
-\item[INTERVAL] Time interval.
-
-\item[TYPE] Type of flag command, representing either a flagging
-("FLAG") or un-flagging ("UNFLAG") operation.
-
-\item[REASON] Flag reason; user specified.
-
-\item[LEVEL] Flag level $(\geq 0)$; reflects different revisions of
-flags which have the same REASON.
-
-\item[SEVERITY] Severity code for the flag, on a scale of 0-10 in
-order of increasing severity; user specified.
-
-\item[APPLIED] True if this flag has been applied to MAIN, and update
-in FLAG\_CATEGORY and FLAG. False if this flag has not been applied to
-MAIN.
-
-\item[COMMAND] Global flag command, expressed in the standard
-syntax for data selection, as adopted within the project as a whole.
-
-\end{description}
 
 \definetable{FREQ\_OFFSET: Frequency offset information}{
 \defline{\bf Columns}
@@ -821,7 +733,7 @@ FLAG\_ROW & Bool & & & Row flag\\
 \begin{description}
 
 \item[Notes:] This table defines the polarization labeling of the DATA
-array in MAIN, and is directly indexed from the DATA\_DESCRIPTION
+array in MAIN, and is directly indexed from the MAIN
 table via POLARIZATION\_ID.
 
 \item[NUM\_CORR] The number of correlation polarization products. For
