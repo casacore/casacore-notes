@@ -88,6 +88,7 @@ FLAG\_CMD  &  Flag commands & TIME \\
 ({\it FREQ\_OFFSET}) & Frequency offset information & FEED\_ID, ANTENNA$n$, FEED\_ID, TIME, SPECTRAL\_WINDOW\_ID \\
 HISTORY  & History information & OBSERVATION\_ID, TIME \\
 OBSERVATION  &Observer, Schedule, etc & OBSERVATION\_ID \\ 
+({\it PHASED\_ARRAY}) & Phased array information & ANTENNA\_ID \\
 POINTING & Pointing information & ANTENNA\_ID, TIME \\
 POLARIZATION &Polarization setup & POLARIZATION\_ID \\
 PROCESSOR & Processor information & PROCESSOR\_ID  \\
@@ -120,7 +121,7 @@ FEED1  &      Int       &          &              & Feed on ANTENNA1 \\
 FEED2  &      Int       &          &              & Feed on ANTENNA2 \\
 {\it (FEED3)} & Int       &          &              & Feed on ANTENNA3 \\
 SPECTRAL\_WINDOW\_ID  &  Int   &          &        & Spectral window id.\\
-POLARIZATION\_ID & Int & & Polarization id.\\
+POLARIZATION\_ID & Int & & & Polarization id.\\
 PROCESSOR\_ID  & Int   &          &        & Processor id.\\
 {\it (PHASE\_ID)} & Int &               &         & Phase id.\\
 FIELD\_ID  &      Int   &          &        & Field id.\\
@@ -143,6 +144,7 @@ matrix (synthesis arrays)\\
 {\it (VIDEO\_POINT)} & Complex(\nc) & & & Video point \\
 {\it (LAG\_DATA)} & Complex(\nc, \nl) & & & Correlation function \\
 {\it (WEIGHT\_SPECTRUM)}   &    Float(\nc, \nfs) &  & & Weight for each channel\\ 
+{\it (MODEL\_DATA)} & Complex(\nc, \nf) &  & & Model visibility \\
 \defline{\em Flag information}
 FLAG    &    Bool(\nc, \nfs) &  &   &  Cumulative data flags \\
 }
@@ -267,19 +269,13 @@ spectrum should be used in preference to the WEIGHT, when available.
 (see the DATA item above) representing the cumulative flags applying
 to this data matrix. Data are flagged bad if the FLAG array element is True.
 
-\item[FLAG\_CATEGORY] An array of flag matrices with the same shape as
-DATA, but indexed by category. The category identifiers are specified
-by a keyword CATEGORY, containing an array of string identifiers,
-attached to the FLAG\_CATEGORY column and thus shared by all rows in
-the MeasurementSet. The cumulative effect of these flags is reflected
-in column FLAG. Data are flagged bad if the FLAG array element is
-True. See Section 3.1.8 for further details.
-
 \end{description}
 
 \definetable{ANTENNA: Antenna characteristics}
 {
 \defline{\bf Columns}
+\defline{\em Keywords}
+{\it (TELESCOPE\_CENTER)} & Double(3) & m & POSITION & Center of telescope\\
 \defline{\em Key}
 ANTENNA\_ID & Int & & & Antenna ID \\
 \defline{\em Data}
@@ -609,8 +605,6 @@ SCHEDULE\_TYPE &  String & & & Schedule type\\
 SCHEDULE &       String(*) &    &      & Project schedule\\
 PROJECT &               String &    &      & Project identification string.\\
 RELEASE\_DATE &         Double &  s  & EPOCH & Target release date\\
-\defline{\em Flags}
-FLAG\_ROW  & Bool & & & Row flag.\\
 }
 
 \begin{description}
@@ -640,8 +634,20 @@ as used by the instrument.
 \item[RELEASE\_DATE] Project release date. This is the date on which
 the data may become public.
 
-\item[FLAG\_ROW] Row flag. True if data in this row is invalid, but
-does not imply any flagging in MAIN.
+\end{description}
+
+\definetable{PHASED\_ARRAY: Phased array information}{
+\defline{\bf Columns}
+\defline{\em Key}
+ANTENNA\_ID  &  Int & & & Antenna id.\\
+\defline{\em Data}
+POSITION & Double(3) & m & POSITION & Reference position \\
+COORDINATE\_SYSTEM & Double(3,3) & m & DIRECTION & Local coordinate system \\
+ELEMENT\_OFFSET & Double(3, nelements) & m & POSITION & Offset per element \\
+BEAM\_ID & Int & & & Beam id.\\
+}
+\begin{description}
+\item
 \end{description}
 
 \definetable{POINTING: Antenna pointing information}{
@@ -727,8 +733,6 @@ NUM\_CORR   &     Int  &           &        & \# correlations\\
 \defline{\em Data}  
 CORR\_TYPE & Int(NUM\_CORR) & & & Polarization of correlation \\
 CORR\_PRODUCT &  Int(2, NUM\_CORR) &  & & Receptor cross-products \\  
-\defline{\em Flags}
-FLAG\_ROW & Bool & & & Row flag\\
 }
 \begin{description}
 
@@ -749,9 +753,6 @@ receptor polarization is defined in the POLARIZATION\_TYPE column in
 the FEED table. An example would be (0,0), (0,1), (1,0), (1,1) to
 specify all correlations between two receptors.
 
-\item[FLAG\_ROW] Row flag. True is the data in this row are not valid,
-but does not imply the flagging of any DATA in MAIN.
-
 \end{description}
 
 \definetable{PROCESSOR: Processor information}{
@@ -764,8 +765,6 @@ SUB\_TYPE & String & & & Processor sub-type\\
 TYPE\_ID  & Int & & & Processor type id.\\
 MODE\_ID  & Int & & & Processor mode id.\\
 {\it (PASS\_ID)}  & Int & & & Processor pass number\\
-\defline{\em Flags}
-FLAG\_ROW & Bool & & & Row flag\\
 }
 \begin{description}
 
@@ -796,9 +795,6 @@ sub-table).
 produced by multiple passes through the same device, where this is
 possible (e.g. VLBI correlators). Used as an index into the associated
 table containing pass information.
-
-\item[FLAG\_ROW] Row flag. True if data in the row is not valid, but
-does not imply flagging in MAIN.
 
 \end{description}
 
@@ -902,9 +898,6 @@ FREQ\_GROUP\_NAME & String & & & Freq. group name \\
 {\it (DOPPLER\_ID)} & Int & & & Doppler id.\\
 {\it (ASSOC\_SPW\_ID)} & Int(*) & & & Associated spw\_id.\\
 {\it (ASSOC\_NATURE)} & String(*) & & & Nature of association\\
-\defline{Flags}
-FLAG\_ROW & Bool & & &\\
-
 } \begin{description}
 
  \item[Notes:] This table describes properties for each defined
@@ -974,8 +967,6 @@ reserved keywords are ("CHANNEL-ZERO" - channel zero;
 "EQUAL-FREQUENCY" - same frequency labels; "SUBSET" - narrow-band
 subset).
 
-\item[FLAG\_ROW] True if the row does not contain valid data.
-
 \end{description}
 
 \definetable{STATE: State information}{
@@ -989,8 +980,6 @@ CAL   &     Double &   K      &        & Noise calibration \\
 LOAD  &     Double &   K      &        & Load temperature\\
 SUB\_SCAN &  Int   &          &        & Sub-scan number\\
 OBS\_MODE &  String &         &        & Observing mode\\
-\defline{\em Flags}
-FLAG\_ROW & Bool &            &        & Row flag\\
 }
 \begin{description}
 
@@ -1014,9 +1003,6 @@ SCAN\_NUMBER in MAIN. Used to identify observing sequences.
 \item[OBS\_MODE] Observing mode; defined by a set of reserved keywords
 characterizing the current observing mode (e.g. "OFF-SPECTRUM"). Used
 to define the schedule strategy.
-
-\item[FLAG\_ROW] True if the row does not contain valid data. Does not
-imply flagging in MAIN.
 
 \end{description}
 
