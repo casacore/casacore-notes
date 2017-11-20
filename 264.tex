@@ -340,6 +340,29 @@ ANTENNA sub-table and contains information on how they are combined.
 
 \end{description}
 
+\definetable{BEAM: Beam information}
+{
+\defline{\bf Columns}
+\defline{\em Key}
+Beam\_ID & Int & & & Beam ID \\ 
+\defline{\em Data}
+TYPE & String &  & &  Beam definition type\\
+COEFFICIENTS & Array of doubles & & &  Coefficients describing beam model\\
+(ALTERNATE\_URL)  &  String &     &      & URL with alternate data\\
+}
+\begin{description}
+
+\item[Notes:] This sub-table contains a description of beam models. It is indexed from MAIN via
+BEAM\_ID.
+
+\item[TYPE] Beam definition type, e.g. POLYNOMIAL, AIRY, NUMERIC, IMAGE, etc. 
+
+\item[COEFFICIENTS] Depending on type polynomial or numeric values rescaled at 1 GHz .
+
+\item[ALTERNATE\_URL] Alternate url, for beam models which cannot be specified by coefficients (e.g.\ images).
+
+\end{description}
+
 
 \definetable{DOPPLER: Doppler tracking information}{
 \defline{\bf Columns}
@@ -592,6 +615,29 @@ same TIME Measure reference as used in MAIN.
 project-wide format.
 \end{description}
 
+\definetable{INTERFEROMETER\_MODEL}{
+\defline{\bf Columns}
+\defline{\em Key}
+TIME & Double & s &              EPOCH  & \\
+INTERVAL  & Double   &          &        & \\
+\defline{\em Data}  
+FIELD\_ID  & Int &    &      & Refers back to FIELD table\\
+ANTENNA\_ID & Int & & & Refers back to ANTENNA table\\
+ARRAY\_ID    & Int & & & Same meaning as in Main table\\
+SPECTRAL\_WINDOW\_ID & Int & & & Refers back to SPECTRAL\_WINDOW\\
+PHASE\_DELAY & Double($n_{pol}$, $n_{poly}$) & & & Phase delay polynomial for each receptor\\
+GROUP\_DELAY & Double($n_{pol}$, $n_{poly}$) & & & Group delay polynomial for each receptor\\
+PHASE\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of change of phase delay\\
+GROUP\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of change of group delay\\
+DISP\_DELAY & Double($n_{pol}$, $n_{poly}$) & & & Dispersive delay\\
+DISP\_DELAY\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of dispersive delay\\
+CLOCK\_ERROR & Double($n_{pol}$, $n_{poly}$) & & & Clock error as delay polynomial\\
+CLOCK\_ERROR\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of clock error modeled as delay rate polynomial\\
+}
+\begin{description}
+\item TODO: Description (refer back to FITS-IDI description?)
+\end{description}
+
 \definetable{OBSERVATION: Observation information}{
 \defline{\bf Columns}
 \defline{\em Key}
@@ -795,6 +841,27 @@ sub-table).
 produced by multiple passes through the same device, where this is
 possible (e.g. VLBI correlators). Used as an index into the associated
 table containing pass information.
+
+\end{description}
+
+\definetable{SCAN: Scan information}{
+\defline{\bf Columns}
+\defline{\em Key}
+SCAN\_NUMBER &      Int &    &      & Scan number\\
+\defline{\em Data}  
+SCAN\_INTENT &  String & & & Scan intent\\
+{\it (EXECBLOCK\_ID)} & Int &    &      & Scheduling id\\
+}
+\begin{description}
+
+\item[Notes:] This table contains information on scans, specified from the main
+table through SCAN\_NUMBER.
+
+\item[SCAN\_NUMBER] Scan number, as specified in MAIN.
+
+\item[SCAN\_INTENT] Scan intent, e.g. CAL\_POINTING, TARGET.
+
+\item[EXECBLOCK\_ID] A number by the online system to refer back to execution block observation.
 
 \end{description}
 
