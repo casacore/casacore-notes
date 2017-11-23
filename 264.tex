@@ -625,16 +625,19 @@ FIELD\_ID  & Int &    &      & Refers back to FIELD table\\
 ANTENNA\_ID & Int & & & Refers back to ANTENNA table\\
 ARRAY\_ID    & Int & & & Same meaning as in Main table\\
 SPECTRAL\_WINDOW\_ID & Int & & & Refers back to SPECTRAL\_WINDOW\\
-PHASE\_DELAY & Double($n_{pol}$, $n_{poly}$) & & & Phase delay polynomial for each receptor\\
-GROUP\_DELAY & Double($n_{pol}$, $n_{poly}$) & & & Group delay polynomial for each receptor\\
-PHASE\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of change of phase delay\\
-GROUP\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of change of group delay\\
-DISP\_DELAY & Double($n_{pol}$, $n_{poly}$) & & & Dispersive delay\\
-DISP\_DELAY\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of dispersive delay\\
-CLOCK\_ERROR & Double($n_{pol}$, $n_{poly}$) & & & Clock error as delay polynomial\\
-CLOCK\_ERROR\_RATE & Double($n_{pol}$, $n_{poly}$) & & & Rate of clock error modeled as delay rate polynomial\\
+PHASE\_DELAY & Double(\nr, $N_{poly}$) & & & Phase delay polynomial for each receptor\\
+GROUP\_DELAY & Double(\nr, $N_{poly}$) & & & Group delay polynomial for each receptor\\
+PHASE\_RATE & Double(\nr, $n_{poly}$) & & & Rate of change of phase delay\\
+GROUP\_RATE & Double(\nr, $n_{poly}$) & & & Rate of change of group delay\\
+DISP\_DELAY & Double(\nr, $n_{poly}$) & & & Dispersive delay\\
+DISP\_DELAY\_RATE & Double(\nr, $n_{poly}$) & & & Rate of dispersive delay\\
+CLOCK\_ERROR & Double(\nr, $n_{poly}$) & & & Clock error as delay polynomial\\
+CLOCK\_ERROR\_RATE & Double(\nr, $n_{poly}$) & & & Rate of clock error modeled as delay rate polynomial\\
 }
 \begin{description}
+
+\item[Notes:] Note that \nr = number of receptors.
+
 \item TODO: Description (refer back to FITS-IDI description?)
 \end{description}
 
