@@ -618,21 +618,20 @@ project-wide format.
 \definetable{INTERFEROMETER\_MODEL}{
 \defline{\bf Columns}
 \defline{\em Key}
-TIME & Double & s &              EPOCH  & \\
-INTERVAL  & Double   &          &        & \\
-\defline{\em Data}  
 FIELD\_ID  & Int &    &      & Refers back to FIELD table\\
 ANTENNA\_ID & Int & & & Refers back to ANTENNA table\\
-ARRAY\_ID    & Int & & & Same meaning as in Main table\\
+TIME & Double & s &              EPOCH  & \\
+INTERVAL  & Double   &          &        & \\
 SPECTRAL\_WINDOW\_ID & Int & & & Refers back to SPECTRAL\_WINDOW\\
+\defline{\em Data}  
 PHASE\_DELAY & Double(\nr, $N_{poly}$) & & & Phase delay polynomial for each receptor\\
-GROUP\_DELAY & Double(\nr, $N_{poly}$) & & & Group delay polynomial for each receptor\\
-PHASE\_RATE & Double(\nr, $n_{poly}$) & & & Rate of change of phase delay\\
-GROUP\_RATE & Double(\nr, $n_{poly}$) & & & Rate of change of group delay\\
-DISP\_DELAY & Double(\nr, $n_{poly}$) & & & Dispersive delay\\
-DISP\_DELAY\_RATE & Double(\nr, $n_{poly}$) & & & Rate of dispersive delay\\
-CLOCK\_ERROR & Double(\nr, $n_{poly}$) & & & Clock error as delay polynomial\\
-CLOCK\_ERROR\_RATE & Double(\nr, $n_{poly}$) & & & Rate of clock error modeled as delay rate polynomial\\
+GROUP\_DELAY & Double(\nr, $N_{poly}$) & s & & Group delay polynomial for each receptor\\
+PHASE\_RATE & Double(\nr, $N_{poly}$) & Hz & & Rate of change of phase delay\\
+GROUP\_RATE & Double(\nr, $N_{poly}$) & & & Rate of change of group delay\\
+DISP\_DELAY & Double(\nr, $N_{poly}$) & & & Dispersive delay\\
+DISP\_DELAY\_RATE & Double(\nr, $N_{poly}$) & & & Rate of dispersive delay\\
+CLOCK\_ERROR & Double(\nr, $N_{poly}$) & s & & Clock error as delay polynomial\\
+CLOCK\_ERROR\_RATE & Double(\nr, $N_{poly}$) & & & Rate of clock error modeled as delay rate polynomial\\
 }
 \begin{description}
 
