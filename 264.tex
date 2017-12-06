@@ -49,8 +49,10 @@
 \section{Summary} 
 
 This note describes a revised MeasurementSet definition which extends
-that previously given in aips++ Note 229(Kemball and Wierienga
-2000).  The new definition is designed to support features that were felt missing from v2.0, provide support for VLBI processing and non dish arrays.
+that previously given in casa/casacore Note 229(Kemball and Wieringa
+2000).  The new definition is designed to support features that were
+felt missing from v2.0 or tedious to deal with, provide support for
+VLBI processing and non dish arrays.
 
 \section{Introduction}
 
@@ -62,18 +64,33 @@ single-dish data are stored for packages using casa/casacore code.
 
 \item{{\bf VLBI data reduction:} From v2.0 added an optional subtable INTERFEROMETER_MODEL}
 
-\item{{\bf Synthesis calibration:} General synthesis development
-currently in progress requires some modifications to the existing
-format, particularly in support of cross-calibration. Some changes
-are also proposed to meet more recent requirements in areas such as mosaicing.}
+\item{{\bf Synthesis calibration:} The need for calibrations table as
+    part the MeasurementSet has been felt by several telescopes and
+    those using v2.0 (e.g ALMA and EVLA) have been using non standard
+    tables to carry calibration type information.}
 
-\item{{\bf Single-dish processing:} Some changes have been proposed to
-enhance support for single-dish processing and to ensure greater
-compatibility between single-dish and synthesis data reduction.}
+\item{{\bf Single-dish processing:} FLOAT_DATA is going to be replaced
+    by DATA unifying it with interferometer. It is left to the column
+    implementation to store floats efficiently rather than have
+    multiple columns defined for data types }
 
-\item{{\bf Accumulated changes:} Several changes of a general nature
-have been proposed since v1.0, and this is a good time to evaluate
-and incorporate these as appropriate.}
+\item{{\bf Explicit keys} One of the major complaints of ms v2.0 is
+    the use of row ids in subtables as implicit keys. In v3.0 we are
+    moving to explicit keys; e.g ANTENNA subtable will have a
+    column ANTENNA_ID so that when making a subset MS re-indexing is
+    not needed in the main table.}
+
+\item{{Data,weight, flag versioning} Non standard columns (e.g
+    CORRECTED_DATA) or kludges have been used by casa (for e.g) to
+    deal with having version of data, flag or weight. These 3 columns
+    are having the same shapes in every row of an msv3.0.  Whenever
+    changes are made example flagging or calibration and a new version
+    is needed. A new triplet of columns will be made. It is left to
+    software implementation to do the smart thing (not making
+    unnecessary copies). E.g if flagging only is done and need to be
+    saved in a new version of FLAG column, the new version of DATA an
+    WEIGHT are going to be just virtual columns pointing back to the
+    previous version.
 
 \end{itemize}
 
@@ -1314,7 +1331,7 @@ be used by applications if current.
 Links to associated sorted reference MeasurementSets, and calibration
 tables are provided in these two MS sub-tables.
 
-\section{MS v2.0 layout}
+\section{MS v3.0 layout}
 
 There is a MAIN table containing a number of data columns and keys
 into various subtables. There is at most one of each subtable. The
