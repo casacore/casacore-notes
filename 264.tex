@@ -35,49 +35,32 @@
 }
 \begin{document}
 
-\title{MeasurementSet definition version 2.0}
-\author{A.J. Kemball (NRAO) and M.H. Wieringa (ATNF), eds.}
-\date{January 21, 2000}
+\title{MeasurementSet definition version 3.0}
+\author{eds.}
+\date{January, 2018}
 \maketitle
 
 \ifpdf
 \else
-\href{229.pdf}{A pdf version of this note is available.}
+\href{264.pdf}{A pdf version of this note is available.}
 \fi
 
 \tableofcontents 
 \section{Summary} 
 
 This note describes a revised MeasurementSet definition which extends
-that previously given in aips++ Note 191 (Wieringa and Cornwell
-1996).  The new definition is designed to support changes in the
-synthesis calibration system, provide support for VLBI processing,
-enhance single-dish capabilities and also incorporate more general
-modifications that have been suggested since the first definition was
-released.  The motivation for the modifications is discussed, and a
-complete form of the revised definition is presented.
+that previously given in aips++ Note 229(Kemball and Wierienga
+2000).  The new definition is designed to support features that were felt missing from v2.0, provide support for VLBI processing and non dish arrays.
 
 \section{Introduction}
 
 The MeasurementSet (MS) defines the format in which visibility and
-single-dish data are stored in aips++ (Wieringa and Cornwell
-1996). The format has been chosen to accommodate synthesis and
-single-dish data from a variety of instruments in as broad a framework
-as possible. In addition, it has been designed to be compatible with
-the requirements of the measurement equation formalism (Noordam 1996),
-which has been adopted to model instrumental errors in the aips++
-calibration system.
+single-dish data are stored for packages using casa/casacore code.
 
-The original definition will be referred to as version 1.0 in what
-follows. The reasons for the modifications proposed here are as
-follows:
 
 \begin{itemize}
 
-\item{{\bf VLBI data reduction:} Some changes are necessary in v1.0 to
-accommodate the requirements of VLBI data processing. An extension of
-the basic synthesis MeasurementSet format is presented to provide a
-common VLBI data format.}
+\item{{\bf VLBI data reduction:} From v2.0 added an optional subtable INTERFEROMETER_MODEL}
 
 \item{{\bf Synthesis calibration:} General synthesis development
 currently in progress requires some modifications to the existing
