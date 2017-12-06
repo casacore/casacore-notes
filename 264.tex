@@ -62,14 +62,14 @@ single-dish data are stored for packages using casa/casacore code.
 
 \begin{itemize}
 
-\item{{\bf VLBI data reduction:} From v2.0 added an optional subtable INTERFEROMETER_MODEL}
+\item{{\bf VLBI data reduction:} From v2.0 added an optional subtable INTERFEROMETER\_MODEL}
 
 \item{{\bf Synthesis calibration:} The need for calibrations table as
     part the MeasurementSet has been felt by several telescopes and
     those using v2.0 (e.g ALMA and EVLA) have been using non standard
     tables to carry calibration type information.}
 
-\item{{\bf Single-dish processing:} FLOAT_DATA is going to be replaced
+\item{{\bf Single-dish processing:} FLOAT\_DATA is going to be replaced
     by DATA unifying it with interferometer. It is left to the column
     implementation to store floats efficiently rather than have
     multiple columns defined for data types }
@@ -77,11 +77,11 @@ single-dish data are stored for packages using casa/casacore code.
 \item{{\bf Explicit keys} One of the major complaints of ms v2.0 is
     the use of row ids in subtables as implicit keys. In v3.0 we are
     moving to explicit keys; e.g ANTENNA subtable will have a
-    column ANTENNA_ID so that when making a subset MS re-indexing is
+    column ANTENNA\_ID so that when making a subset MS re-indexing is
     not needed in the main table.}
 
 \item{{Data,weight, flag versioning} Non standard columns (e.g
-    CORRECTED_DATA) or kludges have been used by casa (for e.g) to
+    CORRECTED\_DATA) or kludges have been used by casa (for e.g) to
     deal with having version of data, flag or weight. These 3 columns
     are having the same shapes in every row of an msv3.0.  Whenever
     changes are made example flagging or calibration and a new version
@@ -90,7 +90,7 @@ single-dish data are stored for packages using casa/casacore code.
     unnecessary copies). E.g if flagging only is done and need to be
     saved in a new version of FLAG column, the new version of DATA an
     WEIGHT are going to be just virtual columns pointing back to the
-    previous version.
+    previous version.}
 
 \end{itemize}
 
