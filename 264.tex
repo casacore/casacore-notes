@@ -62,25 +62,25 @@ single-dish data are stored for packages using casa/casacore code.
 
 \begin{itemize}
 
-\item{{\bf VLBI data reduction:} From v2.0 added an optional subtable INTERFEROMETER\_MODEL}
-
-\item{{\bf Synthesis calibration:} The need for calibrations table as
-    part the MeasurementSet has been felt by several telescopes and
-    those using v2.0 (e.g ALMA and EVLA) have been using non standard
-    tables to carry calibration type information.}
-
-\item{{\bf Single-dish processing:} FLOAT\_DATA is going to be replaced
-    by DATA unifying it with interferometer. It is left to the column
-    implementation to store floats efficiently rather than have
-    multiple columns defined for data types }
-
 \item{{\bf Explicit keys} One of the major complaints of ms v2.0 is
     the use of row ids in subtables as implicit keys. In v3.0 we are
     moving to explicit keys; e.g ANTENNA subtable will have a
     column ANTENNA\_ID so that when making a subset MS re-indexing is
     not needed in the main table.}
 
-\item{{Data,weight, flag versioning} Non standard columns (e.g
+
+\item{{\bf Single-dish processing:} FLOAT\_DATA is going to be replaced
+    by DATA unifying it with interferometer. It is left to the column
+    implementation to store floats efficiently rather than have
+    multiple columns defined for data types }
+
+
+\item{{\bf Synthesis calibration:} The need for calibrations table as
+    part the MeasurementSet has been felt by several telescopes and
+    those using v2.0 (e.g ALMA and EVLA) have been using non standard
+    tables to carry calibration type information.}
+
+\item{{\bf Data,weight, flag versioning} Non standard columns (e.g
     CORRECTED\_DATA) or kludges have been used by casa (for e.g) to
     deal with having version of data, flag or weight. These 3 columns
     are having the same shapes in every row of an msv3.0.  Whenever
@@ -92,34 +92,28 @@ single-dish data are stored for packages using casa/casacore code.
     WEIGHT are going to be just virtual columns pointing back to the
     previous version.}
 
+\item{{\bf Data Description}The concept of data description is being
+    deprecated it saved a column of integers but users found it
+    confusing. SPECTRAL_WINDOW_ID and POLARIZATION_ID are explicit
+    columns in the main table}
+
+\item{{\bf VLBI data reduction:} From v2.0 added an optional subtable
+    INTERFEROMETER\_MODEL}
+
 \end{itemize}
 
-This is an opportune time to revise the MeasurementSet, as an
-increased level of synthesis development is underway. Later revisions
-will have a broader impact on existing code.
 
-The design philosophy underlying this MS definition is summarized in
-terms of the following objectives:
+
+Some features:
 
 \begin{itemize}
 
 \item{{\bf Incremental change:} The changes proposed here are designed
-to be as incremental as possible and no extensive re-design has been
-attempted. The scientific benefit of each modification has been weighed
-against the scope of the proposed change to the MS design.}
+to be as incremental as possible and taking into account what usage at different telescopes and software packages has found lacking.}
 
-\item{{\bf Compatibility:} Compatibility between single-dish and
-synthesis data has been retained within one basic MS definition. The
-proposed VLBI extensions are constrained to be compatible with both
-the basic synthesis format and across existing VLBI networks and
-correlators.}
+\item{{\bf Compatibility:} Some of the changes proposed here are not backwards compatible}
 
-\item{{\bf Separation of information:} A fundamental distinction is
-made between a priori information which is known at the time of
-observation or shortly thereafter, and calibration information
-subsequently derived in post-processing. The MS definition is
-primarily designed to encompass a priori information. The format of
-calibration tables in given elsewhere.}
+\item{{\bf Calibration information:} Many of the direct and peripheral information stored at data collection can be stored as calibration terms (Jones or Mueller matrices). Therefore MS v3.0 will carry in its definition optional calibration table which may carry monitoring information that can be used to modify the data, weights and flags }
 
 \item{{\bf Storage:} A future document will define standard Data
 Managers for each column, which are recommended but not
@@ -128,441 +122,51 @@ by the MS definition, particularly for larger datasets, and storage
 managers for a standard compressed MS format will be discussed in the
 same document.}
 
-\item{{\bf Combining measurement sets:} The MS definition has been
-revised to facilitate the combining of diverse observational datasets
-within one MeasurementSet if required, in a manner that is compatible
-with the calibration system. This does not hold the implication that
-all observations to be processed jointly require that the underlying
-MeasurementSets be combined. Applications will support the ability to
-process groups of MeasurementSets. However, the facility to combine
-data needs to be provided in the MeasurementSet design.
+\item{{\bf Multi measurement sets:} In a different document we will
+    describe the format of having an MS which consists of valid sub
+    MSs without physical concatenation}
 
- The combining of different observations within one MeasurementSet
-is permitted subject to the conventions of Section 3.3, which
-separates data primarily by OBSERVATION\_ID, but also by
-PROCESSOR\_ID and ARRAY\_ID. Cross-calibration between observations
-is however subject to the capabilities of the calibration
-system. Specialized inter-conversion of calibration information may be
-necessary if the calibration in separate observations is sufficiently
-disjoint. For example, transferring calibration between frequencies
-sufficiently far apart will likely be performed in an intermediate
-step, using external utilities.
-
- An application is envisaged to combine data from one or more
-separate MeasurementSets, creating a new output MS by copying the
-input data row by row, and renumbering the indices and interleaving
-data as required. No sort order is prescribed for a MeasurementSet in
-general, but it is expected that data sorted in time order will be
-most useful to the broadest range of applications.}
 
 \end{itemize}
 
-Specific principles adopted in the design are given below:
-
-\begin{itemize}
-
-\item{{\bf Signal path:} The MeasurementSet provides a format to
-represent data from a generic radio-telescope or interferometer. Along
-with the basic observed data, for which a limited set of accepted
-types are specified in the MAIN table section, there are associated
-data characterizing the state of the instrument as a whole. These
-include: i) abstracted antenna properties of components in a generic
-telescope, such as feeds and spectral windows, which serve also to
-label the output data; ii) external information, such as flagging,
-history or weather data; and iii) instrument-specific back-end data
-which may be difficult to represent in a completely generic form. The
-final category includes intermediate data and state information from
-devices such as correlators, radiometers, spectrometers or pulsar
-timers, amongst others, where they do not overlap with abstracted
-antenna properties defined elsewhere. This state information may be
-used in computing or initializing calibration corrections. Thus the MS
-represents the signal path and state of the instrument, using as
-generic an interface as possible, but allowing specialization where
-appropriate. This conforms closely with the overall calibration
-model.}
-
-\item{{\bf Use of Measures:} Some columns in the MeasurementSet
-require coordinate and unit specification. This is done in a manner
-compatible with the AIPS++ Measures system. Measure frame information
-is implicit in the underlying MS data. Row-based measures are avoided
-wherever possible due to the overhead this would often impose on the
-data reduction system through frequent coordinate conversion to a
-common reference frame. Thus, column-based measures are the default
-unless otherwise noted. The only place in which a row-based Measure
-reference is currently allowed is the frequency axis in the
-SPECTRAL\_WINDOW sub-table, where it is supplied in order to allow an
-efficient representation of Doppler tracking. Column-based Measures of
-a specific type (e.g. EPOCH), should have a common reference across
-the MS as a whole, unless there is a compelling reason otherwise. This
-requirement is necessary for efficiency, and in minimizing
-transformations when combining diverse MS datasets. No standard
-reference is enforced for any given Measure type; these should be
-chosen prudently. Units are also required to be column-based, unless a
-row-based Measure is allowed for a given column. Recommended units are
-specified for each Measure column. Access to the MS is assumed to take
-place through the MS access classes. TableMeasures will be used
-wherever practical in the MS access classes.}
-
-\item{{\bf Relative indexing:} All indices for antennas, feeds,
-spectral windows, or related quantities are assumed to start at zero.
-Thus for direct indices into sub-tables, such as SPECTRAL\_WINDOW\_ID,
-a value ID=$n$ maps to row=$n$. MS indexing is zero-based in C++, and
-one-based in Glish, as before.}
-
-\item{{\bf Sub-table completeness:} Not all data represented in
-associated sub-tables are assumed to be present in MAIN, although this
-is encouraged. For example, extra antennas may appear in the ANTENNA
-sub-table, even if they have no associated data in MAIN.}
-
-\item{{\bf Blanking and defaults:} Measured data are blanked by
-setting associated Boolean flag data, and magic value blanking is not
-used. For integer values constrained to be non-negative, or sub-table
-indices, however, a value of -1 will generally denote an unset
-value. All required columns should be filled with suitable defaults if
-not actually used.}
-
-\item{{\bf Times and intervals:} For quantities which may vary with
-time, an INTERVAL of zero implies a constant value with no
-time-dependence, while a negative INTERVAL implies that the value is
-valid until re-defined. The latter case accommodates values that are
-time-stamped but have an undefined or unknown period of validity.}
-
-\item{{\bf Non-standard columns:} The naming convention for
-non-standard columns remains the same as in MS definition v1.0,
-namely: i) general, non-supported columns start with the prefix
-NS\_\$SITE\_, as in NS\_NRAO\_WHATEVER; and ii) columns supported by a
-consortium site start with the prefix \$SITE\_, as in
-NRAO\_WHATEVER. Standard columns, such as those described in this
-definition, are not permitted to use either of the above two prefix
-forms. Non-standard columns may not be defined to store data already
-stored in standard columns. In addition, applications are not required
-to support non-standard columns.}
-
-\item{{\bf Archiving:} MeasurementSet data are assumed to be archived
-in an external format such as FITS or HDF (Hierarchical Data Format)
-for example, in as lossless a format as possible. This format will be
-specified separately. Changes to the MS format will not be made
-without a compelling scientific reason, but the format will, of
-necessity, evolve over time. The archiving application has the
-responsibility to restore the data to the latest format. It is deemed
-too complex for the underlying MS access code, and data reduction
-code, to be made capable of recognizing multiple MS revisions at the
-C++ level. A utility is envisaged, however, to convert MS v1.0 data to
-the MS v2.0 format.}
-
-\end{itemize}
-
-Suggestions regarding this revision of the MS definition have been
-contributed broadly from within the aips++ project. No specific
-attribution is given for each change but the accompanying text
-reflects the rationale behind the modification and includes relevant
-points that were raised in public discussion.
 
 \section{Summary of changes}
 
 This section contains a description of the changes proposed for each
-table in the MS definition. A full definition of the v2.0 MS format is
+table in the MS definition. A full definition of the v3.0 MS format is
 given in Section 5.
 
 \subsection{MAIN table}
 
-The fundamental assumption underlying the MAIN table is that it
-contains interferometer or single-dish data, represented in
-cross-power or autocorrelation form. The composite key is
-baseline-based and auxiliary antenna-based data, that are consequently
-not fully functionally dependent on the baseline-based key, are stored
-in some of the associated sub-tables. As the latter data are often
-time-variable, the design admits multi-key lookups in these tables, as
-is already assumed in v1.0 (eg. SYSCAL table). In keeping with
-realistic databases, the design of the MAIN table is not fully
-normalized. The term is used here in the conventional database sense
-(see for example, Date 1986). Adding indices to MAIN to avoid
-sub-table lookups involves a trade-off between the anticipated
-increase in the physical file size (which is storage manager
-dependent), and the expected size of the sub-table and frequency with
-which the auxiliary data need to be accessed in time-critical
-applications. It also depends on whether the index is commonly used in
-data selection. Note also that auxiliary data may be sampled on
-different intervals, which is an important consideration in deciding
-which antenna-based information should be placed in the same
-sub-table. These factors have been balanced subject to the following
-guidelines: i) storage manager independence has been retained
-(i.e. the worst case is assumed regarding extra MAIN indices; ii)
-single-key lookups in sub-tables are strongly favoured; and iii) it is
-assumed that small sub-tables will be held in cache during MS access.
-
-The changes proposed for the MAIN table are presented below:
-
-\subsubsection{MAIN keywords}
-
-It is proposed that the DEFAULT\_CALIBRATION keyword be removed, as it
-is no longer used. 
-
-The following additional keywords are proposed:
-
-\begin{tabbing}
-SORT\_COLUMNS\quad\quad  \= String\quad\quad  \=
-(Indices over which MS is sorted)\quad\quad \= (Reqd.) \kill
-MS\_VERSION \> Float \> (MS format revision) \> (Reqd.) \\
-SORT\_COLUMNS  \> String  \> (Indices over which MS is sorted) \> (Opt.) \\
-SORT\_ORDER \> String \> ('ASCENDING' or 'DESCENDING') \> (Opt.) \\
-\end{tabbing}
-
- Keywords SORT\_COLUMNS and SORT\_ORDER are used to provide
-information on the sort-order of the underlying MS.
-
-\subsubsection{Non-standard MAIN data}
-
-Three non-standard data types have been suggested for accommodation
-within the standard MS definition, namely: (i) lag data; (ii)
-triple-product data, and (iii) FLOAT\_DATA with an arbitrary axis other
-than frequency.
-
-The need to store lag data is motivated by the output format of XF
-correlators and the requirements for data loading and inspection in
-this case. Storage of triple-product data is required for optical
-interferometry processing but is also useful for the implementation of
-incoherent VLBI fringe-fitting algorithms. The requirement for
-non-standard FLOAT\_DATA axes is concerned with more flexible
-single-dish data formats.
-
-Lag data can be incorporated by allowing an optional MAIN column:
-
-\begin{tabbing}
-LAG\_DATA\quad\quad \= Complex(NUM\_CORR,NUM\_LAG) \quad\quad \= 
-(Lag function) \quad\quad \= (Opt.) \\
-\end{tabbing}
-
-A LAG\_ID index (via DATA\_DESC\_ID) points to a LAG table containing
-the details of the lag spectrum, including range. Lag data are not
-expected to be calibrated directly and would be supported primarily as
-an interim format in an anticipated data reformatting sequence. The
-routine storing of both lag and transformed spectral data in one MS
-would often lead to prohibitive disk space requirements, and is not
-anticipated here. Further information regarding the joint storing of
-lag functions and frequency spectra in the same MS can be found in the
-MAIN table description in Section 5.
-
-Triple-product data can be incorporated in the MS definition by adding
-additional antenna labels such as:
-
-\begin{tabbing}
-FEED3\quad\quad\quad\quad  \= Int\quad\quad  \=
-(Feed on ANTENNA3)\quad\quad \= (Opt.)\quad\quad \kill
-ANTENNA3 \> Int \> (Third antenna) \> (Opt.) \\
-FEED3    \> Int  \> (Feed on ANTENNA3) \> (Opt.) \\
-\end{tabbing}
-
-The UVW column is similarly affected. The triple-product data would
-be expected to be formed for matching time intervals, so other columns
-such as SOURCE\_ID would be held to be common. The triple-product data
-would be stored in the DATA column and the presence of a valid
-ANTENNA3 column would label the data to be of this type. It is
-stressed that triple-product and lag data will not have nearly equal
-standing in the calibration system, as compared to conventional
-frequency spectra.
-
-Support for an arbitrary axis in the FLOAT\_DATA column, by
-generalizing the SPECTRAL\_WINDOW\_ID index, is more difficult to
-accommodate, and is best approached in the same manner as the lag
-data, by enumerating special cases with separate indices such as
-LAG\_ID. The lag and triple-product data formats are still
-fundamentally visibility data and may also share at least some of the
-broader synthesis infrastructure. Their impact on the sub-table
-formats is also limited. This is not true for arbitrary data types in
-the MS such as may result if the axis type in the FLOAT\_DATA
-column was allowed to vary arbitrarily. 
-
- Accommodating non-standard columns (such as LAG\_DATA) in this way is
-contingent on the requirement that they do not permit the
-representation of identical data in multiple equivalent formats. This
-would represent a significant application overhead and would affect
-the global structure of the MS as a whole. Most importantly, this
-would limit joint processing of data from separate instruments
-(eg. single-dish and interferometry data).
+\begin{itemize}
 
 
-\subsubsection{DATA labeling}
+\item{{\bf removal of FLAG_CATEGORY}
 
-At present, polarization labeling for each correlator is stored in the
-SPECTRAL\_WINDOW table, although such information is not properly
-associated with frequency. Consequently, it is proposed that
-polarization information be stored in a separate POLARIZATION
-sub-table, indexed by POLARIZATION\_ID. However, rather than add
-POLARIZATION\_ID to MAIN as an additional index, it is proposed that
-SPECTRAL\_WINDOW\_ID be replaced by DATA\_DESC\_ID, which points to a
-DATA\_DESCRIPTION sub-table containing SPECTRAL\_WINDOW\_ID and
-POLARIZATION\_ID pairs. This structure has the specific advantage that
-the DATA array shape is completely determined by DATA\_DESC\_ID, which
-is an important consideration in tiling and uv-data access. The
-DATA\_DESC sub-table will be small, so that secondary look-ups to
-determine SPECTRAL\_WINDOW\_ID from DATA\_DESC\_ID can take place in
-memory and will not represent a significant overhead.
+}
+\item{{\bf Removal of SIGMA}
+}
 
-Thus, SPECTRAL\_WINDOW\_ID in MAIN will be replaced by DATA\_DESC\_ID,
-as follows:
+\item{{\bf Removal of FLAG_ROW}
 
-\begin{tabbing}
-DATA\_DESC\_ID\quad\quad \= Int\quad\quad \= (Data description index)
- \quad\quad \= (Reqd.) \\
-\end{tabbing}
+}
 
-\subsubsection{Processor information}
+\item{{\bf Redefinition of WEIGHT to be WEIGHT_SPRCTRUM}
+}
 
-As discussed in Section 2, provision needs to be made for the
-characterization of the state of the specific back-end device used to
-produce the final data. Such devices include correlators, radiometers,
-spectrometers and pulsar timers, amongst others. These device data are not
-permitted to duplicate general antenna properties represented
-elsewhere, but are invariably highly instrument-specific. It is
-proposed that the existing CORRELATOR\_ID index be replaced and
-generalized as:
+\item{{\bf Versioning of (DATA, WEIGHT, FLAG) triplet}
 
-\begin{tabbing}
-PROCESSOR\_ID\quad\quad \= Int\quad\quad \= (Processor identifier)
- \quad\quad \= (Reqd.) \\
-\end{tabbing} 
+}
 
-This acts as an index into a PROCESSOR sub-table, which similarly
-replaces the CORRELATOR sub-table, as described in Section 4.0.4.
-This scheme accommodates parameter and status information associated
-with each processor, generally by look-up into secondary sub-tables
-containing this information using a subset of the MAIN key. For
-single-dish data, however, the processor switching phase is
-sufficiently fundamental to warrant inclusion as an optional MAIN
-column, both for access efficiency and data labeling:
+\item{{\bf Merging of DATA and FLOAT_DATA}
+}
 
-\begin{tabbing}
-PHASE\_ID\quad\quad \= Int\quad\quad \= (Switching phase identifier)
- \quad\quad \= (Opt.) \\
-\end{tabbing} 
+\item{{\Replacement of DATA_DESC_ID}
 
-\subsubsection{State information}
-
-An associated STATE table is proposed to store combined information
-relating to active reference signals or loads, as used in phase-switching, sub-scan information and a characterization of the current observing mode. This information is not fully represented in the MS at present, and is required for a more complete integration of single-dish processing in a common framework. An index in MAIN would be required as follows:
-
-\begin{tabbing}
-STATE\_ID\quad\quad \= Int\quad\quad \= (State identifier)
- \quad\quad \= (Reqd.) \\
-\end{tabbing} 
+}
 
 
-\subsubsection{Pulsar information}
-
-Synthesis correlation of pulsar data may involve the use of a pulsar gate,
-which is a Boolean matrix in frequency and pulsar phase. The use of the
-pulsar gate is either selected for a given baseline or not. The gate
-may change with frequency group or source. No baseline dependence
-seems likely but the gate could change with time. A general solution
-is to implement a new MAIN table column as follows:
-
-\begin{tabbing}
-PULSAR\_GATE\_ID\quad\quad \= Int\quad\quad \= (Pulsar gate identifier)
- \quad\quad \= (Opt.) \\
-\end{tabbing}
-
-This is an index into the PULSAR\_GATE table containing the gate mask.
-It is also proposed that the PULSAR\_ID column be absorbed in the
-SOURCE table (via SOURCE\_ID), and removed from MAIN.  In this
-revision of the MS definition, the PULSAR\_BIN column is made
-optional.
-
-\subsubsection{Baseline reference antenna}
-
-For VLBI data from baseline-based correlators, record needs to be kept
-of which antenna was used as the reference on each baseline during
-correlation. The antenna sequence may be switched by the data filler
-to preserve an ascending baseline numbering scheme. The reference
-antenna needs to be known when shifting spectra in frequency to a
-common velocity frame (eg. LSR). An optional column is proposed for
-this purpose:
-
-\begin{tabbing}
-BASELINE\_REF\quad\quad \= Bool\quad\quad \= (True for ANTENNA1)
- \quad\quad \= (Opt.) \\
-\end{tabbing}
-
-\subsubsection{Flag data}
-
- The MS definition has been revised to recognize two distinct forms of
-flagging, both of which need to be supported, namely: i) flagging most
-easily expressed as global commands (eg. (ANTENNA1=3) AND (TIME $>$
-12h03 UT)); and ii) highly time-variable flagging of a more random
-nature, such as that resulting from mean-level clipping. In addition,
-the flagging system recognizes two further requirements, namely that
-point-by-point flags stored with the MS MAIN data are more efficient
-than global flag commands when data are accessed, and secondly that
-flags should be arbitrarily reversible in both representations.
-
- To this end, the multi-level Boolean column FLAG\_HISTORY in MAIN is
-retained, but renamed to FLAG\_CATEGORY. It contains a record of
-point-by-point flags associated with each MS row in separate
-categories. The cumulative effect is stored in column FLAG, for all
-categories combined. Categories may be arbitrarily defined by editing
-applications, but several standard categories are reserved. This
-includes a special category, FLAG\_CMD, which contains the cumulative
-effect of flag (or un-flag) commands stored in the FLAG\_CMD
-table. These commands are stored in the FLAG\_CMD table with
-associated identifiers, including flag reason and level. The flag
-reason indicates the type of flagging and the flag level the revision
-of flagging to which the command belongs. Flag revisions are stored in
-the point-by-point flags in FLAG\_CATEGORY by creating new, related
-categories to store separate revisions of the same category if
-required.
-
- Thus point-by-point or global flags can be reversed individually or
-jointly. Both representations are scientifically necessary, and
-supported. If the global flags are updated, it is the responsibility
-of the flagging application to carry out the required one-time update
-of the point-by-point flags in MAIN.
-
-\subsubsection{Auto-correlation and single-dish data}
-
-Single-dish data are represented by (ANTENNA1={\it n}, ANTENNA2= {\it
-n}), and autocorrelation data by the secondary condition (FEED1={\it
-m}, FEED2={\it m}). MeasurementSets are permitted containing a mixture
-of FLOAT\_DATA and DATA columns. For autocorrelation data, however, in
-any given row the FLOAT\_DATA column will be checked first, and, if
-absent, the DATA column will be used.
-
-\subsubsection{Hypercube indices}
-
-A standardized naming convention for hypercube indices is proposed as
-$<$column$>$\_HYPERCUBE\_ID (eg. DATA\_HYPERCUBE\_ID), where they are
-specifically required by Tiled Storage Managers, as implemented in the
-Table system.
-
-\subsubsection{Video point}
-
- An optional data column is proposed in MAIN to store the video
-point. This is preserved on some systems, and is required for a
-complete transform between the frequency and lag domains. 
-
-\begin{tabbing} 
-VIDEO\_POINT\quad\quad \= Complex(NUM\_CORR)\quad\quad 
-\= (Video point) \quad\quad \= (Opt.) \\
-\end{tabbing}
-
- This representation is more transparent than encoding the information
-in the DATA array, which leads to display and data selection
-inconsistencies.
-
-\subsubsection{Time centroid}
-
-The TIME column in MAIN is defined as the mid-point of the nominal
-sampling interval, as specified in the column, INTERVAL. The EXPOSURE
-column, in contrast to INTERVAL, defines the effective integration
-time, including the effects of missing data. The centroid of the
-effective data interval is not represented in the current MS
-definition, but does contain distinct information. It is added here as
-a new non-key attribute:
-
-\begin{tabbing}
-TIME\_CENTROID\quad\quad \= Double\quad\quad \= (Centroid of
-exposure) \quad\quad \= (Reqd.) \\
-\end{tabbing}
-
+\end{itemize}
 \subsection{ANTENNA table}
 
 The changes proposed for the ANTENNA table are presented below:
@@ -1071,260 +675,18 @@ DEW\_POINT\_FLAG   \> Bool  \> (Flag for DEW\_POINT) \> (Opt.) \\
 
 \section{New sub-tables}
 
-New sub-tables added to MS v2.0 are included in this Section.
+New sub-tables added to MS v3.0 are included in this Section.
 
-\subsubsection{Antenna-based pointing (POINTING)}
+\subsubsection{Multi element station based antenna (PHASED_ARRAY subtable)}
 
-The current MS definition associates a pointing direction with the
-FIELD\_ID. In general, however, the pointing direction is
-antenna-based and may be time-variable and distinct from the
-correlated field position. This is best modeled by introducing a
-POINTING sub-table indexed from the MAIN table by the key (TIME,
-ANTENNA), and containing absolute pointing information.
+Information about elements that makes a station antenna, combination scheme etc
 
-The format for the POINTING table is given later but includes support
-for tracking arcs on the sky, and storing a priori pointing offset
-information. The POINTING table indicates the direction the optical
-axis of the telescope is pointing; feed offsets are stored in the FEED
-table.
-
-\subsubsection{State information (STATE)}
-
-The STATE table is used to store information concerning reference
-signals or loads, sub-scan information and a description of the
-current observing mode, as these fields constitute a set of related
-information. Sub-scans are used here to denote component sequences of
-standard observing patterns. Observing modes are envisaged to be
-represented by standard reserved keywords or phrases. This provides a
-means of linking the observing strategy and the data; this is a
-central requirement in guiding automated data reduction procedures,
-and also provides greater user information.
-
-\subsubsection{Digital samplers (SAMPLER)}
-
-Data streams which have in common an antenna, feed and receiver/LO
-chain may be independently associated with digital samplers with
-time-variable quantization schemes (eg. 1- versus 2-bit sampling) and
-sampler voltage levels. For calibration purposes this does not
-constitute a separate feed but does require separate digital
-correction. This is certainly important in VLBI. A separate SAMPLER
-sub-table is proposed to address this, indexed via MAIN
-table columns (TIME, ANTENNA, FEED, SPECTRAL\_WINDOW\_ID).
-
-\subsubsection{Processor information (PROCESSOR)}
-
-The back-end processor is identified through the PROCESSOR sub-table,
-which contains information concerning the processor type (see Section
-3.1.4), and indices for time-dependent and time-independent mode
-information. A pass number is used to distinguish multiple passes for
-back-end processors for which this is possible (e.g. VLBI
-correlators). Each back-end or processor type includes a family of
-associated tables. These are formatted using common column names where
-appropriate, and accessed using classes that encapsulate the different
-information unique to each instrument-specific data behind a common
-interface. This family of tables will be specified in the future for
-individual instruments and processor types. It is noted, however, that
-the optional PHASE\_ID index in MAIN indexes directly into
-processor-specific phase information included in this family of
-tables. An illustration for generic interferomter correlators is given
-below:
-
-The correlation parameters associated with an individual uv-record are
-particularly important in VLBI calibration but have more general
-application in broader synthesis development. This correlator
-information has four separate components, which are indexed from the
-PROCESSOR sub-table (which has primary key PROCESSOR\_ID):
-
-\begin{itemize}
-\item{{\bf Time-invariant correlation parameters}
-
-This includes software revision numbers and geometrical constants
-adopted by the correlator model. We use a TYPE\_ID index to point to
-this information, which is stored in a separate $subtype\_$CORRELATOR
-table.  The correlator sub-type (e.g. MK4, JIVE) defines the prefix of
-the correlator model, geometry and mode tables discussed below.  }
-
-\item{{\bf Time-dependent correlator parameters}
-
-For synthesis data, these include correlator model values and model
-polynomials as a function of antenna or baseline, time, spectral
-window, polarization and correlator identifier. Note that there is no
-one-to-one mapping between a given uv-record and a correlator model
-record, as a model update may occur within an accumulation
-interval, and an indexed lookup is always required to locate the
-associated correlator model record. The time-dependent data also
-include geometric information common to the instrument as a whole such as
-polar motion, time information and the solar system ephemerides. These
-data are indexed on time and correlator identifier. We propose 
-correlator model and correlator geometry tables to hold these two
-types of time-dependent data respectively. Each table has a composite
-key including TYPE\_ID and no additional MAIN table columns are
-required.
-
-Synthesis correlators differ significantly in their architecture and
-reference frames. For example, the VLBI MK3 correlator is a
-baseline-based, lag correlator (XF), while the VLBA correlator is an
-antenna-based FX correlator. Both also use different celestial and
-interferometer reference frames. This poses difficulties for the
-representation of correlator mode, geometry and model information in a
-common format. Translation between different frames may not be exact
-or reversible in this case, and reference to the original correlator
-model data is sometimes required. The primary purpose of correlator
-record-keeping is to provide parameters for visibility corrections
-required by correlator digital signal processing effects, and to
-provide total model information for geodetic or astrometric
-applications.
-
-To accommodate these correlator differences, and other significant
-differences between synthesis and single-dish correlators, it is
-proposed that correlator sub-type (eg. MK4, GBT, VLBA; as given in the
-PROCESSOR sub-table) act as a global key for correlator information,
-which resides in separate tables (eg. MK3\_CORRELATOR\_MODEL,
-MK4\_CORRELATOR\_GEOMETRY), but is accessed by uniform MS methods to return
-common global data such as total model or correlator correction
-information. The format of these sub-tables needs to form part of a
-global MS definition, with uniform column names used wherever
-possible. The same subset of MAIN indices are used to access the
-correlator sub-tables, in conjunction with TYPE\_ID. The alternative
-representation of diverse correlator information in a single, common
-table will lead to a proliferation of optional columns, which will
-obscure the underlying physical correlator model in most cases.}
+\subsubsection{SCAN subtable}
 
 
-\item{{\bf Correlator mode information}
+\subsubsection{BEAM subtable}
 
-Within a given correlator run, separate subarrays may be correlated in
-different modes which are distinguished by different setup parameters
-(eg. FFT size, number of lags, spectral averaging) but which share the
-same global correlator model. This can be varied independently of
-TYPE\_ID and a secondary index MODE\_ID is
-proposed for this purpose. Separate correlator mode sub-tables are
-required to represent this information (eg. MK3\_CORRELATOR\_MODE), as
-discussed in the previous item.}
 
-\item{{\bf Correlator pass information}
-
-Redundant data are often produced by multiple VLBI correlator
-passes. Traditionally, no record is kept of the correlation pass for
-each uv-record and redundant data may be rejected by other criteria,
-such as comparing weights on a record-by-record basis. Retaining
-correlator pass information adds flexibility to the rejection of
-redundant data, allows more versatile data selection and simplifies
-the filling of VLBI data. A separate table is proposed to store
-correlator pass information (including correlator job number), which
-is indexed on the pass number and time. The correlator pass
-information is numbered relative to each correlator job identifier.}
-
-\end{itemize}
-
-\subsubsection{Frequency offsets (FREQ\_OFFSET)}
-
-Time-variable frequency tracking at each antenna is properly modeled
-by incorporating an antenna-based frequency offset for each antenna in
-each uv-record. This retains the same SPECTRAL\_WINDOW\_ID for
-calibration purposes, if appropriate, but accurately reflects
-frequency changes throughout the observations. These data are indexed
-by the MAIN table columns (TIME, ANTENNA$n$, FEED,
-SPECTRAL\_WINDOW\_ID).
-
-\subsubsection{Orbiting VLBI (TRACKING\_STN)}
-
-In orbiting VLBI observations, each antenna can be thought of as
-consisting of both an orbiting component and a ground-based tracking
-station component, with different calibration errors associated with
-each. Both require entries in the ANTENNA table and can in principle
-vary independently. A new TRACKING\_STN table is proposed to fully
-support calibration and data selection in this case, indexed by MAIN
-columns (TIME, ANTENNA).
-
-\subsubsection{DATA labeling (DATA\_DESCRIPTION)}
-
-A new table is added to hold the data description information, as
-discussed in Section 3.1.3. As described in the same Section,
-polarization information is stored in a POLARIZATION sub-table.
-
-\subsubsection{Doppler tracking (DOPPLER)}
-A new doppler tracking table is added to store source-based doppler
-tracking information for each SPECTRAL\_WINDOW, as discussed in
-Section 3.10.2.
-
-In spectral-line observing, both the on-line telescope and back-end
-processor control systems and the off-line data reduction package
-require information specifying the Doppler tracking parameters used
-during observing or required for post-processing. There are many
-different possibilities for how Doppler tracking is implemented in
-practice; these depend on the instrument and science goals of the
-observing. The MSv2 data format attempts to represent this information
-in a sufficiently general format that is not instrument-dependent, and
-covers all Doppler tracking strategies.
-
-In general, Doppler tracking parameters can be sub-divided into those
-that are dependent on the astronomical source or field, and those that
-capture the frequency tracking strategy used at the telescope and/or
-back-end processor. The source-based parameters include:
-
-\begin{description}
-
-\item{(a) Celestial coordinates of the source or field position used
-for Doppler tracking.}
-
-\item{(b) Properties of the associated transitions $(1..N_{lines})$.
-   \begin{description}
-      \item{(i) Transition name (e.g. CO J=2-1, HI etc.).}
-      \item{(ii) Systemic velocity $(V_{sys}).$}
-      \item{(iii) Rest frequency $(\nu_0).$}
-   \end{description}}
-
-\item{(c) Options for frequency tracking during observing include:
-   \begin{description}
-      \item{(i) No tracking on-line; shift spectra in post-processing.}
-      \item{(ii) Coarse tracking on-line; refine shift of spectra in post-processing.}
-      \item{(iii) Fine tracking on-line; no refinement in post-processing.}
-      \item{(iv) Shift spectra in post-processing to a new line or new frame, not tracked during observing, but lying in the observed frequency band.}
-   \end{description}}
-\end{description}
-
-In MSv2, the source properties (a,b) are recorded in the SOURCE
-sub-table, which is accordingly not optional if Doppler tracking is
-employed. The transition information is SPECTRAL\_WINDOW\_ID dependent, as
-reflected in the SOURCE sub-table key. The SPECTRAL\_WINDOW\_ID is part of the
-primary key in the MAIN table, via DATA\_DESC\_ID, and can accordingly
-be used in any sub-table key without introducing a circular
-dependency. If only the field center is tracked, then a SOURCE entry
-for the field center should be added, named accordingly. The
-transition list in the SOURCE table should include only those
-transitions of scientific interest to the observer, not all possible
-transitions in the frequency band. With increasing observing
-bandwidths, multiple transition entries will become more common
-however.
-
-The frequency tracking strategies (c) are recorded in the
-SPECTRAL\_WINDOW, FREQ\_OFFSET and DOPPLER sub-tables. An underlying
-principle is that spectral windows which can be calibrated together
-should share a common SPECTRAL\_WINDOW\_ID wherever possible. For
-minimal or no on-line tracking (c-i,ii), the frequency in the
-SPECTRAL\_WINDOW table should be labelled as topocentric, and will be
-fixed. Option (c-ii) is accommodated by adding supplementary offset in
-the FREQ\_OFFSET sub-table as required. This table can also be used to
-accomodate antenna-based and other frequency offsets in a flexible
-manner. Both (c-i,ii) have DOPPLER\_ID = -1.
-
-For (c-iii), the frequency axis can be labelling in a frame in which
-it is constant, to within meaningful scientific precision. In this
-case, the DOPPLER\_ID index points to the DOPPLER entry describing the
-transition information used in the on-line tracking. This can be
-source-dependent, as the DOPPLER key includes a SOURCE\_ID. For
-Doppler tracking in software (c-iv), the DOPPLER\_ID key should be
-adjusted to reflect the resultant frequency shift, in the same way
-as described for on-line Doppler tracking.
-
-\subsubsection{Scan summary information}
-
-An optional new table is proposed to store summary information for
-each observation, array and scan, as outlined in Section 3.3. This
-table may need to be re-generated if data are flagged or removed,
-however. It will provide useful user information, and may in addition
-be used by applications if current.
 
 \subsubsection{Associated tables (CAL\_TABLES and SORTED\_TABLES)}
 
