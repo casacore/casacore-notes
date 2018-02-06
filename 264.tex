@@ -37,7 +37,7 @@
 
 \title{MeasurementSet definition version 3.0}
 \author{eds.}
-\date{January, 2018}
+\date{February, 2018}
 \maketitle
 
 \ifpdf
@@ -94,11 +94,15 @@ single-dish data are stored for packages using casa/casacore code.
 
 \item{{\bf Data Description}The concept of data description is being
     deprecated it saved a column of integers but users found it
-    confusing. SPECTRAL_WINDOW_ID and POLARIZATION_ID are explicit
+    confusing. SPECTRAL\_WINDOW\_ID and POLARIZATION\_ID are explicit
     columns in the main table}
 
 \item{{\bf VLBI data reduction:} From v2.0 added an optional subtable
     INTERFEROMETER\_MODEL}
+
+\item{{\bf Phased Array interferometers:} A new optional subtable,
+    PHASED\_ARRAY, which will be defining which antennas form a phased
+    array station.
 
 \end{itemize}
 
@@ -115,12 +119,7 @@ to be as incremental as possible and taking into account what usage at different
 
 \item{{\bf Calibration information:} Many of the direct and peripheral information stored at data collection can be stored as calibration terms (Jones or Mueller matrices). Therefore MS v3.0 will carry in its definition optional calibration table which may carry monitoring information that can be used to modify the data, weights and flags }
 
-\item{{\bf Storage:} A future document will define standard Data
-Managers for each column, which are recommended but not
-required. Attention has been paid to the physical file sizes implied
-by the MS definition, particularly for larger datasets, and storage
-managers for a standard compressed MS format will be discussed in the
-same document.}
+\item{{\bf Storage:} A future document will provide results and suggestion for data storage structures for some commonly used access patterns and storage system in use.}
 
 \item{{\bf Multi measurement sets:} In a different document we will
     describe the format of having an MS which consists of valid sub
@@ -141,27 +140,34 @@ given in Section 5.
 \begin{itemize}
 
 
-\item{{\bf removal of FLAG_CATEGORY}
+\item{{\bf removal of FLAG\_CATEGORY}
+
+
+This column has not been used effectively. With the versioning of FLAG below it is redundant.
 
 }
 \item{{\bf Removal of SIGMA}
+WEIGHT being always considered to be $\frac{1}{\sigma^2}$ this a redundant column.
+
+
+\item{{\bf Removal of FLAG\_ROW}
+Unnecessary and confusing column when used in conjunction with WEIGHT
 }
 
-\item{{\bf Removal of FLAG_ROW}
+\item{{\bf Redefinition of WEIGHT to be WEIGHT\_SPECTRUM}
+With most of contemporary inteferometers being spectral machines with possibility of distinctive weights per channel, usage of MSv2.0 
+WEIGHT is low w.r.t WEIGHT\_SPECTRUM. In this version WEIGHT column will have the same shape as the data.
+}
+
+\item{{\bf Versioning of (DATA, WEIGHT, FLAG) triplet} These three columns will have the same shapes. There may be many versions them in an MS. But the active version will be refered to as DATA, WEIGHT and FLAG.  The versions need not be copies. For e.g if only DATA is corrected and new version is made. The active DATA will refer to DATA1 column while the active WEIGHT, FLAG (thus WEIGHT1 and FLAG1) will refer to the to WEIGHT0 and FLAG0 respectively. We live it to the software to implement these in the most optimal fashion without making duplicate copies. 
 
 }
 
-\item{{\bf Redefinition of WEIGHT to be WEIGHT_SPRCTRUM}
+\item{{\bf Merging of DATA and FLOAT\_DATA}
+It is unnecessary to have explicit DATA and FLOAT\_DATA. The software implementation can do the optimal storage in the presence of float data only and serve it as complex.
 }
 
-\item{{\bf Versioning of (DATA, WEIGHT, FLAG) triplet}
-
-}
-
-\item{{\bf Merging of DATA and FLOAT_DATA}
-}
-
-\item{{\Replacement of DATA_DESC_ID}
+\item{{\bf Replacement of DATA\_DESC\_ID} This unique ID has caused more confusion than the extra column of integers is worth. In this version we are reverting to having explicit POLARIZATION\_ID and SPECTRAL\_WINDOW\_ID which refers to keys in the POLARIZATION and SPECTRAL\_WINDOW subtables directly. DATA\_DESC\_ID column is removed.
 
 }
 
@@ -169,88 +175,23 @@ given in Section 5.
 \end{itemize}
 \subsection{ANTENNA table}
 
-The changes proposed for the ANTENNA table are presented below:
+\item {{\bf ANTENNA\_ID} An explicit ID column is newly defined}.
 
-\subsubsection{ARRAY identification}
 
-It is proposed that the antennas retain the same global numbering
-scheme across the MS as a whole, and not be allowed to vary
-independently for each ARRAY\_ID. Thus ARRAY\_ID is no longer a
-secondary antenna index, but does retain its primary purpose to separate
-antennas in the MAIN table for calibration purposes. There are
-advantages to enforcing a global antenna numbering scheme,
-particularly when antennas are shared between subarrays and may thus
-share certain calibration information.
 
-\subsubsection{Antenna type}
 
-A new column is proposed to distinguish between tracking stations and
-standard antennas (in which orbiting antennas are included):
-
-\begin{tabbing}
-TYPE\quad\quad \= String\quad\quad \= 
-(Enumerated antenna type (eg. TRACKING-STN))
- \quad\quad \= (Reqd.) \\
-\end{tabbing}
-
-\subsubsection{Orbital elements}
-
-Mean Keplerian orbital elements need to be stored for orbiting
-antennas, in the following proposed format:
-
-\begin{tabbing}
-MEAN\_ORBIT\quad\quad \= Double(6)\quad\quad \= (Mean Keplerian elements)
- \quad\quad \= (Opt.) \\
-\end{tabbing}
-
-\subsubsection{Phased array identifier}
-
-It is proposed that the PHASED\_ARRAY\_ID column be made optional.
-
-\subsubsection{Row flag}
-
-It is proposed that a flag column be added to validate or invalidate
-the contents of the row, as follows:
-
-\begin{tabbing}
-FLAG\_ROW\quad\quad \= Bool\quad\quad \= (Row flag)\quad\quad \= (Reqd.)\\
-\end{tabbing}
 
 \subsection{ARRAY table}
 
-It is proposed that multiple datasets be combined within one MS
-through the use of the following indices in the MAIN table:
 
 \begin{itemize}
 
-\item{{\bf OBSERVATION\_ID:} This separates distinct observations
-taken with different instruments (eg. MERLIN, VLBA, VLA), or observations
-with the same instrument at different epochs.}
+\item {{\bf ARRAY\_ID} An explicit ID column is newly defined}.
 
-\item{{\bf PROCESSOR\_ID:} Information obtained via this index
-separates data from separate processors, such as separate correlators,
-as may occur for combined VLBI datasets (eg. MK4, VLBA).}
 
-\item{{\bf ARRAY\_ID:} This index indentifies subarrays, such as those
-defined by separate groups of antennas observing independently in
-source or frequency, which cannot necessarily be calibrated
-together. Subarrays can be transient and highly variable, as in
-geodetic VLBI observations, or more directly associated with the clear
-sub-division of an interferometer array (eg. Fixed Q-band and C-band
-subarrays during a VLA observing run). Subarrays may also be assigned
-by users in an arbitrary manner to label separate parts of an
-array. This may bear no direct relation to the observing
-schedule. This interpretation is supported here with the proviso that
-antennas which cannot be calibrated together are not assigned to the
-same subarray. The index ARRAY\_ID is not numbered relative to
-OBSERVATION\_ID.}
+\item{{\bf ARRAY\_CENTER} A new column which will give the full Measures position of where the array center is assumed for each ARRAY\_ID}
 
-\end{itemize}
 
-In this context the ARRAY table can be absorbed in the OBSERVATION
-table and it is proposed here that it be removed from the MS
-definition.  A new, optional SCAN\_SUMMARY table is proposed to store
-overall array, observation and scan summary information.
 
 \subsection{FEED table}
 
@@ -686,12 +627,14 @@ Information about elements that makes a station antenna, combination scheme etc
 
 \subsubsection{BEAM subtable}
 
+\subsubsection{EPHEMERIDES}
+This optional table is explicitly defined and is refered to from the FIELD table via the EPHEMERIS\_ID column.
 
 
-\subsubsection{Associated tables (CAL\_TABLES and SORTED\_TABLES)}
 
-Links to associated sorted reference MeasurementSets, and calibration
-tables are provided in these two MS sub-tables.
+\subsubsection{Associated tables (CAL\_TABLES)}
+
+
 
 \section{MS v3.0 layout}
 
