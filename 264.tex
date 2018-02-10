@@ -117,9 +117,16 @@ to be as incremental as possible and taking into account what usage at different
 
 \item{{\bf Compatibility:} Some of the changes proposed here are not backwards compatible}
 
-\item{{\bf Calibration information:} Many of the direct and peripheral information stored at data collection can be stored as calibration terms (Jones or Mueller matrices). Therefore MS v3.0 will carry in its definition optional calibration table which may carry monitoring information that can be used to modify the data, weights and flags }
+\item{{\bf Calibration information:} Many of the direct and peripheral
+    information stored at data collection can be stored as calibration
+    terms (Jones or Mueller matrices). Therefore MS v3.0 will carry in
+    its definition optional calibration table which may carry
+    monitoring information that can be used to modify the data,
+    weights and flags }
 
-\item{{\bf Storage:} A future document will provide results and suggestion for data storage structures for some commonly used access patterns and storage system in use.}
+\item{{\bf Storage:} A future document will provide results and
+    suggestion for data storage structures for some commonly used
+    access patterns and storage system in use.}
 
 \item{{\bf Multi measurement sets:} In a different document we will
     describe the format of having an MS which consists of valid sub
@@ -135,6 +142,10 @@ This section contains a description of the changes proposed for each
 table in the MS definition. A full definition of the v3.0 MS format is
 given in Section 5.
 
+All the subtables not mentioned here will have an explicit ID column;
+in v3.0 implicit rown number being an ID is no longer valid. For
+example ANTENNA subtable will have a ANTENNA\_ID column added as a key.
+
 \subsection{MAIN table}
 
 \begin{itemize}
@@ -143,39 +154,53 @@ given in Section 5.
 \item{{\bf removal of FLAG\_CATEGORY}
 
 
-This column has not been used effectively. With the versioning of FLAG below it is redundant.
+    This column has not been used effectively. With the versioning of
+    FLAG below it is redundant.
 
 }
-\item{{\bf Removal of SIGMA}
-WEIGHT being always considered to be $\frac{1}{\sigma^2}$ this a redundant column.
+\item{{\bf Removal of SIGMA} WEIGHT being always considered to be
+    $\frac{1}{\sigma^2}$ this a redundant column.
 
 
 \item{{\bf Removal of FLAG\_ROW}
 Unnecessary and confusing column when used in conjunction with WEIGHT
 }
 
-\item{{\bf Redefinition of WEIGHT to be WEIGHT\_SPECTRUM}
-With most of contemporary inteferometers being spectral machines with possibility of distinctive weights per channel, usage of MSv2.0 
-WEIGHT is low w.r.t WEIGHT\_SPECTRUM. In this version WEIGHT column will have the same shape as the data.
+\item{{\bf Redefinition of WEIGHT to be WEIGHT\_SPECTRUM} With most of
+    contemporary inteferometers being spectral machines with
+    possibility of distinctive weights per channel, usage of MSv2.0
+    WEIGHT is low w.r.t WEIGHT\_SPECTRUM. In this version WEIGHT
+    column will have the same shape as the data.  }
+
+\item{{\bf Versioning of (DATA, WEIGHT, FLAG) triplet} These three
+    columns will have the same shapes. There may be many versions them
+    in an MS. But the active version will be refered to as DATA,
+    WEIGHT and FLAG.  The versions need not be copies. For e.g if only
+    DATA is corrected and a new version is made. The active DATA will
+    refer to DATA1 column while the active WEIGHT, FLAG (thus WEIGHT1
+    and FLAG1) will refer to the to WEIGHT0 and FLAG0 respectively. We
+    leave it to the software to implement these in the most optimal
+    fashion without making duplicate copies. This removes the need for
+    non-standard column like CORRECTED_DATA or FLAG_VERSION etc.
+
 }
 
-\item{{\bf Versioning of (DATA, WEIGHT, FLAG) triplet} These three columns will have the same shapes. There may be many versions them in an MS. But the active version will be refered to as DATA, WEIGHT and FLAG.  The versions need not be copies. For e.g if only DATA is corrected and new version is made. The active DATA will refer to DATA1 column while the active WEIGHT, FLAG (thus WEIGHT1 and FLAG1) will refer to the to WEIGHT0 and FLAG0 respectively. We live it to the software to implement these in the most optimal fashion without making duplicate copies. 
+\item{{\bf Merging of DATA and FLOAT\_DATA} It is unnecessary to have
+    explicit DATA and FLOAT\_DATA. The software implementation can do
+    the optimal storage in the presence of float data only and serve
+    it as complex.  }
 
-}
-
-\item{{\bf Merging of DATA and FLOAT\_DATA}
-It is unnecessary to have explicit DATA and FLOAT\_DATA. The software implementation can do the optimal storage in the presence of float data only and serve it as complex.
-}
-
-\item{{\bf Replacement of DATA\_DESC\_ID} This unique ID has caused more confusion than the extra column of integers is worth. In this version we are reverting to having explicit POLARIZATION\_ID and SPECTRAL\_WINDOW\_ID which refers to keys in the POLARIZATION and SPECTRAL\_WINDOW subtables directly. DATA\_DESC\_ID column is removed.
+\item{{\bf Replacement of DATA\_DESC\_ID} This unique ID has caused
+    more confusion than the extra column of integers is worth. In this
+    version we are reverting to having explicit POLARIZATION\_ID and
+    SPECTRAL\_WINDOW\_ID which refers to keys in the POLARIZATION and
+    SPECTRAL\_WINDOW subtables directly. DATA\_DESC\_ID column is
+    removed.
 
 }
 
 
 \end{itemize}
-\subsection{ANTENNA table}
-
-\item {{\bf ANTENNA\_ID} An explicit ID column is newly defined}.
 
 
 
@@ -189,434 +214,70 @@ It is unnecessary to have explicit DATA and FLOAT\_DATA. The software implementa
 \item {{\bf ARRAY\_ID} An explicit ID column is newly defined}.
 
 
-\item{{\bf ARRAY\_CENTER} A new column which will give the full Measures position of where the array center is assumed for each ARRAY\_ID}
+\item{{\bf ARRAY\_CENTER} A new column which will give the full
+    Measures position of where the array center is assumed for each
+    ARRAY\_ID}
 
-
-
-\subsection{FEED table}
-
-It is proposed that the ARRAY\_ID column be removed from the FEED
-table, for reasons discussed in Section 3.2.1.  The format of the BEAM
-sub-table (indexed on BEAM\_ID) is deferred for later specification.
-In addition, it is proposed that the PHASED\_FEED\_ID be made optional.
-
-A new column is proposed to store the focus length, as:
-
-\begin{tabbing}
-FOCUS\_LENGTH\quad\quad \= Double\quad\quad \= 
-(Focus length) \quad\quad \= (Opt.) \\ 
-\end{tabbing}
 
 
 \subsection{FIELD table}
 
 Changes applicable to the FIELD table are discussed in this section.
 
+An explicit FIELD_ID
 \subsubsection{Direction information}
 
-With the definition of a POINTING sub-table (see Section 4.0.1), the
-POINTING\_DIR and POINTING\_DIR\_RATE columns can be removed from the
-FIELD table. 
+The PHASE_DIR information is to be derived from the ephemeris subtable
+if the EPHEMERIS\_ID is not -1. 
 
-It is also proposed that the DELAY\_DIR\_RATE, PHASE\_DIR\_RATE and
-REFERENCE\_DIR\_RATE columns be replaced by extending the DELAY\_DIR,
-PHASE\_DIR and REFERENCE\_DIR columns to dimension (2, NUM\_POLY+1) to
-represent higher order terms. This allows the representation of more
-specialized correlation modes. The polynomial order is added as a new
-column:
+A new column optional DURATION column is added; when present in
+combination with TIME (time origin) it defines the time range for when
+the information for direction for a given FIELD_ID. In this fashion
+step function phasecentering that happens in some correlators
 
-\begin{tabbing}
-NUM\_POLY\quad\quad \= Int\quad\quad \= (Polynomial order)
- \quad\quad \= (Reqd.) \\
-\end{tabbing}
-
-\subsubsection{Ephemeris identification}
-
-A separate identifier is proposed to identify the ephemeris data
-associated with time-variable FIELD position data, as obtained for
-moving sources. These data are stored in a separate EPHEMERIS
-table. This has the added advantage of identifying multiple revisions
-of the ephemeris, which may vary between observation and final
-reduction. The proposed new column is:
-
-\begin{tabbing} 
-EPHEMERIS\_ID\quad\quad  \= Int\quad\quad\quad\quad \= 
-(Ephemeris identifier)\quad\quad\quad\quad \= (Opt.) \\
-\end{tabbing}
-
-\subsubsection{Indexing}
-
-It is further proposed that the FIELD\_ID column be removed and that
-the table be directly indexed using the FIELD\_ID value in MAIN. A
-row flag is proposed to invalidate the entry, as follows:
-
-\begin{tabbing}
-FLAG\_ROW\quad\quad  \= Bool\quad\quad \= (Row flag)\quad\quad \= (Reqd.)\\
-\end{tabbing}
 
 \subsection{FLAG\_CMD}
 
-As discussed in Section 3.1.8, this table is intended to hold all
-global flag commands applied to the MS. Their cumulative effect is
-reflected in the MAIN column FLAG\_CATEGORY, in the category FLAG\_CMD,
-and therefore further in FLAG and FLAG\_ROW. In this proposal, the
-FLAG\_CMD records are represented as character strings, using the MS
-column names in a limited syntax to represent flagging operations,
-each with associated labeling information:
+FLAG\_CMD table is made an optional subtable.
 
-\begin{tabbing} 
-FLAG\_COMMAND\quad\quad\quad\quad \= String\quad\quad \= (Flagging command)
-\quad\quad\quad\quad \= (Reqd.) \kill
-TIME \> Double \> (Midpoint of interval) \> (Reqd.) \\
-INTERVAL \> Double \> (Time interval) \> (Reqd.) \\
-TYPE \> String \> (FLAG or UNFLAG) \> (Reqd.) \\
-REASON \> String \> (Reason) \> (Reqd.) \\
-LEVEL  \> Int    \> (Flag level) \> (Reqd.) \\
-SEVERITY \> Int \> (Flag severity) \> (Reqd.) \\
-APPLIED \> Bool \> (Flag reflected in MAIN ?) \> (Reqd.) \\
-COMMAND \> String \> (Flagging command) \> (Reqd.) \\
-\end{tabbing}
 
 \subsection{OBSERVATION table}
 
-It is proposed that the CORR\_SCHEDULE field be removed (see Section
-4.0.4), which is accessed via the PROCESSOR sub-table. The telescope
-name, which was previously stored in the ARRAY sub-table, is proposed
-to be recorded as:
+Apart from the explicit OBSERVATION\_ID column version 3.0 adds the
+{\bf ARRAY\_CENTER}: A new column which will give the full Measures
+position of where the array center is assumed for each ARRAY\_ID
 
-\begin{tabbing} 
-TELESCOPE\_NAME\quad\quad \= String\quad\quad \= (Telescope name (eg WSRT))
- \quad\quad \= (Reqd.) \\
-\end{tabbing}
 
-The observation date is required as:
 
-\begin{tabbing} 
-TIME\_RANGE\quad\quad \= Double(2)\quad\quad \= 
-(Start and stop times of observation)
- \quad\quad \= (Reqd.) \\
-\end{tabbing}
 
-A new column is proposed to identify the type of the unmodified
-schedule summary is SCHEDULE, namely:
-
-\begin{tabbing} 
-SCHEDULE\_TYPE\quad\quad \= String\quad\quad \= 
-(Schedule type (eg. VEX)) \quad\quad \= (Reqd.) \\
-\end{tabbing}
-
-A field is proposed to store the log file recorded during observations, as:
-
-\begin{tabbing}
-LOG\quad\quad \= String(*)\quad\quad \= (Observing log)
- \quad\quad \= (Opt.) \\
-\end{tabbing}
-
-A field is proposed to store the target release date for the project:
-
-\begin{tabbing}
-RELEASE\_DATE\quad\quad \= Double\quad\quad \= (Release date)
- \quad\quad \= (Opt.) \\
-\end{tabbing}
-
-A row flag is proposed to invalidate the entry as:
-
-\begin{tabbing}
-FLAG\_ROW\quad\quad \= Bool\quad\quad \= (Row flag)\quad\quad \= (Reqd.)\\
-\end{tabbing}
-
-\subsection{OBS\_LOG table}
-
-It is proposed that this table be renamed as HISTORY, and that its
-primary function be to act as a processing log. New columns
-are proposed as follows:
-
-\begin{tabbing}
-PRIORITY\quad\quad\quad \= String\quad\quad \= 
-(Message priority (eg. DEBUGGING, WARN, NORMAL or SEVERE)
- \quad\quad \= (Reqd.) \\
-ORIGIN             \> String  \> 
-(Source code location from which message originates) \> (Reqd.) \\
-OBJECT\_ID         \> String  \>
-(Originating ObjectID, if available) \> (Reqd.) \\
-APPLICATION        \> String \>
-(Application name) \> (Reqd.) \\
-\end{tabbing}
-
-User notes will be identified by a specific ORIGIN string.
-
-This is also a useful table to store a record of the Glish commands
-and parameters used to invoke the application. This allows parts of
-the data reduction to be repeated with minimal effort. An automatic
-recording mechanism needs to be invoked by individual methods or
-applications for this purpose. This information can be represented in
-a string format as:
-
-\begin{tabbing}
-CLI\_COMMAND\quad\quad \= String(*)\quad\quad \= 
-(Glish parameter or command sequence)
- \quad\quad \= (Reqd.) \\
-APP\_PARAMS \> String(*) \> (Application parameters) \> (Reqd.)
-\end{tabbing}
-
- It is recognized that a mechanism to log all ad hoc CLI commands
-affecting a MeasurementSet is impractical, but this field should be
-filled by all standard applications.
 
 \subsection{SOURCE table}
 
-The changes proposed for the SOURCE table are given below:
+The SOURCE table already had a SOURCE\_ID column.  In this version it
+it proposed to generalize the SOURCE\_MODEL. Apart from a TableRecord
+it can take a URL which will point to catalogue style source list or
+even images representing the model associated with a SOURCE\_ID and
+SPECTRAL\_WINDOW\_ID.
 
-\subsubsection{Source model}
-
-Information on the detailed source model needs to be specified at
-several points in calibration and imaging, and is properly selected at
-that time. A field is added here to record the assignment of a
-component source model for each SOURCE\_ID, as this is made during
-calibration. This assigned source model will never be used in an
-application without explicit notification or confirmation, and is not
-intended as a default source model.
-
-\begin{tabbing}
-SOURCE\_MODEL\quad\quad \= TableRecord\quad\quad \= 
-(Assigned CSM) \quad\quad \= (Opt.) \\
-\end{tabbing}
-
-\subsubsection{Spectral line information}
-
-Information on the systemic velocity and rest frequency of spectral
-lines observed towards individual sources is required in various
-stages of line calibration, particularly for Doppler tracking of
-individual transitions in software. The indices SOURCE\_ID and
-SPECTRAL\_WINDOW\_ID are a good composite key for this information and
-it is proposed that they be added to the SOURCE table. A general
-extension for multiple spectral lines per spectral window is proposed
-as follows:
-
-\begin{tabbing}
-REST\_FREQUENCY\quad\quad \= Double(NUM\_LINES)\quad\quad \=
-(Rest frequency for this transition)\quad\quad\quad\quad\quad \= (Reqd.) \kill
-NUM\_LINES \> Int \> 
-(No. of transitions for this spectral window) \> (Reqd.) \\
-TRANSITION           \> String(NUM\_LINES)  \> 
-(Transition name) \> (Reqd.) \\
-REST\_FREQUENCY       \> Double(NUM\_LINES) \>
-(Rest frequency for this transition) \> (Reqd.) \\
-SYSVEL               \> Double(NUM\_LINES) \>
-(Systemic velocity) \> (Reqd.) \\
-\end{tabbing}
-
-\subsubsection{Pulsar information}
-
- The PULSAR\_ID is moved from the MAIN table to the SOURCE table, as
-proposed in Section 3.1.6. This points to the PULSAR table, containing
-pulsar source information.
 
 \subsection{SPECTRAL\_WINDOW table}
 
-As discussed in Section 3.2.1, it is proposed that the ARRAY\_ID key be
-removed.  In addition, the polarization labeling data CORR\_TYPE,
-CORR\_PRODUCT and NUM\_COR are moved to the POLARIZATION sub-table, as
-discussed in Section 3.1.3.
-
-\subsubsection{Name}
-
-A spectral window name, is proposed as:
-
-\begin{tabbing}
-NAME\quad\quad \= String\quad\quad \= 
-(Spectral window name) \quad\quad\quad \= (Reqd.) \\
-\end{tabbing}
-
-
-\subsubsection{Frequency groups}
-
-It is important to identify which SPECTRAL\_WINDOW\_ID's are
-associated for calibration purposes as part of a broader frequency
-group.  This is necessary in certain calibration applications,
-including multi-band VLBI fringe-fitting. Two new columns are
-added for this purpose:
-
-\begin{tabbing}
-FREQ\_GROUP\_NAME\quad\quad \= String\quad\quad \=
-(Frequency group name)\quad\quad \= (Reqd.) \kill
-FREQ\_GROUP \> Int \> (Frequency group) \> (Reqd.) \\
-FREQ\_GROUP\_NAME \> String \> (Frequency group name) \> (Reqd.) \\
-\end{tabbing}
-
-\subsubsection{Doppler tracking}
-
-The REST\_FREQUENCY column is replaced by a DOPPLER\_ID field
-reflecting the Doppler tracking parameters used for the spectral
-window. These data are stored in a separate DOPPLER table which
-references the line parameters defined in Section 3.9.2.
-
-\begin{tabbing}
-DOPPLER\_ID\quad\quad \= Int\quad\quad \= 
-(Doppler identifier) \quad\quad\quad\quad\quad \= (Opt.) \\
-\end{tabbing}
-
-\subsubsection{Sideband and baseband-converter information}
-
-Two new spectral window attributes are added to record baseband
-converter and sideband information:
-
-\begin{tabbing}
-NET\_SIDEBAND\quad\quad \= Int\quad\quad \= 
-(Upper or lower) \quad\quad\quad\quad\quad \= (Reqd.) \\
-BBC\_NO           \> Int  \> 
-(Baseband converter no.) \> (Opt.) \\
-BBC\_SIDEBAND     \> Int \>
-(BBC sideband) \> (Opt.) \\
-\end{tabbing}
-
-\subsubsection{Receiver information}
-
-An additional index is proposed to reference receiver information:
-
-\begin{tabbing}
-RECEIVER\_ID\quad\quad \= Int\quad\quad \= 
-(Receiver identifier) \quad\quad\quad\quad\quad \= (Opt.) \\
-\end{tabbing}
-
-This points to an optional RECEIVER sub-table.
-
-\subsubsection{Associated spectral windows}
-
-Individual spectral windows may hold a unique relationship to others,
-such as that between channel-zero data and the associated, unaveraged
-spectrum. Other may have a subset or equivalence relationship, and it
-is very useful to record this information. Additional columns for this
-purpose are proposed as follows:
-
-\begin{tabbing}
-ASSOC\_SPW\_ID\quad\quad \= Int(*)\quad\quad \= 
-(Associated spw\_id.) \quad\quad\quad\quad\quad \= (Opt.) \\
-ASSOC\_NATURE           \> String(*)  \> 
-(Nature of association) \> (Opt.) \\
-\end{tabbing}
-
-\subsubsection{Frequency information}
-
-The nominal channel spacing, actual spectral resolution and effective
-noise bandwidth are distinct, and it is proposed that they be
-decoupled by adding new columns:
-
-\begin{tabbing}
-CHAN\_WIDTH\quad\quad \= Double(*)\quad\quad \= 
-(Nominal channel width) \quad\quad\quad\quad\quad \= (Reqd.) \\
-EFFECTIVE\_BW \> Double(*) \> (Effective bandwidth) \> (Reqd.)\\
-\end{tabbing}
-
-The RESOLUTION column then denotes the actual spectral resolution.  A
-new column is proposed to allow a row-based Frequency Meaure
-reference, as:
-
-\begin{tabbing}
-MEAS\_FREQ\_REF\quad\quad \= Int\quad\quad \= (Frequency ref.)\quad\quad 
- \= (Reqd.) \\
-\end{tabbing}
-
-\subsubsection{Row flag}
-
-It is proposed that a flag column be added to validate or invalidate
-the contents of the row, as follows:
-
-\begin{tabbing}
-FLAG\_ROW\quad\quad \= Bool\quad\quad \= (Row flag)\quad\quad \= (Reqd.)\\
-\end{tabbing}
-
-\subsection{SYSCAL table}
-
-As discussed in Section 3.2.1 it is proposed that the ARRAY\_ID key be
-removed.  Further specific changes to the SYSCAL table are listed
-below:
-
-\subsubsection{Number of receptors}
-
-This information is redundant as it is already specified in the FEED
-sub-table, and it is proposed that NUM\_RECEPTORS be removed.
-
-\subsubsection{Measured temperatures}
-
-Optional antenna temperature fields are proposed as follows, where
-\nr=NUM\_RECEPTORS and \nf=NUM\_CHAN:
-
-\begin{tabbing}
-TANT\_TSYS\_SPECTRUM\quad\quad \= Float(\nr,\nf)\quad\quad \=
-(${{T_{ant}}\over{T_{sys}}}$ spectrum)
-\quad\quad\quad\quad\quad\quad\quad\quad\quad 
-\= (Opt.) \kill
-TANT \> Float(\nr) \> (Antenna temperature $T_{ant}$) \> (Opt.) \\
-TSKY \> Float(\nr) \> (Sky temperature) \> (Opt.) \\
-TANT\_SPECTRUM   \> Float(\nr,\nf)  \> 
-(Antenna temperature spectrum) \> (Opt.) \\
-TSKY\_SPECTRUM \> Float(\nr,\nf) \> (Sky temp. spectrum) \> (Opt.) \\
-TANT\_TSYS     \> Float(\nr) \>
-(${{T_{ant}}\over{T_{sys}}}$) \> (Opt.) \\
-TANT\_TSYS\_SPECTRUM     \> Float(\nr,\nf) \>
-(${{T_{ant}}\over{T_{sys}}}$ spectrum) \> (Opt.) \\
-TANT\_FLAG     \> Bool \>
-(Flag for TANT) \> (Opt.) \\
-TSKY\_FLAG \> Bool \> (Flag for TSKY) \> (Opt.) \\
-TANT\_TSYS\_FLAG     \> Bool \>
-(Flag for TANT\_TSYS) \> (Opt.) \\
-\end{tabbing}
-
- Calibration measurements in bands other than those for which there
-are recorded data, are accomodated by creating additional spectral
-window identifiers in the SPECTRAL\_WINDOW table, and recording the
-data in the same format in the SYSCAL table. This allows simultaneous
-wide- and narrow-band calibration data to be recorded in a uniform manner.
-
- Existing calibration quantities in the SYCAL table, including
-PHASE\_DIFF, TCAL, TRX and TSYS, and their associated flags, are made
-optional, on an equal footing with the other entries.
-
-
-\subsubsection{Antenna pointing}
-
-There is a key requirement to know where the antenna and feed are
-pointed at the time of the calibration measurement. In synthesis,
-these data may be taken while interferometer data are not being
-recorded for example, but are nonetheless useful in a priori amplitude
-calibration. This information is obtained by lookup in the POINTING
-sub-table (see Section 4.0.1).
-
-\subsection{WEATHER table}
-
-As in previous sections it is proposed that the ARRAY\_ID qualifier
-for ANTENNA\_ID be removed (see Section 3.2.1). Time- and
-direction-dependent ionospheric electron column density data (such as
-that derived from GPS receiver data) is proposed to be stored in a
-separate TEC sub-table. The existing data columns are made optional,
-and associated flags are added:
-
-\begin{tabbing}
-IONOS\_ELECTRON\_FLAG\quad\quad \= Bool\quad\quad \= 
-(Flag for IONOS\_ELECTRON) \quad\quad \= (Opt.) \\
-H2O\_FLAG \> Bool \> (Flag for H2O) \> (Opt.) \\
-IONOS\_ELECTRON\_FLAG \> Bool \> (Flag for IONOS\_ELECTRON) \> (Opt.) \\
-PRESSURE\_FLAG \> Bool \> (Flag for PRESSURE) \> (Opt.) \\
-REL\_HUMIDITY\_FLAG \> Bool \> (Flag for REL\_HUMIDITY) \> (Opt.) \\
-TEMPERATURE\_FLAG \> Bool \> (Flag for TEMPERATURE) \> (Opt.) \\
-WIND\_DIRECTION\_FLAG \> Bool \> (Flag for WIND\_DIRECTION) \> (Opt.) \\
-WIND\_SPEED\_FLAG \> Bool \> (Flag for WIND\_SPEED) \> (Opt.) \\
-\end{tabbing}
-
-A new column set is proposed to record the dew point:
-
-\begin{tabbing}
-DEW\_POINT\_FLAG\quad\quad   \= Bool\quad\quad  \= 
-(Flag for DEW\_POINT)\quad\quad \= (Opt.) \kill
-DEW\_POINT \> Float \>  (Dew point temperature) \> (Opt.) \\
-DEW\_POINT\_FLAG   \> Bool  \> (Flag for DEW\_POINT) \> (Opt.) \\
-\end{tabbing}
+Apart from the explicit SPECTRAL_WINDOW_ID column; an optional column
+LO\_FREQUENCY which (can be vector of frequencies) gives the Local
+Oscillator frequencies in the chain of frequency conversion.
 
 
 \section{New sub-tables}
 
 New sub-tables added to MS v3.0 are included in this Section.
+
+\subsubsection{BEAM subtable}
+This table proposed in v2.0 but we explicitly define it here. It is referenced from the FEED table or from the newly proposed PHASED_ARRAY table here. 
+
+\subsubsection{EPHEMERIDES}
+This optional table is explicitly defined and is refered to from the FIELD table via the EPHEMERIS\_ID column.
+
+\subsection{INTERFEROMETER\_MODEL}
 
 \subsubsection{Multi element station based antenna (PHASED_ARRAY subtable)}
 
@@ -624,15 +285,17 @@ Information about elements that makes a station antenna, combination scheme etc
 
 \subsubsection{SCAN subtable}
 
+This will carry the information about the scan intent and information
+necessary to tie back information from the online system
 
-\subsubsection{BEAM subtable}
-
-\subsubsection{EPHEMERIDES}
-This optional table is explicitly defined and is refered to from the FIELD table via the EPHEMERIS\_ID column.
 
 
 
 \subsubsection{Associated tables (CAL\_TABLES)}
+
+A lot of data processing or online correction information are carried
+non standard subtables. The formal existance of calibration tables associated with a given MS will 
+
 
 
 
