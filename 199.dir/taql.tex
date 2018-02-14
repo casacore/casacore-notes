@@ -64,6 +64,9 @@ language style to be used.
   Functions, possibly implemented in Python.
   Some standard UDFs exist to deal with MeasurementSets and to do
   measure conversions (for directions, epochs, positions, and stokes).
+\item In the WITH clause the order of the table and alias is reversed
+  compared to SQL because it was felt as not logical having it
+  different from the FROM clause.
 \end{itemize}
 TaQL has a keyword that makes it possible to time the various parts of
 a TaQL command.
@@ -71,10 +74,14 @@ a TaQL command.
 
 \section{TaQL Commands}
 \subsection{Command summary}
-TaQL contains several commands.
-In the commands shown below the square brackets are not part of the
-syntax, but indicate the optional parts of the commands.
+A command can be followed by a semicolon and/or a comment, indicated
+by a leading hash-sign. They are ignored. For example:
+\begin{verbatim}
+  calc sin(pi());   # calculate sine of pi
+\end{verbatim}
 
+The available TaQL commands are shown below. The square brackets are
+not part of the syntax, but indicate the optional parts of the commands.
 \begin{itemize}
 \item show (or help)
 \begin{verbatim}
@@ -160,7 +167,7 @@ Optionally specific table and data manager info can be given.
 \item table structure modification
 \begin{verbatim}
   ALTER TABLE table
-    [ADD COLUMN [column_spec] [DMINFO datamanagers]
+    [ADD COLUMN [column_specs] [DMINFO datamanagers]]
     [RENAME COLUMN column_pair_list]
     [DROP COLUMN column_list]
     [SET KEYWORD key=value, key=value, ...]
@@ -169,11 +176,20 @@ Optionally specific table and data manager info can be given.
     [DROP KEYWORD keyword_list]
     [ADD ROW nrow]
 \end{verbatim}
-It can be used to add, rename, and remove columns and keywords and to
-add rows.
+The subcommands of the ALTER TABLE command (shown above) can be used
+to add, rename, and remove columns and keywords and to add rows.
 Multiple such subcommands can be given, separated by white space.
 
 \end{itemize}
+All TaQL commands, except SHOW, can be preceded by the clause
+\begin{verbatim}
+  WITH table_list
+\end{verbatim}
+which can be used to create one or more temporary tables to be used in
+the subsequent command. 
+\htmlref{Section \ref{TAQL:WITH}}{TAQL:WITH} 
+contains a detailed description of this clause.
+\paragraph*{}
 The commands and verbs in the commands are
 case-insensitive, but case is important in string values and
 in names of columns and keywords. Whitespace (blanks and tabs) can
@@ -283,7 +299,7 @@ TaQL uses the following words as part of its language.
   F             FALSE    FROM
   GIVING        GROUPBY  GROUPBYROLLUP
   HAVING
-  IN            INCONE   INSERT    INTERSECT  INTO
+  ILIKE         IN       INCONE    INSERT    INTERSECT  INTO
   JOIN
   LIKE          LIMIT
   MINUS
@@ -293,7 +309,7 @@ TaQL uses the following words as part of its language.
   T             TO       TOP       TRUE
   UNION         UNIQUE   UPDATE    USINGSTYLE
   VALUES 
-  WHERE
+  WHERE         WITH
   XOR
 \end{verbatim}
 These words are reserved. Note that the words in the TaQL vocabulary
@@ -323,7 +339,7 @@ on expressions.
 As explained above, the result of a selection is usually a reference
 table. This table can be used as any other table, thus it is possible
 to do another selection on it or to update it (which updates the
-underlying original table). It is, however, not possible to insert
+selected rows in the underlying original table). It is, however, not possible to insert
 rows in a reference table or to delete rows from it.
 
 If the select column list contains expressions, it is not possible to
@@ -341,17 +357,18 @@ INTO) might be useful to store the result in a table.
 There is no explicit JOIN clause, but it is possible to
 equi-join tables on row number.
 Such tables must have the same number of rows.
-One can also join , for example, the main table of a
+One can also join, for example, the main table of a
 MeasurementSet with a subtable like the ANTENNA table using a
 \htmlref{subquery}{TAQL:SUBQUERIES}.
 Joins are explained further in
 \htmlref{section \ref{TAQL:JOIN}}{TAQL:JOIN}.
 
-\subsection{SELECT command overview}
+\subsection{\label{TAQL:SELECT}SELECT command overview}
 The SELECT command consists of various clauses of which most are
 optional. The full command looks as follows where the optional
 parts are shown in square brackets.
 \begin{verbatim}
+  [WITH table_list]
   SELECT [[DISTINCT] column_list]
     [INTO table [AS options]]
     [FROM table_list]
@@ -365,10 +382,11 @@ parts are shown in square brackets.
 \end{verbatim}
 The clauses are executed in a somewhat different order.
 \begin{enumerate}
+\item WITH to create the temporary tables to be used.
 \item FROM to define the tables to be used.
 \item WHERE to select the rows.
 \item GROUPBY to group selected rows.
-\item SELECT to fill select columns used in HAVING or ORDERBY
+\item SELECT to fill select columns used in HAVING or ORDERBY.
 \item HAVING to select groups.
 \item SELECT to fill the remaining select columns.
 \item ORDERBY to sort the result.
@@ -404,6 +422,44 @@ TaQL uses the following lookup scheme for column/keyword names.
 See the discussion of \htmlref{column names}{TAQL:COLUMNS}
 and \htmlref{keyword names}{TAQL:KEYWORDS} for more details.
 
+
+\subsection{\label{TAQL:WITH}WITH table\_list}
+Sometimes it is useful to create a temporary table to be used
+thereafter in a SELECT command (or another TaQL command) containing
+subqueries. It can make the command more clear or it can optimize the
+command by factoring out subqueries that are used multiple times.
+For example:
+\begin{verbatim}
+  with [select ANTENNA1,ANTENNA2,gntrue(FLAG) as NFLAG
+        from 3C343.MS
+        where ANTENNA1!=ANTENNA2
+        groupby ANTENNA1,ANTENNA2] as t1
+  select STATION,gsum(NFLAG)
+  from [[select NFLAG,ANTENNA1 as ANTENNA from t1],
+        [select NFLAG,ANTENNA2 as ANTENNA from t1]]
+  groupby ANTENNA orderby ANTENNA]
+\end{verbatim}
+This command counts the number of flagged visibilities per antenna.
+It looks somewhat complicated and can only be fully understood
+once the entire TaQL note has been read.
+\\The imporant thing is that the WITH command creates a small
+temporary table containing the number of 
+flagged visibilities per baseline. It is used twice in the subsequent
+SELECT command (by concatenation). First for ANTENNA1, thereafter
+ANTENNA2.
+The above query command is about twice as fast as something like
+\begin{verbatim}
+  select ANTENNA,gntrue(FLAG)
+  from [[select FLAG,ANTENNA1 as ANTENNA from 3C343.MS
+         where ANTENNA1!=ANTENNA2],
+        [select FLAG,ANTENNA2 as ANTENNA from 3C343.MS
+         where ANTENNA1!=ANTENNA2]]
+  groupby ANTENNA orderby ANTENNA
+\end{verbatim}
+because it processes all flags in the MeasurementSet  only once instead of twice.
+
+It is important to note that, unlike the SQL WITH clause, the order is
+'WITH table AS alias'. This is the same order as used in the FROM clause.
 
 \subsection{\label{TAQL:COLUMNLIST}SELECT column\_list}
 Columns to be selected can be given as
@@ -624,7 +680,7 @@ the query to qualify the table to be used for a column, for example
 table in the list is the primary table which will be used if a column
 is not qualified by a shorthand.
 Often a query uses a single table in which case a shorthand is not
-needed. Multiple tables require a shorthand and are useful when:
+needed. Multiple tables require a shorthand and are useful if:
 \begin{itemize}
   \item A keyword in another table is needed.
   \item Columns from multiple tables are used (an implicit
@@ -663,6 +719,7 @@ path specification and environment variables or the UNIX
 \verb+~+ notation. If the tablename contains a special character, the
 character can be escaped with a backslash or the table name can be
 enclosed in single or double quotes.
+
 \item
 A table name can be taken from a keyword in a previously
 specified table. This can be useful in a
@@ -676,7 +733,7 @@ in an expression. E.g.
 In this example \texttt{key} is a table keyword of column
 \texttt{col2} in table \texttt{mytable} (note that \texttt{tab}
 is the shorthand for \texttt{mytable} and could be left out).
-\\It can also be used for another table in the main query. E.g.
+\\It can also be used for another table in the main query. E.g.,
 \begin{verbatim}
   SELECT FROM mytable, ::key subtab
     WHERE col1 > subtab.key1
@@ -691,6 +748,20 @@ the current query level and proceeds outwards (i.e., up to the
 main query level). If a shorthand is given, only tables with
 that shorthand are taken into account. If no shorthand is
 given, only primary tables are taken into account.
+\begin{verbatim}
+  SELECT FROM mytable, :: subtab
+    WHERE col1 > subtab.key1
+\end{verbatim}
+
+\item
+In a way similar to above, two colons can be used to denote the latest table
+at the same level. If none, at the next higher query level. The example below is
+an excerpt from the full example \htmlref{below}{TAQL:BACKREF}.
+\begin{verbatim}
+  select from my.ms,
+   [select from :: where sumsqr(UVW[1:2]) < 625] as TIMESEL
+\end{verbatim}
+The colons refer to the latest table used, thus \texttt{my.ms}.
 
 \item
 Opening a subtable using a path name like \texttt{my.ms/ANTENNA}
@@ -698,7 +769,7 @@ will fail if \texttt{my.ms} is a reference table instead of the
 original table.
 Therefore the path of a subtable should be given using colons instead of
 slashes like \texttt{my.ms::ANTENNA} which is a slight extension of
-specifying table names in the previous bullet.
+specifying table names in the previous bullets.
 \\In this way a subtable can always be found.
 
 \item
@@ -709,13 +780,13 @@ command in the FROM clause. This is a normal query command
 enclosed in square brackets or parentheses. Besides the SELECT command
 the COUNT and CREATE TABLE command can also be used.
 The table created can thereafter be used in the rest of the
-query command by using the shorthand given to that table. It can also
+query command by using the shorthand (alias) given to that table. It can also
 be used in the remainder of the table\_list, thus using it as a backreference.
 Such backreferencing can be useful to avoid
 multiple equal subqueries. E.g.
 \begin{verbatim}
-  select from MS,
-   [select from MS where sumsqr(UVW[1:2]) < 625]
+  select from my.ms,
+   [select from :: where sumsqr(UVW[1:2]) < 625]
     as TIMESEL
    where TIME in [select distinct TIME from TIMESEL]
     &&  any([ANTENNA1,ANTENNA2] in
@@ -731,6 +802,9 @@ select twice.
 before reading the rest of this note.
 Note, however, that the command uses the shorthand \texttt{TIMESEL}
 to be able to use the temporary table in the subqueries.
+\\Also note the use of :: in the second line which refers to \texttt{my.ms}.
+\\Finally note that the new \htmlref{\ref{TAQL:WITH}}{WITH clause} 
+ is an easier way to use temporary tables.
 
 \item
 Normally only persistent tables (i.e., tables on disk) can
@@ -1212,7 +1286,9 @@ A \htmlref{regular expression}{TAQL:REGEX} constant can be given
 directly or using a function.
 \begin{itemize}
 \item An SQL-style pattern can be given directly as a string constant
-  preceded by operator LIKE or NOT LIKE.
+  preceded by operator LIKE or NOT LIKE. Similar to PostgreSQL the
+  operator ILIKE or NOT ILIKE can be used to indicate a
+  case-insensitive comparison.
 \item A pattern or regular expression can be given like
   \texttt{x/expr/q} preceded by operator \verb+~+ or \verb+!~+.
   Instead of a slash, the characters \% and \# can also be used as
@@ -1244,7 +1320,7 @@ directly or using a function.
   \item Function \texttt{sqlpattern} treats its argument as an SQL-style pattern.
     For example:
 \begin{verbatim}
-  lower(name) LIKE '3c%'
+  name ILIKE '3c%'
   lower(name) = sqlpattern('3c%')
 \end{verbatim}
     do the same.
@@ -1515,7 +1591,7 @@ The operator precedence order is:
   &
   ^
   |
-  == != >  >= <  <=  ~= !~= IN INCONE BETWEEN EXISTS LIKE  ~  !~
+  == != >  >= <  <=  ~= !~= IN INCONE BETWEEN EXISTS (I)LIKE  ~  !~
   &&
   ||
 \end{verbatim}
@@ -1578,8 +1654,8 @@ that can be used with them.
        \htmlref{constant}{TAQL:CONSTANTS}. \\
   \verb+!~+ & string & test if string does not match a regular expression
   constant. \\
-  LIKE & string & test if a string matches an SQL pattern. \\
-  NOT LIKE & string & test if string does not match an SQL pattern. \\
+  (I)LIKE & string & test if a string matches an SQL pattern (I for case-insensitive). \\
+  NOT (I)LIKE & string & test if string does not match an SQL pattern. \\
   IN & all & test if a value is present in a set of
        values, ranges, and/or intervals.
        (See the discussion of \htmlref{sets}{TAQL:SETS}). \\
@@ -1620,7 +1696,8 @@ square brackets. The elements in a set have to be scalars and their
 data types have to be the same or convertible to a common data type.
  The square brackets can be left out if
 the set consists of only one element. For SQL compliance
-parentheses can be used instead of square brackets.
+parentheses can be used instead of square brackets if the set contains
+more than one element.
 
 An array is also a set, so \texttt{IN} can also be used on an array
 like:
@@ -1646,13 +1723,17 @@ a set element are:
 \item \texttt{start:end:incr}. This is similar to the
 way an array index is specified. Incr defaults to 1.
 End defaults to an open end (i.e., no upper bound) and results
-in an unbounded set. Start and end can be a real or a datetime.
-Incr has to be a real. Some examples:
+in an unbounded set. Start and end can be an integer, a real or a datetime.
+Incr has to be an integer or a real. 
+Similar to Python an increment can be negative and start less than end.
+Some examples:
 \begin{verbatim}
   1:10         means 1,2,...,9  (also 10 when using glish style)
   1:10:2       means 1,3,5,7,9
+  10:1:-2      means 10,8,6,4,2
   1::2         means all odd numbers
   1:           means all positive integer numbers
+  -1::-1       means all negative integer numbers
   18Aug97::2   means every other day from 18Aug97 on
 \end{verbatim}
 These examples show constants only, but \texttt{start}, \texttt{end},
@@ -1671,6 +1752,8 @@ by \texttt{=}.
 A curly bracket is a closed side, the angle bracket is an open side.
 The following examples show how bounded and half-bounded,
 (half-)open and closed intervals can be specified.
+\\Note that an interval is not checked on \texttt{start<end}. If that is
+not the case, the result is an empty interval.
 \begin{verbatim}
   1=:=5   {1,5}     means 1<=x<=5   bounded closed
   1<:<5   <1,5>     means 1<x<5     bounded open
@@ -1695,6 +1778,9 @@ This makes it possible for array operators and functions
 \begin{verbatim}
   WHERE column > mean([10,30:100:5])
 \end{verbatim}
+If a set on the right side of the IN operator contains a single
+element  (either a value, range, or interval), it does not need to be
+enclosed in square brackets or parentheses. 
 
 Another form of constructing a set is using a
 \htmlref{subquery}{TAQL:SUBQUERIES} as described in section 4.11.
@@ -1759,45 +1845,97 @@ The second form results in reading the entire array.
 expression has to be done with care.
 
 \subsection{\label{TAQL:UNITS}Units}
-Units can be given at many places in an expression; in fact, each
-subexpression can be ended with a unit meaning that the subexpression
-result gets that unit or will be converted to that unit. A simple
-unit (only letters) can always be given literally. A non-simple unit
-can be given literally if only containing digits, underscores and/or
-dots (e.g., \texttt{m2}, \texttt{fl\_oz}. or \texttt{m.m}).
-Otherwise the unit has to be enclosed in single or double quotes
-(e.g., \texttt{'m/s'}) or the backslash has to be used as escape
-character (e.g., \verb+\+\texttt{in} or \texttt{m}\verb+\+\texttt{/s}).
-\\Arguments to functions like \texttt{sin} will be converted to the
-appropriate unit (radians) as needed. In a similar way, the units of
-operands to operators like addition, will be converted as needed.
-An exception is thrown if a unit conversion is not possible.
-
-All units supported by module
+TaQL has full support of units, both basic and compound units.
+Each value or subexpression can be followed by a unit telling that the 
+value or subexpression result gets that unit or will be converted to
+that unit. All basic units supported by module
 \htmladdnormallink{Quanta}{../html/group__Quanta__module.html}
-can be used. Note that the
-units are case sensitive. Most common units use lowercase characters.
-A unit can be preceded by a scaling prefix (like \texttt{k} for kilo).
-Compound units are created when multiplying or
-dividing values with units. The available units can be shown using the
+can be used. Compound units (such as 'm/s') can be given as well or
+are formed by a TaQL expression with units (such as '10m/30s').
+Note that units are case sensitive. Most common units use
+lowercase characters.
+A basic unit can be preceded by a scaling prefix (like \texttt{k} for kilo).
+The basic units and prefixes can be shown using the
 {\tt show units} command of the program {\em taql}.
 
-Units can be given as follows:
+Most basic units can be given literally (i.e., as an unquoted string)
+after a value or subexpression. Whitespace between value or
+subexpression and unit is optional.
+\\A compound unit can be given literally if only containing digits,
+underscores and/or dots (e.g., \texttt{m2}, \texttt{fl\_oz}. or \texttt{m.m}).
+Otherwise the unit has to be quoted (e.g., \texttt{'m/s'}) or escaped
+with a backslash (e.g., \texttt{m}\verb+\+\texttt{/s}).
+Whitespace between value or subexpression and compound unit is
+mandatory unless the unit is quoted.
+\\For example:
+\begin{verbatim}
+  10.3deg      # 10.3 degrees
+  10.3 deg     # 10.3 degrees
+  (1+10)deg    # 11 degrees
+  3.6 'km/h'   # compound unit requires quotes (or backslash)
+  1/10 deg    # NOTE: results in unit deg-1 (divided by deg)!!!
+  (1/10)deg    # results in 0.1deg
+\end{verbatim}
+
+Units can be converted to another (conforming) unit by giving that
+unit after a (sub)expression. E.g., \texttt{3deg rad} converts 3 degrees to radians. 
+Note that the empty string ('') is an empty unit, which can be used to
+make a value unitless. If ever needed, it can be used to set a
+non-conforming unit for a value. E.g. \texttt{(3deg '') kg}.
+
+There is a slight difference
+whether whitespace is used between a value and simple unit.
+Without whitespace the unit is directly part of the value, with
+whitespace it is seen as a subexpression. This is relevant in two cases.
+\begin{enumerate}
+\item Without whitespace a conversion unit can be given without
+  parentheses. With whitespace parentheses are needed around the
+  subexpression.  Compound units are always seen as a subexpression.
+\item A few units are identical to reserved TaQL keywords (e.g., 'in' for
+inch or 'as' for arcsecond). Such units have to be quoted or escaped
+with a backslash, unless given after a value without whitespace.
+\end{enumerate}
+For example:
+\begin{verbatim}
+  10deg rad         # is fine
+  (10 deg)rad       # is fine
+  10 deg rad        # gives a parse error
+  (10'm/s')'km/h'   # is fine       
+  10'm/s' 'km/h'    # gives a parse error
+  1in               # 1 inch
+  1 \in             # 1 inch
+  1 in              # error; in is a reserved keyword
+  1as deg           # 0.000277778 deg
+  (1 \as)deg        # 0.000277778 deg
+  (1 as)deg         # parse error; as is a reserved keyword
+  1 as deg          # very tricky; can result in column 'deg'
+\end{verbatim}
+
+Arguments to functions such as \texttt{sin} are converted to the
+appropriate unit (radians) as needed. In a similar way, the units of
+operands to operators like addition, will be converted as needed to
+make their units the same.
+An exception is thrown if a unit conversion is not possible.
+
+Units can be given (or derived) in various ways.
 \begin{itemize}
+ \item A value can be followed by a unit.
+ \item A (sub)expression can be followed by a simple or compound unit.
+       If the subexpression has no unit, it gets the given unit.
+       Otherwise the resulting value is converted to the unit.
  \item If a column has a unit defined in column keyword
 	\texttt{QuantumUnits} or \texttt{UNIT}, it automatically
 	gets that unit.
- \item A constant can immediately be followed by a simple unit.
-	e.g., \texttt{2deg}.
  \item The result of several expressions have an implicit unit.
 	\\Constants given as positions are in radians (rad).
 	\\Difference of 2 dates is in days (d).
-	\\Inverse trigonometric functions like \texttt{asin} give radians.
+	\\Inverse trigonometric functions such as \texttt{asin} give radians.
  \item When combining values with different units in e.g., an interval,
-	a set, an addition, or a function like \texttt{min}, the values
+	a set, an addition, or a function such as \texttt{min}, the values
 	are converted to the unit of the first operand or argument
 	with a unit. Values without a unit have by default the unit
-	of the first operand or argument with a unit.
+	of the first operand or argument with a unit. An error is
+        given if the units do no conform.
 \begin{verbatim}
   3mm-7cm          result is -67 mm
   3+3mm            result is 6 mm
@@ -1808,13 +1946,15 @@ Units can be given as follows:
   max(3mm,2cm)     result is 20 mm
   5 'km/h' + 1 'm/s'      is 8.6 km/h
   iif(F,3min,30sec)       is 0.5 min
+  3deg-4m          results in an error
 \end{verbatim}
  \item Similarly, operands of comparison operators and arguments of
 	comparison functions (like \texttt{near}) are converted to
 	the unit of the first operand or argument with a unit.
  \item The result of a multiplication and division is a compound unit
-	if both operands have a unit. Otherwise it is the unit of
-	the argument with a unit.
+	if both operands have a unit. Otherwise for multiplication it is the unit of
+	the argument with a unit and for division it is the unit of
+        the first operand or the reciproke unit of the second operand.
         \\Before TaQL supported units, it was needed to divide the
 	TIME column in a MeasurementSet by 86400 to convert it to
 	days, so it could be compared with a given date/time.
@@ -1822,8 +1962,9 @@ Units can be given as follows:
 	unit \texttt{s} by a constant 86400 results in unit \texttt{d}.
  \item Division of units of an equal kind (e.g., km by m) results in a
    unitless value.
- \item Division of a unitless value by a value with unit, results in
-   the reciproke unit. 
+\item A value can be made unitless by using the empty string as a
+  unit. This can be useful if values with different units have to be
+  combined in a set.
 \begin{verbatim}
   1km/10m          result is 100
   1/2s             result is 0.5 '(s)-1'
@@ -1833,14 +1974,7 @@ Units can be given as follows:
 	compound unit if the argument has a unit.
 	Note that \texttt{sqrt(2m)} will fail, because the square root
 	of a meter does not exist.
- \item A (sub)expression can be followed by a simple or compound unit.
-       If the subexpression has no unit, it gets the given unit.
-       Otherwise the resulting value is converted to the unit.
-       \\Note that some units can be the same as a
-       \htmlref{reserved word}{TAQL:RESERVEDWORDS}
-       (e.g., \texttt{as} or \texttt{in}).
-       In that case it has to be escaped or enclosed in quotes.
-\begin{verbatim}
+ \begin{verbatim}
   COL \in          set/convert column COL to inch
   3 cm             result is 3 cm
   3 'km/s'         result is 3 km/second
@@ -1857,7 +1991,7 @@ Units can be given as follows:
 \end{verbatim}
  \item If a function argument is expected in a certain unit, values
 	are converted as needed. For example, arguments to functions 
-	\texttt{sin} and \texttt{anycone}
+	such as \texttt{sin} and \texttt{anycone}
 	are automatically converted to radians.
  \item When adding or subtracting a value from a date, that value is
 	converted to unit \texttt{d} (days).
@@ -2874,7 +3008,7 @@ explained how to write user defined functions.
 \subsubsection{\label{TAQL:MSFUNC}Special MeasurementSet functions}
 The Casacore package comes with several predefined UDFs in library
 \texttt{libcasa\_derivedmscal}. It contains four groups of UDFs,
-all operating on a MeasurementSet and several on a CASA calibration
+all operating on a MeasurementSet and several on a CalTable, the CASA calibration
 table (both old and new format).  
 \\Although the library is called \texttt{derivedmscal}, for ease of
 use it is possible to use the synonym \texttt{mscal}. 
@@ -2882,8 +3016,10 @@ use it is possible to use the synonym \texttt{mscal}.
 \paragraph*{}
 {\bf Get derived values}
 \\The first group calculates derived values like hourangle and azimuth
-for the first or second antenna of a baseline. 
-For calibration tables, where a row contains a single antenna, 
+for each row in the MeasurementSet or CalTable given in the FROM clause.
+It uses the time, direction and arraycenter or first or second antenna
+of a baseline from the MeasurementSet or CalTable.
+For a CalTable, where a row contains a single antenna, 
 functions like PA1 are the same as PA2. 
 All angles are returned in radians.
 \begin{description}
@@ -2905,6 +3041,8 @@ All angles are returned in radians.
     gives the topocentric azimuth/elevation of ANTENNA1.
   \item[] \texttt{doublearray MSCAL.AZEL2()}\\
     gives the topocentric azimuth/elevation of ANTENNA2.
+  \item[] \texttt{doublearray MSCAL.ITRF()}\\
+    gives the direction in (time-dependent) ITRF coordinates.
   \item[] \texttt{double MSCAL.LAST()}\\
     gives the local sidereal time of the array center.
   \item[] \texttt{double MSCAL.LAST1()}\\
@@ -2932,11 +3070,13 @@ All angles are returned in radians.
     all channel frequencies of the appropriate spectral window.
 \end{description}
 By default all these functions will use the direction given in column PHASE\_DIR
-of the FIELD subtable. It is possible to use another column by giving
+of the FIELD subtable. It is possible to use another column in the
+FIELD table by giving
 its name as a string argument (e.g., HA('DELAY\_DIR')). 
 \\Except for the last 2 functions, it is possible to use an explicit direction which
-must be given as [RA,DEC] in J2000 or as a case-insensitive name of a planetary object
-(as defined by the Casacore Measures).
+must be given as [RA,DEC] in J2000 or as a case-insensitive name of a
+planetary object (as defined by the Casacore Measures) or a known
+source (such as CygA).
 For example:
 \begin{verbatim}
    derivedmscal.azel1([5h23m32.76, 10d15m56.49])
@@ -3075,8 +3215,8 @@ be a string.
 
 \subsubsection{\label{TAQL:MEASFUNC}Special Measures functions}
 These functions make it possible to convert measures like directions,
-epochs, and positions from one reference frame to another. All
-conversions supported by Casacore's 
+epochs, positions, earthmagnetics and frequencies from one reference
+frame to another. All conversions supported by Casacore's 
 \htmladdnormallink{Measures}{../html/group__Measures__module.html}
 are possible.
 For example:
@@ -3085,33 +3225,68 @@ For example:
   meas.azel ("MOON", datetime(), "WSRT")
 \end{verbatim}
 The first example converts a J2000 position to galactic coordinates.
-The second example gives the moon's azimuth/elevation at the WSRT at
+The second example gives the moon's azimuth/elevation at the WSRT for
 the current date/time.
 
+TaQL can handle the following types of measures. A measure can be
+converted from one reference frame to another.
+\begin{itemize}
+\item Positions on the earth in ITRF or WGS84 coordinates defined as
+  xyz or as longitude-latitude-height. The positions of many observatories
+  are known.
+\item Epochs in various coordinate frames, typically UTC is used. A
+  conversion might require a Position.
+\item Directions at the sky in various coordinate frames as angles
+  (e.g., RA,DEC) or as direction cosines. The directions of many
+  sources (also planets) are known. A conversion might require
+  an Epoch and Position. Rise/set times of sources can be calculated.
+\end{itemize}
+
 \paragraph*{}
-The following basic functions are available.
-Most functions return double angle values with unit rad. Only the
-RISESET function returns date/time values.
-\\Note that all names used below are case-insensitive.
+Many functions are available, but they come down to a few basic
+functions.
+The others (described further down) are synonyms or shorthands for the
+basic functions described below. 
+\\The function parameters can be single values, but also arrays of values.
+A function will operate on each element of the Cartesian product of these arrays.
 \begin{description}
+  \item[] \texttt{doublearray MEAS.POS(toref, position)}\\
+    \texttt{doublearray MEAS.POSITION(toref, position)}\\
+    converts positions to the reference frame given by the 'toref'
+    string. The \texttt{toref} value can have a suffix telling how to return
+    the result.
+    \\ - None or XYZ returns as xyz (unit m).
+    \\ - LLH returns as lon-lat-height (in rad,rad,m but without units).
+    \\ - LL or LONLAT returns as lon-lat (unit rad).
+    \\ - H or HEIGHT returns as height (unit m).
+  \item[] \texttt{doublearray MEAS.EPOCH(toref, epoch, position)}\\
+    converts epochs to the reference frame given by the 'toref' string
+    and returns the values with unit 'd'.
+    The position argument only needs to be given if the conversion
+    needs frame information.
+    By default conversions to sidereal time (e.g., LAST) return
+    the fraction giving the true sidereal time. Only if the
+    \texttt{toref} string starts with 'F-', 'F\_', 'f-', or 'f\_' the
+    full sidereal time is returned which includes the number of
+    sidereal days since the start of MJD.
   \item[] \texttt{doublearray MEAS.DIR(toref, direction, epoch, position)}\\
-    converts a direction to the reference type given by the 'toref' string.
+    \texttt{doublearray MEAS.DIRECTION(toref, direction, epoch, position)}\\
+    converts directions to the reference frame given by the 'toref'
+    string and returns them as angles with unit 'rad'.
     The epoch and position arguments only need to be given if the conversion
     needs frame information (e.g., when converting J2000 to apparent).\\
-    Function name MEAS.DIRECTION can be used as well.
   \item[] \texttt{doublearray MEAS.DIRCOS(toref, direction, epoch, position)}\\
     Same as function DIR, but returning 3 direction cosines instead of 2 angles.\\
-    Function name MEAS.DIRECTIONCOSINE can be used as well.
-  \item[] \texttt{DateTimearray MEAS.RISESET(direction, epoch, position)}\\
-   returns the rise and set date/times (UTC) of the sources given in the
-    direction argument for the given dates and positions. Function
-    name MEAS.RISET can be used as well.
+  \item[] \texttt{DateTimearray MEAS.RISET(direction, epoch, position)}\\
+    \texttt{DateTimearray MEAS.RISESET(direction, epoch, position)}\\
+    returns the rise and set date/times (UTC) of the sources given in the
+    direction argument for the given epochs and positions.\\
     Note that the source can be invisible all day (results in
     set$<$rise). If visible all day, rise time is 0h0m and set time is
     24 hours later.
     \\The TIME or CTIME function can be used on the result to get the
-    time part only (as double or string). 
-    \\If the sun is used as a source name (case-insensitive), it can
+    time part only (as double cq. string). 
+    \\If the Sun is used as a source name (case-insensitive), it can
     be followed by a hyphen 
     and one of the following case-insensitive suffices indicating what
     to use. The default is CR which is used in most almanacs.
@@ -3125,9 +3300,7 @@ RISESET function returns date/time values.
       \item \texttt{U}: use the upper brim of the sun without refraction correction.
       \item \texttt{L}: use the lower brim of the sun without refraction correction.
       \item \texttt{CT}: use the civil twilight (6 deg).
-        without artifical light.
       \item \texttt{NT}: use the nautical twilight (12 deg).
-        visible for navigating.
       \item \texttt{AT}: use the amateur astronomical twilight (15 deg).
       \item \texttt{ST}: use the scientific astronomical twilight (18 deg).
     \end{itemize}
@@ -3135,24 +3308,21 @@ RISESET function returns date/time values.
     \\See
     \htmladdnormallink{stjarnhimlen.se}{http://www.stjarnhimlen.se/comp/riset.html}
     for additional information.
-  \item[] \texttt{doublearray MEAS.EPOCH(toref, epoch, position)}\\
-    converts an epoch to the reference type given by the 'toref' string.
-    The position argument only needs to be given if the conversion
-    needs frame information.
-    By default conversions to sidereal time (e.g, LAST) return
-    the fraction giving the true sidereal time. Only if the
-    \texttt{toref} string starts with 'F-', 'F\_', 'f-', or 'f\_' the
-    full sidereal time is returned which includes the number of
-    sidereal days since the start of MJD.
-  \item[] \texttt{doublearray MEAS.POS(toref, position)}\\
-    converts a position to the reference type given by the 'toref' string.\\
-    Function name MEAS.POSITION can be used as well.
 \end{description}
-The available reference types can be shown using the
+The possible reference frame types can be shown using the
 {\tt show meastypes} command in the program {\em taql}.
-For ease of use several specialized MEAS.DIR and MEAS.POS functions
+\\For ease of use several functions
 are defined with an implicit 'toref' argument.
 \begin{description}
+  \item[] \texttt{doublearray MEAS.ITRFxxx(position)}\\
+    converts a position to ITRF coordinates, where xxx must be XYZ,
+    LLH, LONLAT, LL, HEIGHT or H to define the result.
+  \item[] \texttt{doublearray MEAS.WGSxxx(position)}\\
+    converts a position to WGS84 coordinates, where xxx is the same as
+    above. If xxx is omitted, it defaults to XYZ.
+  \item[] \texttt{doublearray MEAS.LAST(epoch, position)}\\
+    converts an epoch to local sidereal time (without date part).
+    \\Function name MEAS.LST can be used as well.
   \item[] \texttt{doublearray MEAS.J2000(direction, epoch, position)}\\
     converts a direction to J2000.
   \item[] \texttt{doublearray MEAS.B1950(direction, epoch, position)}\\
@@ -3176,50 +3346,47 @@ are defined with an implicit 'toref' argument.
   \item[] \texttt{doublearray MEAS.ITRFD(direction, epoch, position)}\\
     converts a direction to ITRF coordinates.
     \\Function name MEAS.ITRFDIR or MEAS.ITRFDIRECTION can be used as well.
-  \item[] \texttt{doublearray MEAS.LAST(epoch, position)}\\
-    converts an epoch to local sidereal time.
-    \\Function name MEAS.LST can be used as well.
-  \item[] \texttt{doublearray MEAS.ITRFxxx(position)}\\
-    converts a position to ITRF coordinates.
-  \item[] \texttt{doublearray MEAS.WGSxxx(position)}\\
-    converts a position to WGS84 coordinates.
 \end{description}
-The names of the last two functions have a suffix xxx indicating how
-positions are returned.
-\\- XYZ means as x,y,z
-\\- LL or LONLAT means as lon,lat
-\\- H or HEIGHT means as height
-\\It defaults to XYZ.
+
 
 \paragraph*{}
-The function arguments can be given in a variety of ways.
+The function arguments can be given in a variety of ways. The argument
+data types and units are used to distinguish the arguments.
 \begin{itemize}
-\item 'toref' is a constant scalar string giving the reference type to
-  convert to. See the Measure classes
-  \htmladdnormallink{MDirection}{../html/classcasa_1_1MDirection.html},
-  \htmladdnormallink{MEpoch}{../html/classcasa_1_1MEpoch.html}, and
-  \htmladdnormallink{MPosition}{../html/classcasa_1_1MPosition.html},
-  for an overview of the types.
-\item 'direction' gives one or more directions to convert. They can be
+\item 'toref' is a constant scalar string giving the reference frame to
+  convert to. The command
+\begin{verbatim}
+   taql show meastype
+\end{verbatim}
+can be used to see the possible frames for each Measure type.
+
+\item 'direction' gives one or more directions. They can be
   given in several ways.
   \begin{itemize}
-    \item As a constant scalar or array of strings giving one or more planetary objects
-      like MOON or VENUS and/or giving the name of standard sources
-      (CasA, CygA, TauA, VirA, HerA, HydA, or PerA).
-      In the future support for comets might be added. 
-      \\The names are case-insensitive.
-    \item As 2 constant double scalar arguments giving ra and dec (or
-      longitude and latitude).
-    \item As a double array with an even number of elements giving
-      ra/dec or longitude/latitude of one or more directions.
-      It can be a constant array (expression), but it
-      can also be a column or an expression using a column.
+  \item An array of directions, each 2 angles or 3 directions cosines.
+    It can be given as a single list or a multi-dim array. The choice
+    between angles and direction cosines is based on the size of the
+    first dimension. If divisible by 2, it is angles, by 3 is
+    direction cosines, otherwise an error. Thus a list of 6 elements
+    defines 3 directions with 2 angles each (default in radians).
+    \\It can be followed by a string defining the source
+    reference frame which defaults to 'J2000'.
+  \item If a single constant direction is used, it can be given as
+    2 (for angles) or 3 (for direction cosines) scalar values,
+    followed by the optional source reference frame.
+  \item The name of a column in a table or a subset of it such as
+    \texttt{DELAY\_DIR[0,]}. Often this is a TableMeasures column
+    which is recognized as such, also its source reference frame.
+    If such a column is given as part of an expression, it will not
+    be recognized as a TableMeasures column and its reference frame
+    should be given.
+  \item As a list of (case-insensitive) names of planetary objects
+    (such as SUN or JUPITER) or names of standard sources.
+    (CasA, CygA, TauA, VirA, HerA, HydA, or PerA). ZENITH can be
+    given as well.
+    In the future support for comets might be added. 
   \end{itemize}
-  If a column or a column slice is given, the reference type stored in
-  the column keywords will be recognized. In other cases the input reference
-  type should be given in the next string argument. If not given, it
-  defaults to J2000.
-  \\For example:
+  For example:
 \begin{verbatim}
   ['MOON','sun', 'venus']          # 3 planetary objects
   12h23m17.5, 23d56m43.8, 'B1950'  # ra/dec as scalar constants (as B1950)
@@ -3249,22 +3416,38 @@ The function arguments can be given in a variety of ways.
 Note that in the last example 'UTC' is not necessary, because it is
 the default.
 
-\item 'position' gives one or more directions to use. They can be
+\item 'position' gives one or more earth positions to use. They can be
   given as x,y,z or as lon,lat with an optional height. Usually the
   unit of the first value defines if x,y,z or lon,lat is used. It is, however, also
-  possible to distinguish between LL and XYZ by using suffices like
-  XYZ or LL in the reference type given in the next argument.
+  possible to distinguish between LL and XYZ by using suffices such as
+  XYZ in the reference frame type given in the next argument.
   \begin{itemize}
-    \item As a scalar or array of observatory names using their positions
-      in the Measures Observatory table.
-    \item As 2 or 3 constant double scalar values giving xyz, lonlat,
-      or lonlat/height.
-    \item As a double array giving one or more positions in xyz or
-      lonlat. Similar to directions it can be a column (expression)
-      where the reference type is taken from the column keywords.
-    \item As two constant double arrays giving lonlat and height of
-      one or more positions. The array sizes have to match (thus the
-      size of the lonlat array must be twice the size of the height array).
+  \item An array of positions given as xyz, as lonlat, as lon-lat-height
+    or as height. The latter is taken towards the pole.
+    Note that specifying as lon-lat-height precludes use of units
+    (angle and length units cannot be mixed in a TaQL value).
+    It can be given as a single list or as a multi-dim array.
+    If given as lonlat it can be followed by an array defining
+    the height for each lon,lat pair (their sizes should match).
+    Finally it can be followed by a string defining the source
+    reference frame type, which defaults to ITRF for xyz and WGS84
+    for lonlat.
+    The source reference frame type can contain the suffix XYZ, LLH, LL
+    or H to tell how the values are specified. If no suffix is given,
+    it is derived from the unit of the first value (angle means LL,
+    length means XYZ).
+  \item If a single constant position is used, it can be given as
+    1, 2 or 3 scalar values, optionally followed by the source
+    reference type. If xyz,  lonlat, lon-lat-height or height is given
+    is derived in the same way as above.
+  \item The name of a column in a table or a subset of it such as
+    \texttt{POSITION[0,]}. Often this is a TableMeasures column
+    which is recognized as such, also its source reference frame.
+    If such a column is used in a expression, it will not be
+    recognized as a TableMeasures column and its reference frame
+    should be given.
+  \item A list containing (case-insensitive) names of known
+    observatories such as 'WSRT' or 'VLA'.
   \end{itemize}
   If needed, the reference type (with optional suffix) can be given in
   the next argument. The reference type defaults to ITRF if xyz
@@ -3280,7 +3463,10 @@ the default.
   [41.84m, 4.835, 55.722], 'WGS'     # xyz as array (WGS84)
   POSITION                           # POSITION column
 \end{verbatim}
+
 \end{itemize}
+
+
 A few more elaborate examples are given below.
 \begin{verbatim}
   meas.last (date('15Oct2011/15:34'), 5deg, 52deg)
@@ -3856,13 +4042,14 @@ The slice or mask is applied to both columns.
 The \texttt{INSERT} command adds rows to the table. It can take three forms:
 \begin{verbatim}
   INSERT INTO table_list SET column=expr, column=expr, ...
-  INSERT INTO table_list [(column_list)] VALUES (exprlist),(exprlist), ...
+  INSERT INTO table_list [(column_list)] VALUES (exprlist),(exprlist),
+         ... [LIMIT n]
   INSERT INTO table_list [(column_list)] SELECT_command
 \end{verbatim}
-The first and second form are basically equivalent, but differ in syntax. The
-first form has the same syntax as the UPDATE command, while the second
-form is the SQL syntax making it possible to leave out the column
-names (see below).
+The first form adds a single row setting the values in the same way
+as the UPDATE command. 
+The second form is the SQL syntax and can add multiple rows. In this
+form the optional LIMIT part can also be given right after the INSERT keyword.
 In both forms it is possible to jointly specify
 data column and mask column if the value is a masked array. This is
 done by combining them in parentheses like {\tt (DATA,FLAG)} as
@@ -3882,8 +4069,8 @@ the expression lists into the columns given in the column list.
 If the column list is not given, it defaults to all stored columns in
 the table in the order as they appear in the table description.
 Multiple expression lists can be given; each list results in the
-addition of a row.
-Each expression in the expression list can be as complex as needed;
+addition of a row (however, see LIMIT clause below).
+\\Each expression in the expression list can be as complex as needed;
 for example, a subquery can also be given. Note that a subquery is
 evaluated before the new row is added, so the new row is not taken
 into account if the subquery is done on the table being modified.
@@ -3914,13 +4101,14 @@ can be given. It will iterate through them while adding rows. Thus
 COL1 and COL2 will have the values 0, 1, 0, 1, and 0 in the new rows.
 
 \paragraph*{}
-The third form evaluates the SELECT command and copies the rows
+The third form evaluates the SELECT command and adds the rows
 found in the selection to the table being modified (which is given
 in the INTO part).
 The columns used in the modified table are defined in the column list.
 As above, they default to all stored columns. The columns used in the
 selection have to be defined in the column-list part of the SELECT command.
 They also default to all stored columns.
+Column names and data types have to match, but their order can differ.
 \\For example:
 \begin{verbatim}
   INSERT INTO my.ms select FROM my.ms
@@ -3988,7 +4176,7 @@ brackets or parentheses (for SQL compatibility).
 It is a comma separated list of column specifications.
 Each specification looks like:
 \begin{verbatim}
-  columnname datatype [NDIM=n, SHAPE=[d1,d2,...], UNIT='s',
+  columnname datatype [NDIM=n, SHAPE=[d1,d2,...], DIRECT=0/1, UNIT='s',
                        DMTYPE='s', DMGROUP='s', COMMENT='s']
 \end{verbatim}
 The possible data type strings are given in
@@ -4004,6 +4192,8 @@ A value 0 means an array of any dimensionality. A positive value means
 an array with the given dimensionality.
 \item \texttt{SHAPE=[d1,d2,...]} makes it possible to define the exact
 array shape.
+\item \texttt{DIRECT=1} tells that a fixed shaped array column has to be
+  stored directly. The default is 0.
 \\If given and if NDIM is positive, they should be consistent.
 \item \texttt{UNIT='s'} defines the unit to be used for the column.
 \\It can be any valid unit (simple or compound). It is a string,
@@ -4074,12 +4264,12 @@ noun is optional. For SQL-compatibility DROP can be used instead of DELETE.
 \end{verbatim}
 renames column Col1 to Col1A and adds a new column Col1 with data type I4.
 
-Note that TaQL has no way of showing keywords that have a record value.
-The program {\em showtable} can be used for that purpose.
+Note that TaQL has no way of showing keywords having a record value.
+The program {\em showtableinfo} can be used for that purpose.
 
 \subsection{ADD COLUMN}
 \begin{verbatim}
-  ADD COLUMN colspec DMINFO datamanagers
+  ADD COLUMN colspecs DMINFO datamanagers
 \end{verbatim}
 adds one or more columns to the table.
 The specification of the columns and the optional data managers is the
@@ -4858,18 +5048,16 @@ form the programmer interface.
     command recall possible across multiple taql sessions.
     \\A few types of commands can be given:
     \begin{itemize}
-    \item \texttt{help}, \texttt{h} or \texttt{?} shows brief help
-      information.
-    \item\texttt{show} can be used to show to available units or
-      measure types.
-    \item A full TaQL command. If no GIVING part is given, the
-      resulting table is not made persistent. It shows the number of matching rows.
+    \item \texttt{h}, \texttt{-h}, or \texttt{--help} shows brief help information.
+    \item A full TaQL command. Note that \texttt{help} or
+      \texttt{show} can be used to show info about TaQL.
     \item A full TaQL command preceded by \texttt{varname=}, where
       \texttt{varname} is the name under which the resulting table is
       kept in this session. Thus the result is not a persistent table
       (unless GIVING was given), but it is kept temporarily.
       The \texttt{varname} can be used in subsequent commands like
       \texttt{SELECT FROM \$varname}.
+    \item \texttt{?} shows the varnames.
     \item \texttt{varname=} without a further command removes the
       temporary result.
     \item \texttt{varname} shows the number of rows in the temporary
@@ -5190,8 +5378,7 @@ features and by doing optimizations.
   \item Add explicit JOIN clause (probably only equi-joins).
   \item Add UNION, INTERSECTION, and DIFFERENCE.
   \item Handle invalid subexpressions (e.g., exceeding array bounds)
-    as null arrays
-    which can be tested with the function ISNULL.
+    as null arrays which can be tested with the function ISNULL.
 \end{itemize}
 
 
@@ -5199,4 +5386,25 @@ features and by doing optimizations.
 %% get all references
 % rep htmlref taql.tex | sed -e s'/.*{\(TAQL:[^}]*\).*/\1/' |grep 'TAQL:' | sort | uniq
 % grep 'label{' taql.tex | sed -e s'/.*{\(TAQL:[^}]*\).*/\1/' |grep 'TAQL:' | sort | uniq
+
+%  select t1.time,ANTENNA1,ANTENNA2,DATA_DESC_ID,boxedmean(GAGGR(DATA),4,1,1) as AVGDATA from your.ms, [select int(rownr()/4/[select GCOUNT()  as time from [select from your.ms limit 100000] groupby TIME][0]t1 GROUPBY t1.time, ANTENNA1, ANTENNA2, DATA_DESC_ID giving avg.tab
+ 
+
+%  select 4*int(rownr()/4/[select GCOUNT() from [select from your.ms limit 100000] groupby TIME][0]) as timeseq from your.ms giving timeseq.tab
+
+%  select t1.timeseq,ANTENNA1,ANTENNA2,DATA_DESC_ID,boxedmean(GAGGR(DATA),4,1,1) as AVGDATA C4 from your.ms t0,  [select 4*int(rownr()/4/[select GCOUNT() from [select from your.ms limit 100000] groupby TIME][0]) as timeseq from your.ms] t1 GROUPBY t1.timeseq, ANTENNA1, ANTENNA2, DATA_DESC_ID giving avg.tab
+
+%  select from [select from your.ms orderby TIME,ANTENNA1,ANTENNA2,DATA_DESC_ID] t0, [select from [avg.tab,avg.tab,avg.tab,avg.tab], [[select timeseq as ts from avg.tab], [select timeseq+1 as ts from avg.tab], [select timeseq+2 as ts from avg.tab], [select timeseq+3 as ts from avg.tab]] a2 orderby a2.ts,ANTENNA1,ANTENNA2,DATA_DESC_ID limit [select GCOUNT() from your.ms][0]]  t1 where t1.ANTENNA1 != t0.ANTENNA1 || t1.ANTENNA2 != t0.ANTENNA2 || t1.DATA_DESC_ID != t0.DATA_DESC_ID
+
+%  update [select from your.ms orderby TIME,ANTENNA1,ANTENNA2,DATA_DESC_ID] SET DATA=DATA-resize(resize(t1.AVGDATA,shape(t1.AVGDATA)[1:]), shape(DATA),0) from [select from [avg.tab,avg.tab,avg.tab,avg.tab], [[select timeseq as ts from avg.tab], [select timeseq+1 as ts from avg.tab], [select timeseq+2 as ts from avg.tab], [select timeseq+3 as ts from avg.tab]] a2 orderby a2.ts,ANTENNA1,ANTENNA2,DATA_DESC_ID limit [select GCOUNT() from your.ms][0]]  t1
+
+
+
+%  select t1.timeseq,ANTENNA1,ANTENNA2,DATA_DESC_ID,boxedmean(GAGGR(DATA),ntime,nchan,1) as AVGDATA C4 from your.ms t0,  [select ntime*int(rownr()/ntime/[select GCOUNT() from [select from your.ms limit 100000] groupby TIME][0]) as timeseq from your.ms] t1 GROUPBY t1.timeseq, ANTENNA1, ANTENNA2, DATA_DESC_ID giving avg.tab
+
+%  select from [select from your.ms orderby TIME,ANTENNA1,ANTENNA2,DATA_DESC_ID] t0, [select from [avg.tab,avg.tab,avg.tab,avg.tab], [[select timeseq as ts from avg.tab], [select timeseq+1 as ts from avg.tab], [select timeseq+2 as ts from avg.tab], [select timeseq+3 as ts from avg.tab]] a2 orderby a2.ts,ANTENNA1,ANTENNA2,DATA_DESC_ID limit [select GCOUNT() from your.ms][0]]  t1 where t1.ANTENNA1 != t0.ANTENNA1 || t1.ANTENNA2 != t0.ANTENNA2 || t1.DATA_DESC_ID != t0.DATA_DESC_ID
+
+%  update [select from your.ms orderby TIME,ANTENNA1,ANTENNA2,DATA_DESC_ID] SET DATA=DATA-resize(resize(t1.AVGDATA,shape(t1.AVGDATA)[1:]), shape(DATA),0) from [select from [avg.tab,avg.tab,avg.tab,avg.tab], [[select timeseq as ts from avg.tab], [select timeseq+1 as ts from avg.tab], [select timeseq+2 as ts from avg.tab], [select timeseq+3 as ts from avg.tab]] a2 orderby a2.ts,ANTENNA1,ANTENNA2,DATA_DESC_ID limit [select GCOUNT() from your.ms][0]]  t1
+
+% taql "select  [select 'avg.tab' limit 8], [select '[select timeseq+'+str(rowid())+' as ts from avg.tab]' limit 8]"
 

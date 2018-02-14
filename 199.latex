@@ -31,14 +31,15 @@ applications. User defined functions can be added easily.
 It also has full support of grouping/aggregation and nested queries.
 An operation that can be expressed in a single function is the
 matching of two sky catalogues.
-\\It can be used from C++, Python, and any shell.
+\\It can be used from C++, Python, and the Casacore program \texttt{taql}.
 \end{abstract}
 
 \begin{tabular}{lll}
   1.0 & 1997 Feb 9 & Original version \\
   2.0 & 2010 Nov 5 & UPDATE, INSERT, DELETE and COUNT commands\\
   3.0 & 2015 Jul 29 & GROUPBY and HAVING clause\\
-  3.1 & 2016 Apr 4 & Masked arrays; ALTER TABLE and SHOW commands
+  3.1 & 2016 Apr 4 & Masked arrays; ALTER TABLE and SHOW commands\\
+  3.2 & 2018 Feb 14 & WITH clause
 \end{tabular}
 
 %%---------------------------------------------------------------------------
