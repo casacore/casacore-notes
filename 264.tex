@@ -37,7 +37,7 @@
 
 \title{MeasurementSet definition version 3.0}
 \author{eds.}
-\date{February, 2018}
+\date{March, 2018}
 \maketitle
 
 \ifpdf
@@ -275,9 +275,10 @@ New sub-tables added to MS v3.0 are included in this Section.
 This table proposed in v2.0 but we explicitly define it here. It is referenced from the FEED table or from the newly proposed PHASED_ARRAY table here. 
 
 \subsubsection{EPHEMERIDES}
-This optional table is explicitly defined and is refered to from the FIELD table via the EPHEMERIS\_ID column.
+This optional table is explicitly defined and is referred to from the FIELD table via the EPHEMERIS\_ID column.
 
 \subsection{INTERFEROMETER\_MODEL}
+This optional subtable contains information necessary for VLBI arrays
 
 \subsubsection{Multi element station based antenna (PHASED_ARRAY subtable)}
 
@@ -295,7 +296,7 @@ necessary to tie back information from the online system
 
 A lot of data processing or online correction information are carried
 non standard subtables. The formal existance of calibration tables associated with a given MS will 
-
+satisfy the needs of many of the non-standard subtables.
 
 
 
@@ -310,17 +311,21 @@ are tabulated below.  Optional sub-tables are shown in italics.
 \multicolumn{3}{|c|}{\bf Subtables}\\ \cline{1-3}
 \multicolumn{1}{|c|}{Table}&\multicolumn{1}{|c|}{Contents}&\multicolumn{1}{|c|}{Keys}\\ \cline{1-3}
 ANTENNA& Antenna characteristics & ANTENNA\_ID \\
-DATA\_DESCRIPTION & Data description & DATA\_DESC\_ID\\
+BEAM & Beam information & BEAM\_ID\\
 ({\it DOPPLER}) & Doppler tracking & DOPPLER\_ID, SOURCE\_ID \\
+({\it EPHEMERIDES}) & Ephemeris information for near field objects & EPHEMERIS\_ID, TIME \\
 FEED  &          Feed characteristics & FEED\_ID, ANTENNA\_ID, TIME, SPECTRAL\_WINDOW\_ID \\
 FIELD  &         Field position & FIELD\_ID  \\
-FLAG\_CMD  &  Flag commands & TIME \\
+({\it FLAG\_CMD})  &  Flag commands & TIME \\
 ({\it FREQ\_OFFSET}) & Frequency offset information & FEED\_ID, ANTENNA$n$, FEED\_ID, TIME, SPECTRAL\_WINDOW\_ID \\
 HISTORY  & History information & OBSERVATION\_ID, TIME \\
+({\it INTERFEROMETER_MODEL}) &  Information for VLBI observations &  ANTENNA\_ID, FIELD\_ID, SPECTRAL_WINDOW\_ID, TIME \\
 OBSERVATION  &Observer, Schedule, etc & OBSERVATION\_ID \\ 
+PHASED_ARRAY & phased array stations information & PHASED\_ARRAY\_ID, ANTENNA\_ID \\
 POINTING & Pointing information & ANTENNA\_ID, TIME \\
 POLARIZATION &Polarization setup & POLARIZATION\_ID \\
 PROCESSOR & Processor information & PROCESSOR\_ID  \\
+SCAN  & scan information & SCAN\_NUMBER \\
 ({\it SOURCE})  &        Source information & SOURCE\_ID, SPECTRAL\_WINDOW\_ID, TIME \\
 SPECTRAL\_WINDOW  &     Spectral window setups & SPECTRAL\_WINDOW\_ID \\
 STATE   & State information & STATE\_ID \\
@@ -330,11 +335,6 @@ STATE   & State information & STATE\_ID \\
 \end{tabular}
 
 \par
-Note that there are two types of subtables. For the first, simpler
-type, the key (ID) is the row number in the subtable. 
-Examples are FIELD, SPECTRAL\_WINDOW, OBSERVATION
-and PROCESSOR. For the second, the key is a collection of parameters,
-usually including TIME. Examples are FEED, SOURCE, SYSCAL, WEATHER.
 
 Note that all optional columns are indicated in italics and in parentheses.
 
@@ -343,18 +343,20 @@ Note that all optional columns are indicated in italics and in parentheses.
 \defline{\bf Columns}
 \defline{\em Keywords}
 MS\_VERSION   & Float  & & & MS format version \\
-{\it (SORT\_COLUMNS)} & String & & & Sort columns \\  
-{\it (SORT\_ORDER)}   & String & & & Sort order \\
 \defline{\em Key}
 TIME  &         Double  &      s   &     EPOCH    & Integration midpoint \\
 {\it (TIME\_EXTRA\_PREC)} & Double & s       &     & extraTIME precision \\
-ANTENNA1  &      Int    &          &              & First antenna \\
-ANTENNA2  &      Int    &          &              & Second antenna \\
+{\it (ANTENNA1)}  &      Int    &          &              & First antenna \\
+{\it (ANTENNA2)}  &      Int    &          &              & Second antenna \\
 {\it (ANTENNA3)} & Int    &          &              & Third antenna \\
+{\it (PHASED\_ARRAY1)}  &      Int    &          &              & First combined antenna \\
+{\it (PHASED\_ARRAY2)}  &      Int    &          &              & Second combined antenna \\
+{\it (PHASED\_ARRAY3)} & Int    &          &              & Third combined antenna \\
 FEED1  &      Int       &          &              & Feed on ANTENNA1 \\
 FEED2  &      Int       &          &              & Feed on ANTENNA2 \\
 {\it (FEED3)} & Int       &          &              & Feed on ANTENNA3 \\
-DATA\_DESC\_ID  &  Int   &          &        & Data desc. id.\\
+SPECTRAL\_WINDOW\_ID  &  Int   &          &        & Spectral window id.\\
+POLARIZATION\_ID  &  Int   &          &        & polarization id.\\
 PROCESSOR\_ID  & Int   &          &        & Processor id.\\
 {\it (PHASE\_ID)} & Int &               &         & Phase id.\\
 FIELD\_ID  &      Int   &          &        & Field id.\\
@@ -379,18 +381,11 @@ UVW       &   Double(3) &      m   & UVW  & UVW coordinates \\
 \defline{\em Data}
 {\it (DATA)}    &    Complex(\nc, \nf) &  & & Complex visibility
 matrix (synthesis arrays)\\
-{\it (FLOAT\_DATA)} & Float(\nc, \nf) & & & Float data matrix
-(single dish) \\
 {\it (VIDEO\_POINT)} & Complex(\nc) & & & Video point \\
 {\it (LAG\_DATA)} & Complex(\nc, \nl) & & & Correlation function \\
-SIGMA   &    Float(\nc) &  & & Estimated rms noise for single channel \\ 
-{\it (SIGMA\_SPECTRUM)}   &    Float(\nc, \nfs) &  & & Estimated rms noise \\ 
-WEIGHT   &    Float(\nc) &  & & Weight for whole data matrix \\ 
-{\it (WEIGHT\_SPECTRUM)}   &    Float(\nc, \nfs) &  & & Weight for each channel\\ 
+WEIGHT   &    Float(\nc, \nfs) &  & & Weight for each channel\\ 
 \defline{\em Flag information}
 FLAG    &    Bool(\nc, \nfs) &  &   &  Cumulative data flags \\ 
-FLAG\_CATEGORY & Bool(\nc, \nfs, \ncat) & & & Flag categories \\
-FLAG\_ROW &    Bool  &  &   &  The row flag \\ 
 }
 \begin{description}
 \item[Notes:]
@@ -401,10 +396,6 @@ FLAG\_ROW &    Bool  &  &   &  The row flag \\
 \item[MS\_VERSION] The MeasurementSet format revision number,
 expressed as $major\_revision.minor\_revision$. This version is 2.0.
 
-\item[SORT\_COLUMNS] Sort indices, in the form "$index_1,\ index_2\
-...$, for the underlying MS. A string containing "NONE" reflects no
-sort order.  An example might be SORT\_COLUMNS="TIME ANTENNA1
-ANTENNA2", to indicate sorting in in time-baseline order.
 
 \item[SORT\_ORDER] Sort order as either "ASCENDING" or "DESCENDING".
 
@@ -412,22 +403,26 @@ ANTENNA2", to indicate sorting in in time-baseline order.
 
 \item[TIME\_EXTRA\_PREC] Extra time precision.
 
-\item[ANTENNA$n$] Antenna number ($\geq 0$), and a direct index into
-the ANTENNA sub-table $rownr$. For $n > 2$, triple-product data
-are implied.
+\item[ANTENNA$n$] Antenna number ($\geq 0$), and a direct key index into
+the ANTENNA sub-table. For $n > 2$, triple-product data
+are implied. Either one ANTENNA$n$ or PHASED\_ARRAY$n$ should exist in a valid MS  
 
 \item[FEED$n$] Feed number ($\geq 0$). For $n > 2$, triple-product
-data are implied.
+  data are implied. For PHASED\_ARRAY$n$ feed id for each antenna in
+  phased_array is given in the PHASED_ARRAY subtable.
 
-\item[DATA\_DESC\_ID] Data description identifier ($\geq 0$), and
-a direct index into the DATA\_DESCRIPTION sub-table $rownr$.
+\item[SPECTRAL\_WINDOW\_ID] Spectral window identifier ($\geq 0$), and
+a direct key index into the SPECTRAL\_WINDOW sub-table.
+
+\item[POLARIZATION\_ID] Polarization identifier ($\geq 0$), and
+a direct key index into the POLARIZATION sub-table.
 
 \item[PROCESSOR\_ID] Processor indentifier ($\geq 0$), and a direct
-index into the PROCESSOR sub-table $rownr$.
+key index into the PROCESSOR sub-table.
 
-\item[PHASE\_ID] Switching phase identifier ($\geq 0$)
+\item[PHASE\_ID] Switching phase identifier ($\geq 0$) 
 
-\item[FIELD\_ID] Field identifier ($\geq 0$).
+\item[FIELD\_ID] Field identifier ($\geq 0$) a direct key index into the FIELD sub-table.
 
 \item[INTERVAL] Data sampling interval. This is the nominal data
 interval and does not include the effects of bad data or partial
@@ -445,7 +440,8 @@ bin number.
 index into the PULSAR\_GATE sub-table $rownr$. 
 
 \item[SCAN\_NUMBER] Arbitrary scan number to identify data taken in
-the same logical scan. Not required to be unique.
+  the same logical scan. Not required to be unique; ($\geq 0$) a
+  direct key index into the SCAN sub-table.
 
 \item[ARRAY\_ID] Subarray identifier $(\geq 0)$, which identifies data
 in separate subarrays, as defined in Section 3.3.
@@ -498,38 +494,24 @@ flux density units or correlation coefficients.
 \item[VIDEO\_POINT] The video point for the spectrum, to allow the
 full reverse transform.
 
-\item[SIGMA] The estimated rms noise for a single channel, for
-each correlator.
 
-\item[SIGMA\_SPECTRUM] The estimated rms noise for each channel.
 
-\item[WEIGHT] The weight for the whole data matrix for each
-correlator, as assigned by the correlator or processor.
-
-\item[WEIGHT\_SPECTRUM] The weight for each channel in the data
-matrix, as assigned by the correlator or processor. The weight
-spectrum should be used in preference to the WEIGHT, when available.
+\item[WEIGHT] The weight for each channel, with the same shape as DATA,
+ as assigned by the correlator or processor. 
 
 \item[FLAG] An array of Boolean values with the same shape as DATA
 (see the DATA item above) representing the cumulative flags applying
-to this data matrix, as specified in FLAG\_CATEGORY. Data are flagged
+to this data matrix. Data are flagged
 bad if the FLAG array element is True.
 
-\item[FLAG\_CATEGORY] An array of flag matrices with the same shape as
-DATA, but indexed by category. The category identifiers are specified
-by a keyword CATEGORY, containing an array of string identifiers,
-attached to the FLAG\_CATEGORY column and thus shared by all rows in
-the MeasurementSet. The cumulative effect of these flags is reflected
-in column FLAG. Data are flagged bad if the FLAG array element is
-True. See Section 3.1.8 for further details.
-
-\item[FLAG\_ROW] True if the entire row is flagged.
 
 \end{description}
 
 \definetable{ANTENNA: Antenna characteristics}
 {
 \defline{\bf Columns}
+\defline{\bf Keys}
+ANTENNA\_ID &  Int &  &  &  unique antenna id \\
 \defline{\em Data}
 NAME &       String &  & &  Antenna name \\
 STATION &        String & & &  Station name \\
