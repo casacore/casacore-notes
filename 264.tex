@@ -143,7 +143,7 @@ table in the MS definition. A full definition of the v3.0 MS format is
 given in Section 5.
 
 All the subtables not mentioned here will have an explicit ID column;
-in v3.0 implicit rown number being an ID is no longer valid. For
+in v3.0 implicit row number being an ID is no longer valid. For
 example ANTENNA subtable will have a ANTENNA\_ID column added as a key.
 
 \subsection{MAIN table}
@@ -531,6 +531,7 @@ FLAG\_ROW & Bool & & & Row flag\\
 \item[Notes:] This sub-table contains the global antenna properties
 for each antenna in the MS. It is indexed directly from MAIN via
 ANTENNA$n$.
+\item[ANTENNA\_ID] ID of the antenna.
 
 \item[NAME] Antenna name (e.g. "NRAO\_140")
 
@@ -583,33 +584,36 @@ indices throughout the MS.
 
 \end{description}
 
-\definetable{DATA\_DESCRIPTION: Data description table}{
+\definetable{BEAM: Beam  information}{
 \defline{\bf Columns}
+\defline{\em Key}
+BEAM\_ID  & Int & & & Beam id.\\
 \defline{\em Data}
-SPECTRAL\_WINDOW\_ID & Int & & & Spectral window id.\\
-POLARIZATION\_ID & Int & & & Polarization id.\\
-{\it (LAG\_ID)} & Int & & & Lag fn. id.\\
-\defline{\em Flags}
-FLAG\_ROW & Bool & & & Row flag.\\
+TYPE & String & & &  definition type from a fixed set of strings. E.g POLYNOMIAL,AIRY, NUMERIC, IMAGE  \\
+COEFFICIENTS & Double(NUM\_COEFFICIENTS) &  &  & Depending on TYPE would be polynomial coefficients or numeric values rescaled at 1GHz \\
+({\it ALTERNATE\_URL}) & String  url  & & & for types that cannot be expressed as coefficients e.g IMAGE\\
+
 }
 \begin{description}
 
-\item[Notes:] This table define the shape of the associated DATA array
-in MAIN, and in indexed directly by DATA\_DESC\_ID.
+\item[Notes:] This sub-table contains Beam information. Referred to from the FEED and PHASED\_ARRAY subtables.
 
-\item[SPECTRAL\_WINDOW\_ID] Spectral window identifier.
+\item[BEAM\_ID] Beam identifier
 
-\item[POLARIZATION\_ID] Polarization identifier ($\geq 0$); direct
-index into the POLARIZATION sub-table.
+\item[TYPE] The way the beam information is expressed. Fixed set of strings possible (POLYNOMIAL, AIRY, NUMERIC, IMAGE, GAUSSIAN,INVERSEPOLYNOMIAL, COSPOLYNOMIAL,  ZERNIKE)
 
-\item[LAG\_ID] Lag function identifier ($\geq 0$), and a direct index
-into the LAG sub-table $rownr$.
-
-\item[FLAG\_ROW] True if the row does not contain valid data; does not
-imply flagging in MAIN.
+\item[COEFFICIENTS] The coefficients for the expressed type. All the beams are defined at 1GHz; exceptio for IMAGE: it can have the spectral coordinates expressed in the image
+\item[ALTERNATE\_URL] Information on how to access beams that are expressed as images (from some telescope archive for e.g).
 
 \end{description}
+\definetable{CORRELATOR_TYPE: Doppler tracking information}{
 
+}
+\begin{description}
+
+\item[Notes:] This optional sub-table contains correlator information referred to from the PROCESSOR subtable.
+
+\end{description}
 
 \definetable{DOPPLER: Doppler tracking information}{
 \defline{\bf Columns}
@@ -617,7 +621,7 @@ imply flagging in MAIN.
 DOPPLER\_ID  & Int & & & Doppler tracking id.\\
 SOURCE\_ID  & Int & & & Source id.\\
 \defline{\em Data}
-TRANSITION\_ID & Int & & & Transition id.\\
+TRANSITION\_ID & Int & & & Transition id. Indexes into transitions list in SOURCE\\
 VELDEF & Double & m/s & Doppler & Velocity definition of Doppler shift.\\
 }
 \begin{description}
@@ -643,6 +647,43 @@ OPTICAL velocity in m/s.
 
 \end{description}
 
+\definetable{EPHEMERIS: Ephemerides information}{
+
+\defline{\em Keywords}
+OBSLOC  &  String &  & &  observer's location for ephemerides \\
+\defline{\bf Columns}
+\defline{\em Key}
+EPHEMERIS\_ID  & Int & & & ephemeris id.\\
+\defline{\em Data}
+
+TIME & Double & s & EPOCH & Time of direction measurement\\
+DIRECTION & Double(2) & rad & DIRECTION & Direction of object from obsloc position.\\
+DISTANCE & Double & km &  & Distance from observer at time\\
+RADIAL\_VELOCITY & Double & m/s & & Radial velocity of source \\
+({\it SHAPE}) & Double(3) & rad & &  Apparent elliptical shape in angular units (Major, minor, pos. angle)\\
+({\it ALTERNATE\_URL}) & String & & & Location of Ephemerides table for this ephemeris_id \\
+}
+\begin{description}
+
+\item[Notes:] This sub-table contains ephemeris  information as referred to 
+from FIELD table.
+ 
+Either multiple rows of information for a given EPHEMERIS\_ID is given in this table with time or 
+a URL is provided to get an ephemeris table of known format (e.g the one used by Measures in casacore)
+
+\item[EPHEMERIS\_ID] identifier referenced in FIELD table
+
+\item[TIME] Epoch of observation of object
+
+\item[DIRECTION] Measures direction of object at given time and seen from OBSLOC position.
+
+\item[RADIAL\_VELOCITY] Velocity of object
+
+\item[SHAPE] Apparent Elliptical shape of object
+
+\item[ALTERNATE_URL] Location of a ephemeris table in documented  format.
+
+\end{description}
 
 
 \definetable{FEED: Feed characteristics}{
@@ -730,6 +771,7 @@ parallactic angle in the sky domain.
 \definetable{FIELD: Field positions for each source}{
 \defline{\bf Columns}
 \defline{\em Key}
+FIELD\_ID & Int & & & Field id. \\ 
 \defline{\em Data}  
 NAME &       String &    &      & Name of field \\
 CODE &       String &    &      & Special characteristics of field \\
@@ -749,6 +791,7 @@ FLAG\_ROW & Bool & & & Row flag\\
 interferometers, this is the correlated field position. For single dishes,
 this is the nominal pointing direction.
 
+\item[FIELD\_ID] Field id.
 \item[NAME] Field name; user specified.
 
 \item[CODE] Field code indicating special characteristics of the
@@ -911,8 +954,11 @@ project-wide format.
 
 \definetable{OBSERVATION: Observation information}{
 \defline{\bf Columns}
+\defline{\em Key}
+OBSERVATION\_ID & Int & & & Observation id. \\
 \defline{\em Data}  
 TELESCOPE\_NAME &      String &    &      & Telescope name\\
+ARRAY\_CENTER & Double(3)  & m & POSITION & Reference position for array \\
 TIME\_RANGE       &     Double(2) & s & EPOCH & Start, end times\\
 OBSERVER &       String &    &      & Name of observer(s)\\
 LOG &   String(*) & & & Observing log \\
@@ -922,6 +968,7 @@ PROJECT &               String &    &      & Project identification string.\\
 RELEASE\_DATE &         Double &  s  & EPOCH & Target release date\\
 \defline{\em Flags}
 FLAG\_ROW  & Bool & & & Row flag.\\
+
 }
 
 \begin{description}
@@ -929,9 +976,9 @@ FLAG\_ROW  & Bool & & & Row flag.\\
 \item[Notes:] This table contains information specifying the observing
 instrument or epoch. See the discussion in Section 3.3 for details. It
 is indexed directly from MAIN via OBSERVATION\_ID.
-
+\item[OBSERVATION_ID] Observation id. key
 \item[TELESCOPE\_NAME] Telescope name (e.g. "WSRT" or "VLBA").
-
+\iten[ARRAY\_CENTER] Reference position used by the correlator for e.g.
 \item[TIME\_RANGE] The start and end times of the overall observing
 period spanned by the actual recorded data in MAIN. Required to use
 the same TIME Measure reference as in MAIN.
