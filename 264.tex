@@ -485,7 +485,7 @@ False for ANTENNA2).
    direction of increasing longitude coordinate) also determines the sign of
    the phase of the recorded data.
 
-\item[DATA, FLOAT\_DATA, LAG\_DATA] At least one of these columns
+\item[DATA,  LAG\_DATA] At least one of these columns
 should be present in a given MeasurementSet. In special cases one or
 more could be present (e.g., single dish data used in synthesis
 imaging or a mix of auto and crosscorrelations on a multi-feed single
@@ -522,7 +522,7 @@ ANTENNA\_ID &  Int &  &  &  unique antenna id \\
 NAME &       String &  & &  Antenna name \\
 STATION &        String & & &  Station name \\
 TYPE  &  String &     &      & Antenna type \\
-MOUNT  & String &  & &   Mount type:alt-az, equatorial, X-Y, orbiting, bizarre \\
+MOUNT  & String &  & &   Mount type:alt-az, equatorial, X-Y, nasmyth, coude, orbiting, bizarre \\
 POSITION &   Double(3) &  m   &     POSITION &   Antenna X,Y,Z phase reference positions \\
 OFFSET & Double(3)  &   m &     POSITION & Axes offset of mount to FEED REFERENCE point \\
 DISH\_DIAMETER &  Double &  m  &      & Diameter of dish\\
@@ -597,6 +597,7 @@ BEAM\_ID  & Int & & & Beam id.\\
 \defline{\em Data}
 TYPE & String & & &  definition type from a fixed set of strings. E.g POLYNOMIAL,AIRY, NUMERIC, IMAGE  \\
 COEFFICIENTS & Double(NUM\_COEFFICIENTS) &  &  & Depending on TYPE would be polynomial coefficients or numeric values rescaled at 1GHz \\
+BEAM\_ROTATION & Int &  & & sign of rotation w.r.t parallactic angle\\
 ({\it ALTERNATE\_URL}) & String  url  & & & for types that cannot be expressed as coefficients e.g IMAGE\\
 
 }
@@ -609,6 +610,9 @@ COEFFICIENTS & Double(NUM\_COEFFICIENTS) &  &  & Depending on TYPE would be poly
 \item[TYPE] The way the beam information is expressed. Fixed set of strings possible (POLYNOMIAL, AIRY, NUMERIC, IMAGE, GAUSSIAN,INVERSEPOLYNOMIAL, COSPOLYNOMIAL,  ZERNIKE)
 
 \item[COEFFICIENTS] The coefficients for the expressed type. All the beams are defined at 1GHz; exceptio for IMAGE: it can have the spectral coordinates expressed in the image
+
+\item[BEAM\_ROTATION] sign of beam rotation angle with respect to parallatic angle.
+
 \item[ALTERNATE\_URL] Information on how to access beams that are expressed as images (from some telescope archive for e.g).
 
 \end{description}
@@ -627,7 +631,7 @@ COEFFICIENTS & Double(NUM\_COEFFICIENTS) &  &  & Depending on TYPE would be poly
 DOPPLER\_ID  & Int & & & Doppler tracking id.\\
 SOURCE\_ID  & Int & & & Source id.\\
 \defline{\em Data}
-TRANSITION\_ID & Int & & & Transition id. Indexes into transitions list in SOURCE\\
+TRANSITION\_INDEX & Int & & & Transition index. Indexes into transitions list in SOURCE\\
 VELDEF & Double & m/s & Doppler & Velocity definition of Doppler shift.\\
 }
 \begin{description}
@@ -645,7 +649,7 @@ sub-table.
 
 \item[SOURCE\_ID] Source identifier (as used in the SOURCE sub-table).
 
-\item[TRANSITION\_ID] This index selects the appropriate line from the
+\item[TRANSITION\_INDEX] This index selects the appropriate line from the
 list of transitions stored for each SOURCE\_ID in the SOURCE table.
 
 \item[VELDEF] Velocity definition of the Doppler shift, e.g., RADIO or
