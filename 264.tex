@@ -42,7 +42,7 @@
 }
 \begin{document}
 
-\title{MeasurementSet definition version 3.0}
+\title{MeasurementSet definition version 3.0\\WORK IN PROGRESS}
 
 \author{eds.}
 \date{March, 2018}
@@ -278,7 +278,7 @@ Oscillator frequencies in the chain of frequency conversion.
 New sub-tables added to MS v3.0 are included in this Section.
 
 \subsubsection{BEAM subtable}
-This table proposed in v2.0 but we explicitly define it here. It is referenced from the FEED table or from the newly proposed PHASED\_ARRAY table here. 
+This table was proposed in v2.0 but we explicitly define it here. It is referenced from the FEED table or from the newly proposed PHASED\_ARRAY table here.
 
 \subsubsection{EPHEMERIDES}
 This optional table is explicitly defined and is referred to from the FIELD table via the EPHEMERIS\_ID column.
@@ -327,7 +327,7 @@ FIELD  &         Field position & FIELD\_ID  \\
 HISTORY  & History information & OBSERVATION\_ID, TIME \\
 ({\it INTERFEROMETER\_MODEL}) &  Information for VLBI observations &  ANTENNA\_ID, FIELD\_ID, SPECTRAL\_WINDOW\_ID, TIME \\
 OBSERVATION  &Observer, Schedule, etc & OBSERVATION\_ID \\ 
-PHASED\_ARRAY & phased array stations information & PHASED\_ARRAY\_ID, ANTENNA\_ID \\
+({\it PHASED\_ARRAY}) & phased array stations information & PHASED\_ARRAY\_ID, ANTENNA\_ID \\
 POINTING & Pointing information & ANTENNA\_ID, TIME \\
 POLARIZATION &Polarization setup & POLARIZATION\_ID \\
 PROCESSOR & Processor information & PROCESSOR\_ID  \\
@@ -352,12 +352,9 @@ MS\_VERSION   & Float  & & & MS format version \\
 \defline{\em Key}
 TIME  &         Double  &      s   &     EPOCH    & Integration midpoint \\
 {\it (TIME\_EXTRA\_PREC)} & Double & s       &     & extraTIME precision \\
-{\it (ANTENNA1)}  &      Int    &          &              & First antenna \\
-{\it (ANTENNA2)}  &      Int    &          &              & Second antenna \\
+ANTENNA1  &      Int    &          &              & First antenna \\
+ANTENNA2  &      Int    &          &              & Second antenna \\
 {\it (ANTENNA3)} & Int    &          &              & Third antenna \\
-{\it (PHASED\_ARRAY1)}  &      Int    &          &              & First combined antenna \\
-{\it (PHASED\_ARRAY2)}  &      Int    &          &              & Second combined antenna \\
-{\it (PHASED\_ARRAY3)} & Int    &          &              & Third combined antenna \\
 FEED1  &      Int       &          &              & Feed on ANTENNA1 \\
 FEED2  &      Int       &          &              & Feed on ANTENNA2 \\
 {\it (FEED3)} & Int       &          &              & Feed on ANTENNA3 \\
@@ -411,11 +408,10 @@ expressed as $major\_revision.minor\_revision$. This version is 2.0.
 
 \item[ANTENNA$n$] Antenna number ($\geq 0$), and a direct key index into
 the ANTENNA sub-table. For $n > 2$, triple-product data
-are implied. Either one ANTENNA$n$ or PHASED\_ARRAY$n$ should exist in a valid MS  
+are implied.
 
 \item[FEED$n$] Feed number ($\geq 0$). For $n > 2$, triple-product
-  data are implied. For PHASED\_ARRAY$n$ feed id for each antenna in
-  phased\_array is given in the PHASED\_ARRAY subtable.
+  data are implied.
 
 \item[SPECTRAL\_WINDOW\_ID] Spectral window identifier ($\geq 0$), and
 a direct key index into the SPECTRAL\_WINDOW sub-table.
@@ -595,7 +591,7 @@ indices throughout the MS.
 \defline{\em Key}
 BEAM\_ID  & Int & & & Beam id.\\
 \defline{\em Data}
-TYPE & String & & &  definition type from a fixed set of strings. E.g POLYNOMIAL,AIRY, NUMERIC, IMAGE  \\
+TYPE & String & & &  definition type from a fixed set of strings. E.g POLYNOMIAL, AIRY, NUMERIC, IMAGE  \\
 COEFFICIENTS & Double(NUM\_COEFFICIENTS) &  &  & Depending on TYPE would be polynomial coefficients or numeric values rescaled at 1GHz \\
 BEAM\_ROTATION & Int &  & & sign of rotation w.r.t parallactic angle\\
 ({\it ALTERNATE\_URL}) & String  url  & & & for types that cannot be expressed as coefficients e.g IMAGE\\
@@ -1062,33 +1058,34 @@ the data may become public.
 does not imply any flagging in MAIN.
 \end{description}
 
-\definetable{PHASED\_ARRAY: phased array stations information}{
+\definetable{PHASED\_ARRAY: phased array station information}{
 \defline{\bf Columns}
 \defline{\em Key}
+ANTENNA\_ID & Int & & & Antenna ID. \\
 PHASED\_ARRAY\_ID & Int & & & phased array id.\\
 \defline{\em Data}
-ANTENNA  &   Int(\na)  & & & List of antenna ids\\
-FEED\_ID     &   Int(\na)  & & & List of Feed id used on each antenna\\
-DIRECTION & Double & rad & DIRECTION & Direction on sky where phased array has ccentered beam\\
+POSITION & Double(3) & m & POSITION & Position of antenna field \\
+COORDINATE\_SYSTEM & Double(3,3) & m & DIRECTION & Local coordinate system \\
+ELEMENT\_OFFSET & Double(3, \na) & m & POSITION & Offset per element \\
 ({\it BEAM\_ID}) & Int &  &  & Beam id.\\
 ELEMENT\_FLAG & Bool(\na) &  & & Flag of elements in array\\
-
-
 }
 \begin{description}
 
 \item[Notes:] The table contains information about phased array information. It refers to antenna ids in ANTENNA table, FEED\_ID for feed  used in forming this phased array.  
 
-\item[ANTENNA] list Antenna identifier, as indexed from ANTENNA table, that is used to form this array
+\item[ANTENNA\_ID] Index into the ANTENNA table to show to which ANTENNA this phased array belongs. Note that this is an n-to-1 mapping: one ANTENNA can consist of multiple PHASED\_ARRAYs.
 
-\item[FEED\_ID] list of feed for each antenna used in array
+\item[POSITION] Position of the antenna field in absolute ITRF coordinates
 
-\item[DIRECTION] Direction of beam phased on the sky.
+\item[COORDINATE\_SYSTEM] (cartesian) direction vectors in ITRF (or measure defined) describing the
+local field coordinate system. This defines the antenna field plane, and the 'up' direction, the normal direction to the antenna field plane. Note that in general this is not the zenith direction. The coordinate system is necessary to evaluate the beam pattern directions. The coordinate system can also be used for describing polarization alignment.  
 
-\item[BEAM\_ID] Beam id as defined in BEAM table. 
+\item[ELEMENT\_OFFSET] Relative offsets of each element from POSITION
 
 \item[ELEMENT\_FLAG] flag for invalid antennas in array not used.
 
+\item[BEAM\_ID] Beam id as defined in BEAM table. 
 
 
 \end{description}
