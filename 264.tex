@@ -4,6 +4,14 @@
 \usepackage{epsf}
 \setlength{\textwidth}{6.5in}
 
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
 
 
 
@@ -40,6 +48,8 @@
         \hline
 	\end{tabular}
 }
+
+
 \begin{document}
 
 \title{MeasurementSet definition version 3.0\\WORK IN PROGRESS}
@@ -111,6 +121,8 @@ single-dish data are stored for packages using casa/casacore code.
 \item{{\bf Phased Array interferometers:} A new optional subtable,
     PHASED\_ARRAY, which will be defining which antennas form a phased
     array station.}
+
+\item{{\bf Quality tables} Three optional subtables that stores statistics on quality and sensitivity are being added.}
 
 \end{itemize}
 
@@ -290,6 +302,19 @@ This optional subtable contains information necessary for VLBI arrays
 
 Information about elements that makes a station antenna, combination scheme etc
 
+\subsubsection{QUALITY TABLES}
+The following subtables are optional and may be filled at such times as flagging or data averaging (i.e when the whole data is being parsed)
+The purpose of the 3 tables is getting a quick overview that allows some basic analysis of  RFI and sensitivity.
+ 
+\paragraph{QUALITY\_TIME\_STATISTIC table}
+This is an optional table for storing time related quality statistics.
+
+\paragraph{QUALITY\_FREQUENCY\_STATISTIC table}
+This is an optional table for storing frequency related quality statistics.
+
+\paragraph{QUALITY\_BASELINE\_STATISTIC table}
+This is an optional table for storing baseline related quality statistics. 
+
 \subsubsection{SCAN subtable}
 
 This will carry the information about the scan intent and information
@@ -331,6 +356,9 @@ OBSERVATION  &Observer, Schedule, etc & OBSERVATION\_ID \\
 POINTING & Pointing information & ANTENNA\_ID, TIME \\
 POLARIZATION &Polarization setup & POLARIZATION\_ID \\
 PROCESSOR & Processor information & PROCESSOR\_ID  \\
+({\it QUALITY\_FREQUENCY\_STATISTIC}) & Frequency related statistics & Frequency  \\
+({\it QUALITY\_BASELINE\_STATISTIC}) & Baseline related statistics & ANTENNA1, ANTENNA2, Frequency \\
+({\it QUALITY\_TIME\_STATISTIC}) & Time related statistics & TIME, Frequency \\
 SCAN  & scan information & SCAN\_NUMBER \\
 ({\it SOURCE})  &        Source information & SOURCE\_ID, SPECTRAL\_WINDOW\_ID, TIME \\
 SPECTRAL\_WINDOW  &     Spectral window setups & SPECTRAL\_WINDOW\_ID \\
@@ -1247,6 +1275,113 @@ table containing pass information.
 does not imply flagging in MAIN.
 
 \end{description}
+
+
+\definetable{QUALITY\_TIME\_STATISTIC: Time related statistic information}{
+\defline{\bf Columns}
+\defline{\em Key}
+TIME & Double & s &  EPOCH      & Time Point \\
+FREQUENCY & Double & Hz &        & Frequency Point \\
+
+\defline{\em Data}  
+KIND  & String &    &      & Fixed set of string defining the kind of statistics\\
+VALUE  & Complex(nc) &    &      & Statistics of KIND\\
+
+
+
+}
+\begin{description}
+
+\item[Notes:] This sub-table contains time associated statitistics
+for the MS.
+\item[TIME] Time point at which statistics are calculated
+\item[FREQUENCY]  Frequency point at which statistics are calculated
+\item[KIND] A string (from a list defined below) that defines the statistics being recorded
+
+\item[VALUE]  Value of statistics
+
+Possible string for {\bf KIND}:
+
+\item[Count:] The number of unflagged samples.
+\item[Sum:] The sum of the unflagged data.
+\item[Mean:] The mean of the unflagged data (Sum / Count).
+\item[RFICount:] The number of flagged samples due to RFI. If possible, they should denote true RFI samples, not samples that are lost due to failing stations, border channel issues, etc.
+\item[RFISum:] The sum of the flagged samples due to RFI.
+\item[RFIMean:] The mean of the RFI (RFISum / RFICount).
+\item[RFIRatio:] RFICount/(Count+RFICount).
+\item[FlaggedCount:] The total number of flagged samples. This does include any kind of flagged samples. “NaN” / “inf” values should
+also be counted as being flagged. Count + FlaggedCount = Total nr samples in the set.
+\item[FlaggedRatio:] FlaggedCount/(FlaggedCount+Count).
+\item[SumP2:] The sum of squares. Together with the mean and the count, this provides enough information to calculate the variance. This easily allows combining ranges.
+\item[SumP3:] The sum of the third power, see SumP4 for why.
+\item[SumP4:] The sum of the fourth power. Together with the sum, sum of squares and sums of third power, this provides enough information to calculate the kurtosis and the variance of the variance. While the kurtosis and/or variance of variance can be stored directly, storing them as SumP4 allows to combine ranges easily.
+\item[Variance:] The variance: $\sigma^2 = <(x –mean)^2> $.
+\item[VarianceOfVariance:] The variance of the variance.
+\item[Skewness:] The skewness (third standardized moment).
+\item[Kurtosis:] The kurtosis, using the most common definition (i.e., normalized so that a kurtosis of Gausian distribution is zero).
+\item[SignalToNoise:]Thesignaltonoise.
+\item[DSum,DMean,DSumP2,DSumP3,DSumP4,DVariance,DVarianceOfVariance,DCount:] these statistics starting with ‘D’ are the same as their counterpart without the ‘D’, but are differential. They can be calculated in different ways, but they should quantize only the noise, thus contain as few contribution of
+celestial sources as possible. The most trivial option is to calculate the 
+statistics on the difference between adjacent channels (on high res).
+\item[BadSolutionCount:] as RFICount, but for bad solutions. This count should not include RFI marked samples. Count - BadSolutionCount = number of good solutions.
+\item[BadSolutionRatio:] Count/BadSolutionCount.
+\item[FTSum:] The Fourier transform of the data without fringe stopping (thus phase centred on the NCP). Flagged samples should not be FTed. Only applicable in time and frequency direction. Data should be uniformly gridded as the other statistics, and the time/frequency range value specifies the 1/time and 1/frequency values.
+\item[FTMean:] FTSum/Count
+
+The RFICount, RFIRatio, FlaggedCount, FlaggedRatio, Count, DCount, BadSolutionCount, BadSolutionRatio  are real valued, all others are complex. The statistics of complex variables are independently calculated. For example, the complex sum of squares is: “$\sum_X Re(x)^2 + i \times Im(x)^2$, and not $\sum_X  x^2$.
+
+\end{description}
+
+\definetable{QUALITY\_FREQUENCY\_STATISTIC: Frequency related statistic information}{
+\defline{\bf Columns}
+\defline{\em Key}
+FREQUENCY & Double & Hz &        & Frequency Point \\
+
+\defline{\em Data}  
+KIND  & String &    &      & Fixed set of string defining the kind of statistics\\
+VALUE  & Complex(nc) &    &      & Statistics of KIND\\
+
+
+
+}
+\begin{description}
+
+\item[Notes:] This sub-table contains frequency associated statitistics
+for the MS.
+\item[FREQUENCY]  Frequency point at which statistics are calculated
+\item[KIND] A string (from a list defined below) that defines the statistics being recorded (see QUALITY\_TIME\_STATISTIC for list)
+
+\item[VALUE]  Value of statistics
+
+\end{description}
+
+\definetable{QUALITY\_BASELINE\_STATISTIC: Baseline related statistic information}{
+\defline{\bf Columns}
+\defline{\em Key}
+ANTENNA1 & Int & & & Antenna id \\
+ANTENNA2 & Int & & & Antenna id \\
+FREQUENCY & Double & Hz &        & Frequency Point \\
+
+\defline{\em Data}  
+KIND  & String &    &      & Fixed set of string defining the kind of statistics\\
+VALUE  & Complex(nc) &    &      & Statistics of KIND\\
+
+
+
+}
+\begin{description}
+
+\item[Notes:] This sub-table contains baseline associated statitistics
+for the MS.
+\item[ANTENNA1]  ANTENNA\_ID (in ANTENNA) of first antenna in baseline
+\item[ANTENNA1]  ANTENNA\_ID (in ANTENNA) of second antenna in baseline
+\item[FREQUENCY]  Frequency point at which statistics are calculated
+\item[KIND] A string (from a list defined below) that defines the statistics being recorded (see QUALITY\_TIME\_STATISTIC for list)
+
+\item[VALUE]  Value of statistics
+
+\end{description}
+
 
 
 \definetable{SCAN: Scan information}{
