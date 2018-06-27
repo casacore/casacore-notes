@@ -4,13 +4,14 @@
 \section{Introduction}
 The Table Query Language (TaQL, rhymes with bagel (though some people
 pronounce it as tackle)) is a language for querying and manipulating
-data in Casacore tables. It makes it possible to get results or select
-rows from an arbitrary table based on the contents of its
-columns and keywords. It supports arbitrary complex
+data in Casacore tables. It makes it possible to get information
+from the data content in the
+columns and keywords of arbitrary tables. It supports arbitrary complex
 expressions including units, extended regular expressions, and many
-functions. User defined functions written in C++ or Python are supported.
+functions. User defined functions written in C++ or Python are
+supported, which is used to support coordinate conversions in TaQL.
 TaQL also makes sorting and column selection possible.
-Furthermore TaQL has commands to update, add or delete rows and columns
+Furthermore, TaQL has commands to update, add or delete rows and columns
 in a table and to create a new table.
 
 The first sections of this document explain the syntax and show the options.
@@ -48,7 +49,7 @@ support of maximum string distance (Levensthein (aka Edit) distance).
 Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
 \item Limited support for joins (only implicit joins on row number).
-\item Many aggregate functions.
+\item Many aggregate functions that can be used with GROUPBY.
 \item The COUNT command exists to count the occurrences of column
   values. Although it can still be used, this command is obsolete now 
   GROUPBY is fully supported.
@@ -65,8 +66,8 @@ language style to be used.
   Some standard UDFs exist to deal with MeasurementSets and to do
   measure conversions (for directions, epochs, positions, and stokes).
 \item In the WITH clause the order of the table and alias is reversed
-  compared to SQL because it was felt as not logical having it
-  different from the FROM clause.
+  compared to SQL. In this way they have the same order as the table
+  specifications in the FROM clause.
 \end{itemize}
 TaQL has a keyword that makes it possible to time the various parts of
 a TaQL command.
@@ -168,6 +169,7 @@ Optionally specific table and data manager info can be given.
 \begin{verbatim}
   ALTER TABLE table
     [ADD COLUMN [column_specs] [DMINFO datamanagers]]
+    [COPY COLUMN col TO colnew [colattr] [SET [expr]], ...]
     [RENAME COLUMN column_pair_list]
     [DROP COLUMN column_list]
     [SET KEYWORD key=value, key=value, ...]
@@ -243,7 +245,7 @@ It is important to note that the interpretation of the axes numbers
 depends on the style being used. e.g., when using glish style, axes numbers are
 1-based and in Fortran order, thus axis 1 is the most rapidly varying
 axis. When using python style, axis 0 is the most slowly varying axis.
-\\Casacore arrays are in Fortran order, but TaQL maps it to the
+\\Casacore arrays are in Fortran order, but TaQL maps them to the
 style being used. Thus when using python style, the axes will be
 reversed (data will not be transposed).
 {\bf Note: unless said differently, all examples in this document are done
@@ -266,7 +268,7 @@ by TaQL as well as the synonym \texttt{py} for \texttt{pytaql}.
 \subsubsection{Tracing}
 It is possible to get tracing output during the execution of a TaQL
 command by using the case-insensitive value \texttt{TRACE} in the
-\texttt{using style} command. 
+\texttt{using style} command. It can bes useful for debugging purposes.
 
 \subsubsection{Timing}
 It is possible to time a TaQL command by using the case-insensitive
@@ -392,6 +394,7 @@ The clauses are executed in a somewhat different order.
 \item ORDERBY to sort the result.
 \item LIMIT (or TOP) and OFFSET to ignore entries in the sorted result.
 \item DMINFO to define the data managers to be used if the result is
+  stored in a plain table.
 \item GIVING/INTO to store the final result.
   stored in a plain table. See
  \htmlref{section \ref{TAQL:DMINFO}}{TAQL:DMINFO} how to specify them.
@@ -412,7 +415,7 @@ columns are used, that part of the SELECT is executed before HAVING.
 TaQL uses the following lookup scheme for column/keyword names.
 \begin{enumerate}
 \item If preceded by a shorthand (like in \texttt{t0.DATA}), the name
-  is looked up in the corresponding table.
+  is looked up in the corresponding table given in the FROM clause.
 \item If not preceded by a shorthand, a name is first looked up in
   the select columns. If not found, the name is looked up in the first
   table given in FROM.
@@ -475,7 +478,7 @@ For example:
   select TIME,ANTENNA1,ANTENNA2,MODEL_DATA AS DATA from 3C343.MS
 \end{verbatim}
 It is possible to precede a column name with a table shorthand
-indicating with table in the FROM clause has to be used. If not
+indicating which table in the FROM clause has to be used. If not
 given, a column will be looked up in the first table. Note that if
 equally named columns from different tables are used, one has to get a
 new name, otherwise a 'duplicate name' error will occur.
@@ -484,22 +487,28 @@ For example:
   select t0.DATA, t1.DATA as DATA1 from 3C343.MS t0, 3C343_1.MS t1
 \end{verbatim}
 
+\subsubsection{Wildcarded SELECT columns}
 Apart from giving exact column names, it is also possible to use
-wildcards by means of a UNIX filename-like pattern (like \texttt{p/pattern/})
-or a regular expression (like \texttt{f/regex/} for a full match or
+wildcards by means of a UNIX filename-like pattern (\texttt{p/pattern/})
+or a regular expression (as \texttt{f/regex/} for a full match or
 \texttt{m/regex/} for a partial match). They can be suffixed with an
 \texttt{i} indicating case-insensitive matching.
 See \htmlref{section \ref{TAQL:REGEXCONST}}{TAQL:REGEXCONST} 
 for a discussion of these constants.
-The operator \verb+~+ needs to be given before the pattern or regex
-to indicate that columns have to be included. Thereafter operator
-\verb+!~+ can be used with another pattern or regex to remove columns.
-Such an excluding pattern or regex only removes columns from the
-wildcarded columns before it until the latest non-wildcarded column.
+An operator has to be given before the pattern or regex. Operator
+\verb+~+  means inclusion of the matching columns. Operator
+\verb+!~+ means exclusion of the matching columns included so far by
+means of a pattern or regex since the last explicit column name or expression.
 \\A special pattern is * (which is the same as \texttt{~p/*/}).
+If \verb+!~+ is used at the first pattern or regex, it is assumed that
+all columns are included (as if * was given before).
+\\The pattern or regex (except *) can be preceded by a table
+shorthand denoting that the columns have to be taken from that table. 
  For example:
 \begin{verbatim}
   select *, !~p/*_DATA/ from 3C343.MS
+  select !~p/*_DATA/ from 3C343.MS          # * is assumed first
+  select !~p/t1.*_DATA/ from 3C343.MS t1    # with shorthand t1
 \end{verbatim}
 selects all columns except the ones ending in \texttt{\_DATA}.
 \begin{verbatim}
@@ -512,11 +521,12 @@ ending in \texttt{\_DATA}.
 or
   select *, !~p/*_DATA/, CORRECTED_DATA from 3C343.MS
 \end{verbatim}
-does select the \texttt{CORRECTED\_DATA} column.
+does select the \texttt{CORRECTED\_DATA} column (in the first case
+because it is explicitly selected).
 \\Note it is not possible to change the name or data type of
 wildcarded columns.
 
-\paragraph*{}
+\subsubsection{Expressions in SELECT column\_list}
 It is also possible to use expressions in the column list to create
 new columns based on the contents of other columns. When doing this,
 the resulting table is a plain table (because a reference table
@@ -767,8 +777,8 @@ The colons refer to the latest table used, thus \texttt{my.ms}.
 Opening a subtable using a path name like \texttt{my.ms/ANTENNA}
 will fail if \texttt{my.ms} is a reference table instead of the
 original table.
-Therefore the path of a subtable should be given using colons instead of
-slashes like \texttt{my.ms::ANTENNA} which is a slight extension of
+Therefore the path of a subtable should be given using two colons instead of
+a slash like \texttt{my.ms::ANTENNA} which is a slight extension of
 specifying table names in the previous bullets.
 \\In this way a subtable can always be found.
 
@@ -818,6 +828,9 @@ indicate the correct object containing the transient table.
 E.g., if two
 table objects are passed \$1 indicates the first table, while \$2
 indicates the second one.
+\\In a similar way as described above it is possible to use a subtable
+ of such a table by specifying it as, for example,
+\texttt{\$1::subtablename} or \texttt{\$1.column::keyword}.
 
 \item
 \label{TAQL:CONCTAB}
@@ -1873,35 +1886,32 @@ mandatory unless the unit is quoted.
   10.3 deg     # 10.3 degrees
   (1+10)deg    # 11 degrees
   3.6 'km/h'   # compound unit requires quotes (or backslash)
-  1/10 deg    # NOTE: results in unit deg-1 (divided by deg)!!!
+  1/10 deg     # NOTE: results in unit deg-1 (divided by deg)!!!
   (1/10)deg    # results in 0.1deg
 \end{verbatim}
 
 Units can be converted to another (conforming) unit by giving that
-unit after a (sub)expression. E.g., \texttt{3deg rad} converts 3 degrees to radians. 
+unit after a (sub)expression. E.g., \texttt{3 deg rad} converts 3 degrees to radians. 
 Note that the empty string ('') is an empty unit, which can be used to
 make a value unitless. If ever needed, it can be used to set a
 non-conforming unit for a value. E.g. \texttt{(3deg '') kg}.
 
-There is a slight difference
-whether whitespace is used between a value and simple unit.
-Without whitespace the unit is directly part of the value, with
-whitespace it is seen as a subexpression. This is relevant in two cases.
-\begin{enumerate}
-\item Without whitespace a conversion unit can be given without
-  parentheses. With whitespace parentheses are needed around the
-  subexpression.  Compound units are always seen as a subexpression.
-\item A few units are identical to reserved TaQL keywords (e.g., 'in' for
+There is no real distinction between giving a unit as part of a value
+(as in \texttt{3deg}) or using whitespace between value and unit (as in
+\texttt{3 deg}). Also composite units (enclosed in quotes) can be
+given right after a value without whitespace.
+\\However, a few units are identical to reserved TaQL keywords (e.g., 'in' for
 inch or 'as' for arcsecond). Such units have to be quoted or escaped
-with a backslash, unless given after a value without whitespace.
-\end{enumerate}
+with a backslash, unless given after a value without whitespace (as in
+\texttt{3in}).
 For example:
 \begin{verbatim}
   10deg rad         # is fine
-  (10 deg)rad       # is fine
-  10 deg rad        # gives a parse error
+  10 deg rad        # is fine
+  10deg m           # error; non-conforming units
+  10deg '' m        # is fine (but makes little sense)
   (10'm/s')'km/h'   # is fine       
-  10'm/s' 'km/h'    # gives a parse error
+  10'm/s' 'km/h'    # is fine
   1in               # 1 inch
   1 \in             # 1 inch
   1 in              # error; in is a reserved keyword
@@ -3214,11 +3224,15 @@ be a string.
 
 
 \subsubsection{\label{TAQL:MEASFUNC}Special Measures functions}
-These functions make it possible to convert measures like directions,
-epochs, positions, earthmagnetics and frequencies from one reference
-frame to another. All conversions supported by Casacore's 
+These functions make it possible to convert Casacore measures (e.g.,
+directions) from one reference frame to another.  The prefix
+\texttt{MEAS.} has to be used for all these functions. The MEAS
+library libcasa_meas.so (or .dylib) will be loaded if not loaded yet.
+All conversions supported by Casacore's 
 \htmladdnormallink{Measures}{../html/group__Measures__module.html}
-are possible.
+are possible. It is quite flexible; for instance, source
+names can be used instead of right ascension and declination. Also it recognizes
+nested MEAS functions and table columns containing measures.
 For example:
 \begin{verbatim}
   meas.galactic (-6h52m36.7, 34d25m56.1, "J2000")
@@ -3228,18 +3242,35 @@ The first example converts a J2000 position to galactic coordinates.
 The second example gives the moon's azimuth/elevation at the WSRT for
 the current date/time.
 
-TaQL can handle the following types of measures. A measure can be
-converted from one reference frame to another.
+Below it is described how the measure values can be specified.
+Further down it is described in detail for each measure type.
 \begin{itemize}
-\item Positions on the earth in ITRF or WGS84 coordinates defined as
-  xyz or as longitude-latitude-height. The positions of many observatories
-  are known.
-\item Epochs in various coordinate frames, typically UTC is used. A
-  conversion might require a Position.
-\item Directions at the sky in various coordinate frames as angles
-  (e.g., RA,DEC) or as direction cosines. The directions of many
-  sources (also planets) are known. A conversion might require
-  an Epoch and Position. Rise/set times of sources can be calculated.
+\item Measures must be given as values optionally followed by a
+  case-insensitive string defining the reference frame of the
+  values. If no frame is given, a default frame is assumed.
+  Some value specifications imply a measure frame, in which case
+  the frame should not be specified. If specified, it should
+  match the implied frame.
+  \\The possible frames depend on the measure type. They
+  can be shown using the
+  {\tt show meastypes} command in the program {\em taql}.
+\item Values can be given as expressions with constant values and/or table
+  columns. The values can have a unit and sometimes must have a unit.
+  If no unit is given, it is implied (similar to the reference frame)
+  or a default unit is assumed.
+\item A constant value can be a numeric expression, but
+  it can also be a constant string defining the name of an
+  observatory (for a position), a celestial source (for a direction),
+  or a line (for a frequency) which are defined in the Measures tables.
+  In such a case the measure frame and
+  unit are implicitly defined and should not be given.
+\item Depending on the measure type, a measure is represented by
+  a single value or multiple values (e.g., 2 or 3 for positions and directions).
+\item If the value is a table column containing measures, the
+  measure frame is obtained from the column and no extra frame
+  argument should be given.
+\item If the value is a nested MEAS function, it recognises its type
+  and measure frame and no extra frame argument should be given.
 \end{itemize}
 
 \paragraph*{}
@@ -3247,38 +3278,35 @@ Many functions are available, but they come down to a few basic
 functions.
 The others (described further down) are synonyms or shorthands for the
 basic functions described below. 
-\\The function parameters can be single values, but also arrays of values.
-A function will operate on each element of the Cartesian product of these arrays.
+\\A function will operate on each element of the Cartesian product of
+the function arguments.
 \begin{description}
-  \item[] \texttt{doublearray MEAS.POS(toref, position)}\\
-    \texttt{doublearray MEAS.POSITION(toref, position)}\\
+  \item[] \texttt{doublearray MEAS.POSITION(toref, position)}\\
     converts positions to the reference frame given by the 'toref'
     string. The \texttt{toref} value can have a suffix telling how to return
     the result.
-    \\ - None or XYZ returns as xyz (unit m).
-    \\ - LLH returns as lon-lat-height (in rad,rad,m but without units).
-    \\ - LL or LONLAT returns as lon-lat (unit rad).
-    \\ - H or HEIGHT returns as height (unit m).
+    \\ - None or XYZ: return as xyz (unit m).
+    \\ - LLH: return as lon-lat-height (in rad,rad,m but without units).
+    \\ - LL or LONLAT: return as lon-lat (unit rad).
+    \\ - H or HEIGHT: return as height (unit m).
   \item[] \texttt{doublearray MEAS.EPOCH(toref, epoch, position)}\\
     converts epochs to the reference frame given by the 'toref' string
     and returns the values with unit 'd'.
     The position argument only needs to be given if the conversion
-    needs frame information.
+   depends om position (e.g., UTC to LST).
     By default conversions to sidereal time (e.g., LAST) return
     the fraction giving the true sidereal time. Only if the
     \texttt{toref} string starts with 'F-', 'F\_', 'f-', or 'f\_' the
     full sidereal time is returned which includes the number of
     sidereal days since the start of MJD.
-  \item[] \texttt{doublearray MEAS.DIR(toref, direction, epoch, position)}\\
-    \texttt{doublearray MEAS.DIRECTION(toref, direction, epoch, position)}\\
+  \item[] \texttt{doublearray MEAS.DIRECTION(toref, direction, epoch, position)}\\
     converts directions to the reference frame given by the 'toref'
     string and returns them as angles with unit 'rad'.
     The epoch and position arguments only need to be given if the conversion
-    needs frame information (e.g., when converting J2000 to apparent).\\
+    needs such information (e.g., when converting J2000 to apparent).\\
   \item[] \texttt{doublearray MEAS.DIRCOS(toref, direction, epoch, position)}\\
-    Same as function DIR, but returning 3 direction cosines instead of 2 angles.\\
-  \item[] \texttt{DateTimearray MEAS.RISET(direction, epoch, position)}\\
-    \texttt{DateTimearray MEAS.RISESET(direction, epoch, position)}\\
+    Same as function DIRECTION, but returning 3 direction cosines instead of 2 angles.\\
+  \item[] \texttt{DateTimearray MEAS.RISESET(direction, epoch, position)}\\
     returns the rise and set date/times (UTC) of the sources given in the
     direction argument for the given epochs and positions.\\
     Note that the source can be invisible all day (results in
@@ -3288,8 +3316,9 @@ A function will operate on each element of the Cartesian product of these arrays
     time part only (as double cq. string). 
     \\If the Sun is used as a source name (case-insensitive), it can
     be followed by a hyphen 
-    and one of the following case-insensitive suffices indicating what
-    to use. The default is CR which is used in most almanacs.
+    and one of the following case-insensitive suffices indicating
+    which part of the sun
+    to use. The default is UR which is used in most almanacs.
     \begin{itemize}
       \item \texttt{CR}: use the center of the sun with refraction correction.
       \item \texttt{UR}: use the upper brim of the sun with refraction
@@ -3308,11 +3337,61 @@ A function will operate on each element of the Cartesian product of these arrays
     \\See
     \htmladdnormallink{stjarnhimlen.se}{http://www.stjarnhimlen.se/comp/riset.html}
     for additional information.
+  \item[] \texttt{doublearray MEAS.IGRF(toref, height, direction, epoch, position)}\\
+    calculates earth magnetic field values using the IGRF model and
+    returns them in the reference frame given by 'toref'.
+    A suffix to the function name determines how the values are returned.
+    \\ - None or XYZ: return as xyz (unit nT).
+    \\ - LL or LONLAT: return as lon-lat (unit rad).
+    \\ - STR or STRENGTH: return as strength (unit nT).
+  \item[] \texttt{doublearray MEAS.IGRFLOS(height, direction, epoch, position)}\\
+    calculates earth magnetic field values using the IGRF model along
+    the line of sight. The result is in unit nT.
+  \item[] \texttt{doublearray MEAS.IGRFLONG(height, direction, epoch, position)}\\
+    calculates the longitude of the IGRF model calculation. The result
+    is in radians.
+  \item[] \texttt{doublearray MEAS.EARTHMAGNETIC(toref, em, epoch, position)}\\
+    converts earth magnetic field values to the reference frame given by the 'toref'
+    string. Similar to function IGRF the function name suffix (XYZ, LL or STR)
+    determines how the result is returned.
+  \item[] \texttt{doublearray MEAS.FREQUENCY(toref, freq, radvel, direction, epoch, position)}\\
+    converts frequencies to the reference frame given by the 'toref'
+    string and returns them with unit Hz.
+    Parameter 'radvel' is only needed when converting to/from rest frequencies.
+    The frequency can be specified as period or wavelength by using
+    the proper units. If no unit is given, Hz is assumed.
+  \item[] \texttt{doublearray MEAS.RESTFREQUENCY(freq, doppler)}\\
+    calculates the rest frequencies from the doppler shifts and
+    returns them with unit Hz.
+  \item[] \texttt{doublearray MEAS.SHIFTFREQUENCY(freq, doppler)}\\
+    shifts the (rest) frequency according to the doppler shift and
+    returns them with unit Hz.
+    (opposite of function RESTFREQUENCY).
+  \item[] \texttt{doublearray MEAS.DOPPLER(toref, doppler)}\\
+    converts the dopplers to the 'toref' type.
+  \item[] \texttt{doublearray MEAS.DOPPLER(toref, radvel)}\\
+    calculates the dopplers from the radial velocities.
+  \item[] \texttt{doublearray MEAS.DOPPLER(toref, freq, restfreq)}\\
+    calculates the dopplers from the frequencies and rest frequencies.
+  \item[] \texttt{doublearray MEAS.RADIALVELOCITY(toref, radvel, direction, epoch, position}\\
+    converts the radial velocities to the 'toref' frame and return
+    them with unit km/s.
+  \item[] \texttt{doublearray MEAS.RADIALVELOCITY(toref, doppler)}\\
+    calculates the radial velocities from the dopplers and returns
+    them with unit km/s.
 \end{description}
-The possible reference frame types can be shown using the
-{\tt show meastypes} command in the program {\em taql}.
-\\For ease of use several functions
-are defined with an implicit 'toref' argument.
+For ease of use several functions have a shorthand synonym.
+\begin{itemize}
+  \item POS for POSITION
+  \item DIR for DIRECTION
+  \item EM for EARTHMAGNETIC
+  \item FREQ for FREQUENCY
+  \item REST or RESTFREQ for RESTFREQUENCY
+  \item SHIFT or SHIFTFREQ for SHIFTFREQUENCY
+  \item REDSHIFT for DOPPLER
+  \item RV or RADVEL for RADIALVELOCITY
+\end{itemize}
+For even more ease of use several functions are defined with an implicit 'toref' argument.
 \begin{description}
   \item[] \texttt{doublearray MEAS.ITRFxxx(position)}\\
     converts a position to ITRF coordinates, where xxx must be XYZ,
@@ -3346,12 +3425,29 @@ are defined with an implicit 'toref' argument.
   \item[] \texttt{doublearray MEAS.ITRFD(direction, epoch, position)}\\
     converts a direction to ITRF coordinates.
     \\Function name MEAS.ITRFDIR or MEAS.ITRFDIRECTION can be used as well.
+  \item[] \texttt{doublearray MEAS.LSRK(frequency, direction, epoch, position)}\\
+    converts a frequency to the LSRK frame.
+  \item[] \texttt{doublearray MEAS.LSRD(frequency, direction, epoch, position)}\\
+    converts a frequency to the LSRD frame.
+  \item[] \texttt{doublearray MEAS.BARY(frequency, direction, epoch, position)}\\
+    converts a frequency to the BARY frame.
+  \item[] \texttt{doublearray MEAS.REST(frequency, radvel, direction, epoch, position)}\\
+    calculates the rest frequency.
+    \\Function name MEAS.RESTFREQ or MEAS.RESTFREQUENCY can be used as well.
 \end{description}
 
 
 \paragraph*{}
-The function arguments can be given in a variety of ways. The argument
-data types and units are used to distinguish the arguments.
+The function arguments can be given in a variety of ways.
+Coordinate values (such as directions) can be followed by a 'ref'
+argument telling the reference frame used for them (e.g., J2000). If not given,
+a default reference frame is assumed.
+\\Where
+needed, the argument data types and units are used to distinguish
+arguments. However, a string value for a reference frame cannot be
+distinguished from a string giving the name of a source, observatory
+or line. In such a case the string value is used to distinguish them.
+
 \begin{itemize}
 \item 'toref' is a constant scalar string giving the reference frame to
   convert to. The command
@@ -3464,15 +3560,96 @@ the default.
   POSITION                           # POSITION column
 \end{verbatim}
 
+\item 'em' gives the earthmagnetic values to use, thus earth
+  magnetic field strengths for given points. They can be given
+  as xyz or as lon-lat-strength. The default unit is nT.
+  \begin{itemize}
+  \item An array of earthmagnetics given as xyz or as lon-lat-strength
+    Note that specifying as lon-lat-strength (lls) precludes use of units
+    (angle and length units cannot be mixed in a TaQL value),
+    while xyz must have a proper unit (e.g., nT or G). It means that the
+    unit determines if xyz or lon-lat-strength is given.
+    It can be given as a single list or a multi-dim array.
+    It can be followed by a string defining the source
+    reference type, which defaults to ITRF.
+  \item If a single constant earthmagnetic is used, it can be given as
+    3 scalar values, optionally followed by the source
+    reference type. The unit defines if xyz or lon-lat-strength is
+    given.
+  \item The name of a column in a table or a subset of it such as
+    <src>EMVAL[0,]</src>. Often this is a TableMeasures column
+    which is recognized as such, also its source reference frame.
+    If such a column is used in a expression, it will not be
+    recognized as a TableMeasures column and its reference frame
+    should be given.
+  \end{itemize}
+
+  For example:
+\begin{verbatim}
+  43deg, 45deg, 10nT, 'J2000'        # as scalars in J2000
+  [43, 45, 10], 'J2000'              # as array in J2000
+\end{verbatim}
+
+\item 'frequency' gives one or more frequencies to use. Similar to
+  directions the reference type is taken from the column keywords or
+  can be given in the next argument. It defaults to LSRK.
+  \\Frequencies can be given as a scalar or array containing double
+  values. The type of wave characteristics is recognized from the unit
+  (using Casacore's MVFrequency class). 
+  The values are converted to proper frequencies (in Hz).
+  \begin{itemize}
+  \item frequency (1/time)
+  \item time
+  \item angle/time (in 2pi units)
+  \item wavelength
+  \item 1/wavelength (in 2pi units)
+  \item energy (h.nu) (mass*length*length/time/time using Planck's constant)
+  \item impulse (mass*length using Planck's constant and speed of light)
+  \end{itemize}
+
+  For example:
+\begin{verbatim}
+  1e7                              # 10 MHz in LSRK
+  10MHz, 'BARY'                    # 10 MHz in BARY
+  10m                              # 29.9792 MHz in LSRK
+  10s, 'LSRK'                      # 0.1 Hz
+\end{verbatim}
+  Note that in the last example 'LSRK' is not necessary, because it is
+  the default.
+
+\item 'radialvelocity' gives one or more radial velocities. Its
+  default unit is km/s and its default reference frame is LSRK.
+  Similar to the other values, they can be given as a scalar, as an
+  array or as a column (expression).
+
+  For example:
+\begin{verbatim}
+  [200,300]'km/s', 'BARY'          # array of 2 velocities in BARY
+\end{verbatim}
+
+\item 'doppler' gives one or more (unitless) doppler shifts. Its default
+  reference type is RADIO.
+  Similar to the other values, they can be given as a scalar, as an
+  array or as a column (expression).
+  For example:
+\begin{verbatim}
+  2.5, 'RADIO'                     # RADIO doppler shift 
+\end{verbatim}
+
+
 \end{itemize}
 
 
-A few more elaborate examples are given below.
+Below a few examples are given showing how the MEAS functionality can
+be used.
 \begin{verbatim}
-  meas.last (date('15Oct2011/15:34'), 5deg, 52deg)
+  meas.lst (15Oct2011/15:34, 5deg, 52deg)
+  hms(meas.lst ('15Oct2011/15:34', 'WSRT'))
 \end{verbatim}
-calculates the local apparent sidereal time for the given date and
-position. 
+calculates the local apparent sidereal time for the given date/time and
+position. The second example shows that an observatory name can be
+used for the position. It also shows that the date/time can be given
+as a string.
 \begin{verbatim}
   meas.azel ("JUPITER", [select unique TIME from ~/GER1.MS],
             ["WSRT","VLA"])
@@ -3486,12 +3663,21 @@ converts the PHASE\_DIR directions in the FIELD table to B1950. Note
 that no frame information is needed for such a conversion.
 \begin{verbatim}
   meas.azel([03h13m10,65d50m12], 24sep2015/12:0:0+[0:24]h, 'LOFAR') deg
-  meas.azel(03h13m10,65d50m12,'B1950', 24sep2015/12:0:0+[0:24]h, 'LOFAR')deg
+  dms(meas.azel(03h13m10,65d50m12,'B1950', 24sep2015/12:0:0+[0:24]h, 'LOFAR'))
 \end{verbatim}
-calculates the azimuth/elevation (in degrees) of the given source direction for
-the LOFAR site for 24 hours. The result is an array with shape [24,2].
+calculates the azimuth/elevation of the given source direction for
+the LOFAR site for the next 24 hours on the given date. The result is an array with shape [24,2].
 The direction in the second example is given in B1950, the first as the
 default J2000.
+The result of the first example is double values with unit deg (given
+at the end of the expression). The result of the second example is
+strings in DMS format (because function DMS is used).
+\begin{verbatim}
+  meas.rest(1.03GHz,'LSRK', 210'km/s','LSRK', [03h13m10,65d50m12],'J2000',
+            2Jul2016/13:3:41, 'WSRT')
+\end{verbatim}
+calculates the rest frequency for the given radial velocity,
+direction, date/time and position. The result will have unit Hz.
 
 
 \subsection{\label{TAQL:SUBQUERIES}Subqueries}
@@ -4247,6 +4433,7 @@ The following subcommands can be given. They are explained in
 the next subsections.
 \begin{verbatim}
   ADD COLUMN colspecs DMINFO datamanagers
+  COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
   RENAME COLUMN old TO new, old TO new, ...
   DELETE COLUMN column_list
   SET KEYWORD name=value AS dtype, ...
@@ -4271,6 +4458,34 @@ The program {\em showtableinfo} can be used for that purpose.
 \begin{verbatim}
   ADD COLUMN colspecs DMINFO datamanagers
 \end{verbatim}
+adds one or more columns to the table.
+The specification of the columns and the optional data managers is the
+same as used in the
+\htmlref{CREATE TABLE}{TAQL:CREATETABLE} command. Thus for each column
+a data type, dimensionality or shape, and unit  can be given.
+The data manager(s) for the new columns can be specified in the DMINFO
+part. If not given, StandardStMan will be used.
+For example:
+\begin{verbatim}
+  ADD COLUMN NCol1 R4, NCol2 R8 [UNIT="m", NDIM=3]
+\end{verbatim}
+adds two columns, a 4-byte floating point scalar column and an 8-byte
+floating point 3-dim array column. They will be stored with StandardStMan.
+
+\subsection{COPY COLUMN}
+\begin{verbatim}
+  COPY COLUMN spec1, spec2, ...
+\end{verbatim}
+makes it possible to copy columns, where each column specification
+looks like:
+\begin{verbatim}
+  col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
+\end{verbatim}
+The new column gets the same description, but it is possible to define
+a new data type and/or tile shape. If the \texttt{SET} keyword is
+given values are written into the new column. If given, the value of an expression is
+stored in the new column, otherwise the contents of the input column.
+In its simplest form it copies a column
 adds one or more columns to the table.
 The specification of the columns and the optional data managers is the
 same as used in the
@@ -5037,7 +5252,7 @@ form the programmer interface.
     lines, where a \# can be used for comments. A semicolon has to be
     used to separate commands. The special commands listed below
     for the interactive case, can also be given.
-  \item The program is run interactively if command nor -f is given.
+  \item The program is run interactively if no command nor -f is given.
     It will run until the user stops via the  command \texttt{exit},
     \texttt{quit}, or \texttt{q} or by giving Ctrl/D. Command editing
     and recall is possible, unless taql was built without readline
@@ -5056,7 +5271,7 @@ form the programmer interface.
       kept in this session. Thus the result is not a persistent table
       (unless GIVING was given), but it is kept temporarily.
       The \texttt{varname} can be used in subsequent commands like
-      \texttt{SELECT FROM \$varname}.
+      \texttt{SELECT FROM \$varname} or \texttt{SHOW TABLE \$varname}.
     \item \texttt{?} shows the varnames.
     \item \texttt{varname=} without a further command removes the
       temporary result.
