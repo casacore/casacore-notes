@@ -2018,7 +2018,7 @@ column \texttt{TIMED} with keyword \texttt{QuantumUnits=d} and the
 values are converted to days.
 
 \subsection{\label{TAQL:FUNCTIONS}Functions}
-More than 100 functions exist to operate on scalar and/or array values.
+More than 200 functions exist to operate on scalar and/or array values.
 Some functions have two names. One name is the CASA/Glish name, while the
 other is the name as used in SQL.
 In the following tables the function names are shown in uppercase,
@@ -2050,7 +2050,9 @@ These functions can be used on a scalar or an array argument.
   \item[] \texttt{string DOWNCASE(string),  string LOWER(string)}\\
     Convert to lowercase.
   \item[] \texttt{string CAPITALIZE(string)}\\
-    Capitalize a string (make first letter uppercase).
+    Capitalize a string  by making the first letter of each word
+    uppercase and the rest of the word lowercase. A word is delimited
+    by a non-alphanumeric  character.
   \item[] \texttt{string LTRIM(string)}\\
     Removes leading whitespace.
   \item[] \texttt{string RTRIM(string)}\\
@@ -2059,11 +2061,13 @@ These functions can be used on a scalar or an array argument.
     Removes leading and trailing whitespace.
   \item[] \texttt{string SUBSTR(string, integer ST, integer N)}\\
     Returns a substring starting at the 0-based position
-    \texttt{ST} with a length of at most \texttt{N} characters.
+    \texttt{ST} with a length of at most \texttt{N} characters. N
+    defaults to the string length.
    If the string argument is an array of strings, an array with the substring of each
    string is returned. The arguments ST and N have to be scalar
    values. If ST is negative, it counts from the end (a la Python).
-   N and the resulting ST will be set to 0 if negative.
+   N and the resulting ST will be set to 0 if negative. If ST exceeeds
+   the string length, an empty string is returned.
   \item[] \texttt{string REPLACE(string SRC, PATTERN, string REPL)}\\
    Replaces all occurrences of PATTERN in SRC by REPL and returns the
    result. REPL can be omitted and defaults to the empty string.
@@ -2300,14 +2304,14 @@ Standard mathematical can be used on scalar and array arguments (and a mix of th
     Return the value of the speed of light (with unit m/s).
   \item[] \texttt{dnumeric SIN(numeric)}
   \item[] \texttt{dnumeric SINH(numeric)}
-  \item[] \texttt{double ASIN(real)}
+  \item[] \texttt{dnumeric ASIN(numeric)}
   \item[] \texttt{dnumeric COS(numeric)}
   \item[] \texttt{dnumeric COSH(numeric)}
-  \item[] \texttt{double ACOS(real)}
-  \item[] \texttt{double TAN(real)}
-  \item[] \texttt{double TANH(real)}
-  \item[] \texttt{double ATAN(real)}
-  \item[] \texttt{double ATAN2(real y, real x)}\\
+  \item[] \texttt{dnumeric ACOS(numeric)}
+  \item[] \texttt{dnumeric TAN(numeric)}
+  \item[] \texttt{dnumeric TANH(numeric)}
+  \item[] \texttt{dnumeric ATAN(numeric)}
+  \item[] \texttt{dnumeric ATAN2(numeric y, numeric x)}\\
     Return \texttt{ATAN(y/x)} in correct quadrant.
   \item[] \texttt{dnumeric EXP(numeric)}
   \item[] \texttt{dnumeric LOG(numeric)}\\
@@ -2460,7 +2464,7 @@ The most useful one is probably calculating the boxed mean, but
 the other ones can be used similarly.
 The width of each window axis has to be given. Missing axes default to 1.
 Similarly to the partial reduce functions described above, the axes
-can be given as scalars or as a set.
+must be given as the last argument(s) and can be given as scalars or as a set.
 \\For example,
 \texttt{BOXEDMEAN(array,3,3)} calculates the mean
 in each 3x3 box. At the end of an axis the box used will be smaller
@@ -2471,6 +2475,16 @@ if it does not fit integrally.
     Is any element true?
   \item[] \texttt{bool BOXEDALL(bool)}\\
     Are all elements true?
+  \item[] \texttt{bool BOXEDNTRUE(bool)}\\
+    Return number of true elements.
+  \item[] \texttt{bool BOXEDNFALSE(bool)}\\
+    Return number of false elements.
+  \item[] \texttt{numeric BOXEDSUM(numeric)}\\
+    Return sum of elements.
+  \item[] \texttt{numeric BOXEDSUMSQUARE(numeric), numeric BOXEDSUMSQR(numeric)}\\
+    Return sum of squared elements.
+  \item[] \texttt{numeric BOXEDPRODUCT(numeric)}\\
+    Return product of elements.
   \item[] \texttt{double BOXEDMIN(real)}\\
     Return minimum of elements.
   \item[] \texttt{double BOXEDMAX(real)}\\
@@ -2490,6 +2504,9 @@ if it does not fit integrally.
     \\\texttt{(a(i)**2)/nelements(a)}.
   \item[] \texttt{double BOXEDMEDIAN(real)}\\
     Return median (the middle element).
+  \item[] \texttt{double BOXEDFRACTILE(real, doublescalar fraction)}\\
+    Return the value of the element at the given fraction.
+    Fraction 0.5 is the same as the median.
 \end{description}
 
 \subsubsection{Array functions operating in running windows}
@@ -2500,7 +2517,7 @@ the other ones can be used similarly.
 The half-width of each window axis has to be given; the full width is
 \texttt{2*halfwidth + 1}. Missing axes default to a half-width of 0.
 Similarly to the partial reduce functions described above, the axes
-can be given as scalars or as a set.
+must be given as the last argument(s) and can be given as scalars or as a set.
 \\For example,
 \texttt{RUNNINGMEDIAN(array,1,1)} calculates the median
 in a 3x3 box around each array element.
@@ -2513,6 +2530,16 @@ window can be applied) are set to 0 (or False).
     Is any element true?
   \item[] \texttt{bool RUNNINGALL(bool)}\\
     Are all elements true?
+  \item[] \texttt{bool RUNNINGNTRUE(bool)}\\
+    Return number of true elements.
+  \item[] \texttt{bool RUNNINGNFALSE(bool)}\\
+    Return number of false elements.
+  \item[] \texttt{numeric RUNNINGSUM(numeric)}\\
+    Return sum of elements.
+  \item[] \texttt{numeric RUNNINGSUMSQUARES(numeric), numeric RUNNINGSUMSQR(numeric)}\\
+    Return sum of squared elements.
+  \item[] \texttt{numeric RUNNINGPRODUCT(numeric)}\\
+    Return product of elements.
   \item[] \texttt{double RUNNINGMIN(real)}\\
     Return minimum of elements.
   \item[] \texttt{double RUNNINGMAX(real)}\\
@@ -2532,6 +2559,9 @@ window can be applied) are set to 0 (or False).
     \\\texttt{(a(i)**2)/nelements(a)}.
   \item[] \texttt{double RUNNINGMEDIAN(real)}\\
     Return median (the middle element).
+  \item[] \texttt{double RUNNINGFRACTILE(real, doublescalar fraction)}\\
+    Return the value of the element at the given fraction.
+    Fraction 0.5 is the same as the median.
 \end{description}
 
 \subsubsection{Type conversion functions}
@@ -2590,16 +2620,17 @@ below. They can operate on scalars and arrays.
     the data type of the argument. The argument value itself is not
     used.
     It is mainly meant for test purposes.
-  \item[] \texttt{anytypearray RESIZE(anytypearray,shape[,mode])}\\
+  \item[] \texttt{anytypearray RESIZE(anytypearray,newshape[,mode])}\\
     This function resizes an array to the given shape and copies the
     values. The optional \texttt{mode} argument determines how the values are
     copied. If the argument is not given, the new shape is arbitrary
     and the dimensionality can change. The values are copied to the same index in the
     new array. If an axis gets larger, the new values are set to 0
     (or an empty string).
-    \\If mode is given, the new shape is much more restricted. The
-    dimensionality cannot change and each axis has to be a
-    multiple of the old one. If \texttt{mode=0}, copying the values is
+    \\If mode is given, the dimensionality can change as well, but
+    each new axis has to be a multiple of the old one. If the
+    dimensionality grows, the missing input axes have length 1.
+    If \texttt{mode=0}, copying the values is
     done in an upsampling way. E.g., if a new axis is twice the length
     of the old one, values 1,2,3 are copied as 1,1,2,2,3,3. A good use case is
     applying the flags of averaged data to the original data. 
@@ -2781,7 +2812,8 @@ usually works faster because, unlike GAGGR, it is non-lazy.
 \subsubsection{Miscellaneous functions}
 \begin{description}
   \item[] \texttt{bool ISNULL(anytype)}\\
-    Return True if the argument value is a null array.
+    Return True if the argument value is a null array (an array with 0
+    axes). Note that function {\tt NULLARRAY} can create a null array.
   \item[] \texttt{bool ISDEFINED(anytype)}\\
     Return False if the array value in the current row is undefined (is null).
     It makes it possible to test if a cell in a column with variable shaped arrays
@@ -2792,11 +2824,11 @@ usually works faster because, unlike GAGGR, it is non-lazy.
   \item[] \texttt{bool sh.ISCOLUMN(string)}\\
     Return False if no column with the given name exists in
     the table with the shorthand given before the function name.
-    If no table is given, the first one will be used.
+    If no shorthand is given, the first table will be used.
   \item[] \texttt{bool sh.ISKEYWORD(string)}\\
     Return False if no keyword with the given name exists in
     the table with the shorthand given before the function name.
-    If no table is given, the first one will be used.
+    If no shorthand is given, the first table will be used.
     The keyword name can be given as described in
     \htmlref{section \ref{TAQL:KEYWORDS}}{TAQL:KEYWORDS}, thus
     the name of a table keyword or column keyword or a nested field

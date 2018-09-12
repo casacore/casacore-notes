@@ -1763,12 +1763,66 @@ MAIN.
 \end{description}
 
 
+\section{Units and Measures}
+
+\definetable{Units and Measures}{
+\defline{\bf Column keywords}
+QuantumUnits &        String Vector &    &      & Units of the data in the column\\
+MEASINFO &  Record  &     &   & subfields defining the unit\\
+\defline{\em Subfields of MEASINFO}  
+type &        String    &      &      & lowercase name of the Measure type (e.g., frequency)\\
+{\it Ref} & String &     &      & Uppercase name of the frame (e.g., LSRK)\\
+{\it VarRefCol} & String &     &      & Name of the column containing the frames\\
+{\it VarRefTypes} & String Vector&     &      & All frame names for this type\\
+{\it VarRefCodes} & Int Vector&     &      & All frame codes for this type\\
+}
+\begin{description}
+
+\item[QuantumUnits] Its value is a vector of strings, usually
+containing a single value (e.g., rad) applying to all values in the
+column. If the column cells contain array values,
+QuantumUnits can define multiple units. For example, the telescope
+position could be stored as longitude, latitude, height with units rad,rad,m.
+
+\item[type] Its value is one of the Measures types which are
+epoch, position, direction, frequency, doppler, radialvelocity and
+earthmagnetic.
+
+\item[Ref] This field is used if the entire column has the same frame.
+Its value is one the the frame names for the given Measures
+type. For instance: J2000, B1950, ECLIPTIC, etc. for the direction
+measure.
+
+\item[VarRefCol] This field is used if each row in the column can have
+its own reference frame. Its value is the name of the column
+containing the frame. The column can contain strings giving the frame
+name or can contain integers giving the frame codes. If integers are
+used, the following two fields (VarRefTypes and VarRefCodes) can be
+defined to make the stored frame codes resilient to possible future
+changes. 
+
+\item[VarRefTypes and VarRefCodes] These fields can be used if
+VarRefCol is defined. They contain a vector of
+strings and integers  giving the the frame names and codes for this Measures type.
+They map a frame code to its name.  It makes it possible that the
+Measures classes can renumber the frame codes without affecting the
+stored frame codes (the frame names are not changed).
+\\These fields are optional. If VarRefTypes is not defined, it is assumed that the frame
+codes in the table are the same as in the Measures classes.
+
+\item[Notes:]
+The possible units can be found in the Casacore Unit classes. They
+can be listed using the TaQL command {\tt 'show units'}.
+\\The possible measure types and frames can be found in the Casacore
+Measures classes (such as MDirection). They
+can be listed using the TaQL command {\tt 'show meastypes'}.
+
+\end{description}
 
 \section{References}
 
-
-
 \noindent Kemball, A.J., Wieringa, M.H., 2000, casacore Note 229.
+
 
 \end{document}
 

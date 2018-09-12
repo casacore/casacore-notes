@@ -10,7 +10,6 @@ WORK IN PROGRESS</title>
 <meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="264.tex" /> 
-<meta name="date" content="2018-05-25 13:44:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -289,7 +288,11 @@ href="#x1-5000026" id="QQ2-1-51">SYSCAL: System calibration</a></span>
 <br />    <span class="subsectionToc" >5.27 <a 
 href="#x1-5100027" id="QQ2-1-52">WEATHER: weather station information</a></span>
 <br />   <span class="sectionToc" >6 <a 
-href="#x1-520006" id="QQ2-1-53">References</a></span>
+href="#x1-520006" id="QQ2-1-53">Units and Measures</a></span>
+<br />    <span class="subsectionToc" >6.1 <a 
+href="#x1-530001" id="QQ2-1-54">Units and Measures</a></span>
+<br />   <span class="sectionToc" >7 <a 
+href="#x1-540007" id="QQ2-1-55">References</a></span>
    </div>
 <a 
  id="x1-1001r1"></a>
@@ -330,12 +333,12 @@ class="cmbx-10">Data,weight, ﬂag versioning </span>Non standard columns (e.g C
      implementation to do the smart thing (not making unnecessary copies). E.g if ﬂagging only is done
      and need to be saved in a new version of FLAG column, the new version of DATA an WEIGHT are
      going to be just virtual columns pointing back to the previous version.
-     </li>
-     <li class="itemize"><span 
-class="cmbx-10">Data Description</span>The concept of data description is being deprecated it saved a column of integers but
                                                                                          
 
                                                                                          
+     </li>
+     <li class="itemize"><span 
+class="cmbx-10">Data Description</span>The concept of data description is being deprecated it saved a column of integers but
      users found it confusing. SPECTRAL_WINDOW_ID and POLARIZATION_ID are explicit columns
      in the main table
      </li>
@@ -380,12 +383,12 @@ class="cmbx-10">Multi measurement sets: </span>In a diﬀerent document we will 
  id="x1-40003"></a>Summary of changes</h3>
 <!--l. 161--><p class="noindent" >This section contains a description of the changes proposed for each table in the MS deﬁnition. A full deﬁnition of
 the v3.0 MS format is given in Section 5.
-</p><!--l. 165--><p class="indent" >   All the subtables not mentioned here will have an explicit ID column; in v3.0 implicit row number being an ID is
-no longer valid. For example ANTENNA subtable will have a ANTENNA_ID column added as a
-key.
                                                                                          
 
                                                                                          
+</p><!--l. 165--><p class="indent" >   All the subtables not mentioned here will have an explicit ID column; in v3.0 implicit row number being an ID is
+no longer valid. For example ANTENNA subtable will have a ANTENNA_ID column added as a
+key.
 <a 
  id="x1-4001r1"></a>
 </p>
@@ -447,15 +450,15 @@ class="cmbx-10">_ID </span>This unique ID has caused more confusion than the ext
      </li></ul>
 <a 
  id="x1-5001r6"></a>
+                                                                                         
+
+                                                                                         
 <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
  id="x1-60002"></a>ARRAY table</h4>
      <ul class="itemize1">
      <li class="itemize"><span 
 class="cmbx-10">ARRAY</span><span 
 class="cmbx-10">_ID </span>An explicit ID column is newly deﬁned.
-                                                                                         
-
-                                                                                         
      </li>
      <li class="itemize"><span 
 class="cmbx-10">ARRAY</span><span 
@@ -502,15 +505,15 @@ ARRAY_ID
 <!--l. 274--><p class="noindent" >The SOURCE table already had a SOURCE_ID column. In this version it it proposed to generalize the
 SOURCE_MODEL. Apart from a TableRecord it can take a URL which will point to catalogue style source list or
 even images representing the model associated with a SOURCE_ID and SPECTRAL_WINDOW_ID.
+                                                                                         
+
+                                                                                         
 <a 
  id="x1-11001r12"></a>
 </p>
 <h4 class="subsectionHead"><span class="titlemark">3.7   </span> <a 
  id="x1-120007"></a>SPECTRAL_WINDOW table</h4>
 <!--l. 283--><p class="noindent" >Apart from the explicit SPECTRAL_WINDOW_ID column; an optional column LO_FREQUENCY
-                                                                                         
-
-                                                                                         
 which (can be vector of frequencies) gives the Local Oscillator frequencies in the chain of frequency
 conversion.
 <a 
@@ -556,6 +559,9 @@ of RFI and sensitivity.
 <a 
  id="x1-18001r1"></a>
 </p>
+                                                                                         
+
+                                                                                         
 <span class="paragraphHead"><a 
  id="x1-190001"></a><span 
 class="cmbx-10">QUALITY</span><span 
@@ -564,9 +570,6 @@ class="cmbx-10">_STATISTIC table</span></span>
    This is an optional table for storing time related quality statistics.
 <a 
  id="x1-19001r20"></a>
-                                                                                         
-
-                                                                                         
 <span class="paragraphHead"><a 
  id="x1-200002"></a><span 
 class="cmbx-10">QUALITY</span><span 
@@ -1649,7 +1652,7 @@ class="cmr-9">towards source direction; </span><!--l. 496--><math
 display="inline" ><mi 
 >V</mi> </math>
      <span 
-class="cmr-9">in plane through source and system&#x2019;s pole; </span><!--l. 496--><math 
+class="cmr-9">in plane through source and system’s pole; </span><!--l. 496--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >U</mi></math>
@@ -1685,7 +1688,7 @@ class="cmr-9">towards source direction; </span><!--l. 508--><math
 display="inline" ><mi 
 >V</mi> </math>
      <span 
-class="cmr-9">in plane through source and system&#x2019;s pole; </span><!--l. 508--><math 
+class="cmr-9">in plane through source and system’s pole; </span><!--l. 508--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >U</mi></math>
@@ -1730,7 +1733,7 @@ class="cmr-9"> is</span>
      <span 
 class="cmr-9">the number of frequency channels, and the weight information refers to the frequency spectra only. The units</span>
      <span 
-class="cmr-9">for these columns (eg. &#x2019;Jy&#x2019;) specify whether the data are in ﬂux density units or correlation coeﬃcients.</span>
+class="cmr-9">for these columns (eg. ’Jy’) specify whether the data are in ﬂux density units or correlation coeﬃcients.</span>
      </dd><dt class="description">
 <span 
 class="cmbx-9">VIDEO</span><span 
@@ -2546,7 +2549,7 @@ class="cmr-9">String</span>                     </p></td><td  style="text-align:
 class="td11">     </td><td  style="text-align:left;" id="TBL-9-8-4"  
 class="td11"><!--l. 690--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-9-8-5"  
 class="td11"><!--l. 690--><p class="noindent" ><span 
-class="cmr-9">observer&#x2019;s   location   for</span>
+class="cmr-9">observer’s   location   for</span>
 <span 
 class="cmr-9">ephemerides</span>                 </p></td>
 </tr><tr 
@@ -4810,7 +4813,7 @@ class="cmbx-9">_SYSTEM</span> </dt><dd
 class="description"><span 
 class="cmr-9">(cartesian) direction vectors in ITRF (or measure deﬁned) describing the local ﬁeld</span>
      <span 
-class="cmr-9">coordinate system. This deﬁnes the antenna ﬁeld plane, and the &#x2019;up&#x2019; direction, the normal direction to the</span>
+class="cmr-9">coordinate system. This deﬁnes the antenna ﬁeld plane, and the ’up’ direction, the normal direction to the</span>
      <span 
 class="cmr-9">antenna ﬁeld plane. Note that in general this is not the zenith direction. The coordinate system is necessary</span>
      <span 
@@ -8581,8 +8584,219 @@ class="cmr-9">_POINT.</span>
 <h3 class="sectionHead"><span class="titlemark"><span 
 class="cmr-9">6   </span></span> <a 
  id="x1-520006"></a><span 
+class="cmr-9">Units and Measures</span></h3>
+<!--l. 1778--><p class="noindent" >
+                                                                                         
+
+                                                                                         
+<a 
+ id="x1-52001r52"></a>
+</p>
+<h4 class="subsectionHead"><span class="titlemark"><span 
+class="cmr-9">6.1   </span></span> <a 
+ id="x1-530001"></a><span 
+class="cmr-9">Units and Measures</span></h4>
+   <div class="tabular"> <table id="TBL-30" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-30-1g"><col 
+id="TBL-30-1" /></colgroup><colgroup id="TBL-30-2g"><col 
+id="TBL-30-2" /></colgroup><colgroup id="TBL-30-3g"><col 
+id="TBL-30-3" /></colgroup><colgroup id="TBL-30-4g"><col 
+id="TBL-30-4" /></colgroup><colgroup id="TBL-30-5g"><col 
+id="TBL-30-5" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-1-"><td colspan="5" style="text-align:center; white-space:nowrap;" id="TBL-30-1-1"  
+class="td11">                              <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="cmbx-9">Units and Measures</span></div></td></tr><tr 
+class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-3-"><td  style="text-align:center; white-space:nowrap;" id="TBL-30-3-1"  
+class="td11">    <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="cmr-9">Name</span></div>      </td><td  style="text-align:center; white-space:nowrap;" id="TBL-30-3-2"  
+class="td11">      <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="cmr-9">Format</span></div>          </td><td  style="text-align:center; white-space:nowrap;" id="TBL-30-3-3"  
+class="td11"><div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="cmr-9">Units</span></div></td><td  style="text-align:center; white-space:nowrap;" id="TBL-30-3-4"  
+class="td11">   <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="cmr-9">Measure</span></div>     </td><td  style="text-align:center; white-space:nowrap;" id="TBL-30-3-5"  
+class="td11">      <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="cmr-9">Comments</span></div></td></tr><tr 
+class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr 
+class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-6-"><td colspan="5" style="text-align:left; white-space:nowrap;" id="TBL-30-6-1"  
+class="td11"><div class="multicolumn"  style="text-align:left; white-space:nowrap;"><span 
+class="cmbx-9">Column keywords</span></div>
+</td></tr><tr 
+class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-8-1"  
+class="td11"><span 
+class="cmr-9">QuantumUnits</span></td><td  style="text-align:left;" id="TBL-30-8-2"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">String Vector</span>            </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-30-8-3"  
+class="td11">     </td><td  style="text-align:left;" id="TBL-30-8-4"  
+class="td11"><!--l. 1778--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-30-8-5"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">Units of the data in the</span>
+<span 
+class="cmr-9">column</span>                       </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-9-1"  
+class="td11"><span 
+class="cmr-9">MEASINFO   </span></td><td  style="text-align:left;" id="TBL-30-9-2"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">Record</span>                    </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-30-9-3"  
+class="td11">     </td><td  style="text-align:left;" id="TBL-30-9-4"  
+class="td11"><!--l. 1778--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-30-9-5"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">subﬁelds    deﬁning    the</span>
+<span 
+class="cmr-9">unit</span>                           </p></td>
+</tr><tr 
+class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-11-"><td colspan="5" style="text-align:left; white-space:nowrap;" id="TBL-30-11-1"  
+class="td11"><div class="multicolumn"  style="text-align:left; white-space:nowrap;"><span 
+class="cmti-9">Subﬁelds of MEASINFO</span></div>
+</td></tr><tr 
+class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-13-1"  
+class="td11"><span 
+class="cmr-9">type              </span></td><td  style="text-align:left;" id="TBL-30-13-2"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">String</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-30-13-3"  
+class="td11">     </td><td  style="text-align:left;" id="TBL-30-13-4"  
+class="td11"><!--l. 1778--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-30-13-5"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">lowercase              name</span>
+<span 
+class="cmr-9">of the Measure type (e.g.,</span>
+<span 
+class="cmr-9">frequency)</span>                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-14-1"  
+class="td11"><span 
+class="cmti-9">Ref              </span></td><td  style="text-align:left;" id="TBL-30-14-2"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">String</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-30-14-3"  
+class="td11">     </td><td  style="text-align:left;" id="TBL-30-14-4"  
+class="td11"><!--l. 1778--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-30-14-5"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">Uppercase  name  of  the</span>
+<span 
+class="cmr-9">frame (e.g., LSRK)</span>        </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-15-1"  
+class="td11"><span 
+class="cmti-9">VarRefCol      </span></td><td  style="text-align:left;" id="TBL-30-15-2"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">String</span>                     </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-30-15-3"  
+class="td11">     </td><td  style="text-align:left;" id="TBL-30-15-4"  
+class="td11"><!--l. 1778--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-30-15-5"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">Name   of   the   column</span>
+<span 
+class="cmr-9">containing the frames</span>    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-16-1"  
+class="td11"><span 
+class="cmti-9">VarRefTypes   </span></td><td  style="text-align:left;" id="TBL-30-16-2"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">String Vector</span>            </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-30-16-3"  
+class="td11">     </td><td  style="text-align:left;" id="TBL-30-16-4"  
+class="td11"><!--l. 1778--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-30-16-5"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">All frame names for this</span>
+<span 
+class="cmr-9">type</span>                           </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-17-1"  
+class="td11"><span 
+class="cmti-9">VarRefCodes   </span></td><td  style="text-align:left;" id="TBL-30-17-2"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">Int Vector</span>                </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-30-17-3"  
+class="td11">     </td><td  style="text-align:left;" id="TBL-30-17-4"  
+class="td11"><!--l. 1778--><p class="noindent" >              </p></td><td  style="text-align:left;" id="TBL-30-17-5"  
+class="td11"><!--l. 1778--><p class="noindent" ><span 
+class="cmr-9">All frame codes for this</span>
+<span 
+class="cmr-9">type</span>                           </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-30-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-30-18-1"  
+class="td11">             </td> </tr></table>
+</div>
+     <dl class="description"><dt class="description">
+<span 
+class="cmbx-9">QuantumUnits</span> </dt><dd 
+class="description"><span 
+class="cmr-9">Its value is a vector of strings, usually containing a single value (e.g., rad) applying to all values</span>
+     <span 
+class="cmr-9">in the column. If the column cells contain array values, QuantumUnits can deﬁne multiple units. For example,</span>
+     <span 
+class="cmr-9">the telescope position could be stored as longitude, latitude, height with units rad,rad,m.</span>
+     </dd><dt class="description">
+<span 
+class="cmbx-9">type</span> </dt><dd 
+class="description"><span 
+class="cmr-9">Its value is one of the Measures types which are epoch, position, direction, frequency, doppler, radialvelocity</span>
+     <span 
+class="cmr-9">and earthmagnetic.</span>
+     </dd><dt class="description">
+<span 
+class="cmbx-9">Ref</span> </dt><dd 
+class="description"><span 
+class="cmr-9">This ﬁeld is used if the entire column has the same frame. Its value is one the the frame names for the given</span>
+     <span 
+class="cmr-9">Measures type. For instance: J2000, B1950, ECLIPTIC, etc. for the direction measure.</span>
+     </dd><dt class="description">
+<span 
+class="cmbx-9">VarRefCol</span> </dt><dd 
+class="description"><span 
+class="cmr-9">This ﬁeld is used if each row in the column can have its own reference frame. Its value is the name of the</span>
+     <span 
+class="cmr-9">column containing the frame. The column can contain strings giving the frame name or can contain integers</span>
+     <span 
+class="cmr-9">giving the frame codes. If integers are used, the following two ﬁelds (VarRefTypes and VarRefCodes) can be</span>
+     <span 
+class="cmr-9">deﬁned to make the stored frame codes resilient to possible future changes.</span>
+     </dd><dt class="description">
+<span 
+class="cmbx-9">VarRefTypes and VarRefCodes</span> </dt><dd 
+class="description"><span 
+class="cmr-9">These ﬁelds can be used if VarRefCol is deﬁned. They contain a vector of strings</span>
+     <span 
+class="cmr-9">and integers giving the the frame names and codes for this Measures type. They map a frame code to its name.</span>
+     <span 
+class="cmr-9">It makes it possible that the Measures classes can renumber the frame codes without aﬀecting the stored frame</span>
+     <span 
+class="cmr-9">codes (the frame names are not changed). </span><br 
+class="newline" /><span 
+class="cmr-9">These ﬁelds are optional. If VarRefTypes is not deﬁned, it is assumed that the frame codes in the table are the</span>
+     <span 
+class="cmr-9">same as in the Measures classes.</span>
+                                                                                         
+
+                                                                                         
+     </dd><dt class="description">
+<span 
+class="cmbx-9">Notes:</span> </dt><dd 
+class="description"><span 
+class="cmr-9">The possible units can be found in the Casacore Unit classes. They can be listed using the TaQL command</span>
+     <span 
+class="cmtt-9">’show units’</span><span 
+class="cmr-9">. </span><br 
+class="newline" /><span 
+class="cmr-9">The possible measure types and frames can be found in the Casacore Measures classes (such as MDirection).</span>
+     <span 
+class="cmr-9">They can be listed using the TaQL command </span><span 
+class="cmtt-9">’show meastypes’</span><span 
+class="cmr-9">.</span>
+     </dd></dl>
+<a 
+ id="x1-53001r53"></a>
+<h3 class="sectionHead"><span class="titlemark"><span 
+class="cmr-9">7   </span></span> <a 
+ id="x1-540007"></a><span 
 class="cmr-9">References</span></h3>
-<!--l. 1771--><p class="noindent" ><span 
+<!--l. 1824--><p class="noindent" ><span 
 class="cmr-9">Kemball, A.J., Wieringa, M.H., 2000, casacore Note 229.</span>
 </p>
     
