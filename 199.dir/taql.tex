@@ -2596,6 +2596,10 @@ below. They can operate on scalars and arrays.
 \end{description}
 
 \subsubsection{Array creation functions}
+The following functions create an array value with or without a mask.
+Function \texttt{marray} creates a new masked array, the other
+functions return a masked array if the input was masked, otherwise an
+unmasked array.
 \begin{description}
   \item[] \texttt{anytypearray ARRAY(anytype,shape)}\\
     This function creates an unmasked array of the given type and shape.
@@ -2615,6 +2619,7 @@ below. They can operate on scalars and arrays.
     This function offers another way to create a masked array. The
     mask must be given in the second argument; its shape must be the
     same as the shape of the data array.
+    If the argument is a scalar, it returns a 1-dim array with one element.
   \item[] \texttt{anytypearray NULLARRAY(anytype)}\\
     This function creates a null array. Its data type is determined by
     the data type of the argument. The argument value itself is not
@@ -2656,33 +2661,37 @@ below. They can operate on scalars and arrays.
     \\The \texttt{diag} argument tells which diagonal has to be
     taken. The default 0 means the main diagonal. A negative value means
     below the main diagonal, while positive means above the main diagonal.
+    \\A possible mask is diagonaled as well.
  \item[] \texttt{anytypearray ARRAYDATA(anytype)}\\
     This function returns the array without a mask, thus removes the mask.
-    If the operand is a scalar, it returns a 1-dim array with one element.
+    If the argument is a scalar, it returns a 1-dim array with one element.
+  \item[] \texttt{boolarray ARRAYMASK(anytype), boolarray MASK(anytype)}\\
+    This function returns the mask of an array. If the array has no
+    mask, it returns a boolean array of the same shape with all values
+    set to False.
+    If the argument is a scalar, it returns an 1-dim array with one False
+    element.
  \item[] \texttt{anytypearray NEGATEMASK(anytype)}\\
     This function returns the array with the negated mask. If the array has
     no mask, it returns the array with a mask of all Trues.
-    If the operand is a scalar, it returns a 1-dim array with one element.
+    If the argument is a scalar, it returns a 1-dim array with one element.
  \item[] \texttt{anytypearray REPLACEMASKED(anytype, anytype)}\\
     This function replaces the masked elements in the first argument
     by the corresponding value in the second argument (which can be a
     scalar value).
     If the first argument has no mask, the function is a no-op.
+    If the first argument is a scalar, it returns a 1-dim array with one element.
  \item[] \texttt{anytypearray REPLACEUNMASKED(anytype, anytype)}\\
     This function replaces the unmasked elements in the first argument
     by the corresponding value in the second argument (which can be a
     scalar value).
-    If the first argument has no mask, the function is a no-op.
-  \item[] \texttt{boolarray ARRAYMASK(anytype), boolarray MASK(anytype)}\\
-    This function returns the mask of an array. If the array has no
-    mask, it returns a boolean array of the same shape with all values
-    set to False.
-    If the operand is a scalar, it returns an 1-dim array with one False
-    element.
+    If the first argument has no mask, the replacement value is
+    returned; a scalar replacement is expanded to the array shape.
+    If the first argument is a scalar, it returns a 1-dim array with one element.
   \item[] \texttt{anytypearray FLATTEN(anytype)}\\
     This function flattens an N-dim array to a 1-dim array keeping the
     unmasked elements only.
-    If the operand is a scalar, it returns a 1-dim array with one element.
+    If the argument is a scalar, it returns a 1-dim array with one element.
 \end{description}
 
 \subsubsection{\label{TAQL:AGGRFUNC}Aggregate functions}
@@ -3259,7 +3268,7 @@ be a string.
 These functions make it possible to convert Casacore measures (e.g.,
 directions) from one reference frame to another.  The prefix
 \texttt{MEAS.} has to be used for all these functions. The MEAS
-library libcasa_meas.so (or .dylib) will be loaded if not loaded yet.
+library libcasa\_meas.so (or .dylib) will be loaded if not loaded yet.
 All conversions supported by Casacore's 
 \htmladdnormallink{Measures}{../html/group__Measures__module.html}
 are possible. It is quite flexible; for instance, source
@@ -4505,6 +4514,8 @@ adds two columns, a 4-byte floating point scalar column and an 8-byte
 floating point 3-dim array column. They will be stored with StandardStMan.
 
 \subsection{COPY COLUMN}
+\bf{NOTE:} This subcommand cannot be used yet and will give a parser
+error when used.
 \begin{verbatim}
   COPY COLUMN spec1, spec2, ...
 \end{verbatim}
