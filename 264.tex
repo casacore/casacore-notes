@@ -54,8 +54,9 @@
 
 \title{MeasurementSet definition version 3.0\\WORK IN PROGRESS}
 
-\author{eds.}
-\date{March, 2018}
+\author{ MS v3.0 working group: Dijkema, T., Golap, K., Hiriart, R., Pokorny, M., Pouzols, F., Raba, R., van Diepen, G.
+}
+\date{October, 2018}
 \maketitle
 
 \ifpdf
@@ -74,23 +75,39 @@ VLBI processing and non dish arrays.
 
 \section{Introduction}
 
-The MeasurementSet (MS) defines the format in which visibility and
-single-dish data are stored for packages using casa/casacore code.
+The MeasurementSet (MS) defines a format in which interferometer
+visibilities and single-dish data are stored. It will be implemented in
+software packages using casa/casacore code.  This document will define
+the schematic layout of information stored in the MeasurementSet
+(refered to as MS or ms in this documnent).  No attempt is being made
+here to suggest implementation and we tried to distance the schematic
+from implementation issues (although we may attach an addendum in the
+future, to this document, to describe implementation choices
+especially with regards to IO rates and large data issues).
+
+Here are some of the major changes from MS V2.0:
+
 
 
 \begin{itemize}
 
 \item{{\bf Explicit keys} One of the major complaints of ms v2.0 is
-    the use of row ids in subtables as implicit keys. In v3.0 we are
-    moving to explicit keys; e.g ANTENNA subtable will have a
-    column ANTENNA\_ID so that when making a subset MS re-indexing is
-    not needed in the main table.}
+  the use of row ids in subtables as implicit keys. In v3.0 we are
+  moving to explicit keys; e.g ANTENNA subtable will have a column
+  ANTENNA\_ID so that when making a subset MS re-indexing is not
+  needed in the main table. This makes it easier to make a subset of
+  an MS without the need to reindex the data in the main table or any
+  subtables.}
 
-
-\item{{\bf Single-dish processing:} FLOAT\_DATA is going to be replaced
-    by DATA unifying it with interferometer. It is left to the column
-    implementation to store floats efficiently rather than have
-    multiple columns defined for data types }
+\item{{\bf Single-dish processing:} FLOAT\_DATA is going to be
+  replaced by DATA unifying it with interferometer. It is left to the
+  software column implementation to store floats efficiently rather
+  than have multiple columns defined for different data types. We
+  donot need to define in the schematic how the data is to be stored
+  and accessed for efficiency purposes. The implementation can decide
+  to compress data or keep as float or integers but on request a given
+  DATA column cell, for e.g, single precision Complex numbers are
+  served.}
 
 
 \item{{\bf Synthesis calibration:} The need for calibrations table as
@@ -102,8 +119,8 @@ single-dish data are stored for packages using casa/casacore code.
     CORRECTED\_DATA) or kludges have been used by casa (for e.g) to
     deal with having version of data, flag or weight. These 3 columns
     are having the same shapes in every row of an msv3.0.  Whenever
-    changes are made example flagging or calibration and a new version
-    is needed. A new triplet of columns will be made. It is left to
+    changes are made, example flagging or calibration, and a new version
+    is needed a new triplet of columns will be made. It is left to
     software implementation to do the smart thing (not making
     unnecessary copies). E.g if flagging only is done and need to be
     saved in a new version of FLAG column, the new version of DATA an
@@ -113,7 +130,7 @@ single-dish data are stored for packages using casa/casacore code.
 \item{{\bf Data Description}The concept of data description is being
     deprecated it saved a column of integers but users found it
     confusing. SPECTRAL\_WINDOW\_ID and POLARIZATION\_ID are explicit
-    columns in the main table}
+    columns in the main table.}
 
 \item{{\bf VLBI data reduction:} From v2.0 added an optional subtable
     INTERFEROMETER\_MODEL}
@@ -122,35 +139,46 @@ single-dish data are stored for packages using casa/casacore code.
     PHASED\_ARRAY, which will be defining which antennas form a phased
     array station.}
 
-\item{{\bf Quality tables} Three optional subtables that stores statistics on quality and sensitivity are being added.}
+\item{{\bf BEAM, EPHEMERIDES and SCAN subtables:} In MS V2.0 the BEAM
+  (BEAM\_ID), EPHEMERIDES (EPHEMERIS\_ID) and SCAN (SCAN\_NUMBER)
+  subtables are referred to but were not defined. Here we explicitly
+  define these optional subtables.}
+
 
 \end{itemize}
 
 
 
-Some features:
+Some features and reasons for some changes made and not made:
 
 \begin{itemize}
 
-\item{{\bf Incremental change:} The changes proposed here are designed
-to be as incremental as possible and taking into account what usage at different telescopes and software packages has found lacking.}
+\item{{\bf Changes:} The changes proposed here are designed
+  to be as incremental as possible and taking into account what usage
+  at different telescopes and software packages has found lacking.}
 
-\item{{\bf Compatibility:} Some of the changes proposed here are not backwards compatible}
+\item{{\bf Compatibility:} Some of the changes proposed here are not
+  backwards compatible but converters can written to move data between
+  version 2.0 and 3.0. As there is more information in version 3.0
+  going to version 2.0 may be lossy.}
 
 \item{{\bf Calibration information:} Many of the direct and peripheral
-    information stored at data collection can be stored as calibration
-    terms (Jones or Mueller matrices). Therefore MS v3.0 will carry in
-    its definition optional calibration table which may carry
-    monitoring information that can be used to modify the data,
-    weights and flags }
+  information stored at data collection can be stored as calibration
+  terms (Jones or Mueller matrices). Therefore MS v3.0 will carry in
+  its definition optional calibration tables which may carry
+  monitoring information that can be used to modify the data, weights
+  and flags. The calibration tables definition will be added to this
+  document once it is finalized }
 
 \item{{\bf Storage:} A future document will provide results and
     suggestion for data storage structures for some commonly used
     access patterns and storage system in use.}
 
-\item{{\bf Multi measurement sets:} In a different document we will
-    describe the format of having an MS which consists of valid sub
-    MSs without physical concatenation}
+\item{{\bf Multi measurement sets:} The reason for Multi Measurement
+  Sets (MMS) was to bypass an issue in the impementation in parallel
+  access subsection of an ms could not be locked separately. We
+  therefore postpone the need to define the MMS format if no
+  implementation of multi-lockable Measurementsets is do-able. }
 
 
 \end{itemize}
@@ -302,18 +330,6 @@ This optional subtable contains information necessary for VLBI arrays
 
 Information about elements that makes a station antenna, combination scheme etc
 
-\subsubsection{QUALITY TABLES}
-The following subtables are optional and may be filled at such times as flagging or data averaging (i.e when the whole data is being parsed)
-The purpose of the 3 tables is getting a quick overview that allows some basic analysis of  RFI and sensitivity.
- 
-\paragraph{QUALITY\_TIME\_STATISTIC table}
-This is an optional table for storing time related quality statistics.
-
-\paragraph{QUALITY\_FREQUENCY\_STATISTIC table}
-This is an optional table for storing frequency related quality statistics.
-
-\paragraph{QUALITY\_BASELINE\_STATISTIC table}
-This is an optional table for storing baseline related quality statistics. 
 
 \subsubsection{SCAN subtable}
 
@@ -672,7 +688,7 @@ OPTICAL velocity in m/s.
 
 \end{description}
 
-\definetable{EPHEMERIS: Ephemerides information}{
+\definetable{EPHEMERIDES: Ephemerides information}{
 
 \defline{\em Keywords}
 OBSLOC  &  String &  & &  observer's location for ephemerides \\
@@ -1246,111 +1262,6 @@ table containing pass information.
 
 \end{description}
 
-
-\definetable{QUALITY\_TIME\_STATISTIC: Time related statistic information}{
-\defline{\bf Columns}
-\defline{\em Key}
-TIME & Double & s &  EPOCH      & Time Point \\
-FREQUENCY & Double & Hz &        & Frequency Point \\
-
-\defline{\em Data}  
-KIND  & String &    &      & Fixed set of string defining the kind of statistics\\
-VALUE  & Complex(nc) &    &      & Statistics of KIND\\
-
-
-
-}
-\begin{description}
-
-\item[Notes:] This sub-table contains time associated statitistics
-for the MS.
-\item[TIME] Time point at which statistics are calculated
-\item[FREQUENCY]  Frequency point at which statistics are calculated
-\item[KIND] A string (from a list defined below) that defines the statistics being recorded
-
-\item[VALUE]  Value of statistics
-
-Possible string for {\bf KIND}:
-
-\item[Count:] The number of unflagged samples.
-\item[Sum:] The sum of the unflagged data.
-\item[Mean:] The mean of the unflagged data (Sum / Count).
-\item[RFICount:] The number of flagged samples due to RFI. If possible, they should denote true RFI samples, not samples that are lost due to failing stations, border channel issues, etc.
-\item[RFISum:] The sum of the flagged samples due to RFI.
-\item[RFIMean:] The mean of the RFI (RFISum / RFICount).
-\item[RFIRatio:] RFICount/(Count+RFICount).
-\item[FlaggedCount:] The total number of flagged samples. This does include any kind of flagged samples. “NaN” / “inf” values should
-also be counted as being flagged. Count + FlaggedCount = Total nr samples in the set.
-\item[FlaggedRatio:] FlaggedCount/(FlaggedCount+Count).
-\item[SumP2:] The sum of squares. Together with the mean and the count, this provides enough information to calculate the variance. This easily allows combining ranges.
-\item[SumP3:] The sum of the third power, see SumP4 for why.
-\item[SumP4:] The sum of the fourth power. Together with the sum, sum of squares and sums of third power, this provides enough information to calculate the kurtosis and the variance of the variance. While the kurtosis and/or variance of variance can be stored directly, storing them as SumP4 allows to combine ranges easily.
-\item[Variance:] The variance: $\sigma^2 = <(x –mean)^2> $.
-\item[VarianceOfVariance:] The variance of the variance.
-\item[Skewness:] The skewness (third standardized moment).
-\item[Kurtosis:] The kurtosis, using the most common definition (i.e., normalized so that a kurtosis of Gausian distribution is zero).
-\item[SignalToNoise:]Thesignaltonoise.
-\item[DSum,DMean,DSumP2,DSumP3,DSumP4,DVariance,DVarianceOfVariance,DCount:] these statistics starting with ‘D’ are the same as their counterpart without the ‘D’, but are differential. They can be calculated in different ways, but they should quantize only the noise, thus contain as few contribution of
-celestial sources as possible. The most trivial option is to calculate the 
-statistics on the difference between adjacent channels (on high res).
-\item[BadSolutionCount:] as RFICount, but for bad solutions. This count should not include RFI marked samples. Count - BadSolutionCount = number of good solutions.
-\item[BadSolutionRatio:] Count/BadSolutionCount.
-\item[FTSum:] The Fourier transform of the data without fringe stopping (thus phase centred on the NCP). Flagged samples should not be FTed. Only applicable in time and frequency direction. Data should be uniformly gridded as the other statistics, and the time/frequency range value specifies the 1/time and 1/frequency values.
-\item[FTMean:] FTSum/Count
-
-The RFICount, RFIRatio, FlaggedCount, FlaggedRatio, Count, DCount, BadSolutionCount, BadSolutionRatio  are real valued, all others are complex. The statistics of complex variables are independently calculated. For example, the complex sum of squares is: “$\sum_X Re(x)^2 + i \times Im(x)^2$, and not $\sum_X  x^2$.
-
-\end{description}
-
-\definetable{QUALITY\_FREQUENCY\_STATISTIC: Frequency related statistic information}{
-\defline{\bf Columns}
-\defline{\em Key}
-FREQUENCY & Double & Hz &        & Frequency Point \\
-
-\defline{\em Data}  
-KIND  & String &    &      & Fixed set of string defining the kind of statistics\\
-VALUE  & Complex(nc) &    &      & Statistics of KIND\\
-
-
-
-}
-\begin{description}
-
-\item[Notes:] This sub-table contains frequency associated statitistics
-for the MS.
-\item[FREQUENCY]  Frequency point at which statistics are calculated
-\item[KIND] A string (from a list defined below) that defines the statistics being recorded (see QUALITY\_TIME\_STATISTIC for list)
-
-\item[VALUE]  Value of statistics
-
-\end{description}
-
-\definetable{QUALITY\_BASELINE\_STATISTIC: Baseline related statistic information}{
-\defline{\bf Columns}
-\defline{\em Key}
-ANTENNA1 & Int & & & Antenna id \\
-ANTENNA2 & Int & & & Antenna id \\
-FREQUENCY & Double & Hz &        & Frequency Point \\
-
-\defline{\em Data}  
-KIND  & String &    &      & Fixed set of string defining the kind of statistics\\
-VALUE  & Complex(nc) &    &      & Statistics of KIND\\
-
-
-
-}
-\begin{description}
-
-\item[Notes:] This sub-table contains baseline associated statitistics
-for the MS.
-\item[ANTENNA1]  ANTENNA\_ID (in ANTENNA) of first antenna in baseline
-\item[ANTENNA1]  ANTENNA\_ID (in ANTENNA) of second antenna in baseline
-\item[FREQUENCY]  Frequency point at which statistics are calculated
-\item[KIND] A string (from a list defined below) that defines the statistics being recorded (see QUALITY\_TIME\_STATISTIC for list)
-
-\item[VALUE]  Value of statistics
-
-\end{description}
 
 
 
