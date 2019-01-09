@@ -45,7 +45,6 @@
 .cmtt-10x-x-109{font-family: monospace;}  
 .cmtt-10x-x-109{font-family: monospace;}  
 .cmti-10x-x-109{ font-style: italic;}  
-.cmbxti-10x-x-109{ font-weight: bold; font-style: italic;}  
 p.noindent { text-indent: 0em }  
 td p.noindent { text-indent: 0em; margin-top:0em; }  
 p.nopar { text-indent: 0em; }  
@@ -6906,69 +6905,48 @@ They will be stored with StandardStMan.
    <h4 class="subsectionHead"><span class="titlemark">9.2   </span> <a 
  id="x1-1010009.2"></a>COPY COLUMN</h4>
 <!--l. 4556--><p class="noindent" ><span 
-class="cmbx-10x-x-109">NOTE: This subcommand cannot be used yet and will give a parser error when</span>
-<span 
-class="cmbx-10x-x-109">used.</span>
+class="cmbx-10x-x-109">NOTE: </span>This subcommand cannot be used yet and will give a parser error when used.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-172">
   COPY COLUMN spec1, spec2, ...
 </div>
-<!--l. 4560--><p class="nopar" > <span 
-class="cmbx-10x-x-109">makes it possible to copy columns, where each column speciﬁcation looks like:</span>
+<!--l. 4560--><p class="nopar" > makes it possible to copy columns, where each column speciﬁcation looks like:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-173">
   col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
 </div>
-<!--l. 4565--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The new column gets the same description, but it is possible to deﬁne a new data type and/or</span>
-<span 
-class="cmbx-10x-x-109">tile shape. If the </span><span 
-class="cmtt-10x-x-109">SET </span><span 
-class="cmbx-10x-x-109">keyword is given values are written into the new column. If given, the</span>
-<span 
-class="cmbx-10x-x-109">value of an expression is stored in the new column, otherwise the contents of the input column.</span>
-<span 
-class="cmbx-10x-x-109">In its simplest form it copies a column adds one or more columns to the table. The</span>
-<span 
-class="cmbx-10x-x-109">speciﬁcation of the columns and the optional data managers is the same as used in</span>
-<span 
-class="cmbx-10x-x-109">the </span><a 
-href="#x1-960008"><span 
-class="cmbx-10x-x-109">CREATE TABLE</span></a> <span 
-class="cmbx-10x-x-109">command. Thus for each column a data type, dimensionality</span>
-<span 
-class="cmbx-10x-x-109">or shape, and unit can be given. The data manager(s) for the new columns can</span>
-<span 
-class="cmbx-10x-x-109">be speciﬁed in the DMINFO part. If not given, StandardStMan will be used. For</span>
-<span 
-class="cmbx-10x-x-109">example:</span>
+<!--l. 4565--><p class="nopar" > The new column gets the same description, but it is possible to deﬁne a new data type and/or tile shape. If
+the <span 
+class="cmtt-10x-x-109">SET </span>keyword is given values are written into the new column. If given, the value of an expression is stored
+in the new column, otherwise the contents of the input column. In its simplest form it copies a
+column adds one or more columns to the table. The speciﬁcation of the columns and the optional
+data managers is the same as used in the <a 
+href="#x1-960008">CREATE TABLE</a> command. Thus for each column a
+data type, dimensionality or shape, and unit can be given. The data manager(s) for the new
+columns can be speciﬁed in the DMINFO part. If not given, StandardStMan will be used. For
+example:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-174">
   ADD COLUMN NCol1 R4, NCol2 R8 [UNIT=&#x0022;m&#x0022;, NDIM=3]
 </div>
-<!--l. 4581--><p class="nopar" > <span 
-class="cmbx-10x-x-109">adds two columns, a 4-byte ﬂoating point scalar column and an 8-byte ﬂoating point 3-dim</span>
-<span 
-class="cmbx-10x-x-109">array column. They will be stored with StandardStMan.</span>
+<!--l. 4581--><p class="nopar" > adds two columns, a 4-byte ﬂoating point scalar column and an 8-byte ﬂoating point 3-dim array column.
+They will be stored with StandardStMan.
 </p><!--l. 4585--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">9.3   </span></span> <a 
- id="x1-1020009.3"></a><span 
-class="cmbx-10x-x-109">RENAME COLUMN</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">9.3   </span> <a 
+ id="x1-1020009.3"></a>RENAME COLUMN</h4>
                                                                                             
                                                                                             
    <div class="verbatim" id="verbatim-175">
   RENAME COLUMN old1 TO new1, old2 TO new2, etc.
 </div>
-<!--l. 4588--><p class="nopar" > <span 
-class="cmbx-10x-x-109">renames one or more columns in a table. For example:</span>
+<!--l. 4588--><p class="nopar" > renames one or more columns in a table. For example:
                                                                                             
                                                                                             
 </p>
@@ -6978,19 +6956,15 @@ class="cmbx-10x-x-109">renames one or more columns in a table. For example:</spa
 <!--l. 4593--><p class="nopar" >
 </p><!--l. 4595--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">9.4   </span></span> <a 
- id="x1-1030009.4"></a><span 
-class="cmbx-10x-x-109">DELETE COLUMN</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">9.4   </span> <a 
+ id="x1-1030009.4"></a>DELETE COLUMN</h4>
                                                                                             
                                                                                             
    <div class="verbatim" id="verbatim-177">
   DELETE COLUMN col1, col2, etc.
 </div>
-<!--l. 4598--><p class="nopar" > <span 
-class="cmbx-10x-x-109">removes one or more columns. Note that if multiple columns are combined in a TiledStMan,</span>
-<span 
-class="cmbx-10x-x-109">they have to be removed at the same time. Thus in that case</span>
+<!--l. 4598--><p class="nopar" > removes one or more columns. Note that if multiple columns are combined in a TiledStMan, they have to be
+removed at the same time. Thus in that case
                                                                                             
                                                                                             
 </p>
@@ -6998,46 +6972,28 @@ class="cmbx-10x-x-109">they have to be removed at the same time. Thus in that ca
   DELETE COLUMN col1, col2
  <br />  DELETE COLUMN col1, DELETE COLUMN col2
 </div>
-<!--l. 4605--><p class="nopar" > <span 
-class="cmbx-10x-x-109">are not the same, because the second example might fail.</span>
+<!--l. 4605--><p class="nopar" > are not the same, because the second example might fail.
 </p><!--l. 4608--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">9.5   </span></span> <a 
- id="x1-1040009.5"></a><span 
-class="cmbx-10x-x-109">SET KEYWORD</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">9.5   </span> <a 
+ id="x1-1040009.5"></a>SET KEYWORD</h4>
                                                                                             
                                                                                             
    <div class="verbatim" id="verbatim-179">
   SET KEYWORD key1=value1 AS dtype, etc.
 </div>
-<!--l. 4611--><p class="nopar" > <span 
-class="cmbx-10x-x-109">adds a keyword with the given value or replaces the value if the keyword already exists. The</span>
-<span 
-class="cmbx-10x-x-109">value of a keyword can be a scalar, array, or arbitrarily deeply nested record. See</span>
-<a 
-href="#x1-470004.5"><span 
-class="cmbx-10x-x-109">section 4.5</span></a> <span 
-class="cmbx-10x-x-109">how to specify a keyword name in a column or nested record. The </span><span 
-class="cmtt-10x-x-109">AS dtype</span>
-<span 
-class="cmbx-10x-x-109">part can be used to explicitly set the data type of a new keyword. For an existing</span>
-<span 
-class="cmbx-10x-x-109">keyword, the data type of the new value has to match the data type of the current</span>
-<span 
-class="cmbx-10x-x-109">value.</span>
-</p><!--l. 4622--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The value can be an expression, possibly using values from another table given in the</span>
-<span 
-class="cmbx-10x-x-109">FROM clause. It has to be a constant expression, thus cannot depend on column values. Of</span>
-<span 
-class="cmbx-10x-x-109">course, column values can be used when aggregated to a single value. If no data</span>
-<span 
-class="cmbx-10x-x-109">type is given, the data type of the expression result is used. If given, upward and</span>
-<span 
-class="cmbx-10x-x-109">downward coercion is possible (e.g., integer to ﬂoat and also ﬂoat to integer). For</span>
-<span 
-class="cmbx-10x-x-109">example:</span>
+<!--l. 4611--><p class="nopar" > adds a keyword with the given value or replaces the value if the keyword already exists. The value of a
+keyword can be a scalar, array, or arbitrarily deeply nested record. See <a 
+href="#x1-470004.5">section 4.5</a> how to specify a keyword
+name in a column or nested record. The <span 
+class="cmtt-10x-x-109">AS dtype </span>part can be used to explicitly set the data type of a new
+keyword. For an existing keyword, the data type of the new value has to match the data type of the current
+value.
+</p><!--l. 4622--><p class="indent" >   The value can be an expression, possibly using values from another table given in the FROM clause. It
+has to be a constant expression, thus cannot depend on column values. Of course, column values can be used
+when aggregated to a single value. If no data type is given, the data type of the expression result is used. If
+given, upward and downward coercion is possible (e.g., integer to ﬂoat and also ﬂoat to integer). For
+example:
                                                                                             
                                                                                             
 </p>
@@ -7049,118 +7005,70 @@ class="cmbx-10x-x-109">example:</span>
  <br />  SET KEYWORD col::ckey=[=], col::ckey.subrec=[=]
  <br />  SET KEWYORD key=[] AS I4
 </div>
-<!--l. 4636--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The 1st example sets table keyword </span><span 
-class="cmbxti-10x-x-109">key1 </span><span 
-class="cmbx-10x-x-109">to 4. Its data type is not given, thus is the</span>
-<span 
-class="cmbx-10x-x-109">expression’s data type, in this case I8. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The 2nd example sets </span><span 
-class="cmbxti-10x-x-109">key1 </span><span 
-class="cmbx-10x-x-109">to 9, but as an unsigned 4 byte integer. Note that the </span><span 
-class="cmtt-10x-x-109">:: </span><span 
-class="cmbx-10x-x-109">part is</span>
-<span 
-class="cmbx-10x-x-109">redundant. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The 3rd example copies the value of keyword </span><span 
-class="cmbxti-10x-x-109">otherkey </span><span 
-class="cmbx-10x-x-109">while converting its data</span>
-<span 
-class="cmbx-10x-x-109">type to I4. Note that if no data type is given, the data type of </span><span 
-class="cmbxti-10x-x-109">otherkey </span><span 
-class="cmbx-10x-x-109">is NOT</span>
-<span 
-class="cmbx-10x-x-109">preserved, because it is seen as a TaQL expression which has data type I8 (or R8).</span>
+<!--l. 4636--><p class="nopar" > The 1st example sets table keyword <span 
+class="cmti-10x-x-109">key1 </span>to 4. Its data type is not given, thus is the expression’s data type,
+in this case I8. <br 
+class="newline" />The 2nd example sets <span 
+class="cmti-10x-x-109">key1 </span>to 9, but as an unsigned 4 byte integer. Note that the <span 
+class="cmtt-10x-x-109">:: </span>part is redundant.
 <br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The 4th example sets the </span><span 
-class="cmbxti-10x-x-109">ckey.subrec.ﬂd1 </span><span 
-class="cmbx-10x-x-109">in column </span><span 
-class="cmbxti-10x-x-109">col </span><span 
-class="cmbx-10x-x-109">to the given vector. It is a nested</span>
+class="newline" />The 3rd example copies the value of keyword <span 
+class="cmti-10x-x-109">otherkey </span>while converting its data type to I4. Note that if no
+data type is given, the data type of <span 
+class="cmti-10x-x-109">otherkey </span>is NOT preserved, because it is seen as a TaQL expression which
+has data type I8 (or R8). <br 
+class="newline" />The 4th example sets the <span 
+class="cmti-10x-x-109">ckey.subrec.ﬂd1 </span>in column <span 
+class="cmti-10x-x-109">col </span>to the given vector. It is a nested structure, thus ﬁeld
 <span 
-class="cmbx-10x-x-109">structure, thus ﬁeld </span><span 
-class="cmbxti-10x-x-109">ﬂd1 </span><span 
-class="cmbx-10x-x-109">in ﬁeld </span><span 
-class="cmbxti-10x-x-109">subrec </span><span 
-class="cmbx-10x-x-109">of column keyword </span><span 
-class="cmbxti-10x-x-109">ckey </span><span 
-class="cmbx-10x-x-109">will be set. Its data type will</span>
-<span 
-class="cmbx-10x-x-109">be R8. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that the command in the 4th example does not create the higher level records. If not</span>
-<span 
-class="cmbx-10x-x-109">existing yet, the 5th example can be used to create them, where [=] denotes an empty record</span>
-<span 
-class="cmbx-10x-x-109">(it is the old Glish syntax for an empty struct). </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The last example shows how to create a key with an empty integer vector as value. In</span>
-<span 
-class="cmbx-10x-x-109">such a case the data type must be given, because it cannot be derived from the</span>
-<span 
-class="cmbx-10x-x-109">value.</span>
+class="cmti-10x-x-109">ﬂd1 </span>in ﬁeld <span 
+class="cmti-10x-x-109">subrec </span>of column keyword <span 
+class="cmti-10x-x-109">ckey </span>will be set. Its data type will be R8. <br 
+class="newline" />Note that the command in the 4th example does not create the higher level records. If not existing yet, the
+5th example can be used to create them, where [=] denotes an empty record (it is the old Glish syntax for an
+empty struct). <br 
+class="newline" />The last example shows how to create a key with an empty integer vector as value. In such a case the data
+type must be given, because it cannot be derived from the value.
 </p>
 <!--l. 4657--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-1050009.5"></a></span>
-   <span 
-class="cmbx-10x-x-109">Setting a keyword to the value of another keyword is easily possible. For instance:</span>
+   Setting a keyword to the value of another keyword is easily possible. For instance:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-181">
   SET KEYWORD key2 = otherkey
 </div>
-<!--l. 4662--><p class="nopar" > <span 
-class="cmbx-10x-x-109">However, it has two problems. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">1) As explained above the data type might not be preserved. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">2) Keywords having a record value cannot be copied this way, because TaQL expressions do</span>
-<span 
-class="cmbx-10x-x-109">not support record values.</span>
+<!--l. 4662--><p class="nopar" > However, it has two problems. <br 
+class="newline" />1) As explained above the data type might not be preserved. <br 
+class="newline" />2) Keywords having a record value cannot be copied this way, because TaQL expressions do not support
+record values.
 </p><!--l. 4668--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">9.6   </span></span> <a 
- id="x1-1060009.6"></a><span 
-class="cmbx-10x-x-109">COPY KEYWORD</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">9.6   </span> <a 
+ id="x1-1060009.6"></a>COPY KEYWORD</h4>
                                                                                             
                                                                                             
    <div class="verbatim" id="verbatim-182">
   COPY KEYWORD key = otherkey AS dtype, etc.
 </div>
-<!--l. 4671--><p class="nopar" > <span 
-class="cmbx-10x-x-109">copies the value of keyword </span><span 
-class="cmbxti-10x-x-109">otherkey </span><span 
-class="cmbx-10x-x-109">to </span><span 
-class="cmbxti-10x-x-109">key</span><span 
-class="cmbx-10x-x-109">. It can be used for any keyword value,</span>
-<span 
-class="cmbx-10x-x-109">thus also for records. The optional </span><span 
-class="cmtt-10x-x-109">AS dtype </span><span 
-class="cmbx-10x-x-109">part can be used to change the data</span>
-<span 
-class="cmbx-10x-x-109">type.</span>
+<!--l. 4671--><p class="nopar" > copies the value of keyword <span 
+class="cmti-10x-x-109">otherkey </span>to <span 
+class="cmti-10x-x-109">key</span>. It can be used for any keyword value, thus also for records. The
+optional <span 
+class="cmtt-10x-x-109">AS dtype </span>part can be used to change the data type.
 </p><!--l. 4677--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">9.7   </span></span> <a 
- id="x1-1070009.7"></a><span 
-class="cmbx-10x-x-109">RENAME KEYWORD</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">9.7   </span> <a 
+ id="x1-1070009.7"></a>RENAME KEYWORD</h4>
                                                                                             
                                                                                             
    <div class="verbatim" id="verbatim-183">
   RENAME KEYWORD old1 TO new1, old2 TO new2, etc.
 </div>
-<!--l. 4680--><p class="nopar" > <span 
-class="cmbx-10x-x-109">renames one or more table or column keywords. If the old keyword is a ﬁeld in a column or a</span>
-<span 
-class="cmbx-10x-x-109">nested record, the new name should only contain the new ﬁeld name, not the full keyword</span>
-<span 
-class="cmbx-10x-x-109">path. For example:</span>
+<!--l. 4680--><p class="nopar" > renames one or more table or column keywords. If the old keyword is a ﬁeld in a column or a nested
+record, the new name should only contain the new ﬁeld name, not the full keyword path. For
+example:
                                                                                             
                                                                                             
 </p>
@@ -7168,146 +7076,100 @@ class="cmbx-10x-x-109">path. For example:</span>
   RENAME KEYWORD NAME to NAME_SAV, Col1::CNAME to CNAME_SAV
  <br />  RENAME KEYWORD KEYS.SET.NAME to NAME_SAV
 </div>
-<!--l. 4688--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The ﬁrst example renames the table keyword NAME and the keyword CNAME of column</span>
-<span 
-class="cmbx-10x-x-109">Col1. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The second example renames a ﬁeld in the nested records of table keyword KEYS.</span>
+<!--l. 4688--><p class="nopar" > The ﬁrst example renames the table keyword NAME and the keyword CNAME of column Col1.
+<br 
+class="newline" />The second example renames a ﬁeld in the nested records of table keyword KEYS.
 </p><!--l. 4694--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">9.8   </span></span> <a 
- id="x1-1080009.8"></a><span 
-class="cmbx-10x-x-109">DELETE KEYWORD</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">9.8   </span> <a 
+ id="x1-1080009.8"></a>DELETE KEYWORD</h4>
                                                                                             
                                                                                             
    <div class="verbatim" id="verbatim-185">
   DELETE KEYWORD key1, key2, ...
 </div>
-<!--l. 4697--><p class="nopar" > <span 
-class="cmbx-10x-x-109">removes one or more table or column keywords.</span>
+<!--l. 4697--><p class="nopar" > removes one or more table or column keywords.
 </p><!--l. 4700--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">9.9   </span></span> <a 
- id="x1-1090009.9"></a><span 
-class="cmbx-10x-x-109">ADD ROW</span></h4>
-<!--l. 4701--><p class="noindent" ><span 
-class="cmbx-10x-x-109">adds the given number of rows to the table.</span>
+   <h4 class="subsectionHead"><span class="titlemark">9.9   </span> <a 
+ id="x1-1090009.9"></a>ADD ROW</h4>
+<!--l. 4701--><p class="noindent" >adds the given number of rows to the table.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-186">
   ADD ROW nrows
 </div>
-<!--l. 4704--><p class="nopar" > <span 
-class="cmbx-10x-x-109">where </span><span 
-class="cmbxti-10x-x-109">nrows </span><span 
-class="cmbx-10x-x-109">can be any expression. For example,</span>
+<!--l. 4704--><p class="nopar" > where <span 
+class="cmti-10x-x-109">nrows </span>can be any expression. For example,
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-187">
  ALTER TABLE mytab ADD ROW [SELECT GCOUNT() from othertab]
 </div>
-<!--l. 4709--><p class="nopar" > <span 
-class="cmbx-10x-x-109">makes </span><span 
-class="cmbxti-10x-x-109">mytab </span><span 
-class="cmbx-10x-x-109">the same size as </span><span 
-class="cmbxti-10x-x-109">othertab </span><span 
-class="cmbx-10x-x-109">(assuming it was empty).</span>
+<!--l. 4709--><p class="nopar" > makes <span 
+class="cmti-10x-x-109">mytab </span>the same size as <span 
+class="cmti-10x-x-109">othertab </span>(assuming it was empty).
 </p><!--l. 4713--><p class="noindent" >
 </p>
-   <h3 class="sectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">10   </span></span> <a 
- id="x1-11000010"></a><span 
-class="cmbx-10x-x-109">Counting in a table</span></h3>
-<!--l. 4714--><p class="noindent" ><span 
-class="cmbx-10x-x-109">Before TaQL had the GROUPBY command, the COUNT command could be used instead</span>
-<span 
-class="cmbx-10x-x-109">of the </span><a 
+   <h3 class="sectionHead"><span class="titlemark">10   </span> <a 
+ id="x1-11000010"></a>Counting in a table</h3>
+<!--l. 4714--><p class="noindent" >Before TaQL had the GROUPBY command, the COUNT command could be used instead of the <a 
 href="#x1-650004.10.13"><span 
-class="cmtt-10x-x-109">gcount </span><span 
-class="cmbx-10x-x-109">aggregate function</span></a> <span 
-class="cmbx-10x-x-109">to count the number of occurrences in a table.</span>
-<br 
-class="newline" /><span 
-class="cmbx-10x-x-109">For backward compatibility this command can still be used, but its usage is discouraged, also</span>
-<span 
-class="cmbx-10x-x-109">because usually GROUPBY is faster.</span>
-</p><!--l. 4720--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The exact syntax is:</span>
+class="cmtt-10x-x-109">gcount</span>
+aggregate function</a> to count the number of occurrences in a table. <br 
+class="newline" />For backward compatibility this command can still be used, but its usage is discouraged, also because usually
+GROUPBY is faster.
+</p><!--l. 4720--><p class="indent" >   The exact syntax is:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-188">
   COUNT column-list FROM table-list [WHERE expression]
 </div>
-<!--l. 4723--><p class="nopar" > <span 
-class="cmbx-10x-x-109">It counts the number of rows for each unique tuple in the column list of the table (after the</span>
-<span 
-class="cmbx-10x-x-109">possible WHERE selection is done). For example:</span>
+<!--l. 4723--><p class="nopar" > It counts the number of rows for each unique tuple in the column list of the table (after the possible
+WHERE selection is done). For example:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-189">
   COUNT TIME FROM my.ms
 </div>
-<!--l. 4729--><p class="nopar" > <span 
-class="cmbx-10x-x-109">counts the number of rows per timestamp.</span>
+<!--l. 4729--><p class="nopar" > counts the number of rows per timestamp.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-190">
   COUNT ANTENNA1,ANTENNA2 FROM my.ms
 </div>
-<!--l. 4733--><p class="nopar" > <span 
-class="cmbx-10x-x-109">counts the number of rows per baseline.</span>
-</p><!--l. 4736--><p class="indent" >   <span 
-class="cmbx-10x-x-109">As in the other TaQL commands a column in the column list can be any expression, but</span>
-<span 
-class="cmbx-10x-x-109">that will be slower than straight columns.</span>
+<!--l. 4733--><p class="nopar" > counts the number of rows per baseline.
+</p><!--l. 4736--><p class="indent" >   As in the other TaQL commands a column in the column list can be any expression, but that will be
+slower than straight columns.
 </p><!--l. 4739--><p class="noindent" >
 </p>
-   <h3 class="sectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">11   </span></span> <a 
- id="x1-11100011"></a><span 
-class="cmbx-10x-x-109">Calculations on a table</span></h3>
-<!--l. 4740--><p class="noindent" ><span 
-class="cmbx-10x-x-109">TaQL can be used to get derived values from a table by means of an expression. The</span>
-<span 
-class="cmbx-10x-x-109">expression can result in any data type and value type. For example, if the expression uses an</span>
-<span 
-class="cmbx-10x-x-109">array column, the result might be a vector of arrays (an array for each row). If the expression</span>
-<span 
-class="cmbx-10x-x-109">uses a scalar column, the result might be a vector of scalars or even a single scalar if a reduce</span>
-<span 
-class="cmbx-10x-x-109">function like SUM is used.</span>
-</p><!--l. 4747--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The CALC command was developed before the GROUPBY was available and before</span>
-<span 
-class="cmbx-10x-x-109">SELECT could be used without the FROM part. Currently, SELECT is more powerful than</span>
-<span 
-class="cmbx-10x-x-109">the CALC command. For example, multiple expressions can be given in a SELECT command.</span>
-<span 
-class="cmbx-10x-x-109">However, especially in Python sessions CALC has the advantage that it returns the results as a</span>
-<span 
-class="cmbx-10x-x-109">numpy-array or a list instead of a Casacore table.</span>
-</p><!--l. 4754--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The exact syntax is:</span>
+   <h3 class="sectionHead"><span class="titlemark">11   </span> <a 
+ id="x1-11100011"></a>Calculations on a table</h3>
+<!--l. 4740--><p class="noindent" >TaQL can be used to get derived values from a table by means of an expression. The expression can
+result in any data type and value type. For example, if the expression uses an array column, the
+result might be a vector of arrays (an array for each row). If the expression uses a scalar column,
+the result might be a vector of scalars or even a single scalar if a reduce function like SUM is
+used.
+</p><!--l. 4747--><p class="indent" >   The CALC command was developed before the GROUPBY was available and before SELECT could be
+used without the FROM part. Currently, SELECT is more powerful than the CALC command. For example,
+multiple expressions can be given in a SELECT command. However, especially in Python sessions CALC
+has the advantage that it returns the results as a numpy-array or a list instead of a Casacore
+table.
+</p><!--l. 4754--><p class="indent" >   The exact syntax is:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-191">
   CALC expression [FROM table_list]
 </div>
-<!--l. 4757--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The part in square brackets can be omitted if no column is (directly) used in the expression.</span>
-<span 
-class="cmbx-10x-x-109">The examples will make clear what that means. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The following syntax is still available for backward compatibility:</span>
+<!--l. 4757--><p class="nopar" > The part in square brackets can be omitted if no column is (directly) used in the expression. The examples
+will make clear what that means. <br 
+class="newline" />The following syntax is still available for backward compatibility:
                                                                                             
                                                                                             
 </p>
@@ -7321,102 +7183,75 @@ class="cmbx-10x-x-109">The following syntax is still available for backward comp
    <div class="verbatim" id="verbatim-193">
   CALC 1in cm
 </div>
-<!--l. 4767--><p class="nopar" > <span 
-class="cmbx-10x-x-109">is a simple expression not using a table. It shows how the CALC command can be used as a</span>
-<span 
-class="cmbx-10x-x-109">desk calculator to convert 1 inch to cm.</span>
+<!--l. 4767--><p class="nopar" > is a simple expression not using a table. It shows how the CALC command can be used as a desk calculator
+to convert 1 inch to cm.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-194">
   CALC mean(column1+column2) FROM mytable
 </div>
-<!--l. 4773--><p class="nopar" > <span 
-class="cmbx-10x-x-109">gives a vector of scalars containing the mean per row.</span>
+<!--l. 4773--><p class="nopar" > gives a vector of scalars containing the mean per row.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-195">
   CALC sum([SELECT FROM mytable GIVING [mean(column1+column2)]])
 </div>
-<!--l. 4778--><p class="nopar" > <span 
-class="cmbx-10x-x-109">gives a single scalar giving the sum of the means in each row. Note that in this command</span>
-<span 
-class="cmbx-10x-x-109">the CALC command does not need the FROM clause, because it does not use a</span>
-<span 
-class="cmbx-10x-x-109">column itself. Columns are only used in the nested query which has a FROM clause</span>
-<span 
-class="cmbx-10x-x-109">itself.</span>
+<!--l. 4778--><p class="nopar" > gives a single scalar giving the sum of the means in each row. Note that in this command the CALC
+command does not need the FROM clause, because it does not use a column itself. Columns are only used in
+the nested query which has a FROM clause itself.
 </p><!--l. 4784--><p class="noindent" >
 </p>
-   <h3 class="sectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12   </span></span> <a 
- id="x1-11200012"></a><span 
-class="cmbx-10x-x-109">Examples</span></h3>
+   <h3 class="sectionHead"><span class="titlemark">12   </span> <a 
+ id="x1-11200012"></a>Examples</h3>
 <!--l. 4785--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.1   </span></span> <a 
- id="x1-11300012.1"></a><span 
-class="cmbx-10x-x-109">Selection examples</span></h4>
-<!--l. 4786--><p class="noindent" ><span 
-class="cmbx-10x-x-109">Some examples are given starting with simple ones.</span>
+   <h4 class="subsectionHead"><span class="titlemark">12.1   </span> <a 
+ id="x1-11300012.1"></a>Selection examples</h4>
+<!--l. 4786--><p class="noindent" >Some examples are given starting with simple ones.
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.1.1   </span></span> <a 
- id="x1-11400012.1.1"></a><span 
-class="cmbx-10x-x-109">Reference table results</span></h5>
-<!--l. 4788--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The result of the following queries is a reference table, because no expressions have been given</span>
-<span 
-class="cmbx-10x-x-109">in the column-list. This will be the most common case when using TaQL.</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">12.1.1   </span> <a 
+ id="x1-11400012.1.1"></a>Reference table results</h5>
+<!--l. 4788--><p class="noindent" >The result of the following queries is a reference table, because no expressions have been given in the
+column-list. This will be the most common case when using TaQL.
      </p><dl class="description"><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.ms WHERE ANTENNA1 != ANTENNA2  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the cross-correlations in a MeasurementSet.</span>
+class="newline" />selects the cross-correlations in a MeasurementSet.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT NAME FROM some.ms::ANTENNA  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the NAME of all antennae in a MeasurementSet.</span>
+class="newline" />selects the NAME of all antennae in a MeasurementSet.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT unique ANTENNA1,ANTENNA2 FROM some.ms  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">gives the baselines used in a MeasurementSet.</span>
+class="newline" />gives the baselines used in a MeasurementSet.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT ANTENNA1,ANTENNA2 FROM some.ms GROUPBY ANTENNA1,ANTENNA2 </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">does the same using the GROUPBY clause.</span>
+class="newline" />does the same using the GROUPBY clause.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM mytable ORDERBY column0 DESC limit 10  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the 10 highest values of </span><span 
-class="cmtt-10x-x-109">column0</span><span 
-class="cmbx-10x-x-109">.</span>
+class="newline" />selects the 10 highest values of <span 
+class="cmtt-10x-x-109">column0</span>.
                                                                                             
                                                                                             
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.MS WHERE near(MJD(1999/03/30/17:27:15), TIME)  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the rows with the given time from a MeasurementSet. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that the TIME is stored in seconds, but will automatically be converted to</span>
-     <span 
-class="cmbx-10x-x-109">days.</span>
+class="newline" />selects the rows with the given time from a MeasurementSet. <br 
+class="newline" />Note that the TIME is stored in seconds, but will automatically be converted to days.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.MS where TIME in  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7428,11 +7263,10 @@ class="cmsy-10x-x-109">{</span><span
 class="cmtt-10x-x-109">MJD(1999/03/30/17:27:15),MJD(1999/03/30/17:29:15)</span><span 
 class="cmsy-10x-x-109">}</span><span 
 class="cmtt-10x-x-109">]  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the rows in the given closed time interval.</span>
+class="newline" />selects the rows in the given closed time interval.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.MS where TIME in  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7440,62 +7274,48 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">[MJD(1999/03/30/17:27:15),MJD(1999/03/30/17:29:15)]  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the rows having one of the given times. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note the diﬀerence with the previous example where an interval was given. Here a</span>
-     <span 
-class="cmbx-10x-x-109">set of two individual time values is given.</span>
+class="newline" />selects the rows having one of the given times. <br 
+class="newline" />Note the diﬀerence with the previous example where an interval was given. Here a set of two
+     individual time values is given.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT NAME FROM some.ms::ANTENNA WHERE NAME !</span><span 
 class="cmtt-10x-x-109"> p/[CR]S*/ </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the names of the international LOFAR stations (not core or remote).</span>
+class="newline" />selects the names of the international LOFAR stations (not core or remote).
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.ms WHERE ntrue(FLAG) &#x003E;= 3 </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects rows where at least 3 visibilities are ﬂagged.</span>
+class="newline" />selects rows where at least 3 visibilities are ﬂagged.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM book.table WHERE nelements(author) &#x003E; 1 </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects books with more than 1 author.</span>
+class="newline" />selects books with more than 1 author.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.ms WHERE any(ANTENNA1==[0,0,1] &#x0026;&#x0026; ANTENNA2==[1,3,2]) </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects the antenna pairs (baselines) 0-1, 0-3, and 1-2. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">It requires some explanation. The two comparisons result in boolean vectors (with 3</span>
-     <span 
-class="cmbx-10x-x-109">elements). It matching elements are both true, the baseline in the table row matches.</span>
-     <span 
-class="cmbx-10x-x-109">Thus the vectors are and-ed to see if any two matching elements are true.</span>
+class="newline" />selects the antenna pairs (baselines) 0-1, 0-3, and 1-2. <br 
+class="newline" />It requires some explanation. The two comparisons result in boolean vectors (with 3 elements).
+     It matching elements are both true, the baseline in the table row matches. Thus the vectors are
+     and-ed to see if any two matching elements are true.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.ms WHERE ANTENNA1 in [0,0,1] &#x0026;&#x0026; ANTENNA2 in [1,3,2]) </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">looks the same as above, but will select all baselines between the two sets, thus also</span>
-     <span 
-class="cmbx-10x-x-109">1-1, 1-3, and 0-2.</span>
+class="newline" />looks the same as above, but will select all baselines between the two sets, thus also 1-1, 1-3,
+     and 0-2.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM some.ms t1, that.ms t2 WHERE !all(near(t1.DATA, t2.DATA, 1e-5)) </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects all rows where the DATA columns in both tables are not equal (with some</span>
-     <span 
-class="cmbx-10x-x-109">tolerance). Note the use of shorthands t1 and t2.</span>
+class="newline" />selects all rows where the DATA columns in both tables are not equal (with some tolerance).
+     Note the use of shorthands t1 and t2.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM mytable WHERE cos(0d1m) &#x003C;= </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7503,39 +7323,32 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">sin(52deg) * sin(DEC) + cos(52deg) * cos(DEC) * cos(3h30m - RA)  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects observations with an direction (in say J2000) inside a cone with a radius of 1</span>
-                                                                                            
-                                                                                            
-     <span 
-class="cmbx-10x-x-109">arcmin around (3h30m, 52deg). To ﬁnd them the condition DISTANCE</span><!--l. 4858--><math 
+class="newline" />selects observations with an direction (in say J2000) inside a cone with a radius of 1 arcmin
+     around (3h30m, 52deg). To ﬁnd them the condition DISTANCE<!--l. 4858--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
-class="MathClass-rel">=</mo></math><span 
-class="cmbx-10x-x-109">RADIUS</span>
-     <span 
-class="cmbx-10x-x-109">must be fulﬁlled, which is equivalent to COS(RADIUS)</span><!--l. 4859--><math 
+class="MathClass-rel">=</mo></math>RADIUS
+     must be fulﬁlled, which is equivalent to COS(RADIUS)<!--l. 4859--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
-class="MathClass-rel">=</mo></math><span 
-class="cmbx-10x-x-109">COS(DISTANCE).</span>
+class="MathClass-rel">=</mo></math>COS(DISTANCE).
+                                                                                            
+                                                                                            
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM mytable WHERE [RA,DEC] INCONE [3h30m, 52deg, 0d1m]  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">does the same as above in an easier (and faster) way.</span>
+class="newline" />does the same as above in an easier (and faster) way.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM mytable WHERE angdist([RA,DEC], [3h30m, 52deg]) &#x003C;= 0d1m]  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">is another way to do the above.</span>
+class="newline" />is another way to do the above.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT FROM mytable WHERE object == pattern(&#x0022;3C*&#x0022;) &#x0026;&#x0026; </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7543,11 +7356,10 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">[RA,DEC] INCONE [3h30m, 52deg, 0d1m]  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">ﬁnds all 3C objects inside that cone.</span>
+class="newline" />ﬁnds all 3C objects inside that cone.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT ANTENNA1,ANTENNA2,sqrt(sumsqr(UVW[:2])) </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7555,15 +7367,11 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">FROM some.ms GROUPBY ANTENNA1,ANTENNA2  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">ﬁnds the 10 longest baselines. It groups by ANTENNA1 and ANTENNA2 to get</span>
-     <span 
-class="cmbx-10x-x-109">the unique baselines. UVW[:2] denotes the U and V coordinate giving the baseline</span>
-     <span 
-class="cmbx-10x-x-109">length.</span>
+class="newline" />ﬁnds the 10 longest baselines. It groups by ANTENNA1 and ANTENNA2 to get the unique
+     baselines. UVW[:2] denotes the U and V coordinate giving the baseline length.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select from MY.MS where DATA</span><span 
 class="cmtt-10x-x-109">_DESC</span><span 
 class="cmtt-10x-x-109">_ID in [select from ::DATA</span><span 
@@ -7576,15 +7384,11 @@ class="cmtt-10x-x-109"> </span></span></span>  <span
 class="cmtt-10x-x-109">SPECTRAL</span><span 
 class="cmtt-10x-x-109">_WINDOW</span><span 
 class="cmtt-10x-x-109">_ID in [0,2,4] giving [ROWID()]] </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">ﬁnds all rows in a measurement set matching the given spectral windows. It uses a</span>
-     <span 
-class="cmbx-10x-x-109">nested query to ﬁnd the DATA</span><span 
-class="cmbx-10x-x-109">_DESC</span><span 
-class="cmbx-10x-x-109">_ID for each spectral window.</span>
+class="newline" />ﬁnds all rows in a measurement set matching the given spectral windows. It uses a nested query
+     to ﬁnd the DATA_DESC_ID for each spectral window.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select from MY.MS where TIME in [select from ::SOURCE where REST</span><span 
 class="cmtt-10x-x-109">_FREQUENCY &#x003C;</span>
      <span 
@@ -7595,13 +7399,10 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">giving [TIME-INTERVAL/2 =:= TIME+INTERVAL/2]] </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">ﬁnds all rows in a measurement set observing sources with a rest frequency less</span>
-     <span 
-class="cmbx-10x-x-109">than 180 Mhz.</span>
+class="newline" />ﬁnds all rows in a measurement set observing sources with a rest frequency less than 180 Mhz.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select from VLA.MS, </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7627,25 +7428,15 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">[iif(UVW[2] &#x003C; 0, ANTENNA1, ANTENNA2)]]) </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">selects rows where an antenna (VLA has 25 m diameter) is shadowed. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The query in the FROM command ﬁnds all rows where an antenna is shadowed (i.e.,</span>
-     <span 
-class="cmbx-10x-x-109">its UV-distance less than 25 meters) and creates a temporary table. This selection</span>
-     <span 
-class="cmbx-10x-x-109">(named TIMESEL) is done ﬁrst otherwise two 2 equal selections are needed in</span>
-     <span 
-class="cmbx-10x-x-109">the main WHERE command. The last line determines which antenna is shadowed</span>
-     <span 
-class="cmbx-10x-x-109">(based on the W coordinate). The two lines above selects the times and baselines</span>
-     <span 
-class="cmbx-10x-x-109">where an antenna is shadowed.</span>
-                                                                                            
-                                                                                            
+class="newline" />selects rows where an antenna (VLA has 25 m diameter) is shadowed. <br 
+class="newline" />The  query  in  the  FROM  command  ﬁnds  all  rows  where  an  antenna  is  shadowed  (i.e.,  its
+     UV-distance  less  than  25  meters)  and  creates  a  temporary  table.  This  selection  (named
+     TIMESEL)  is  done  ﬁrst  otherwise  two  2  equal  selections  are  needed  in  the  main  WHERE
+     command. The last line determines which antenna is shadowed (based on the W coordinate).
+     The two lines above selects the times and baselines where an antenna is shadowed.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select from MS </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7672,16 +7463,14 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">where NET</span><span 
 class="cmtt-10x-x-109">_SIDEBAND==1 giving [ROWID()]] giving [ROWID()]] </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">ﬁnds all rows in the MeasurementSet with the given NET</span><span 
-class="cmbx-10x-x-109">_SIDEBAND. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The MeasurementSet uses a table to map spectral-window-id to data-desc-id. Hence</span>
-     <span 
-class="cmbx-10x-x-109">two nested subqueries are needed.</span>
+class="newline" />ﬁnds all rows in the MeasurementSet with the given NET_SIDEBAND. <br 
+class="newline" />The MeasurementSet uses a table to map spectral-window-id to data-desc-id. Hence two nested
+                                                                                            
+                                                                                            
+     subqueries are needed.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select findcone(REFERENCE</span><span 
 class="cmtt-10x-x-109">_DIR[0,], </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
@@ -7696,134 +7485,90 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">from MS/FIELD </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">compares the direction given in the ﬁrst argument with the directions given in the</span>
-     <span 
-class="cmbx-10x-x-109">second function argument using the search radius given in the third argument. It</span>
-     <span 
-class="cmbx-10x-x-109">returns the index of the ﬁrst matching cone (thus 0 or 1). If no cone matches, it</span>
-     <span 
-class="cmbx-10x-x-109">returns -1. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">It can be used in the following example to ﬁnd the name of the source matching a</span>
-     <span 
-class="cmbx-10x-x-109">direction.</span>
+class="newline" />compares the direction given in the ﬁrst argument with the directions given in the second function
+     argument using the search radius given in the third argument. It returns the index of the ﬁrst
+     matching cone (thus 0 or 1). If no cone matches, it returns -1. <br 
+class="newline" />It can be used in the following example to ﬁnd the name of the source matching a direction.
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
-class="cmtt-10x-x-109">select [’unknown’,’3C343’,’3C273’][1+findcone(...)] from MS/FIELD  </span><span 
-class="cmbx-10x-x-109">where  ...  is  the</span>
-     <span 
-class="cmbx-10x-x-109">ﬁndcone argument list given in the previous example. 1 is added to cope with the</span>
-     <span 
-class="cmbx-10x-x-109">case that no cone matches.</span></dd></dl>
+class="cmtt-10x-x-109">select [’unknown’,’3C343’,’3C273’][1+findcone(...)] from MS/FIELD  </span>where   ...   is   the
+     ﬁndcone argument list given in the previous example. 1 is added to cope with the case that no
+     cone matches.</dd></dl>
 <!--l. 4944--><p class="noindent" >
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.1.2   </span></span> <a 
- id="x1-11500012.1.2"></a><span 
-class="cmbx-10x-x-109">Plain table results</span></h5>
-<!--l. 4945--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The following examples result in a plain table, thus in a deep copy of the query results,</span>
-<span 
-class="cmbx-10x-x-109">because the column-list contains an expression or a data type.</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">12.1.2   </span> <a 
+ id="x1-11500012.1.2"></a>Plain table results</h5>
+<!--l. 4945--><p class="noindent" >The following examples result in a plain table, thus in a deep copy of the query results, because the
+column-list contains an expression or a data type.
      </p><dl class="description"><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT column0+column1 FROM mytable  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates a table of 1 column with name Col</span><span 
-class="cmbx-10x-x-109">_1. Its data type is on the expression data</span>
-     <span 
-class="cmbx-10x-x-109">type.</span>
+class="newline" />creates a table of 1 column with name Col_1. Its data type is on the expression data type.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT column0+column1 Res I4 FROM mytable  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates a table of 1 column with name </span><span 
-class="cmtt-10x-x-109">Res</span><span 
-class="cmbx-10x-x-109">. Its data type is a 4 byte signed integer.</span>
+class="newline" />creates a table of 1 column with name <span 
+class="cmtt-10x-x-109">Res</span>. Its data type is a 4 byte signed integer.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT colx colx R4 FROM mytable  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates a table of 1 column with name </span><span 
-class="cmtt-10x-x-109">colx</span><span 
-class="cmbx-10x-x-109">. The sole purpose of this selection is to</span>
-     <span 
-class="cmbx-10x-x-109">convert the data type of the column.</span>
+class="newline" />creates a table of 1 column with name <span 
+class="cmtt-10x-x-109">colx</span>. The sole purpose of this selection is to convert the
+     data type of the column.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">SELECT means(DATA,0) AS DATA</span><span 
 class="cmtt-10x-x-109">_MEAN C4 FROM my.ms  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates a table of 1 column with name </span><span 
+class="newline" />creates a table of 1 column with name <span 
 class="cmtt-10x-x-109">DATA</span><span 
-class="cmtt-10x-x-109">_MEAN</span><span 
-class="cmbx-10x-x-109">. Column DATA in a Casacore</span>
-                                                                                            
-                                                                                            
-     <span 
-class="cmbx-10x-x-109">MeasurementSet is a 2-dimensional array with axes polarization and frequency. This</span>
-     <span 
-class="cmbx-10x-x-109">command calculates and stores the mean in each polarization. If no data type was</span>
-     <span 
-class="cmbx-10x-x-109">given, the means would have been stored as double precision complex (which is the</span>
-     <span 
-class="cmbx-10x-x-109">expression data type). </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that this command is valid when using python style; in glish style </span><span 
-class="cmtt-10x-x-109">MEANS(DATA,2)</span>
-     <span 
-class="cmbx-10x-x-109">should be used.</span>
+class="cmtt-10x-x-109">_MEAN</span>. Column DATA in a Casacore MeasurementSet
+     is a 2-dimensional array with axes polarization and frequency. This command calculates and
+     stores the mean in each polarization. If no data type was given, the means would have been
+     stored as double precision complex (which is the expression data type). <br 
+class="newline" />Note that this command is valid when using python style; in glish style <span 
+class="cmtt-10x-x-109">MEANS(DATA,2) </span>should
+     be used.
      </dd></dl>
+                                                                                            
+                                                                                            
 <!--l. 4974--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.2   </span></span> <a 
- id="x1-11600012.2"></a><span 
-class="cmbx-10x-x-109">Modiﬁcation examples</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">12.2   </span> <a 
+ id="x1-11600012.2"></a>Modiﬁcation examples</h4>
 <!--l. 4975--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">update MY.MS set VIDEO</span><span 
 class="cmtt-10x-x-109">_POINT=MEANS(DATA,2) where isdefined(DATA)  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">sets the VIDEO</span><span 
-class="cmbx-10x-x-109">_POINT of each correlation to the mean of the DATA for that</span>
-     <span 
-class="cmbx-10x-x-109">correlation.  Note  that  the  2  indicates  averaging  over  the  second  axis,  thus  the</span>
-     <span 
-class="cmbx-10x-x-109">frequency axis.</span>
+class="newline" />sets the VIDEO_POINT of each correlation to the mean of the DATA for that correlation. Note
+     that the 2 indicates averaging over the second axis, thus the frequency axis.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">update MY.MS set FLAG</span><span 
 class="cmtt-10x-x-109">_ROW=T where isdefined(FLAG) &#x0026;&#x0026; all(FLAG) </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">sets FLAG</span><span 
-class="cmbx-10x-x-109">_ROW in the rows where the entire FLAG array is set.</span>
+class="newline" />sets FLAG_ROW in the rows where the entire FLAG array is set.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">delete from MY.MS where FLAG</span><span 
 class="cmtt-10x-x-109">_ROW </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">deletes all ﬂagged rows.</span>
+class="newline" />deletes all ﬂagged rows.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">insert into MY.MS select from OTHER.MS where !FLAG</span><span 
 class="cmtt-10x-x-109">_ROW </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">copies all unﬂagged rows from OTHER.MS to MY.MS.</span>
+class="newline" />copies all unﬂagged rows from OTHER.MS to MY.MS.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">insert into MY.MS/DATA</span><span 
 class="cmtt-10x-x-109">_DESCRIPTION </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
@@ -7842,36 +7587,23 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">values (1,0,F) </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">adds a row to the DATA</span><span 
-class="cmbx-10x-x-109">_DESCRIPTION subtable and initializes it.</span>
+class="newline" />adds a row to the DATA_DESCRIPTION subtable and initializes it.
      </dd></dl>
 <!--l. 5000--><p class="noindent" >
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.2.1   </span></span> <a 
- id="x1-11700012.2.1"></a><span 
-class="cmbx-10x-x-109">Applying running median to an image</span></h5>
-<!--l. 5001--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The following command shows how a running median can be applied to an Casacore</span>
-<span 
-class="cmbx-10x-x-109">image.</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">12.2.1   </span> <a 
+ id="x1-11700012.2.1"></a>Applying running median to an image</h5>
+<!--l. 5001--><p class="noindent" >The following command shows how a running median can be applied to an Casacore image.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-196">
   update my.imgd set map = map - runningmedian(map,25,25)’)
 </div>
-<!--l. 5005--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The running medians are subtracted from the data in the copy. It uses a half window size of</span>
-<span 
-class="cmbx-10x-x-109">25x25, thus the full window is 51x51. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">When doing this, one should take care that in case of a spectral line cube the image is not too</span>
-<span 
-class="cmbx-10x-x-109">large, otherwise it won’t ﬁt in memory. If too large, it should be done in chunks</span>
-<span 
-class="cmbx-10x-x-109">like:</span>
+<!--l. 5005--><p class="nopar" > The running medians are subtracted from the data in the copy. It uses a half window size of 25x25, thus the
+full window is 51x51. <br 
+class="newline" />When doing this, one should take care that in case of a spectral line cube the image is not too large,
+otherwise it won’t ﬁt in memory. If too large, it should be done in chunks like:
                                                                                             
                                                                                             
 </p>
@@ -7879,56 +7611,42 @@ class="cmbx-10x-x-109">like:</span>
   update my.imgd set map[,,sc:ec,] =
  <br />             map[,,sc:ec,] - runningmedian(map[,,sc:ec,],25,25)’)
 </div>
-<!--l. 5015--><p class="nopar" > <span 
-class="cmbx-10x-x-109">where </span><span 
-class="cmtt-10x-x-109">sc </span><span 
-class="cmbx-10x-x-109">and </span><span 
-class="cmtt-10x-x-109">ec </span><span 
-class="cmbx-10x-x-109">are the start and end frequency channel. In this example it is assumed that</span>
-<span 
-class="cmbx-10x-x-109">the axes of the image are RA, DEC, freq, Stokes. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that the image is updated, so it should have been copied before if the original data needs</span>
-<span 
-class="cmbx-10x-x-109">to be kept.</span>
+<!--l. 5015--><p class="nopar" > where <span 
+class="cmtt-10x-x-109">sc </span>and <span 
+class="cmtt-10x-x-109">ec </span>are the start and end frequency channel. In this example it is assumed that the axes of the
+image are RA, DEC, freq, Stokes. <br 
+class="newline" />Note that the image is updated, so it should have been copied before if the original data needs to be
+kept.
 </p><!--l. 5023--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.3   </span></span> <a 
- id="x1-11800012.3"></a><span 
-class="cmbx-10x-x-109">Table creation examples</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">12.3   </span> <a 
+ id="x1-11800012.3"></a>Table creation examples</h4>
 <!--l. 5024--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">create table mytab (col1 I4, col2 I4, col3 R8)  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates table </span><span 
-class="cmtt-10x-x-109">mytab </span><span 
-class="cmbx-10x-x-109">of 3 scalar columns.</span>
+class="newline" />creates table <span 
+class="cmtt-10x-x-109">mytab </span>of 3 scalar columns.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">create table mytab  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates an empty table.</span>
+class="newline" />creates an empty table.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">create table mytab colarr R4 ndim=0  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates a table of 1 array column with arbitrary dimensionality.</span>
+class="newline" />creates a table of 1 array column with arbitrary dimensionality.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">create table mytab colarr R4 [shape=[4,128], dmtype=’TiledColumnStMan’]  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates a table of 1 array column with the given shape. The column is stored with</span>
-     <span 
-class="cmbx-10x-x-109">the TiledColumnStMan storage manager using its default settings.</span>
+class="newline" />creates  a  table  of  1  array  column  with  the  given  shape.  The  column  is  stored  with  the
+     TiledColumnStMan storage manager using its default settings.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">create table mytab colarr R4 shape=[4,128]  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7942,50 +7660,40 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">SPEC=[DEFAULTTILESHAPE=[4,32,64]], COLUMNS=[’colarr’]] </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">creates a table of 1 array column with the given shape. The column is stored with</span>
-     <span 
-class="cmbx-10x-x-109">the TiledColumnStMan storage manager using the given settings.</span></dd></dl>
+class="newline" />creates  a  table  of  1  array  column  with  the  given  shape.  The  column  is  stored  with  the
+     TiledColumnStMan storage manager using the given settings.</dd></dl>
 <!--l. 5050--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.4   </span></span> <a 
- id="x1-11900012.4"></a><span 
-class="cmbx-10x-x-109">Calculation examples</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">12.4   </span> <a 
+ id="x1-11900012.4"></a>Calculation examples</h4>
 <!--l. 5051--><p class="noindent" >
                                                                                             
                                                                                             
      </p><dl class="description"><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">calc 1+2  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">uses TaQL as a desktop calculator.</span>
+class="newline" />uses TaQL as a desktop calculator.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">calc 7-Apr-2007 - 20-Nov-1979  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">calculates the number of days between these dates.</span>
+class="newline" />calculates the number of days between these dates.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">calc sum([select from MY.MS giving [ntrue(FLAG)]])  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">determines the total number of ﬂags set in the measurement set.</span>
+class="newline" />determines the total number of ﬂags set in the measurement set.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">calc mean(abs(DATA))  </span><br 
 class="newline" /> <span 
 class="cmtt-10x-x-109">from [select from MY.MS where ANTENNA1==0]</span>
-     <!--l. 5064--><p class="noindent" ><span 
-class="cmbx-10x-x-109">calculates  for  each  row  the  mean  of  the  data  for  the  selected  subset  of  the</span>
-     <span 
-class="cmbx-10x-x-109">measurement set.</span>
+     <!--l. 5064--><p class="noindent" >calculates for each row the mean of the data for the selected subset of the measurement set.
      </p></dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">calc mean([select from MY.MS where ANTENNA1==0  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -7993,13 +7701,11 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">giving [mean(abs(DATA))]])</span>
-     <!--l. 5071--><p class="noindent" ><span 
-class="cmbx-10x-x-109">looks like the previous example. It, however, calculates the mean of the mean of the</span>
-     <span 
-class="cmbx-10x-x-109">data in each row for the selected subset of the measurement set.</span>
+     <!--l. 5071--><p class="noindent" >looks like the previous example. It, however, calculates the mean of the mean of the data in each
+     row for the selected subset of the measurement set.
      </p></dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">calc max([select from MY.MS where isdefined(DATA)  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -8008,39 +7714,29 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">giving [max(abs(VIDEO</span><span 
 class="cmtt-10x-x-109">_POINT-MEANS(DATA,0)))]])</span>
-     <!--l. 5079--><p class="noindent" ><span 
-class="cmbx-10x-x-109">shows the maximum absolute diﬀerence between VIDEO</span><span 
-class="cmbx-10x-x-109">_POINT of each correlation</span>
-     <span 
-class="cmbx-10x-x-109">and the mean of the DATA for that correlation. Note that the 2 indicates averaging</span>
-     <span 
-class="cmbx-10x-x-109">over the ﬁrst axis, thus the frequency axis.</span>
+     <!--l. 5079--><p class="noindent" >shows the maximum absolute diﬀerence between VIDEO_POINT of each correlation and the
+     mean of the DATA for that correlation. Note that the 2 indicates averaging over the ﬁrst axis,
+     thus the frequency axis.
 </p>
      </dd></dl>
 <!--l. 5086--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.5   </span></span> <a 
- id="x1-12000012.5"></a><span 
-class="cmbx-10x-x-109">Aggregation/groupby examples</span></h4>
+   <h4 class="subsectionHead"><span class="titlemark">12.5   </span> <a 
+ id="x1-12000012.5"></a>Aggregation/groupby examples</h4>
 <!--l. 5087--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select gcount(*) from my.ms  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">counts the number of rows in the table.</span>
+class="newline" />counts the number of rows in the table.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select TIME, gcount(*) from my.ms groupby TIME  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">counts the number of rows (usually number of baselines) per time slot.</span>
-                                                                                            
-                                                                                            
+class="newline" />counts the number of rows (usually number of baselines) per time slot.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select ANTENNA1,ANTENNA2,gfirst(TIME),glast(TIME),gcount()  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -8048,13 +7744,13 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">from my.ms groupby ANTENNA1,ANTENNA2  </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">counts the number of rows (usually number of time slots) and shows the ﬁrst and</span>
-     <span 
-class="cmbx-10x-x-109">last time per baseline.</span>
+class="newline" />counts the number of rows (usually number of time slots) and shows the ﬁrst and last time per
+     baseline.
+                                                                                            
+                                                                                            
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select gmean(DATA) from my.ms  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -8063,15 +7759,12 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">groupby int((TIME - [select TIME from my.ms limit1][0]) / INTERVAL / 10))</span>
      <br 
-class="newline" /><span 
-class="cmbx-10x-x-109">calculates  the  average  of  DATA  for  every  10  time  slots.  Note  it  also  averages</span>
-     <span 
-class="cmbx-10x-x-109">in frequency and polarization. The following example shows how to average each</span>
-     <span 
-class="cmbx-10x-x-109">frequency channel and polarization.</span>
+class="newline" />calculates the average of DATA for every 10 time slots. Note it also averages in frequency
+     and polarization. The following example shows how to average each frequency channel and
+     polarization.
      </dd><dt class="description">
  </dt><dd 
-class="description"> <span 
+class="description">  <span 
 class="cmtt-10x-x-109">select boxedmean(gaggr(DATA), 10, 4) from my.ms  </span><br 
 class="newline" /><span class="obeylines-h"><span class="verb"><span 
 class="cmtt-10x-x-109"> </span><span 
@@ -8080,34 +7773,21 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">groupby int((TIME - [select TIME from my.ms limit1][0]) / INTERVAL / 10))</span>
      <br 
-class="newline" /><span 
-class="cmbx-10x-x-109">calculates  the  average  of  DATA  per  polarization  for  every  10  time  slots  and  4</span>
-     <span 
-class="cmbx-10x-x-109">frequency channels. Note it it ﬁrst combines the data of each 10 time slots in a</span>
-     <span 
-class="cmbx-10x-x-109">single array, after which the </span><span 
-class="cmtt-10x-x-109">boxedmean </span><span 
-class="cmbx-10x-x-109">function is used to average every [10,4,1] box.</span></dd></dl>
+class="newline" />calculates the average of DATA per polarization for every 10 time slots and 4 frequency channels.
+     Note it it ﬁrst combines the data of each 10 time slots in a single array, after which the <span 
+class="cmtt-10x-x-109">boxedmean</span>
+     function is used to average every [10,4,1] box.</dd></dl>
 <!--l. 5118--><p class="noindent" >
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.5.1   </span></span> <a 
- id="x1-12100012.5.1"></a><span 
-class="cmbx-10x-x-109">Obtaining the ﬂux density from visibility data</span></h5>
-<!--l. 5119--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The Miriad program </span><span 
-class="cmtt-10x-x-109">uvflux </span><span 
-class="cmbx-10x-x-109">estimates the source I ﬂux density and its standard deviation at</span>
-<span 
-class="cmbx-10x-x-109">the phase center without having to make an image. A single, not too complicated TaQL</span>
-<span 
-class="cmbx-10x-x-109">command (courtesy Dijkema, Heald) provides the same functionality on a MeasurementSet.</span>
-<span 
-class="cmbx-10x-x-109">For LOFAR it is best to use baselines with a length between 5 and 10 km. The command</span>
-<span 
-class="cmbx-10x-x-109">shows various aspects of TaQL that are explained below. The numbers at the beginning of the</span>
-<span 
-class="cmbx-10x-x-109">lines point to the text following the example.</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">12.5.1   </span> <a 
+ id="x1-12100012.5.1"></a>Obtaining the ﬂux density from visibility data</h5>
+<!--l. 5119--><p class="noindent" >The Miriad program <span 
+class="cmtt-10x-x-109">uvflux </span>estimates the source I ﬂux density and its standard deviation at the phase
+center without having to make an image. A single, not too complicated TaQL command (courtesy
+Dijkema, Heald) provides the same functionality on a MeasurementSet. For LOFAR it is best to use
+baselines with a length between 5 and 10 km. The command shows various aspects of TaQL that
+are explained below. The numbers at the beginning of the lines point to the text following the
+example.
                                                                                             
                                                                                             
 </p>
@@ -8123,78 +7803,45 @@ class="cmbx-10x-x-109">lines point to the text following the example.</span>
  <br />2.          where mscal.baseline(’5km~10km) &#x0026;&#x0026; !all(FLAG)
  <br />3.          groupby TIME)
 </div>
-<!--l. 5137--><p class="nopar" > <span 
-class="cmbx-10x-x-109">A subquery is used to get the average ﬂux (I = 0.5*(XX+YY)) per time slot.</span>
+<!--l. 5137--><p class="nopar" > A subquery is used to get the average ﬂux (I = 0.5*(XX+YY)) per time slot.
      </p><ol  class="enumerate1" >
      <li 
-  class="enumerate" id="x1-121002x1"><span 
-class="cmbx-10x-x-109">For each baseline it gets the mean of the channels. Note that it uses </span><span 
-class="cmtt-10x-x-109">sum/n </span><span 
-class="cmbx-10x-x-109">to</span>
-     <span 
-class="cmbx-10x-x-109">ignore ﬂagged visibilities. The </span><span 
-class="cmtt-10x-x-109">iif </span><span 
-class="cmbx-10x-x-109">function tells to use 0 for them. Also note that</span>
-     <span 
-class="cmbx-10x-x-109">XX is the 1st and YY the 4th polarisation, hence [0:4:3] (or [::3]) indexes these</span>
-     <span 
-class="cmbx-10x-x-109">polarisations. Once masked arrays are supported by TaQL, it could be written as:</span>
-     <span 
+  class="enumerate" id="x1-121002x1">For each baseline it gets the mean of the channels. Note that it uses <span 
+class="cmtt-10x-x-109">sum/n </span>to ignore ﬂagged
+     visibilities. The <span 
+class="cmtt-10x-x-109">iif </span>function tells to use 0 for them. Also note that XX is the 1st and YY
+     the 4th polarisation, hence [0:4:3] (or [::3]) indexes these polarisations. Once masked arrays are
+     supported by TaQL, it could be written as:   <span 
 class="cmtt-10x-x-109">mean(DATA[,::3][FLAG[,::3]])</span>
      </li>
      <li 
-  class="enumerate" id="x1-121004x2"><span 
-class="cmbx-10x-x-109">It only uses the baselines with lengths between 5 and 10 km where not all visibilities</span>
-     <span 
-class="cmbx-10x-x-109">are ﬂagged. Note that a </span><span 
-class="cmtt-10x-x-109">mscal </span><span 
-class="cmbx-10x-x-109">user deﬁned function is used for the baseline selection</span>
-     <span 
-class="cmbx-10x-x-109">as described in </span><a 
-href="#x1-690004.10.17"><span 
-class="cmbx-10x-x-109">section 4.10.17</span></a><span 
-class="cmbx-10x-x-109">.</span>
+  class="enumerate" id="x1-121004x2">It only uses the baselines with lengths between 5 and 10 km where not all visibilities are ﬂagged.
+     Note that a <span 
+class="cmtt-10x-x-109">mscal </span>user deﬁned function is used for the baseline selection as described in <a 
+href="#x1-690004.10.17">section
+     4.10.17</a>.
      </li>
      <li 
-  class="enumerate" id="x1-121006x3"><span 
-class="cmbx-10x-x-109">Thereafter the average ﬂux per time slot is determined in the subquery using the</span>
-     <span 
-class="cmtt-10x-x-109">gmean </span><span 
-class="cmbx-10x-x-109">aggregation and GROUPBY functionality. The result is an intermediate table</span>
-     <span 
-class="cmbx-10x-x-109">with one column called SUMMED and a row per time slot.</span>
+  class="enumerate" id="x1-121006x3">Thereafter  the  average  ﬂux  per  time  slot  is  determined  in  the  subquery  using  the  <span 
+class="cmtt-10x-x-109">gmean</span>
+     aggregation and GROUPBY functionality. The result is an intermediate table with one column
+     called SUMMED and a row per time slot.
      </li>
      <li 
-  class="enumerate" id="x1-121008x4"><span 
-class="cmbx-10x-x-109">Finally, the outer query uses aggregate functions to calculate the overall mean,</span>
-     <span 
-class="cmbx-10x-x-109">standard deviation, and number of time slots from the result of the subquery. The</span>
-     <span 
-class="cmbx-10x-x-109">ﬁnal result is a table with 1 row and 3 columns.</span></li></ol>
+  class="enumerate" id="x1-121008x4">Finally,  the  outer  query  uses  aggregate  functions  to  calculate  the  overall  mean,  standard
+     deviation, and number of time slots from the result of the subquery. The ﬁnal result is a table
+     with 1 row and 3 columns.</li></ol>
 <!--l. 5160--><p class="noindent" >
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">12.5.2   </span></span> <a 
- id="x1-12200012.5.2"></a><span 
-class="cmbx-10x-x-109">Number of fully ﬂagged baselines per antenna</span></h5>
-<!--l. 5161--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The example below counts per antenna the number of fully ﬂagged baselines, excluding the</span>
-<span 
-class="cmbx-10x-x-109">autocorrelations. It uses grouping and aggregate functions twice; ﬁrst per baseline, thereafter</span>
-<span 
-class="cmbx-10x-x-109">per antenna. It also uses the </span><a 
-href="#x1-240137"><span 
-class="cmbx-10x-x-109">concatenation</span></a> <span 
-class="cmbx-10x-x-109">and </span><a 
-href="#x1-240095"><span 
-class="cmbx-10x-x-109">backreferencing</span></a> <span 
-class="cmbx-10x-x-109">features. It also shows the</span>
-<span 
-class="cmbx-10x-x-109">results when using the </span><span 
-class="cmtt-10x-x-109">time </span><span 
-class="cmbx-10x-x-109">keyword, which shows that the processing time is dominated by</span>
-<span 
-class="cmbx-10x-x-109">the ﬁrst query.</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">12.5.2   </span> <a 
+ id="x1-12200012.5.2"></a>Number of fully ﬂagged baselines per antenna</h5>
+<!--l. 5161--><p class="noindent" >The example below counts per antenna the number of fully ﬂagged baselines, excluding the autocorrelations.
+It uses grouping and aggregate functions twice; ﬁrst per baseline, thereafter per antenna. It also uses the
+<a 
+href="#x1-240137">concatenation</a> and <a 
+href="#x1-240095">backreferencing</a> features. It also shows the results when using the <span 
+class="cmtt-10x-x-109">time </span>keyword, which
+shows that the processing time is dominated by the ﬁrst query.
                                                                                             
                                                                                             
 </p>
@@ -8222,85 +7869,49 @@ time select gsum(t1.cnt), t1.ANTENNA,
 <!--l. 5189--><p class="nopar" >
      </p><ol  class="enumerate1" >
      <li 
-  class="enumerate" id="x1-122002x1"><span 
-class="cmbx-10x-x-109">The ﬁrst inner select counts the number of fully ﬂagged baselines per baseline and</span>
-     <span 
-class="cmbx-10x-x-109">stores the result with the antennas making up a baseline in a temporary table with</span>
-     <span 
-class="cmbx-10x-x-109">shorthand </span><span 
-class="cmtt-10x-x-109">t0</span><span 
-class="cmbx-10x-x-109">.. In this way the expensive counting part needs to be executed only</span>
-     <span 
-class="cmbx-10x-x-109">once.</span>
+  class="enumerate" id="x1-122002x1">The ﬁrst inner select counts the number of fully ﬂagged baselines per baseline and stores the
+     result with the antennas making up a baseline in a temporary table with shorthand <span 
+class="cmtt-10x-x-109">t0</span>.. In this
+     way the expensive counting part needs to be executed only once.
      </li>
      <li 
-  class="enumerate" id="x1-122004x2"><span 
-class="cmbx-10x-x-109">This table has to be summed for both antennas of the baselines, which is done in the</span>
-     <span 
-class="cmbx-10x-x-109">second part creating a concatenated table with shorthand </span><span 
-class="cmtt-10x-x-109">t1</span><span 
-class="cmbx-10x-x-109">. It backreferences the</span>
-     <span 
-class="cmbx-10x-x-109">ﬁrst table </span><span 
-class="cmtt-10x-x-109">t0 </span><span 
-class="cmbx-10x-x-109">twice. First to use it directly to count for ANTENNA1, thereafter to</span>
-     <span 
-class="cmbx-10x-x-109">count for ANTENNA2 by doing a select to make the ANTENNA2 the ANTENNA</span>
-     <span 
-class="cmbx-10x-x-109">column.</span>
+  class="enumerate" id="x1-122004x2">This table has to be summed for both antennas of the baselines, which is done in the second
+     part creating a concatenated table with shorthand <span 
+class="cmtt-10x-x-109">t1</span>. It backreferences the ﬁrst table <span 
+class="cmtt-10x-x-109">t0 </span>twice.
+     First to use it directly to count for ANTENNA1, thereafter to count for ANTENNA2 by doing
+     a select to make the ANTENNA2 the ANTENNA column.
      </li>
      <li 
-  class="enumerate" id="x1-122006x3"><span 
-class="cmbx-10x-x-109">The table does not contain the antennas having no fully ﬂagged baselines. Therefore</span>
-     <span 
-class="cmbx-10x-x-109">the third part of the concatenation copies the ANTENNA table to insert zero counts</span>
-     <span 
-class="cmbx-10x-x-109">for all antennas.</span>
+  class="enumerate" id="x1-122006x3">The table does not contain the antennas having no fully ﬂagged baselines. Therefore the third
+     part of the concatenation copies the ANTENNA table to insert zero counts for all antennas.
      </li>
      <li 
-  class="enumerate" id="x1-122008x4"><span 
-class="cmbx-10x-x-109">Finally the outer select (in the ﬁrst line) sums the values in the concatenated table</span>
-     <span 
-class="cmbx-10x-x-109">per antenna. It also retrieves the name of the antenna by indexing in the selection</span>
-     <span 
-class="cmbx-10x-x-109">of all antenna names.</span></li></ol>
-                                                                                            
-                                                                                            
+  class="enumerate" id="x1-122008x4">Finally the outer select (in the ﬁrst line) sums the values in the concatenated table per antenna.
+     It also retrieves the name of the antenna by indexing in the selection of all antenna names.</li></ol>
 <!--l. 5216--><p class="noindent" >
 </p>
-   <h3 class="sectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13   </span></span> <a 
- id="x1-12300013"></a><span 
-class="cmbx-10x-x-109">Interface to TaQL</span></h3>
-<!--l. 5217--><p class="noindent" ><span 
-class="cmbx-10x-x-109">User and a programmer interfaces to TaQL are available. The program </span><span 
-class="cmtt-10x-x-109">taql </span><span 
-class="cmbx-10x-x-109">and some Python</span>
-<span 
-class="cmbx-10x-x-109">and Glish functions form the user interface, while C++ classes and functions form the</span>
-<span 
-class="cmbx-10x-x-109">programmer interface.</span>
+                                                                                            
+                                                                                            
+   <h3 class="sectionHead"><span class="titlemark">13   </span> <a 
+ id="x1-12300013"></a>Interface to TaQL</h3>
+<!--l. 5217--><p class="noindent" >User and a programmer interfaces to TaQL are available. The program <span 
+class="cmtt-10x-x-109">taql </span>and some Python and
+Glish functions form the user interface, while C++ classes and functions form the programmer
+interface.
 </p><!--l. 5222--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13.1   </span></span> <a 
- id="x1-12400013.1"></a><span 
-class="cmbx-10x-x-109">Python interface </span><span 
+   <h4 class="subsectionHead"><span class="titlemark">13.1   </span> <a 
+ id="x1-12400013.1"></a>Python interface <span 
 class="cmtt-10x-x-109">python-casacore</span></h4>
-<!--l. 5223--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The main TaQL interface in Python is formed by the </span><a 
+<!--l. 5223--><p class="noindent" >The main TaQL interface in Python is formed by the <a 
 href="../../../pyrap/docs/pyrap_tables.html#pyrap.tables.table.query" ><span 
-class="cmtt-10x-x-109">query</span></a> <span 
-class="cmbx-10x-x-109">function in module </span><a 
+class="cmtt-10x-x-109">query</span></a> function in module <a 
 href="../../../pyrap/docs/pyrap_tables.html" ><span 
-class="cmtt-10x-x-109">table</span></a><span 
-class="cmbx-10x-x-109">. The</span>
-<span 
-class="cmbx-10x-x-109">function can be used to compose and execute a TaQL command using the various (optional)</span>
-<span 
-class="cmbx-10x-x-109">arguments given to the </span><span 
-class="cmtt-10x-x-109">query </span><span 
-class="cmbx-10x-x-109">function. E.g.</span>
+class="cmtt-10x-x-109">table</span></a>. The function can be
+used to compose and execute a TaQL command using the various (optional) arguments given to the <span 
+class="cmtt-10x-x-109">query</span>
+function. E.g.
                                                                                             
                                                                                             
 </p>
@@ -8313,16 +7924,10 @@ class="cmbx-10x-x-109">function. E.g.</span>
  <br />                            columns=’column1,column2’,
  <br />                            name=’result.tab’)
 </div>
-<!--l. 5238--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The ﬁrst command opens the table </span><span 
-class="cmtt-10x-x-109">mytable</span><span 
-class="cmbx-10x-x-109">. The second command does a simple query</span>
-<span 
-class="cmbx-10x-x-109">resulting in a temporary table. That temporary table is used in the next command</span>
-<span 
-class="cmbx-10x-x-109">resulting in a persistent table. The latter function call is transformed to the TaQL</span>
-<span 
-class="cmbx-10x-x-109">command:</span>
+<!--l. 5238--><p class="nopar" > The ﬁrst command opens the table <span 
+class="cmtt-10x-x-109">mytable</span>. The second command does a simple query resulting in a
+temporary table. That temporary table is used in the next command resulting in a persistent table. The
+latter function call is transformed to the TaQL command:
                                                                                             
                                                                                             
 </p>
@@ -8330,28 +7935,17 @@ class="cmbx-10x-x-109">command:</span>
   SELECT column1,column2 FROM \$1 WHERE column2&#x003E;5
  <br />  ORDERBY time GIVING result.tab
 </div>
-<!--l. 5247--><p class="nopar" > <span 
-class="cmbx-10x-x-109">During execution $1 is replaced by table </span><span 
-class="cmtt-10x-x-109">seltab1</span><span 
-class="cmbx-10x-x-109">. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that the </span><span 
-class="cmtt-10x-x-109">name </span><span 
-class="cmbx-10x-x-109">argument generates the </span><span 
-class="cmtt-10x-x-109">GIVING </span><span 
-class="cmbx-10x-x-109">part to make the result persistent.</span>
-</p><!--l. 5252--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The functions </span><span 
-class="cmtt-10x-x-109">sort </span><span 
-class="cmbx-10x-x-109">and </span><span 
-class="cmtt-10x-x-109">select </span><span 
-class="cmbx-10x-x-109">exist as convenience functions for a query consisting of a sort</span>
-<span 
-class="cmbx-10x-x-109">or column selection only. Both functions have an optional second </span><span 
-class="cmtt-10x-x-109">name </span><span 
-class="cmbx-10x-x-109">parameter to make the</span>
-<span 
-class="cmbx-10x-x-109">result persistent.</span>
+<!--l. 5247--><p class="nopar" > During execution $1 is replaced by table <span 
+class="cmtt-10x-x-109">seltab1</span>. <br 
+class="newline" />Note that the <span 
+class="cmtt-10x-x-109">name </span>argument generates the <span 
+class="cmtt-10x-x-109">GIVING </span>part to make the result persistent.
+</p><!--l. 5252--><p class="indent" >   The functions <span 
+class="cmtt-10x-x-109">sort </span>and <span 
+class="cmtt-10x-x-109">select </span>exist as convenience functions for a query consisting of a sort or
+column selection only. Both functions have an optional second <span 
+class="cmtt-10x-x-109">name </span>parameter to make the result
+persistent.
                                                                                             
                                                                                             
 </p>
@@ -8360,18 +7954,12 @@ class="cmbx-10x-x-109">result persistent.</span>
  <br />   t1 = tab.select (’column1,column2’)
 </div>
 <!--l. 5259--><p class="nopar" >
-</p><!--l. 5261--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The </span><span 
-class="cmtt-10x-x-109">calc </span><span 
-class="cmbx-10x-x-109">function can be used to execute a TaQL </span><span 
-class="cmtt-10x-x-109">calc </span><span 
-class="cmbx-10x-x-109">command on the current table. The</span>
-<span 
-class="cmbx-10x-x-109">result can be kept in a variable. For example, the following returns a vector containing the</span>
-<span 
-class="cmbx-10x-x-109">median of the </span><span 
-class="cmtt-10x-x-109">DATA </span><span 
-class="cmbx-10x-x-109">column in each table row:</span>
+</p><!--l. 5261--><p class="indent" >   The <span 
+class="cmtt-10x-x-109">calc </span>function can be used to execute a TaQL <span 
+class="cmtt-10x-x-109">calc </span>command on the current table. The result can be
+kept in a variable. For example, the following returns a vector containing the median of the <span 
+class="cmtt-10x-x-109">DATA </span>column in
+each table row:
                                                                                             
                                                                                             
 </p>
@@ -8379,18 +7967,12 @@ class="cmbx-10x-x-109">column in each table row:</span>
   med = t.calc (’median(DATA)’)
 </div>
 <!--l. 5267--><p class="nopar" >
-</p><!--l. 5269--><p class="indent" >   <span 
-class="cmbx-10x-x-109">It is possible to embed Python variables and expressions in a TaQL command using the</span>
+</p><!--l. 5269--><p class="indent" >   It is possible to embed Python variables and expressions in a TaQL command using the syntax
 <span 
-class="cmbx-10x-x-109">syntax </span><span 
-class="cmtt-10x-x-109">$variable </span><span 
-class="cmbx-10x-x-109">and </span><span 
-class="cmtt-10x-x-109">$(expression)</span><span 
-class="cmbx-10x-x-109">. A variable can be a standard numeric or string scalar or</span>
-<span 
-class="cmbx-10x-x-109">vector. It can also be a table tool. An expression has to result in a numeric or string scalar or</span>
-<span 
-class="cmbx-10x-x-109">vector. E.g</span>
+class="cmtt-10x-x-109">$variable </span>and <span 
+class="cmtt-10x-x-109">$(expression)</span>. A variable can be a standard numeric or string scalar or vector. It
+can also be a table tool. An expression has to result in a numeric or string scalar or vector.
+E.g
                                                                                             
                                                                                             
 </p>
@@ -8403,24 +7985,13 @@ class="cmbx-10x-x-109">vector. E.g</span>
  <br />  seltab2 = tab.query (’col &#x003E; $(sum(coldata)/len(coldata))’)
  <br />  seltab3 = tab.query (’col &#x003E; mean([SELECT col from $tab])’)
 </div>
-<!--l. 5283--><p class="nopar" > <span 
-class="cmbx-10x-x-109">These three queries give the same result. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The substitution mechanism is described in more detail in </span><a 
-href="../../../pyrap/docs/pyrap_util.html" ><span 
-class="cmbx-10x-x-109">pyrap.util</span></a><span 
-class="cmbx-10x-x-109">.</span>
-</p><!--l. 5288--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The most generic function that can be used is </span><a 
-href="../../../pyrap/docs/pyrap_tables.html#pyrap.tables.taql" ><span 
-class="cmbx-10x-x-109">taql</span></a> <span 
-class="cmbx-10x-x-109">(or its synonym </span><span 
-class="cmtt-10x-x-109">tablecommand</span><span 
-class="cmbx-10x-x-109">). The</span>
-<span 
-class="cmbx-10x-x-109">full TaQL command has to be given to that command. The result is a table object.</span>
-<span 
-class="cmbx-10x-x-109">E.g.</span>
+<!--l. 5283--><p class="nopar" > These three queries give the same result. <br 
+class="newline" />The substitution mechanism is described in more detail in <a 
+href="../../../pyrap/docs/pyrap_util.html" >pyrap.util</a>.
+</p><!--l. 5288--><p class="indent" >   The most generic function that can be used is <a 
+href="../../../pyrap/docs/pyrap_tables.html#pyrap.tables.taql" >taql</a> (or its synonym <span 
+class="cmtt-10x-x-109">tablecommand</span>). The full TaQL
+command has to be given to that command. The result is a table object. E.g.
                                                                                             
                                                                                             
 </p>
@@ -8429,23 +8000,16 @@ class="cmbx-10x-x-109">E.g.</span>
  <br />  t = pt.taql(’select from GER.MS where ANTENNA1==1’);
 </div>
 <!--l. 5296--><p class="nopar" >
-</p><!--l. 5298--><p class="indent" >   <span 
-class="cmbx-10x-x-109">By default, these commands will use the Python style for a TaQL statement. The </span><span 
-class="cmtt-10x-x-109">style</span>
-<span 
-class="cmbx-10x-x-109">argument can be used to choose another style.</span>
+</p><!--l. 5298--><p class="indent" >   By default, these commands will use the Python style for a TaQL statement. The <span 
+class="cmtt-10x-x-109">style </span>argument can be
+used to choose another style.
 </p><!--l. 5302--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13.2   </span></span> <a 
- id="x1-12500013.2"></a><span 
-class="cmbx-10x-x-109">Interface to Glish</span></h4>
-<!--l. 5303--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The Glish interface is formed by script </span><span 
-class="cmtt-10x-x-109">table.g</span><span 
-class="cmbx-10x-x-109">. By default, it will use the Glish style for a</span>
-<span 
-class="cmbx-10x-x-109">TaQL statement. For example:</span>
+   <h4 class="subsectionHead"><span class="titlemark">13.2   </span> <a 
+ id="x1-12500013.2"></a>Interface to Glish</h4>
+<!--l. 5303--><p class="noindent" >The Glish interface is formed by script <span 
+class="cmtt-10x-x-109">table.g</span>. By default, it will use the Glish style for a TaQL statement.
+For example:
                                                                                             
                                                                                             
 </p>
@@ -8464,324 +8028,184 @@ class="cmbx-10x-x-109">TaQL statement. For example:</span>
 <!--l. 5318--><p class="nopar" >
 </p><!--l. 5320--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13.3   </span></span> <a 
- id="x1-12600013.3"></a><span 
-class="cmbx-10x-x-109">Program </span><span 
+   <h4 class="subsectionHead"><span class="titlemark">13.3   </span> <a 
+ id="x1-12600013.3"></a>Program <span 
 class="cmtt-10x-x-109">taql</span></h4>
-<!--l. 5321--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The program </span><span 
-class="cmtt-10x-x-109">taql </span><span 
-class="cmbx-10x-x-109">makes it possible to execute TaQL commands from the shell. Commands</span>
-<span 
-class="cmbx-10x-x-109">can be given in diﬀerent ways:</span> </p>
+<!--l. 5321--><p class="noindent" >The program <span 
+class="cmtt-10x-x-109">taql </span>makes it possible to execute TaQL commands from the shell. Commands can be given in
+diﬀerent ways: </p>
+     <ul class="itemize1">
+     <li class="itemize">A TaQL command can be given directly as command line arguments to the <span 
+class="cmti-10x-x-109">taql </span>program. The
+     arguments will be combined to a single command (separated by spaces). Note that using multiple
+     arguments instead of a single (quoted) argument makes it easier to use tab-completion for the
+     table name. It will execute the command, show the result, and exit.
+     </li>
+     <li class="itemize">Using the -f option, the name of a ﬁle containing one or more TaQL commands can be given. The
+     commands can be split over multiple lines, where a # can be used for comments. A semicolon
+     has to be used to separate commands. This can be nested arbitrarily deep, thus a command ﬁle
+     can execute another command ﬁle using a -f option.
+     </li>
+     <li class="itemize">The program is run interactively if neither command nor -f is given. It will run until the user
+     stops via the command <span 
+class="cmtt-10x-x-109">exit</span>, <span 
+class="cmtt-10x-x-109">quit</span>, or <span 
+class="cmtt-10x-x-109">q </span>or by giving Ctrl/D. Command editing and recall is
+     possible, unless taql was built without readline support. Of course, a ﬁle can be used as input
+     by redirection to stdin. This is more or less the same as using -f, but a command cannot be split
+     over multiple lines and no semicolon is needed to separate commands. Interactive commands are
+     kept in $HOME/.taql_history making command recall possible across multiple taql sessions.</li></ul>
+<!--l. 5348--><p class="noindent" >The commands can be given in a fully recursive way. For example, a command in an input ﬁle can invoke
+another TaQL command ﬁle using -f. <br 
+class="newline" />The following commands can be given: </p>
      <ul class="itemize1">
      <li class="itemize"><span 
-class="cmbx-10x-x-109">A TaQL command can be given directly as command line arguments to the </span><span 
-class="cmbxti-10x-x-109">taql</span>
-     <span 
-class="cmbx-10x-x-109">program.  The  arguments  will  be  combined  to  a  single  command  (separated  by</span>
-     <span 
-class="cmbx-10x-x-109">spaces). Note that using multiple arguments instead of a single (quoted) argument</span>
-     <span 
-class="cmbx-10x-x-109">makes  it  easier  to  use  tab-completion  for  the  table  name.  It  will  execute  the</span>
-     <span 
-class="cmbx-10x-x-109">command, show the result, and exit.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">Using the -f option, the name of a ﬁle containing one or more TaQL commands can</span>
-     <span 
-class="cmbx-10x-x-109">be given. The commands can be split over multiple lines, where a # can be used for</span>
-     <span 
-class="cmbx-10x-x-109">comments. A semicolon has to be used to separate commands. This can be nested</span>
-     <span 
-class="cmbx-10x-x-109">arbitrarily deep, thus a command ﬁle can execute another command ﬁle using a -f</span>
-     <span 
-class="cmbx-10x-x-109">option.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">The program is run interactively if neither command nor -f is given. It will run until</span>
-     <span 
-class="cmbx-10x-x-109">the user stops via the command </span><span 
-class="cmtt-10x-x-109">exit</span><span 
-class="cmbx-10x-x-109">, </span><span 
-class="cmtt-10x-x-109">quit</span><span 
-class="cmbx-10x-x-109">, or </span><span 
-class="cmtt-10x-x-109">q </span><span 
-class="cmbx-10x-x-109">or by giving Ctrl/D. Command</span>
-     <span 
-class="cmbx-10x-x-109">editing and recall is possible, unless taql was built without readline support. Of</span>
-     <span 
-class="cmbx-10x-x-109">course, a ﬁle can be used as input by redirection to stdin. This is more or less</span>
-     <span 
-class="cmbx-10x-x-109">the  same  as  using  -f,  but  a  command  cannot  be  split  over  multiple  lines  and</span>
-     <span 
-class="cmbx-10x-x-109">no semicolon is needed to separate commands. Interactive commands are kept in</span>
-     <span 
-class="cmbx-10x-x-109">$HOME/.taql</span><span 
-class="cmbx-10x-x-109">_history making command recall possible across multiple taql sessions.</span></li></ul>
-<!--l. 5348--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The commands can be given in a fully recursive way. For example, a command in an input ﬁle can</span>
-<span 
-class="cmbx-10x-x-109">invoke another TaQL command ﬁle using -f. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The following commands can be given:</span> </p>
+class="cmtt-10x-x-109">h</span>, <span 
+class="cmtt-10x-x-109">-h</span>, or <span 
+class="cmtt-10x-x-109">--help </span>shows brief help information about the <span 
+class="cmti-10x-x-109">taql </span>program itself.
                                                                                             
                                                                                             
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">v </span>shows the <span 
+class="cmti-10x-x-109">taql </span>version.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">o </span>shows the current options settings (see below) on stderr.
+     </li>
+     <li class="itemize">A full TaQL command. Note that the command <span 
+class="cmtt-10x-x-109">help </span>or <span 
+class="cmtt-10x-x-109">show </span>shows help info about the TaQL
+     syntax and functionality.
+     </li>
+     <li class="itemize">A full TaQL command preceded by <span 
+class="cmtt-10x-x-109">varname=</span>, where <span 
+class="cmtt-10x-x-109">varname </span>is the name under which the
+     resulting table is kept in this session. Thus the result is not a persistent table (unless GIVING
+     was given), but it is kept temporarily. The <span 
+class="cmtt-10x-x-109">varname </span>can be used in subsequent commands such
+     as <span 
+class="cmtt-10x-x-109">SELECT FROM $varname </span>or <span 
+class="cmtt-10x-x-109">SHOW TABLE $varname</span>. <br 
+class="newline" />If a command is not recognized, it is assumed an expression is given with an implicit SELECT. In
+     this way it is easily possible to calculate expressions. Note that multiple expressions (separated
+     by a comma) can be given, because it is the very same as selecting multiple column expressions
+     in TaQL.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">? </span>shows the varnames.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">varname= </span>without a further command removes the temporary result.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">varname </span>shows the number of rows in the temporary result. It can be followed by one or more
+     question marks to show the column names and details about them. <br 
+class="newline" />Note that if an unknown varname is given, it is treated as a TaQL command resulting in a parse
+     error.
+     </li>
+     <li class="itemize">Comments can be given after the hash (#) character. Empty lines are ignored.</li></ul>
+<!--l. 5380--><p class="noindent" >A command can be preceded by zero or more options to specify if, how and where the results of a TaQL selection
+are printed. The options can be given at various levels: </p>
+     <ul class="itemize1">
+     <li class="itemize">The initial default options can be overridden by the options given when starting the <span 
+class="cmti-10x-x-109">taql </span>program.
+     These are global settings and used for all subsequent TaQL commands.
+     </li>
+     <li class="itemize">A TaQL command can be preceded by options to override the global settings for that TaQL
+     command only. However, when only giving options on a command line, the are persistent, thus
+     get new global settings.
+     </li>
+     <li class="itemize">The options usage in a TaQL command ﬁle behaves in a similar way. The initial option values are
+     the settings of the level above which can be overridden temporarily or permanently by options
+     on the command lines in the ﬁle. A nested command ﬁle inherits the settings from the level
+     above. Note that persistent options settings do not go upwards.</li></ul>
+                                                                                            
+                                                                                            
+<!--l. 5399--><p class="indent" >   The output of a TaQL command can be printed. Most commands (such as UPDATE) will only show the
+expanded command and the number of rows aﬀected. However, the CALC and SELECT command can also
+show the the results of the selected expressions. <br 
+class="newline" />The result of a CALC command is always printed. <br 
+class="newline" />Selected columns in a SELECT command are optionally printed. If an implicit SELECT is done (thus if
+SELECT was added to the command) or if -ps is in eﬀect, all results are printed. Otherwise if -pa is in eﬀect,
+the ﬁrst N rows are printed where N is deﬁned by the -m option.
+</p><!--l. 5409--><p class="indent" >   The following print options are available. </p>
      <ul class="itemize1">
      <li class="itemize"><span 
-class="cmtt-10x-x-109">h</span><span 
-class="cmbx-10x-x-109">, </span><span 
-class="cmtt-10x-x-109">-h</span><span 
-class="cmbx-10x-x-109">, or </span><span 
-class="cmtt-10x-x-109">--help </span><span 
-class="cmbx-10x-x-109">shows brief help information about the </span><span 
-class="cmbxti-10x-x-109">taql </span><span 
-class="cmbx-10x-x-109">program itself.</span>
+class="cmtt-10x-x-109">-ps </span>or <span 
+class="cmtt-10x-x-109">--printselect </span>deﬁnes if all rows of selected columns will be printed. Note that all rows
+     of an implicit SELECT are always printed.
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">v </span><span 
-class="cmbx-10x-x-109">shows the </span><span 
-class="cmbxti-10x-x-109">taql </span><span 
-class="cmbx-10x-x-109">version.</span>
+class="cmtt-10x-x-109">-pa </span>or <span 
+class="cmtt-10x-x-109">--printauto </span>deﬁnes if auto printing is in eﬀect meaning that only the ﬁrst N rows of
+     selected columns are printed. N is deﬁned by the -m option.
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">o </span><span 
-class="cmbx-10x-x-109">shows the current options settings (see below) on stderr.</span>
+class="cmtt-10x-x-109">-pm </span>or  <span 
+class="cmtt-10x-x-109">--printmeasure </span>deﬁnes  if  values  with  a  reference  frame  (such  as  times,  positions,
+     directions, ...) are pretty printed. Note that TaQL’s <span 
+class="cmtt-10x-x-109">str </span>function oﬀers very ﬂexible pretty
+     printing.
      </li>
      <li class="itemize"><span 
-class="cmbx-10x-x-109">A full TaQL command. Note that the command </span><span 
-class="cmtt-10x-x-109">help </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">show </span><span 
-class="cmbx-10x-x-109">shows help info about</span>
-     <span 
-class="cmbx-10x-x-109">the TaQL syntax and functionality.</span>
+class="cmtt-10x-x-109">-ph </span>or <span 
+class="cmtt-10x-x-109">--printheader </span>deﬁnes if a header will be printed consisting of the names of the selected
+     columns.
      </li>
      <li class="itemize"><span 
-class="cmbx-10x-x-109">A full TaQL command preceded by </span><span 
-class="cmtt-10x-x-109">varname=</span><span 
-class="cmbx-10x-x-109">, where </span><span 
-class="cmtt-10x-x-109">varname </span><span 
-class="cmbx-10x-x-109">is the name under which</span>
-     <span 
-class="cmbx-10x-x-109">the resulting table is kept in this session. Thus the result is not a persistent table</span>
-     <span 
-class="cmbx-10x-x-109">(unless GIVING was given), but it is kept temporarily. The </span><span 
-class="cmtt-10x-x-109">varname </span><span 
-class="cmbx-10x-x-109">can be used in</span>
-     <span 
-class="cmbx-10x-x-109">subsequent commands such as </span><span 
-class="cmtt-10x-x-109">SELECT FROM $varname </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">SHOW TABLE $varname</span><span 
-class="cmbx-10x-x-109">. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">If a command is not recognized, it is assumed an expression is given with an implicit</span>
-     <span 
-class="cmbx-10x-x-109">SELECT. In this way it is easily possible to calculate expressions. Note that multiple</span>
-     <span 
-class="cmbx-10x-x-109">expressions (separated by a comma) can be given, because it is the very same as</span>
-     <span 
-class="cmbx-10x-x-109">selecting multiple column expressions in TaQL.</span>
+class="cmtt-10x-x-109">-pc </span>or <span 
+class="cmtt-10x-x-109">--printcommand </span>deﬁnes if the expanded TaQL command (as executed) will be printed.
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">? </span><span 
-class="cmbx-10x-x-109">shows the varnames.</span>
+class="cmtt-10x-x-109">-pr </span>or <span 
+class="cmtt-10x-x-109">--printnrows </span>deﬁnes if the number of rows handled by the command will be printed.
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">varname= </span><span 
-class="cmbx-10x-x-109">without a further command removes the temporary result.</span>
+class="cmtt-10x-x-109">-p </span>or <span 
+class="cmtt-10x-x-109">--printall </span>deﬁnes all 5 print options (except -pa) above.
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">varname </span><span 
-class="cmbx-10x-x-109">shows the number of rows in the temporary result. It can be followed by</span>
-     <span 
-class="cmbx-10x-x-109">one or more question marks to show the column names and details about them. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that if an unknown varname is given, it is treated as a TaQL command resulting</span>
-     <span 
-class="cmbx-10x-x-109">in a parse error.</span>
+class="cmtt-10x-x-109">-m </span>deﬁnes the maximum number of rows to print if auto printing is used. It defaults to 50.
      </li>
      <li class="itemize"><span 
-class="cmbx-10x-x-109">Comments can be given after the hash (#) character. Empty lines are ignored.</span></li></ul>
-<!--l. 5380--><p class="noindent" ><span 
-class="cmbx-10x-x-109">A command can be preceded by zero or more options to specify if, how and where the</span>
-<span 
-class="cmbx-10x-x-109">results of a TaQL selection are printed. The options can be given at various levels:</span>
-</p>
+class="cmtt-10x-x-109">-d separator </span>deﬁnes the separator between printed columns. The default is a tab.
+     </li>
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">-o filename </span>deﬁnes the ﬁle in which to write the output. <span 
+class="cmti-10x-x-109">stdout </span>and <span 
+class="cmti-10x-x-109">stderr </span>are special names.
+     Default is stdout.</li></ul>
+<!--l. 5437--><p class="noindent" >All -p options can be preceded by <span 
+class="cmtt-10x-x-109">no </span>to negate settings. <br 
+class="newline" />The initial default settings are ’-nops -pa -ph -pm -nopc -pr -m 50’. <br 
+class="newline" />Note that an implicit SELECT always uses -noph -nopc -nopr regardless of their settings. <br 
+class="newline" />A few other options are available. </p>
      <ul class="itemize1">
      <li class="itemize"><span 
-class="cmbx-10x-x-109">The initial default options can be overridden by the options given when starting the</span>
-     <span 
-class="cmbxti-10x-x-109">taql </span><span 
-class="cmbx-10x-x-109">program. These are global settings and used for all subsequent TaQL commands.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">A TaQL command can be preceded by options to override the global settings for</span>
-     <span 
-class="cmbx-10x-x-109">that TaQL command only. However, when only giving options on a command line,</span>
-     <span 
-class="cmbx-10x-x-109">the are persistent, thus get new global settings.</span>
+class="cmtt-10x-x-109">-s style </span>or <span 
+class="cmtt-10x-x-109">--style style </span>deﬁnes the default TaQL style. It defaults to ’python’.
                                                                                             
                                                                                             
      </li>
      <li class="itemize"><span 
-class="cmbx-10x-x-109">The options usage in a TaQL command ﬁle behaves in a similar way. The initial</span>
-     <span 
-class="cmbx-10x-x-109">option values are the settings of the level above which can be overridden temporarily</span>
-     <span 
-class="cmbx-10x-x-109">or permanently by options on the command lines in the ﬁle. A nested command ﬁle</span>
-     <span 
-class="cmbx-10x-x-109">inherits the settings from the level above. Note that persistent options settings do</span>
-     <span 
-class="cmbx-10x-x-109">not go upwards.</span></li></ul>
-<!--l. 5399--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The output of a TaQL command can be printed. Most commands (such as UPDATE) will</span>
-<span 
-class="cmbx-10x-x-109">only show the expanded command and the number of rows aﬀected. However, the CALC</span>
-<span 
-class="cmbx-10x-x-109">and SELECT command can also show the the results of the selected expressions.</span>
-<br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The result of a CALC command is always printed. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Selected columns in a SELECT command are optionally printed. If an implicit SELECT is</span>
-<span 
-class="cmbx-10x-x-109">done (thus if SELECT was added to the command) or if -ps is in eﬀect, all results are printed.</span>
-<span 
-class="cmbx-10x-x-109">Otherwise if -pa is in eﬀect, the ﬁrst N rows are printed where N is deﬁned by the -m</span>
-<span 
-class="cmbx-10x-x-109">option.</span>
-</p><!--l. 5409--><p class="indent" >   <span 
-class="cmbx-10x-x-109">The following print options are available.</span> </p>
-     <ul class="itemize1">
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-ps </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--printselect </span><span 
-class="cmbx-10x-x-109">deﬁnes if all rows of selected columns will be printed. Note</span>
-     <span 
-class="cmbx-10x-x-109">that all rows of an implicit SELECT are always printed.</span>
+class="cmtt-10x-x-109">-h </span>or <span 
+class="cmtt-10x-x-109">--help </span>shows the help about the <span 
+class="cmti-10x-x-109">taql </span>program (same as command <span 
+class="cmtt-10x-x-109">h</span>).
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">-pa </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--printauto </span><span 
-class="cmbx-10x-x-109">deﬁnes if auto printing is in eﬀect meaning that only the ﬁrst N</span>
-     <span 
-class="cmbx-10x-x-109">rows of selected columns are printed. N is deﬁned by the -m option.</span>
+class="cmtt-10x-x-109">-v </span>or <span 
+class="cmtt-10x-x-109">--version </span>shows the <span 
+class="cmti-10x-x-109">taql </span>version (same as command <span 
+class="cmtt-10x-x-109">v</span>).
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">-pm </span><span 
-class="cmbx-10x-x-109">or  </span><span 
-class="cmtt-10x-x-109">--printmeasure </span><span 
-class="cmbx-10x-x-109">deﬁnes  if  values  with  a  reference  frame  (such  as  times,</span>
-     <span 
-class="cmbx-10x-x-109">positions, directions, ...) are pretty printed. Note that TaQL’s </span><span 
-class="cmtt-10x-x-109">str </span><span 
-class="cmbx-10x-x-109">function oﬀers</span>
-     <span 
-class="cmbx-10x-x-109">very ﬂexible pretty printing.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-ph </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--printheader </span><span 
-class="cmbx-10x-x-109">deﬁnes if a header will be printed consisting of the names of</span>
-     <span 
-class="cmbx-10x-x-109">the selected columns.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-pc </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--printcommand </span><span 
-class="cmbx-10x-x-109">deﬁnes if the expanded TaQL command (as executed) will be</span>
-     <span 
-class="cmbx-10x-x-109">printed.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-pr </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--printnrows </span><span 
-class="cmbx-10x-x-109">deﬁnes if the number of rows handled by the command will be</span>
-     <span 
-class="cmbx-10x-x-109">printed.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-p </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--printall </span><span 
-class="cmbx-10x-x-109">deﬁnes all 5 print options (except -pa) above.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-m </span><span 
-class="cmbx-10x-x-109">deﬁnes the maximum number of rows to print if auto printing is used. It defaults</span>
-     <span 
-class="cmbx-10x-x-109">to 50.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-d separator </span><span 
-class="cmbx-10x-x-109">deﬁnes the separator between printed columns. The default is a tab.</span>
-                                                                                            
-                                                                                            
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-o filename </span><span 
-class="cmbx-10x-x-109">deﬁnes the ﬁle in which to write the output. </span><span 
-class="cmbxti-10x-x-109">stdout </span><span 
-class="cmbx-10x-x-109">and </span><span 
-class="cmbxti-10x-x-109">stderr </span><span 
-class="cmbx-10x-x-109">are</span>
-     <span 
-class="cmbx-10x-x-109">special names. Default is stdout.</span></li></ul>
-<!--l. 5437--><p class="noindent" ><span 
-class="cmbx-10x-x-109">All -p options can be preceded by </span><span 
-class="cmtt-10x-x-109">no </span><span 
-class="cmbx-10x-x-109">to negate settings. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The initial default settings are ’-nops -pa -ph -pm -nopc -pr -m 50’. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that an implicit SELECT always uses -noph -nopc -nopr regardless of their settings.</span>
-<br 
-class="newline" /><span 
-class="cmbx-10x-x-109">A few other options are available.</span> </p>
-     <ul class="itemize1">
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-s style </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--style style </span><span 
-class="cmbx-10x-x-109">deﬁnes the default TaQL style. It defaults to ’python’.</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-h </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--help </span><span 
-class="cmbx-10x-x-109">shows the help about the </span><span 
-class="cmbxti-10x-x-109">taql </span><span 
-class="cmbx-10x-x-109">program (same as command </span><span 
-class="cmtt-10x-x-109">h</span><span 
-class="cmbx-10x-x-109">).</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-v </span><span 
-class="cmbx-10x-x-109">or </span><span 
-class="cmtt-10x-x-109">--version </span><span 
-class="cmbx-10x-x-109">shows the </span><span 
-class="cmbxti-10x-x-109">taql </span><span 
-class="cmbx-10x-x-109">version (same as command </span><span 
-class="cmtt-10x-x-109">v</span><span 
-class="cmbx-10x-x-109">).</span>
-     </li>
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">-f filename </span><span 
-class="cmbx-10x-x-109">executes the TaQL commands in the given ﬁle.</span></li></ul>
-<!--l. 5451--><p class="noindent" ><span 
-class="cmbx-10x-x-109">Note that ’–’ can be used to indicate the end of the options. This can be useful if the following</span>
-<span 
-class="cmbx-10x-x-109">TaQL command starts with a minus sign.</span>
-</p><!--l. 5455--><p class="indent" >   <span 
-class="cmbx-10x-x-109">For example:</span>
+class="cmtt-10x-x-109">-f filename </span>executes the TaQL commands in the given ﬁle.</li></ul>
+<!--l. 5451--><p class="noindent" >Note that ’–’ can be used to indicate the end of the options. This can be useful if the following TaQL command
+starts with a minus sign.
+</p><!--l. 5455--><p class="indent" >   For example:
                                                                                             
                                                                                             
 </p>
@@ -8807,40 +8231,21 @@ class="cmbx-10x-x-109">For example:</span>
 <!--l. 5474--><p class="nopar" >
 </p><!--l. 5476--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13.4   </span></span> <a 
- id="x1-12700013.4"></a><span 
-class="cmbx-10x-x-109">C++ interface</span></h4>
-<!--l. 5477--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The C++ programmer can use TaQL commands and expressions at various levels,</span>
+   <h4 class="subsectionHead"><span class="titlemark">13.4   </span> <a 
+ id="x1-12700013.4"></a>C++ interface</h4>
+<!--l. 5477--><p class="noindent" >The C++ programmer can use TaQL commands and expressions at various levels,
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13.4.1   </span></span> <a 
- id="x1-12800013.4.1"></a><span 
-class="cmbx-10x-x-109">TaQL query string</span></h5>
-<!--l. 5479--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The function </span><span 
-class="cmtt-10x-x-109">tableCommand </span><span 
-class="cmbx-10x-x-109">in </span><a 
-href="../html/classcasa_1_1TableParse.html" ><span 
-class="cmbx-10x-x-109">TableParse.h</span></a> <span 
-class="cmbx-10x-x-109">can be used to execute a TaQL command. The</span>
-<span 
-class="cmbx-10x-x-109">result is a </span><a 
-href="../html/classcasa_1_1TaQLResult.html" ><span 
-class="cmbx-10x-x-109">TaQLResult</span></a> <span 
-class="cmbx-10x-x-109">object. Its function </span><span 
-class="cmtt-10x-x-109">isTable() </span><span 
-class="cmbx-10x-x-109">tells if the result contains a </span><a 
-href="../html/classcasa_1_1Table.html" ><span 
-class="cmbx-10x-x-109">Table</span></a>
-<span 
-class="cmbx-10x-x-109">object or an </span><a 
-href="../html/classcasa_1_1TableExprNode.html" ><span 
-class="cmbx-10x-x-109">TableExprNode</span></a> <span 
-class="cmbx-10x-x-109">object. The latter results from a CALC command. .</span>
-<span 
-class="cmbx-10x-x-109">E.g.,</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">13.4.1   </span> <a 
+ id="x1-12800013.4.1"></a>TaQL query string</h5>
+<!--l. 5479--><p class="noindent" >The function <span 
+class="cmtt-10x-x-109">tableCommand </span>in <a 
+href="../html/classcasa_1_1TableParse.html" >TableParse.h</a> can be used to execute a TaQL command. The result is a
+<a 
+href="../html/classcasa_1_1TaQLResult.html" >TaQLResult</a> object. Its function <span 
+class="cmtt-10x-x-109">isTable() </span>tells if the result contains a <a 
+href="../html/classcasa_1_1Table.html" >Table</a> object or an <a 
+href="../html/classcasa_1_1TableExprNode.html" >TableExprNode</a>
+object. The latter results from a CALC command. . E.g.,
                                                                                             
                                                                                             
 </p>
@@ -8853,39 +8258,22 @@ class="cmbx-10x-x-109">E.g.,</span>
  <br />         (&#x0022;select column1,column2 from $1 where column2&#x003E;5&#x0022;
  <br />          &#x0022; orderby time giving result.tab&#x0022;, seltab1).table();
 </div>
-<!--l. 5499--><p class="nopar" > <span 
-class="cmbx-10x-x-109">These examples do the same as the Python ones shown above. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">Note that in the second function call the table name </span><span 
-class="cmtt-10x-x-109">$1 </span><span 
-class="cmbx-10x-x-109">is replaced by the object </span><span 
-class="cmtt-10x-x-109">seltab1</span>
-<span 
-class="cmbx-10x-x-109">passed to the function. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">There is no style argument, so if an explicit style is needed it should be the ﬁrst part of the</span>
-<span 
-class="cmbx-10x-x-109">TaQL statement. Note that the Glish style is the default style.</span>
+<!--l. 5499--><p class="nopar" > These examples do the same as the Python ones shown above. <br 
+class="newline" />Note that in the second function call the table name <span 
+class="cmtt-10x-x-109">$1 </span>is replaced by the object <span 
+class="cmtt-10x-x-109">seltab1 </span>passed to the
+function. <br 
+class="newline" />There is no style argument, so if an explicit style is needed it should be the ﬁrst part of the TaQL statement.
+Note that the Glish style is the default style.
 </p><!--l. 5508--><p class="noindent" >
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13.4.2   </span></span> <a 
- id="x1-12900013.4.2"></a><span 
-class="cmbx-10x-x-109">Expression string</span></h5>
-<!--l. 5509--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The function </span><span 
-class="cmtt-10x-x-109">parse </span><span 
-class="cmbx-10x-x-109">in </span><a 
-href="../html/classcasa_1_1RecordGram.html" ><span 
-class="cmbx-10x-x-109">RecordGram.h</span></a> <span 
-class="cmbx-10x-x-109">can be used to parse a TaQL expression. The</span>
-<span 
-class="cmbx-10x-x-109">result is a </span><a 
-href="../html/classcasa_1_1ExprNode.html" ><span 
-class="cmbx-10x-x-109">TableExprNode</span></a> <span 
-class="cmbx-10x-x-109">object that can be evaluated for each row in the table.</span>
-<span 
-class="cmbx-10x-x-109">E.g.</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">13.4.2   </span> <a 
+ id="x1-12900013.4.2"></a>Expression string</h5>
+<!--l. 5509--><p class="noindent" >The function <span 
+class="cmtt-10x-x-109">parse </span>in <a 
+href="../html/classcasa_1_1RecordGram.html" >RecordGram.h</a> can be used to parse a TaQL expression. The result is a
+<a 
+href="../html/classcasa_1_1ExprNode.html" >TableExprNode</a> object that can be evaluated for each row in the table. E.g.
                                                                                             
                                                                                             
 </p>
@@ -8894,10 +8282,8 @@ class="cmbx-10x-x-109">E.g.</span>
  <br />  TableExprNode expr = RecordGram::parse (tab, &#x0022;column1&#x003E;0&#x0022;);
  <br />  Table seltab1 = tab(expr);
 </div>
-<!--l. 5519--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The example above does the same as the ﬁrst example in the previous section. There are,</span>
-<span 
-class="cmbx-10x-x-109">however, better ways to use this functionality.</span>
+<!--l. 5519--><p class="nopar" > The example above does the same as the ﬁrst example in the previous section. There are, however, better
+ways to use this functionality.
                                                                                             
                                                                                             
 </p>
@@ -8910,12 +8296,9 @@ class="cmbx-10x-x-109">however, better ways to use this functionality.</span>
  <br />    }
  <br />  }
 </div>
-<!--l. 5530--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The example above shows a boolean scalar expression, but it can also be a numeric expression</span>
-<span 
-class="cmbx-10x-x-109">or an array expression as shown in the example below. Note that TaQL expression results have</span>
-<span 
-class="cmbx-10x-x-109">data type Bool, Int64, Double, DComplex, String, or MVTime.</span>
+<!--l. 5530--><p class="nopar" > The example above shows a boolean scalar expression, but it can also be a numeric expression or an array
+expression as shown in the example below. Note that TaQL expression results have data type Bool, Int64,
+Double, DComplex, String, or MVTime.
                                                                                             
                                                                                             
 </p>
@@ -8927,36 +8310,19 @@ class="cmbx-10x-x-109">data type Bool, Int64, Double, DComplex, String, or MVTim
  <br />  }
 </div>
 <!--l. 5542--><p class="nopar" >
-</p><!--l. 5544--><p class="indent" >   <span 
-class="cmbx-10x-x-109">Class RecordGram can also be used to apply TaQL to C++ vectors of values or Records.</span>
-<span 
-class="cmbx-10x-x-109">The RecordGram class documentation and its test program describe these features in more</span>
-<span 
-class="cmbx-10x-x-109">detail.</span>
+</p><!--l. 5544--><p class="indent" >   Class RecordGram can also be used to apply TaQL to C++ vectors of values or Records. The
+RecordGram class documentation and its test program describe these features in more detail.
 </p><!--l. 5548--><p class="noindent" >
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">13.4.3   </span></span> <a 
- id="x1-13000013.4.3"></a><span 
-class="cmbx-10x-x-109">Expression classes</span></h5>
-<!--l. 5549--><p class="noindent" ><span 
-class="cmbx-10x-x-109">The other expression interface is a true C++ interface having the advantage that C++</span>
-<span 
-class="cmbx-10x-x-109">variables can be used directly. Class </span><a 
-href="../html/classcasa_1_1Table.html" ><span 
-class="cmbx-10x-x-109">Table</span></a> <span 
-class="cmbx-10x-x-109">contains functions to sort a table or to select</span>
-<span 
-class="cmbx-10x-x-109">columns or rows. When selecting rows class </span><a 
-href="../html/classcasa_1_1TableExprNode.html" ><span 
-class="cmbx-10x-x-109">TableExprNode</span></a> <span 
-class="cmbx-10x-x-109">(in ExprNode.h) has to be used to</span>
-<span 
-class="cmbx-10x-x-109">build a WHERE expression which can be executed by the overloaded function operator in</span>
-<span 
-class="cmbx-10x-x-109">class </span><span 
-class="cmtt-10x-x-109">Table</span><span 
-class="cmbx-10x-x-109">. E.g.</span>
+   <h5 class="subsubsectionHead"><span class="titlemark">13.4.3   </span> <a 
+ id="x1-13000013.4.3"></a>Expression classes</h5>
+<!--l. 5549--><p class="noindent" >The other expression interface is a true C++ interface having the advantage that C++ variables can be used
+directly. Class <a 
+href="../html/classcasa_1_1Table.html" >Table</a> contains functions to sort a table or to select columns or rows. When selecting rows class
+<a 
+href="../html/classcasa_1_1TableExprNode.html" >TableExprNode</a> (in ExprNode.h) has to be used to build a WHERE expression which can be executed by the
+overloaded function operator in class <span 
+class="cmtt-10x-x-109">Table</span>. E.g.
                                                                                             
                                                                                             
 </p>
@@ -8965,81 +8331,44 @@ class="cmbx-10x-x-109">. E.g.</span>
  <br />  Table tab (&#x0022;mytable&#x0022;);
  <br />  Table seltab = tab(tab.col(&#x0022;column1&#x0022;) &#x003E; limit);
 </div>
-<!--l. 5562--><p class="nopar" > <span 
-class="cmbx-10x-x-109">does the same as the ﬁrst example shown above. See classes </span><a 
-href="../html/classcasa_1_1Table.html" ><span 
-class="cmbx-10x-x-109">Table</span></a><span 
-class="cmbx-10x-x-109">, </span><a 
-href="../html/classcasa_1_1TableExprNode.html" ><span 
-class="cmbx-10x-x-109">TableExprNode</span></a><span 
-class="cmbx-10x-x-109">, and</span>
-<a 
-href="../html/classcasa_1_1TableExprNodeSet.html" ><span 
-class="cmbx-10x-x-109">TableExprNodeSet</span></a> <span 
-class="cmbx-10x-x-109">for more information on how to construct a WHERE expression.</span>
+<!--l. 5562--><p class="nopar" > does the same as the ﬁrst example shown above. See classes <a 
+href="../html/classcasa_1_1Table.html" >Table</a>, <a 
+href="../html/classcasa_1_1TableExprNode.html" >TableExprNode</a>, and <a 
+href="../html/classcasa_1_1TableExprNodeSet.html" >TableExprNodeSet</a>
+for more information on how to construct a WHERE expression.
 </p><!--l. 5572--><p class="noindent" >
 </p>
-   <h3 class="sectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">14   </span></span> <a 
- id="x1-13100014"></a><span 
-class="cmbx-10x-x-109">Writing user deﬁned functions</span></h3>
-<!--l. 5573--><p class="noindent" ><span 
-class="cmbx-10x-x-109">A C++ user deﬁned function has to be written as a class derived from the abstract base class</span>
+   <h3 class="sectionHead"><span class="titlemark">14   </span> <a 
+ id="x1-13100014"></a>Writing user deﬁned functions</h3>
+<!--l. 5573--><p class="noindent" >A C++ user deﬁned function has to be written as a class derived from the abstract base class
 <a 
-href="../html/classcasa_1_1UDFBase.html" ><span 
-class="cmbx-10x-x-109">UDFBase</span></a><span 
-class="cmbx-10x-x-109">. The documentation of this base class describes how to write a UDF. Furthermore</span>
-<span 
-class="cmbx-10x-x-109">one can look at class </span><a 
-href="../html/classcasa_1_1UDFMSCal.html" ><span 
-class="cmbx-10x-x-109">UDFMSCal</span></a> <span 
-class="cmbx-10x-x-109">that contains the UDFs described in subsection </span><a 
-href="#x1-690004.10.17"><span 
-class="cmbx-10x-x-109">User deﬁned</span>
-<span 
-class="cmbx-10x-x-109">functions</span></a><span 
-class="cmbx-10x-x-109">.</span>
-</p><!--l. 5582--><p class="indent" >   <span 
-class="cmbx-10x-x-109">It is possible to write a UDF that operates on an individual expression (for each table row)</span>
-<span 
-class="cmbx-10x-x-109">and returns the result. It is, however, also possible to write a UDF acting as an aggregate</span>
-<span 
-class="cmbx-10x-x-109">function. In that case it will return a result based on the values of all rows in a group. See the</span>
-<span 
-class="cmbx-10x-x-109">desription of the </span><a 
-href="#x1-260003.7"><span 
-class="cmbx-10x-x-109">GROUPBY clause</span></a> <span 
-class="cmbx-10x-x-109">for more information on the GROUPBY clause and</span>
-<span 
-class="cmbx-10x-x-109">aggregate functions.</span>
-</p><!--l. 5590--><p class="indent" >   <span 
-class="cmbx-10x-x-109">Note that a class can contain multiple UDFs as done in UDFMSCal. Also note that a single</span>
-<span 
-class="cmbx-10x-x-109">UDF can operate on multiple data types which is similar to a function like </span><span 
-class="cmtt-10x-x-109">min </span><span 
-class="cmbx-10x-x-109">that can</span>
-<span 
-class="cmbx-10x-x-109">operate on scalars and arrays of diﬀerent data types.</span>
-</p><!--l. 5595--><p class="indent" >   <span 
-class="cmbx-10x-x-109">A UDF class can contain a </span><span 
-class="cmtt-10x-x-109">HELP </span><span 
-class="cmbx-10x-x-109">function, which should return help information. This</span>
-<span 
-class="cmbx-10x-x-109">function is called by a help command like</span>
+href="../html/classcasa_1_1UDFBase.html" >UDFBase</a>. The documentation of this base class describes how to write a UDF. Furthermore
+one can look at class <a 
+href="../html/classcasa_1_1UDFMSCal.html" >UDFMSCal</a> that contains the UDFs described in subsection <a 
+href="#x1-690004.10.17">User deﬁned
+functions</a>.
+</p><!--l. 5582--><p class="indent" >   It is possible to write a UDF that operates on an individual expression (for each table row) and returns
+the result. It is, however, also possible to write a UDF acting as an aggregate function. In that case it will
+return a result based on the values of all rows in a group. See the desription of the <a 
+href="#x1-260003.7">GROUPBY clause</a> for
+more information on the GROUPBY clause and aggregate functions.
+</p><!--l. 5590--><p class="indent" >   Note that a class can contain multiple UDFs as done in UDFMSCal. Also note that a single UDF can
+operate on multiple data types which is similar to a function like <span 
+class="cmtt-10x-x-109">min </span>that can operate on scalars and arrays
+of diﬀerent data types.
+</p><!--l. 5595--><p class="indent" >   A UDF class can contain a <span 
+class="cmtt-10x-x-109">HELP </span>function, which should return help information. This function is called
+by a help command like
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-213">
    show function meas [subtype]
 </div>
-<!--l. 5599--><p class="nopar" > <span 
-class="cmbx-10x-x-109">It returns an overview of the functions in the UDF class and possible other information. The</span>
+<!--l. 5599--><p class="nopar" > It returns an overview of the functions in the UDF class and possible other information. The optional
 <span 
-class="cmbx-10x-x-109">optional </span><span 
-class="cmtt-10x-x-109">subtype </span><span 
-class="cmbx-10x-x-109">argument can be used to return more speciﬁc information. Note that the</span>
-<span 
-class="cmbx-10x-x-109">same result is given by</span>
+class="cmtt-10x-x-109">subtype </span>argument can be used to return more speciﬁc information. Note that the same result is given
+by
                                                                                             
                                                                                             
 </p>
@@ -9047,51 +8376,27 @@ class="cmbx-10x-x-109">same result is given by</span>
    meas.help(’subtype’)
 </div>
 <!--l. 5606--><p class="nopar" >
-</p><!--l. 5608--><p class="indent" >   <span 
-class="cmbx-10x-x-109">TaQL ﬁnds a UDF by looking in a dictionary mapping the UDF name to a function</span>
-<span 
-class="cmbx-10x-x-109">constructing an object of the UDF class. If not found, it tries to load the shared library with</span>
-<span 
-class="cmbx-10x-x-109">the lowercase name of the library part of the UDF (like in </span><span 
-class="cmtt-10x-x-109">derivedmscal.pa1</span><span 
-class="cmbx-10x-x-109">). If the load is</span>
-<span 
-class="cmbx-10x-x-109">successful, it calls an initialization function in the shared library that should add all UDF</span>
-<span 
-class="cmbx-10x-x-109">functions in the library to the dictionary. The description of the </span><a 
-href="../html/classcasa_1_1UDFBase.html" ><span 
-class="cmbx-10x-x-109">UDFBase</span></a> <span 
-class="cmbx-10x-x-109">class shows how this</span>
-<span 
-class="cmbx-10x-x-109">should be done.</span>
+</p><!--l. 5608--><p class="indent" >   TaQL ﬁnds a UDF by looking in a dictionary mapping the UDF name to a function constructing an
+object of the UDF class. If not found, it tries to load the shared library with the lowercase name of the
+library part of the UDF (like in <span 
+class="cmtt-10x-x-109">derivedmscal.pa1</span>). If the load is successful, it calls an initialization
+function in the shared library that should add all UDF functions in the library to the dictionary. The
+description of the <a 
+href="../html/classcasa_1_1UDFBase.html" >UDFBase</a> class shows how this should be done.
 </p><!--l. 5617--><p class="noindent" >
 </p>
-   <h4 class="subsectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">14.1   </span></span> <a 
- id="x1-13200014.1"></a><span 
-class="cmbx-10x-x-109">UDFs in Python</span></h4>
-<!--l. 5618--><p class="noindent" ><span 
-class="cmbx-10x-x-109">NOTE: This section is for a future version of TaQL. It has not been fully implemented</span>
+   <h4 class="subsectionHead"><span class="titlemark">14.1   </span> <a 
+ id="x1-13200014.1"></a>UDFs in Python</h4>
+<!--l. 5618--><p class="noindent" >NOTE: This section is for a future version of TaQL. It has not been fully implemented yet.
+</p><!--l. 5621--><p class="indent" >   For performance reasons User Deﬁned Functions will usually be implemented in C++. It is, however,
+possible to implement them in Python, both regular functions and aggregate functions. This can be done by
+means of the <span 
+class="cmtt-10x-x-109">pytaql </span>module of Casacore.
+</p><!--l. 5626--><p class="indent" >   A UDF has to be implemented in Python by subclassing <span 
+class="cmtt-10x-x-109">pytaqlbase</span>, that can be imported from
 <span 
-class="cmbx-10x-x-109">yet.</span>
-</p><!--l. 5621--><p class="indent" >   <span 
-class="cmbx-10x-x-109">For performance reasons User Deﬁned Functions will usually be implemented in C++. It is,</span>
-<span 
-class="cmbx-10x-x-109">however, possible to implement them in Python, both regular functions and aggregate</span>
-<span 
-class="cmbx-10x-x-109">functions. This can be done by means of the </span><span 
-class="cmtt-10x-x-109">pytaql </span><span 
-class="cmbx-10x-x-109">module of Casacore.</span>
-</p><!--l. 5626--><p class="indent" >   <span 
-class="cmbx-10x-x-109">A UDF has to be implemented in Python by subclassing </span><span 
-class="cmtt-10x-x-109">pytaqlbase</span><span 
-class="cmbx-10x-x-109">, that can be imported</span>
-<span 
-class="cmbx-10x-x-109">from </span><span 
-class="cmtt-10x-x-109">Casacore.python</span><span 
-class="cmbx-10x-x-109">. The subclass has to implement a few functions, some are optional. The</span>
-<span 
-class="cmbx-10x-x-109">functions are called in the order given below.</span>
+class="cmtt-10x-x-109">Casacore.python</span>. The subclass has to implement a few functions, some are optional. The functions are
+called in the order given below.
 </p>
      <ul class="itemize1">
      <li class="itemize"><span 
@@ -9099,35 +8404,22 @@ class="cmtt-10x-x-109">_</span><span
 class="cmtt-10x-x-109">_init</span><span 
 class="cmtt-10x-x-109">_</span><span 
 class="cmtt-10x-x-109">_(self)</span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">The class constructor must call the </span><span 
-class="cmbx-10x-x-109">_</span><span 
-class="cmbx-10x-x-109">_init</span><span 
-class="cmbx-10x-x-109">_</span><span 
-class="cmbx-10x-x-109">_ function of the superclass.</span>
+class="newline" />The class constructor must call the __init__ function of the superclass.
      </li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">needTable(self)</span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">This optional function tells if the UDF needs the Table object of the table being</span>
-     <span 
-class="cmbx-10x-x-109">queried. If True is returned, the function setTable is called thereafter. The Table</span>
-     <span 
-class="cmbx-10x-x-109">object can be used by UDFs needing extra info (e.g., keywords) from the table being</span>
-     <span 
-class="cmbx-10x-x-109">queried or from its subtables (comparable to derivedmscal). It requires the import</span>
-     <span 
-class="cmbx-10x-x-109">of </span><span 
-class="cmtt-10x-x-109">pyrap.tables </span><span 
-class="cmbx-10x-x-109">at the beginning of the UDF script.</span>
+class="newline" />This optional function tells if the UDF needs the Table object of the table being queried. If
+     True is returned, the function setTable is called thereafter. The Table object can be used by
+     UDFs needing extra info (e.g., keywords) from the table being queried or from its subtables
+     (comparable to derivedmscal). It requires the import of <span 
+class="cmtt-10x-x-109">pyrap.tables </span>at the beginning of the
+     UDF script.
      </li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">setTable(self, tab)</span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">This function makes it possible to keep the Table object. It must be implemented if</span>
-     <span 
-class="cmtt-10x-x-109">needTable </span><span 
-class="cmbx-10x-x-109">returns True. The object should be kept like:</span>
+class="newline" />This function makes it possible to keep the Table object. It must be implemented if <span 
+class="cmtt-10x-x-109">needTable </span>returns
+     True. The object should be kept like:
                                                                                             
                                                                                             
      <div class="verbatim" id="verbatim-215">
@@ -9137,12 +8429,8 @@ class="cmbx-10x-x-109">returns True. The object should be kept like:</span>
      </p></li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">setup(self, valuetypes, datatypes, units)</span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">This function is called once at the beginning. It gets the value types, data types, and</span>
-     <span 
-class="cmbx-10x-x-109">units of the function arguments. The length of the sequences tells the number of</span>
-     <span 
-class="cmbx-10x-x-109">arguments.</span>
+class="newline" />This function is called once at the beginning. It gets the value types, data types, and units of the
+     function arguments. The length of the sequences tells the number of arguments.
                                                                                             
                                                                                             
      <div class="verbatim" id="verbatim-216">
@@ -9153,10 +8441,8 @@ class="cmbx-10x-x-109">arguments.</span>
       <br />                       4=string 6=date
       <br /> units       strings   unit of each argument (empty=no unit)
 </div>
-     <!--l. 5663--><p class="nopar" > <span 
-class="cmbx-10x-x-109">The UDF should check if the argument types are correct and determine the result type.</span>
-     <span 
-class="cmbx-10x-x-109">It has to return a dict containing the following ﬁelds:</span>
+     <!--l. 5663--><p class="nopar" > The UDF should check if the argument types are correct and determine the result type. It has to
+     return a dict containing the following ﬁelds:
                                                                                             
                                                                                             
 </p>
@@ -9172,33 +8458,19 @@ class="cmbx-10x-x-109">It has to return a dict containing the following ﬁelds:
      </p></li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">getValue(self, argValues, rownr)</span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">This function must return the function value for the given argument values. It is only</span>
-     <span 
-class="cmbx-10x-x-109">called if </span><span 
-class="cmtt-10x-x-109">setup </span><span 
-class="cmbx-10x-x-109">does not set </span><span 
-class="cmtt-10x-x-109">isaggr=True</span><span 
-class="cmbx-10x-x-109">. Normally the </span><span 
-class="cmtt-10x-x-109">rownr </span><span 
-class="cmbx-10x-x-109">argument is not</span>
-     <span 
-class="cmbx-10x-x-109">needed, but it could be used to obtain special info from the Table object for that</span>
-     <span 
-class="cmbx-10x-x-109">row.</span>
+class="newline" />This function must return the function value for the given argument values. It is only called if <span 
+class="cmtt-10x-x-109">setup</span>
+     does not set <span 
+class="cmtt-10x-x-109">isaggr=True</span>. Normally the <span 
+class="cmtt-10x-x-109">rownr </span>argument is not needed, but it could be used to obtain
+     special info from the Table object for that row.
      </li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">getAggrValue(self, rownrs)</span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">This function must return the value of the aggregate function for the given rows. The</span>
-     <span 
-class="cmbx-10x-x-109">argument values are not passed, because their sizes may exhaust memory. Instead</span>
-     <span 
-class="cmbx-10x-x-109">the list of row numbers in the aggregation group are given. For each row the</span>
-     <span 
-class="cmbx-10x-x-109">following function must be called to get a list of the argument values for that</span>
-     <span 
-class="cmbx-10x-x-109">row.</span>
+class="newline" />This function must return the value of the aggregate function for the given rows. The argument values
+     are not passed, because their sizes may exhaust memory. Instead the list of row numbers in the
+     aggregation group are given. For each row the following function must be called to get a list of the
+     argument values for that row.
                                                                                             
                                                                                             
      <div class="verbatim" id="verbatim-218">
@@ -9207,16 +8479,11 @@ class="cmbx-10x-x-109">row.</span>
      <!--l. 5689--><p class="nopar" >
 </p>
      </li></ul>
-<!--l. 5692--><p class="noindent" ><span 
-class="cmbx-10x-x-109">Such a UDF can be called in TaQL like </span><span 
-class="cmtt-10x-x-109">py.module.class </span><span 
-class="cmbx-10x-x-109">where the class defaults to the module</span>
-<span 
-class="cmbx-10x-x-109">name. </span><br 
-class="newline" /><span 
-class="cmbx-10x-x-109">An example of UDFs in Python is given below. The ﬁrst one is a regular UDF, the second one</span>
-<span 
-class="cmbx-10x-x-109">an aggregate UDF.</span>
+<!--l. 5692--><p class="noindent" >Such a UDF can be called in TaQL like <span 
+class="cmtt-10x-x-109">py.module.class </span>where the class defaults to the module name.
+<br 
+class="newline" />An example of UDFs in Python is given below. The ﬁrst one is a regular UDF, the second one an aggregate
+UDF.
                                                                                             
                                                                                             
 </p>
@@ -9298,33 +8565,23 @@ class="cmbx-10x-x-109">an aggregate UDF.</span>
 <!--l. 5768--><p class="nopar" >
 </p><!--l. 5771--><p class="noindent" >
 </p>
-   <h3 class="sectionHead"><span class="titlemark"><span 
-class="cmbx-10x-x-109">15   </span></span> <a 
- id="x1-13300015"></a><span 
-class="cmbx-10x-x-109">Possible future developments</span></h3>
-<!--l. 5772--><p class="noindent" ><span 
-class="cmbx-10x-x-109">In the near or far future TaQL can be enhanced by adding new features and by doing</span>
-<span 
-class="cmbx-10x-x-109">optimizations.</span> </p>
+   <h3 class="sectionHead"><span class="titlemark">15   </span> <a 
+ id="x1-13300015"></a>Possible future developments</h3>
+<!--l. 5772--><p class="noindent" >In the near or far future TaQL can be enhanced by adding new features and by doing optimizations.
+</p>
      <ul class="itemize1">
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">Add ROLLUP/CUBE to the GROUPBY clause.</span>
+     <li class="itemize">Add ROLLUP/CUBE to the GROUPBY clause.
      </li>
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">Implement the OVER/PARTITION clause.</span>
+     <li class="itemize">Implement the OVER/PARTITION clause.
      </li>
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">Add explicit JOIN clause (probably only equi-joins).</span>
+     <li class="itemize">Add explicit JOIN clause (probably only equi-joins).
      </li>
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">Add UNION, INTERSECTION, and DIFFERENCE.</span>
+     <li class="itemize">Add UNION, INTERSECTION, and DIFFERENCE.
                                                                                             
                                                                                             
      </li>
-     <li class="itemize"><span 
-class="cmbx-10x-x-109">Handle invalid subexpressions (e.g., exceeding array bounds) as null arrays which</span>
-     <span 
-class="cmbx-10x-x-109">can be tested with the function ISNULL.</span></li></ul>
+     <li class="itemize">Handle invalid subexpressions (e.g., exceeding array bounds) as null arrays which can be tested
+     with the function ISNULL.</li></ul>
     
 </body></html> 
 
