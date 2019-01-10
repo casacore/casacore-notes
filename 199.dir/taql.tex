@@ -122,7 +122,8 @@ first table list.
 \begin{verbatim}
   INSERT INTO table_list SET column=expr, column=expr, ...
 or
-  INSERT INTO table_list [(column_list)] VALUES (expr_list)
+  INSERT INTO table_list [(column_list)]
+         VALUES (expr_list),(expr_list),... [LIMIT n]
 or
   INSERT INTO table_list [(column_list)] SELECT_command
 \end{verbatim}
@@ -152,7 +153,7 @@ clause and aggregate functions in the SELECT command.
   CALC expression [FROM table_list]
 \end{verbatim}
 It can be used to calculate an expression, in which columns
-in a table can be used.
+in a table can be used. It returns a list of values instead of a table.
 
 \item table creation
 \begin{verbatim}
@@ -178,11 +179,19 @@ Optionally specific table and data manager info can be given.
     [DROP KEYWORD keyword_list]
     [ADD ROW nrow]
 \end{verbatim}
-The subcommands of the ALTER TABLE command (shown above) can be used
+The subcommands of the ALTER TABLE command can be used
 to add, rename, and remove columns and keywords and to add rows.
 Multiple such subcommands can be given, separated by white space.
 
 \end{itemize}
+The SELECT, COUNT, CREATE TABLE and ALTER TABLE commands can be used
+as a table in another command making it possible to directly use the
+resulting table. The following example creates a table (with column
+NAME) and puts values into the column.
+\begin{verbatim}
+  INSERT INTO [CREATE TABLE a.tab [NAME string]]
+         VALUES ('name1'), ('name2')
+\end{verbatim}
 All TaQL commands, except SHOW, can be preceded by the clause
 \begin{verbatim}
   WITH table_list
@@ -195,18 +204,20 @@ contains a detailed description of this clause.
 The commands and verbs in the commands are
 case-insensitive, but case is important in string values and
 in names of columns and keywords. Whitespace (blanks and tabs) can
-be used at will.
-\\\htmlref{Section \ref{TAQL:MODIFYING} (Modifying a table)}{TAQL:MODIFYING} 
-explains the UPDATE, INSERT, and DELETE commands in more detail.
-The CREATE TABLE command is
-explained in 
-\htmlref{section \ref{TAQL:CREATETABLE} (Creating a table)}{TAQL:CREATETABLE}.
-The ALTER TABLE command is explained in 
+be used at will. The HELP command can be used to obtain brief
+information about each command and the available functions.
+\\The SELECT command is fully explained in
+\htmlref{Section \ref{TAQL:SELECT} (Making a selection from a table)}{TAQL:SELECT} 
+\\The UPDATE, INSERT and DELETE commands are explained in
+\htmlref{Section \ref{TAQL:MODIFYING} (Modifying a table)}{TAQL:MODIFYING} 
+\\The CREATE TABLE command is explained in 
+\htmlref{section \ref{TAQL:CREATETABLE} (Creating a  table)}{TAQL:CREATETABLE}
+\\The ALTER TABLE command is explained in 
 \htmlref{section \ref{TAQL:ALTERTABLE} (Modifying the table structure)}{TAQL:ALTERTABLE}.
-\\\htmlref{Section \ref{TAQL:COUNTING} (Counting in a table)}{TAQL:COUNTING}
-explains the COUNT command in more detail.
-\\\htmlref{Section \ref{TAQL:CALCULATING} (Calculations on a table)}{TAQL:CALCULATING}
-explains the CALC command in more detail.
+\\The CALC command is explained in
+\htmlref{Section \ref{TAQL:CALCULATING} (Calculations on a table)}{TAQL:CALCULATING}
+\\The COUNT command is explained in 
+\htmlref{Section \ref{TAQL:COUNTING} (Counting in a table)}{TAQL:COUNTING}
 
 \subsection{\label{TAQL:USINGSTYLE}Using a style}
 TaQL can be used from different languages, in particular Python and
@@ -333,7 +344,7 @@ might become clear. It means: use unit \texttt{in} (inch) for column
 \\Note this is unlike SQL where quotes have to be used to use a
 reserved word as a column name.
 
-\section{Selection from a table}
+\section{Making of a selection from a table}
 The SELECT is the main TaQL command. It can be used to select a subset
 of rows and/or columns from a table and to generate new columns based
 on expressions.
@@ -365,7 +376,7 @@ MeasurementSet with a subtable like the ANTENNA table using a
 Joins are explained further in
 \htmlref{section \ref{TAQL:JOIN}}{TAQL:JOIN}.
 
-\subsection{\label{TAQL:SELECT}SELECT command overview}
+\subsection{\label{TAQL:SELECT}Selection from a table}
 The SELECT command consists of various clauses of which most are
 optional. The full command looks as follows where the optional
 parts are shown in square brackets.
@@ -395,8 +406,8 @@ The clauses are executed in a somewhat different order.
 \item LIMIT (or TOP) and OFFSET to ignore entries in the sorted result.
 \item DMINFO to define the data managers to be used if the result is
   stored in a plain table.
-\item GIVING/INTO to store the final result.
-  stored in a plain table. See
+\item GIVING/INTO to write the final result,
+  possibly stored in a plain table. See
  \htmlref{section \ref{TAQL:DMINFO}}{TAQL:DMINFO} how to specify them.
 \end{enumerate}
 All clauses are explained in full detail in the subsequent sections.
@@ -428,7 +439,7 @@ and \htmlref{keyword names}{TAQL:KEYWORDS} for more details.
 
 \subsection{\label{TAQL:WITH}WITH table\_list}
 Sometimes it is useful to create a temporary table to be used
-thereafter in a SELECT command (or another TaQL command) containing
+in a SELECT command (or another TaQL command) containing
 subqueries. It can make the command more clear or it can optimize the
 command by factoring out subqueries that are used multiple times.
 For example:
@@ -445,7 +456,7 @@ For example:
 This command counts the number of flagged visibilities per antenna.
 It looks somewhat complicated and can only be fully understood
 once the entire TaQL note has been read.
-\\The imporant thing is that the WITH command creates a small
+\\The important thing is that the WITH command creates a small
 temporary table containing the number of 
 flagged visibilities per baseline. It is used twice in the subsequent
 SELECT command (by concatenation). First for ANTENNA1, thereafter
@@ -463,6 +474,7 @@ because it processes all flags in the MeasurementSet  only once instead of twice
 
 It is important to note that, unlike the SQL WITH clause, the order is
 'WITH table AS alias'. This is the same order as used in the FROM clause.
+\\Another property is that WITH is nestable, thus can be used in a nested query.
 
 \subsection{\label{TAQL:COLUMNLIST}SELECT column\_list}
 Columns to be selected can be given as
@@ -4308,8 +4320,8 @@ The slice or mask is applied to both columns.
 The \texttt{INSERT} command adds rows to the table. It can take three forms:
 \begin{verbatim}
   INSERT INTO table_list SET column=expr, column=expr, ...
-  INSERT INTO table_list [(column_list)] VALUES (exprlist),(exprlist),
-         ... [LIMIT n]
+  INSERT INTO table_list [(column_list)]
+         VALUES (exprlist),(exprlist),... [LIMIT n]
   INSERT INTO table_list [(column_list)] SELECT_command
 \end{verbatim}
 The first form adds a single row setting the values in the same way
