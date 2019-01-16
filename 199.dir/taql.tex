@@ -4525,7 +4525,7 @@ The following subcommands can be given. They are explained in
 the next subsections.
 \begin{verbatim}
   ADD COLUMN colspecs DMINFO datamanagers
-  COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
+   future: COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
   RENAME COLUMN old TO new, old TO new, ...
   DELETE COLUMN column_list
   SET KEYWORD name=value AS dtype, ...
@@ -4579,20 +4579,13 @@ The new column gets the same description, but it is possible to define
 a new data type and/or tile shape. If the \texttt{SET} keyword is
 given values are written into the new column. If given, the value of an expression is
 stored in the new column, otherwise the contents of the input column.
-In its simplest form it copies a column
-adds one or more columns to the table.
-The specification of the columns and the optional data managers is the
-same as used in the
-\htmlref{CREATE TABLE}{TAQL:CREATETABLE} command. Thus for each column
-a data type, dimensionality or shape, and unit  can be given.
-The data manager(s) for the new columns can be specified in the DMINFO
-part. If not given, StandardStMan will be used.
-For example:
+In its simplest form it copies a column to another column in the table.
+
+{\bf Note} that copying a column to a new table can be done like:
 \begin{verbatim}
-  ADD COLUMN NCol1 R4, NCol2 R8 [UNIT="m", NDIM=3]
+  select COL from a.tab giving new.tab as plain
 \end{verbatim}
-adds two columns, a 4-byte floating point scalar column and an 8-byte
-floating point 3-dim array column. They will be stored with StandardStMan.
+The 'as plain' part takes care that a true copy is made (thus no references).
 
 \subsection{RENAME COLUMN}
 \begin{verbatim}

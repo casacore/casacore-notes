@@ -6872,7 +6872,7 @@ subsections.
 </p>
    <div class="verbatim" id="verbatim-169">
   ADD COLUMN colspecs DMINFO datamanagers
- <br />  COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
+ <br />   future: COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
  <br />  RENAME COLUMN old TO new, old TO new, ...
  <br />  DELETE COLUMN column_list
  <br />  SET KEYWORD name=value AS dtype, ...
@@ -6939,22 +6939,18 @@ class="cmbx-10x-x-109">NOTE: </span>This subcommand cannot be used yet and will 
 <!--l. 4577--><p class="nopar" > The new column gets the same description, but it is possible to deﬁne a new data type and/or tile shape. If
 the <span 
 class="cmtt-10x-x-109">SET </span>keyword is given values are written into the new column. If given, the value of an expression is stored
-in the new column, otherwise the contents of the input column. In its simplest form it copies a
-column adds one or more columns to the table. The speciﬁcation of the columns and the optional
-data managers is the same as used in the <a 
-href="#x1-960008">CREATE TABLE</a> command. Thus for each column a
-data type, dimensionality or shape, and unit can be given. The data manager(s) for the new
-columns can be speciﬁed in the DMINFO part. If not given, StandardStMan will be used. For
-example:
+in the new column, otherwise the contents of the input column. In its simplest form it copies a column to
+another column in the table.
+</p><!--l. 4584--><p class="indent" >   <span 
+class="cmbx-10x-x-109">Note </span>that copying a column to a new table can be done like:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-175">
-  ADD COLUMN NCol1 R4, NCol2 R8 [UNIT=&#x0022;m&#x0022;, NDIM=3]
+  select COL from a.tab giving new.tab as plain
 </div>
-<!--l. 4593--><p class="nopar" > adds two columns, a 4-byte ﬂoating point scalar column and an 8-byte ﬂoating point 3-dim array column.
-They will be stored with StandardStMan.
-</p><!--l. 4597--><p class="noindent" >
+<!--l. 4587--><p class="nopar" > The ’as plain’ part takes care that a true copy is made (thus no references).
+</p><!--l. 4590--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.3   </span> <a 
  id="x1-1020009.3"></a>RENAME COLUMN</h4>
@@ -6963,15 +6959,15 @@ They will be stored with StandardStMan.
    <div class="verbatim" id="verbatim-176">
   RENAME COLUMN old1 TO new1, old2 TO new2, etc.
 </div>
-<!--l. 4600--><p class="nopar" > renames one or more columns in a table. For example:
+<!--l. 4593--><p class="nopar" > renames one or more columns in a table. For example:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-177">
   RENAME COLUMN NAME to NAME_SAV, ADDR to ADDR_SAV
 </div>
-<!--l. 4605--><p class="nopar" >
-</p><!--l. 4607--><p class="noindent" >
+<!--l. 4598--><p class="nopar" >
+</p><!--l. 4600--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.4   </span> <a 
  id="x1-1030009.4"></a>DELETE COLUMN</h4>
@@ -6980,7 +6976,7 @@ They will be stored with StandardStMan.
    <div class="verbatim" id="verbatim-178">
   DELETE COLUMN col1, col2, etc.
 </div>
-<!--l. 4610--><p class="nopar" > removes one or more columns. Note that if multiple columns are combined in a TiledStMan, they have to be
+<!--l. 4603--><p class="nopar" > removes one or more columns. Note that if multiple columns are combined in a TiledStMan, they have to be
 removed at the same time. Thus in that case
                                                                                             
                                                                                             
@@ -6989,8 +6985,8 @@ removed at the same time. Thus in that case
   DELETE COLUMN col1, col2
  <br />  DELETE COLUMN col1, DELETE COLUMN col2
 </div>
-<!--l. 4617--><p class="nopar" > are not the same, because the second example might fail.
-</p><!--l. 4620--><p class="noindent" >
+<!--l. 4610--><p class="nopar" > are not the same, because the second example might fail.
+</p><!--l. 4613--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.5   </span> <a 
  id="x1-1040009.5"></a>SET KEYWORD</h4>
@@ -6999,14 +6995,14 @@ removed at the same time. Thus in that case
    <div class="verbatim" id="verbatim-180">
   SET KEYWORD key1=value1 AS dtype, etc.
 </div>
-<!--l. 4623--><p class="nopar" > adds a keyword with the given value or replaces the value if the keyword already exists. The value of a
+<!--l. 4616--><p class="nopar" > adds a keyword with the given value or replaces the value if the keyword already exists. The value of a
 keyword can be a scalar, array, or arbitrarily deeply nested record. See <a 
 href="#x1-470004.5">section 4.5</a> how to specify a keyword
 name in a column or nested record. The <span 
 class="cmtt-10x-x-109">AS dtype </span>part can be used to explicitly set the data type of a new
 keyword. For an existing keyword, the data type of the new value has to match the data type of the current
 value.
-</p><!--l. 4634--><p class="indent" >   The value can be an expression, possibly using values from another table given in the FROM clause. It
+</p><!--l. 4627--><p class="indent" >   The value can be an expression, possibly using values from another table given in the FROM clause. It
 has to be a constant expression, thus cannot depend on column values. Of course, column values can be used
 when aggregated to a single value. If no data type is given, the data type of the expression result is used. If
 given, upward and downward coercion is possible (e.g., integer to ﬂoat and also ﬂoat to integer). For
@@ -7022,7 +7018,7 @@ example:
  <br />  SET KEYWORD col::ckey=[=], col::ckey.subrec=[=]
  <br />  SET KEWYORD key=[] AS I4
 </div>
-<!--l. 4648--><p class="nopar" > The 1st example sets table keyword <span 
+<!--l. 4641--><p class="nopar" > The 1st example sets table keyword <span 
 class="cmti-10x-x-109">key1 </span>to 4. Its data type is not given, thus is the expression’s data type,
 in this case I8. <br 
 class="newline" />The 2nd example sets <span 
@@ -7047,7 +7043,7 @@ empty struct). <br
 class="newline" />The last example shows how to create a key with an empty integer vector as value. In such a case the data
 type must be given, because it cannot be derived from the value.
 </p>
-<!--l. 4669--><p class="noindent" ><span class="likeparagraphHead"><a 
+<!--l. 4662--><p class="noindent" ><span class="likeparagraphHead"><a 
  id="x1-1050009.5"></a></span>
    Setting a keyword to the value of another keyword is easily possible. For instance:
                                                                                             
@@ -7056,11 +7052,11 @@ type must be given, because it cannot be derived from the value.
    <div class="verbatim" id="verbatim-182">
   SET KEYWORD key2 = otherkey
 </div>
-<!--l. 4674--><p class="nopar" > However, it has two problems. <br 
+<!--l. 4667--><p class="nopar" > However, it has two problems. <br 
 class="newline" />1) As explained above the data type might not be preserved. <br 
 class="newline" />2) Keywords having a record value cannot be copied this way, because TaQL expressions do not support
 record values.
-</p><!--l. 4680--><p class="noindent" >
+</p><!--l. 4673--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.6   </span> <a 
  id="x1-1060009.6"></a>COPY KEYWORD</h4>
@@ -7069,12 +7065,12 @@ record values.
    <div class="verbatim" id="verbatim-183">
   COPY KEYWORD key = otherkey AS dtype, etc.
 </div>
-<!--l. 4683--><p class="nopar" > copies the value of keyword <span 
+<!--l. 4676--><p class="nopar" > copies the value of keyword <span 
 class="cmti-10x-x-109">otherkey </span>to <span 
 class="cmti-10x-x-109">key</span>. It can be used for any keyword value, thus also for records. The
 optional <span 
 class="cmtt-10x-x-109">AS dtype </span>part can be used to change the data type.
-</p><!--l. 4689--><p class="noindent" >
+</p><!--l. 4682--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.7   </span> <a 
  id="x1-1070009.7"></a>RENAME KEYWORD</h4>
@@ -7083,7 +7079,7 @@ class="cmtt-10x-x-109">AS dtype </span>part can be used to change the data type.
    <div class="verbatim" id="verbatim-184">
   RENAME KEYWORD old1 TO new1, old2 TO new2, etc.
 </div>
-<!--l. 4692--><p class="nopar" > renames one or more table or column keywords. If the old keyword is a ﬁeld in a column or a nested
+<!--l. 4685--><p class="nopar" > renames one or more table or column keywords. If the old keyword is a ﬁeld in a column or a nested
 record, the new name should only contain the new ﬁeld name, not the full keyword path. For
 example:
                                                                                             
@@ -7093,10 +7089,10 @@ example:
   RENAME KEYWORD NAME to NAME_SAV, Col1::CNAME to CNAME_SAV
  <br />  RENAME KEYWORD KEYS.SET.NAME to NAME_SAV
 </div>
-<!--l. 4700--><p class="nopar" > The ﬁrst example renames the table keyword NAME and the keyword CNAME of column Col1.
+<!--l. 4693--><p class="nopar" > The ﬁrst example renames the table keyword NAME and the keyword CNAME of column Col1.
 <br 
 class="newline" />The second example renames a ﬁeld in the nested records of table keyword KEYS.
-</p><!--l. 4706--><p class="noindent" >
+</p><!--l. 4699--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.8   </span> <a 
  id="x1-1080009.8"></a>DELETE KEYWORD</h4>
@@ -7105,19 +7101,19 @@ class="newline" />The second example renames a ﬁeld in the nested records of t
    <div class="verbatim" id="verbatim-186">
   DELETE KEYWORD key1, key2, ...
 </div>
-<!--l. 4709--><p class="nopar" > removes one or more table or column keywords.
-</p><!--l. 4712--><p class="noindent" >
+<!--l. 4702--><p class="nopar" > removes one or more table or column keywords.
+</p><!--l. 4705--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">9.9   </span> <a 
  id="x1-1090009.9"></a>ADD ROW</h4>
-<!--l. 4713--><p class="noindent" >adds the given number of rows to the table.
+<!--l. 4706--><p class="noindent" >adds the given number of rows to the table.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-187">
   ADD ROW nrows
 </div>
-<!--l. 4716--><p class="nopar" > where <span 
+<!--l. 4709--><p class="nopar" > where <span 
 class="cmti-10x-x-109">nrows </span>can be any expression. For example,
                                                                                             
                                                                                             
@@ -7125,27 +7121,27 @@ class="cmti-10x-x-109">nrows </span>can be any expression. For example,
    <div class="verbatim" id="verbatim-188">
  ALTER TABLE mytab ADD ROW [SELECT GCOUNT() from othertab]
 </div>
-<!--l. 4721--><p class="nopar" > makes <span 
+<!--l. 4714--><p class="nopar" > makes <span 
 class="cmti-10x-x-109">mytab </span>the same size as <span 
 class="cmti-10x-x-109">othertab </span>(assuming it was empty).
-</p><!--l. 4725--><p class="noindent" >
+</p><!--l. 4718--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">10   </span> <a 
  id="x1-11000010"></a>Counting in a table</h3>
-<!--l. 4726--><p class="noindent" >Before TaQL had the GROUPBY command, the COUNT command could be used instead of the <a 
+<!--l. 4719--><p class="noindent" >Before TaQL had the GROUPBY command, the COUNT command could be used instead of the <a 
 href="#x1-650004.10.13"><span 
 class="cmtt-10x-x-109">gcount</span>
 aggregate function</a> to count the number of occurrences in a table. <br 
 class="newline" />For backward compatibility this command can still be used, but its usage is discouraged, also because usually
 GROUPBY is faster.
-</p><!--l. 4732--><p class="indent" >   The exact syntax is:
+</p><!--l. 4725--><p class="indent" >   The exact syntax is:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-189">
   COUNT column-list FROM table-list [WHERE expression]
 </div>
-<!--l. 4735--><p class="nopar" > It counts the number of rows for each unique tuple in the column list of the table (after the possible
+<!--l. 4728--><p class="nopar" > It counts the number of rows for each unique tuple in the column list of the table (after the possible
 WHERE selection is done). For example:
                                                                                             
                                                                                             
@@ -7153,38 +7149,38 @@ WHERE selection is done). For example:
    <div class="verbatim" id="verbatim-190">
   COUNT TIME FROM my.ms
 </div>
-<!--l. 4741--><p class="nopar" > counts the number of rows per timestamp.
+<!--l. 4734--><p class="nopar" > counts the number of rows per timestamp.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-191">
   COUNT ANTENNA1,ANTENNA2 FROM my.ms
 </div>
-<!--l. 4745--><p class="nopar" > counts the number of rows per baseline.
-</p><!--l. 4748--><p class="indent" >   As in the other TaQL commands a column in the column list can be any expression, but that will be
+<!--l. 4738--><p class="nopar" > counts the number of rows per baseline.
+</p><!--l. 4741--><p class="indent" >   As in the other TaQL commands a column in the column list can be any expression, but that will be
 slower than straight columns.
-</p><!--l. 4751--><p class="noindent" >
+</p><!--l. 4744--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">11   </span> <a 
  id="x1-11100011"></a>Calculations on a table</h3>
-<!--l. 4752--><p class="noindent" >TaQL can be used to get derived values from a table by means of an expression. The expression can
+<!--l. 4745--><p class="noindent" >TaQL can be used to get derived values from a table by means of an expression. The expression can
 result in any data type and value type. For example, if the expression uses an array column, the
 result might be a vector of arrays (an array for each row). If the expression uses a scalar column,
 the result might be a vector of scalars or even a single scalar if a reduce function like SUM is
 used.
-</p><!--l. 4759--><p class="indent" >   The CALC command was developed before the GROUPBY was available and before SELECT could be
+</p><!--l. 4752--><p class="indent" >   The CALC command was developed before the GROUPBY was available and before SELECT could be
 used without the FROM part. Currently, SELECT is more powerful than the CALC command. For example,
 multiple expressions can be given in a SELECT command. However, especially in Python sessions CALC
 has the advantage that it returns the results as a numpy-array or a list instead of a Casacore
 table.
-</p><!--l. 4766--><p class="indent" >   The exact syntax is:
+</p><!--l. 4759--><p class="indent" >   The exact syntax is:
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-192">
   CALC expression [FROM table_list]
 </div>
-<!--l. 4769--><p class="nopar" > The part in square brackets can be omitted if no column is (directly) used in the expression. The examples
+<!--l. 4762--><p class="nopar" > The part in square brackets can be omitted if no column is (directly) used in the expression. The examples
 will make clear what that means. <br 
 class="newline" />The following syntax is still available for backward compatibility:
                                                                                             
@@ -7193,14 +7189,14 @@ class="newline" />The following syntax is still available for backward compatibi
    <div class="verbatim" id="verbatim-193">
   CALC FROM table_list CALC expression
 </div>
-<!--l. 4775--><p class="nopar" >
+<!--l. 4768--><p class="nopar" >
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-194">
   CALC 1in cm
 </div>
-<!--l. 4779--><p class="nopar" > is a simple expression not using a table. It shows how the CALC command can be used as a desk calculator
+<!--l. 4772--><p class="nopar" > is a simple expression not using a table. It shows how the CALC command can be used as a desk calculator
 to convert 1 inch to cm.
                                                                                             
                                                                                             
@@ -7208,29 +7204,29 @@ to convert 1 inch to cm.
    <div class="verbatim" id="verbatim-195">
   CALC mean(column1+column2) FROM mytable
 </div>
-<!--l. 4785--><p class="nopar" > gives a vector of scalars containing the mean per row.
+<!--l. 4778--><p class="nopar" > gives a vector of scalars containing the mean per row.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-196">
   CALC sum([SELECT FROM mytable GIVING [mean(column1+column2)]])
 </div>
-<!--l. 4790--><p class="nopar" > gives a single scalar giving the sum of the means in each row. Note that in this command the CALC
+<!--l. 4783--><p class="nopar" > gives a single scalar giving the sum of the means in each row. Note that in this command the CALC
 command does not need the FROM clause, because it does not use a column itself. Columns are only used in
 the nested query which has a FROM clause itself.
-</p><!--l. 4796--><p class="noindent" >
+</p><!--l. 4789--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">12   </span> <a 
  id="x1-11200012"></a>Examples</h3>
-<!--l. 4797--><p class="noindent" >
+<!--l. 4790--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.1   </span> <a 
  id="x1-11300012.1"></a>Selection examples</h4>
-<!--l. 4798--><p class="noindent" >Some examples are given starting with simple ones.
+<!--l. 4791--><p class="noindent" >Some examples are given starting with simple ones.
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.1.1   </span> <a 
  id="x1-11400012.1.1"></a>Reference table results</h5>
-<!--l. 4800--><p class="noindent" >The result of the following queries is a reference table, because no expressions have been given in the
+<!--l. 4793--><p class="noindent" >The result of the following queries is a reference table, because no expressions have been given in the
 column-list. This will be the most common case when using TaQL.
      </p><dl class="description"><dt class="description">
  </dt><dd 
@@ -7341,12 +7337,12 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">sin(52deg) * sin(DEC) + cos(52deg) * cos(DEC) * cos(3h30m - RA)  </span><br 
 class="newline" />selects observations with an direction (in say J2000) inside a cone with a radius of 1 arcmin
-     around (3h30m, 52deg). To ﬁnd them the condition DISTANCE<!--l. 4870--><math 
+     around (3h30m, 52deg). To ﬁnd them the condition DISTANCE<!--l. 4863--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
 class="MathClass-rel">=</mo></math>RADIUS
-     must be fulﬁlled, which is equivalent to COS(RADIUS)<!--l. 4871--><math 
+     must be fulﬁlled, which is equivalent to COS(RADIUS)<!--l. 4864--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo><mo 
@@ -7512,11 +7508,11 @@ class="description"><span
 class="cmtt-10x-x-109">select [’unknown’,’3C343’,’3C273’][1+findcone(...)] from MS/FIELD  </span>where   ...   is   the
      ﬁndcone argument list given in the previous example. 1 is added to cope with the case that no
      cone matches.</dd></dl>
-<!--l. 4956--><p class="noindent" >
+<!--l. 4949--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.1.2   </span> <a 
  id="x1-11500012.1.2"></a>Plain table results</h5>
-<!--l. 4957--><p class="noindent" >The following examples result in a plain table, thus in a deep copy of the query results, because the
+<!--l. 4950--><p class="noindent" >The following examples result in a plain table, thus in a deep copy of the query results, because the
 column-list contains an expression or a data type.
      </p><dl class="description"><dt class="description">
  </dt><dd 
@@ -7553,11 +7549,11 @@ class="cmtt-10x-x-109">MEANS(DATA,2) </span>should
      </dd></dl>
                                                                                             
                                                                                             
-<!--l. 4986--><p class="noindent" >
+<!--l. 4979--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.2   </span> <a 
  id="x1-11600012.2"></a>Modiﬁcation examples</h4>
-<!--l. 4987--><p class="noindent" >
+<!--l. 4980--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description">  <span 
@@ -7606,18 +7602,18 @@ class="cmtt-10x-x-109"> </span></span></span> <span
 class="cmtt-10x-x-109">values (1,0,F) </span><br 
 class="newline" />adds a row to the DATA_DESCRIPTION subtable and initializes it.
      </dd></dl>
-<!--l. 5012--><p class="noindent" >
+<!--l. 5005--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.2.1   </span> <a 
  id="x1-11700012.2.1"></a>Applying running median to an image</h5>
-<!--l. 5013--><p class="noindent" >The following command shows how a running median can be applied to an Casacore image.
+<!--l. 5006--><p class="noindent" >The following command shows how a running median can be applied to an Casacore image.
                                                                                             
                                                                                             
 </p>
    <div class="verbatim" id="verbatim-197">
   update my.imgd set map = map - runningmedian(map,25,25)’)
 </div>
-<!--l. 5017--><p class="nopar" > The running medians are subtracted from the data in the copy. It uses a half window size of 25x25, thus the
+<!--l. 5010--><p class="nopar" > The running medians are subtracted from the data in the copy. It uses a half window size of 25x25, thus the
 full window is 51x51. <br 
 class="newline" />When doing this, one should take care that in case of a spectral line cube the image is not too large,
 otherwise it won’t ﬁt in memory. If too large, it should be done in chunks like:
@@ -7628,17 +7624,17 @@ otherwise it won’t ﬁt in memory. If too large, it should be done in chunks l
   update my.imgd set map[,,sc:ec,] =
  <br />             map[,,sc:ec,] - runningmedian(map[,,sc:ec,],25,25)’)
 </div>
-<!--l. 5027--><p class="nopar" > where <span 
+<!--l. 5020--><p class="nopar" > where <span 
 class="cmtt-10x-x-109">sc </span>and <span 
 class="cmtt-10x-x-109">ec </span>are the start and end frequency channel. In this example it is assumed that the axes of the
 image are RA, DEC, freq, Stokes. <br 
 class="newline" />Note that the image is updated, so it should have been copied before if the original data needs to be
 kept.
-</p><!--l. 5035--><p class="noindent" >
+</p><!--l. 5028--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.3   </span> <a 
  id="x1-11800012.3"></a>Table creation examples</h4>
-<!--l. 5036--><p class="noindent" >
+<!--l. 5029--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description">  <span 
@@ -7679,11 +7675,11 @@ class="cmtt-10x-x-109"> </span></span></span>  <span
 class="cmtt-10x-x-109">SPEC=[DEFAULTTILESHAPE=[4,32,64]], COLUMNS=[’colarr’]] </span><br 
 class="newline" />creates  a  table  of  1  array  column  with  the  given  shape.  The  column  is  stored  with  the
      TiledColumnStMan storage manager using the given settings.</dd></dl>
-<!--l. 5062--><p class="noindent" >
+<!--l. 5055--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.4   </span> <a 
  id="x1-11900012.4"></a>Calculation examples</h4>
-<!--l. 5063--><p class="noindent" >
+<!--l. 5056--><p class="noindent" >
                                                                                             
                                                                                             
      </p><dl class="description"><dt class="description">
@@ -7707,7 +7703,7 @@ class="description">  <span
 class="cmtt-10x-x-109">calc mean(abs(DATA))  </span><br 
 class="newline" /> <span 
 class="cmtt-10x-x-109">from [select from MY.MS where ANTENNA1==0]</span>
-     <!--l. 5076--><p class="noindent" >calculates for each row the mean of the data for the selected subset of the measurement set.
+     <!--l. 5069--><p class="noindent" >calculates for each row the mean of the data for the selected subset of the measurement set.
      </p></dd><dt class="description">
  </dt><dd 
 class="description">  <span 
@@ -7718,7 +7714,7 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span><span 
 class="cmtt-10x-x-109"> </span></span></span> <span 
 class="cmtt-10x-x-109">giving [mean(abs(DATA))]])</span>
-     <!--l. 5083--><p class="noindent" >looks like the previous example. It, however, calculates the mean of the mean of the data in each
+     <!--l. 5076--><p class="noindent" >looks like the previous example. It, however, calculates the mean of the mean of the data in each
      row for the selected subset of the measurement set.
      </p></dd><dt class="description">
  </dt><dd 
@@ -7731,16 +7727,16 @@ class="cmtt-10x-x-109"> </span><span
 class="cmtt-10x-x-109"> </span></span></span>  <span 
 class="cmtt-10x-x-109">giving [max(abs(VIDEO</span><span 
 class="cmtt-10x-x-109">_POINT-MEANS(DATA,0)))]])</span>
-     <!--l. 5091--><p class="noindent" >shows the maximum absolute diﬀerence between VIDEO_POINT of each correlation and the
+     <!--l. 5084--><p class="noindent" >shows the maximum absolute diﬀerence between VIDEO_POINT of each correlation and the
      mean of the DATA for that correlation. Note that the 2 indicates averaging over the ﬁrst axis,
      thus the frequency axis.
 </p>
      </dd></dl>
-<!--l. 5098--><p class="noindent" >
+<!--l. 5091--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">12.5   </span> <a 
  id="x1-12000012.5"></a>Aggregation/groupby examples</h4>
-<!--l. 5099--><p class="noindent" >
+<!--l. 5092--><p class="noindent" >
      </p><dl class="description"><dt class="description">
  </dt><dd 
 class="description">  <span 
@@ -7794,11 +7790,11 @@ class="newline" />calculates the average of DATA per polarization for every 10 t
      Note it it ﬁrst combines the data of each 10 time slots in a single array, after which the <span 
 class="cmtt-10x-x-109">boxedmean</span>
      function is used to average every [10,4,1] box.</dd></dl>
-<!--l. 5130--><p class="noindent" >
+<!--l. 5123--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.5.1   </span> <a 
  id="x1-12100012.5.1"></a>Obtaining the ﬂux density from visibility data</h5>
-<!--l. 5131--><p class="noindent" >The Miriad program <span 
+<!--l. 5124--><p class="noindent" >The Miriad program <span 
 class="cmtt-10x-x-109">uvflux </span>estimates the source I ﬂux density and its standard deviation at the phase
 center without having to make an image. A single, not too complicated TaQL command (courtesy
 Dijkema, Heald) provides the same functionality on a MeasurementSet. For LOFAR it is best to use
@@ -7820,7 +7816,7 @@ example.
  <br />2.          where mscal.baseline(’5km~10km) &#x0026;&#x0026; !all(FLAG)
  <br />3.          groupby TIME)
 </div>
-<!--l. 5149--><p class="nopar" > A subquery is used to get the average ﬂux (I = 0.5*(XX+YY)) per time slot.
+<!--l. 5142--><p class="nopar" > A subquery is used to get the average ﬂux (I = 0.5*(XX+YY)) per time slot.
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-121002x1">For each baseline it gets the mean of the channels. Note that it uses <span 
@@ -7848,11 +7844,11 @@ class="cmtt-10x-x-109">gmean</span>
   class="enumerate" id="x1-121008x4">Finally,  the  outer  query  uses  aggregate  functions  to  calculate  the  overall  mean,  standard
      deviation, and number of time slots from the result of the subquery. The ﬁnal result is a table
      with 1 row and 3 columns.</li></ol>
-<!--l. 5172--><p class="noindent" >
+<!--l. 5165--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">12.5.2   </span> <a 
  id="x1-12200012.5.2"></a>Number of fully ﬂagged baselines per antenna</h5>
-<!--l. 5173--><p class="noindent" >The example below counts per antenna the number of fully ﬂagged baselines, excluding the autocorrelations.
+<!--l. 5166--><p class="noindent" >The example below counts per antenna the number of fully ﬂagged baselines, excluding the autocorrelations.
 It uses grouping and aggregate functions twice; ﬁrst per baseline, thereafter per antenna. It also uses the
 <a 
 href="#x1-240137">concatenation</a> and <a 
@@ -7883,7 +7879,7 @@ time select gsum(t1.cnt), t1.ANTENNA,
  <br />  Projection            0 real           0 user           0 system
  <br /> Total time          0.83 real         0.6 user        0.08 system
 </div>
-<!--l. 5201--><p class="nopar" >
+<!--l. 5194--><p class="nopar" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-122002x1">The ﬁrst inner select counts the number of fully ﬂagged baselines per baseline and stores the
@@ -7906,22 +7902,22 @@ class="cmtt-10x-x-109">t0 </span>twice.
      <li 
   class="enumerate" id="x1-122008x4">Finally the outer select (in the ﬁrst line) sums the values in the concatenated table per antenna.
      It also retrieves the name of the antenna by indexing in the selection of all antenna names.</li></ol>
-<!--l. 5228--><p class="noindent" >
+<!--l. 5221--><p class="noindent" >
 </p>
                                                                                             
                                                                                             
    <h3 class="sectionHead"><span class="titlemark">13   </span> <a 
  id="x1-12300013"></a>Interface to TaQL</h3>
-<!--l. 5229--><p class="noindent" >User and a programmer interfaces to TaQL are available. The program <span 
+<!--l. 5222--><p class="noindent" >User and a programmer interfaces to TaQL are available. The program <span 
 class="cmtt-10x-x-109">taql </span>and some Python and
 Glish functions form the user interface, while C++ classes and functions form the programmer
 interface.
-</p><!--l. 5234--><p class="noindent" >
+</p><!--l. 5227--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">13.1   </span> <a 
  id="x1-12400013.1"></a>Python interface <span 
 class="cmtt-10x-x-109">python-casacore</span></h4>
-<!--l. 5235--><p class="noindent" >The main TaQL interface in Python is formed by the <a 
+<!--l. 5228--><p class="noindent" >The main TaQL interface in Python is formed by the <a 
 href="../../../pyrap/docs/pyrap_tables.html#pyrap.tables.table.query" ><span 
 class="cmtt-10x-x-109">query</span></a> function in module <a 
 href="../../../pyrap/docs/pyrap_tables.html" ><span 
@@ -7941,7 +7937,7 @@ function. E.g.
  <br />                            columns=’column1,column2’,
  <br />                            name=’result.tab’)
 </div>
-<!--l. 5250--><p class="nopar" > The ﬁrst command opens the table <span 
+<!--l. 5243--><p class="nopar" > The ﬁrst command opens the table <span 
 class="cmtt-10x-x-109">mytable</span>. The second command does a simple query resulting in a
 temporary table. That temporary table is used in the next command resulting in a persistent table. The
 latter function call is transformed to the TaQL command:
@@ -7952,12 +7948,12 @@ latter function call is transformed to the TaQL command:
   SELECT column1,column2 FROM \$1 WHERE column2&#x003E;5
  <br />  ORDERBY time GIVING result.tab
 </div>
-<!--l. 5259--><p class="nopar" > During execution $1 is replaced by table <span 
+<!--l. 5252--><p class="nopar" > During execution $1 is replaced by table <span 
 class="cmtt-10x-x-109">seltab1</span>. <br 
 class="newline" />Note that the <span 
 class="cmtt-10x-x-109">name </span>argument generates the <span 
 class="cmtt-10x-x-109">GIVING </span>part to make the result persistent.
-</p><!--l. 5264--><p class="indent" >   The functions <span 
+</p><!--l. 5257--><p class="indent" >   The functions <span 
 class="cmtt-10x-x-109">sort </span>and <span 
 class="cmtt-10x-x-109">select </span>exist as convenience functions for a query consisting of a sort or
 column selection only. Both functions have an optional second <span 
@@ -7970,8 +7966,8 @@ persistent.
    t1 = tab.sort (’time’)
  <br />   t1 = tab.select (’column1,column2’)
 </div>
-<!--l. 5271--><p class="nopar" >
-</p><!--l. 5273--><p class="indent" >   The <span 
+<!--l. 5264--><p class="nopar" >
+</p><!--l. 5266--><p class="indent" >   The <span 
 class="cmtt-10x-x-109">calc </span>function can be used to execute a TaQL <span 
 class="cmtt-10x-x-109">calc </span>command on the current table. The result can be
 kept in a variable. For example, the following returns a vector containing the median of the <span 
@@ -7983,8 +7979,8 @@ each table row:
    <div class="verbatim" id="verbatim-204">
   med = t.calc (’median(DATA)’)
 </div>
-<!--l. 5279--><p class="nopar" >
-</p><!--l. 5281--><p class="indent" >   It is possible to embed Python variables and expressions in a TaQL command using the syntax
+<!--l. 5272--><p class="nopar" >
+</p><!--l. 5274--><p class="indent" >   It is possible to embed Python variables and expressions in a TaQL command using the syntax
 <span 
 class="cmtt-10x-x-109">$variable </span>and <span 
 class="cmtt-10x-x-109">$(expression)</span>. A variable can be a standard numeric or string scalar or vector. It
@@ -8002,10 +7998,10 @@ E.g
  <br />  seltab2 = tab.query (’col &#x003E; $(sum(coldata)/len(coldata))’)
  <br />  seltab3 = tab.query (’col &#x003E; mean([SELECT col from $tab])’)
 </div>
-<!--l. 5295--><p class="nopar" > These three queries give the same result. <br 
+<!--l. 5288--><p class="nopar" > These three queries give the same result. <br 
 class="newline" />The substitution mechanism is described in more detail in <a 
 href="../../../pyrap/docs/pyrap_util.html" >pyrap.util</a>.
-</p><!--l. 5300--><p class="indent" >   The most generic function that can be used is <a 
+</p><!--l. 5293--><p class="indent" >   The most generic function that can be used is <a 
 href="../../../pyrap/docs/pyrap_tables.html#pyrap.tables.taql" >taql</a> (or its synonym <span 
 class="cmtt-10x-x-109">tablecommand</span>). The full TaQL
 command has to be given to that command. The result is a table object. E.g.
@@ -8016,15 +8012,15 @@ command has to be given to that command. The result is a table object. E.g.
   import pyrap.tables as pt
  <br />  t = pt.taql(’select from GER.MS where ANTENNA1==1’);
 </div>
-<!--l. 5308--><p class="nopar" >
-</p><!--l. 5310--><p class="indent" >   By default, these commands will use the Python style for a TaQL statement. The <span 
+<!--l. 5301--><p class="nopar" >
+</p><!--l. 5303--><p class="indent" >   By default, these commands will use the Python style for a TaQL statement. The <span 
 class="cmtt-10x-x-109">style </span>argument can be
 used to choose another style.
-</p><!--l. 5314--><p class="noindent" >
+</p><!--l. 5307--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">13.2   </span> <a 
  id="x1-12500013.2"></a>Interface to Glish</h4>
-<!--l. 5315--><p class="noindent" >The Glish interface is formed by script <span 
+<!--l. 5308--><p class="noindent" >The Glish interface is formed by script <span 
 class="cmtt-10x-x-109">table.g</span>. By default, it will use the Glish style for a TaQL statement.
 For example:
                                                                                             
@@ -8042,13 +8038,13 @@ For example:
  <br />                    style=’’);    # use default (glish) style
  <br />  med := t.calc (’median(DATA)’)
 </div>
-<!--l. 5330--><p class="nopar" >
-</p><!--l. 5332--><p class="noindent" >
+<!--l. 5323--><p class="nopar" >
+</p><!--l. 5325--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">13.3   </span> <a 
  id="x1-12600013.3"></a>Program <span 
 class="cmtt-10x-x-109">taql</span></h4>
-<!--l. 5333--><p class="noindent" >The program <span 
+<!--l. 5326--><p class="noindent" >The program <span 
 class="cmtt-10x-x-109">taql </span>makes it possible to execute TaQL commands from the shell. Commands can be given in
 diﬀerent ways: </p>
      <ul class="itemize1">
@@ -8072,7 +8068,7 @@ class="cmtt-10x-x-109">q </span>or by giving Ctrl/D. Command editing and recall 
      by redirection to stdin. This is more or less the same as using -f, but a command cannot be split
      over multiple lines and no semicolon is needed to separate commands. Interactive commands are
      kept in $HOME/.taql_history making command recall possible across multiple taql sessions.</li></ul>
-<!--l. 5360--><p class="noindent" >The commands can be given in a fully recursive way. For example, a command in an input ﬁle can invoke
+<!--l. 5353--><p class="noindent" >The commands can be given in a fully recursive way. For example, a command in an input ﬁle can invoke
 another TaQL command ﬁle using -f. <br 
 class="newline" />The following commands can be given: </p>
      <ul class="itemize1">
@@ -8123,7 +8119,7 @@ class="newline" />Note that if an unknown varname is given, it is treated as a T
      error.
      </li>
      <li class="itemize">Comments can be given after the hash (#) character. Empty lines are ignored.</li></ul>
-<!--l. 5392--><p class="noindent" >A command can be preceded by zero or more options to specify if, how and where the results of a TaQL selection
+<!--l. 5385--><p class="noindent" >A command can be preceded by zero or more options to specify if, how and where the results of a TaQL selection
 are printed. The options can be given at various levels: </p>
      <ul class="itemize1">
      <li class="itemize">The initial default options can be overridden by the options given when starting the <span 
@@ -8140,14 +8136,14 @@ class="cmti-10x-x-109">taql </span>program.
      above. Note that persistent options settings do not go upwards.</li></ul>
                                                                                             
                                                                                             
-<!--l. 5411--><p class="indent" >   The output of a TaQL command can be printed. Most commands (such as UPDATE) will only show the
+<!--l. 5404--><p class="indent" >   The output of a TaQL command can be printed. Most commands (such as UPDATE) will only show the
 expanded command and the number of rows aﬀected. However, the CALC and SELECT command can also
 show the the results of the selected expressions. <br 
 class="newline" />The result of a CALC command is always printed. <br 
 class="newline" />Selected columns in a SELECT command are optionally printed. If an implicit SELECT is done (thus if
 SELECT was added to the command) or if -ps is in eﬀect, all results are printed. Otherwise if -pa is in eﬀect,
 the ﬁrst N rows are printed where N is deﬁned by the -m option.
-</p><!--l. 5421--><p class="indent" >   The following print options are available. </p>
+</p><!--l. 5414--><p class="indent" >   The following print options are available. </p>
      <ul class="itemize1">
      <li class="itemize"><span 
 class="cmtt-10x-x-109">-ps </span>or <span 
@@ -8194,7 +8190,7 @@ class="cmtt-10x-x-109">-o filename </span>deﬁnes the ﬁle in which to write t
 class="cmti-10x-x-109">stdout </span>and <span 
 class="cmti-10x-x-109">stderr </span>are special names.
      Default is stdout.</li></ul>
-<!--l. 5449--><p class="noindent" >All -p options can be preceded by <span 
+<!--l. 5442--><p class="noindent" >All -p options can be preceded by <span 
 class="cmtt-10x-x-109">no </span>to negate settings. <br 
 class="newline" />The initial default settings are ’-nops -pa -ph -pm -nopc -pr -m 50’. <br 
 class="newline" />Note that an implicit SELECT always uses -noph -nopc -nopr regardless of their settings. <br 
@@ -8220,9 +8216,9 @@ class="cmtt-10x-x-109">v</span>).
      </li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">-f filename </span>executes the TaQL commands in the given ﬁle.</li></ul>
-<!--l. 5463--><p class="noindent" >Note that ’–’ can be used to indicate the end of the options. This can be useful if the following TaQL command
+<!--l. 5456--><p class="noindent" >Note that ’–’ can be used to indicate the end of the options. This can be useful if the following TaQL command
 starts with a minus sign.
-</p><!--l. 5467--><p class="indent" >   For example:
+</p><!--l. 5460--><p class="indent" >   For example:
                                                                                             
                                                                                             
 </p>
@@ -8245,16 +8241,16 @@ starts with a minus sign.
  <br />     select unique TIME from an.ms       # explicit SELECT with printing
  <br />     q                 # stop interactive session
 </div>
-<!--l. 5486--><p class="nopar" >
-</p><!--l. 5488--><p class="noindent" >
+<!--l. 5479--><p class="nopar" >
+</p><!--l. 5481--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">13.4   </span> <a 
  id="x1-12700013.4"></a>C++ interface</h4>
-<!--l. 5489--><p class="noindent" >The C++ programmer can use TaQL commands and expressions at various levels,
+<!--l. 5482--><p class="noindent" >The C++ programmer can use TaQL commands and expressions at various levels,
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">13.4.1   </span> <a 
  id="x1-12800013.4.1"></a>TaQL query string</h5>
-<!--l. 5491--><p class="noindent" >The function <span 
+<!--l. 5484--><p class="noindent" >The function <span 
 class="cmtt-10x-x-109">tableCommand </span>in <a 
 href="../html/classcasa_1_1TableParse.html" >TableParse.h</a> can be used to execute a TaQL command. The result is a
 <a 
@@ -8275,18 +8271,18 @@ object. The latter results from a CALC command. . E.g.,
  <br />         (&#x0022;select column1,column2 from $1 where column2&#x003E;5&#x0022;
  <br />          &#x0022; orderby time giving result.tab&#x0022;, seltab1).table();
 </div>
-<!--l. 5511--><p class="nopar" > These examples do the same as the Python ones shown above. <br 
+<!--l. 5504--><p class="nopar" > These examples do the same as the Python ones shown above. <br 
 class="newline" />Note that in the second function call the table name <span 
 class="cmtt-10x-x-109">$1 </span>is replaced by the object <span 
 class="cmtt-10x-x-109">seltab1 </span>passed to the
 function. <br 
 class="newline" />There is no style argument, so if an explicit style is needed it should be the ﬁrst part of the TaQL statement.
 Note that the Glish style is the default style.
-</p><!--l. 5520--><p class="noindent" >
+</p><!--l. 5513--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">13.4.2   </span> <a 
  id="x1-12900013.4.2"></a>Expression string</h5>
-<!--l. 5521--><p class="noindent" >The function <span 
+<!--l. 5514--><p class="noindent" >The function <span 
 class="cmtt-10x-x-109">parse </span>in <a 
 href="../html/classcasa_1_1RecordGram.html" >RecordGram.h</a> can be used to parse a TaQL expression. The result is a
 <a 
@@ -8299,7 +8295,7 @@ href="../html/classcasa_1_1ExprNode.html" >TableExprNode</a> object that can be 
  <br />  TableExprNode expr = RecordGram::parse (tab, &#x0022;column1&#x003E;0&#x0022;);
  <br />  Table seltab1 = tab(expr);
 </div>
-<!--l. 5531--><p class="nopar" > The example above does the same as the ﬁrst example in the previous section. There are, however, better
+<!--l. 5524--><p class="nopar" > The example above does the same as the ﬁrst example in the previous section. There are, however, better
 ways to use this functionality.
                                                                                             
                                                                                             
@@ -8313,7 +8309,7 @@ ways to use this functionality.
  <br />    }
  <br />  }
 </div>
-<!--l. 5542--><p class="nopar" > The example above shows a boolean scalar expression, but it can also be a numeric expression or an array
+<!--l. 5535--><p class="nopar" > The example above shows a boolean scalar expression, but it can also be a numeric expression or an array
 expression as shown in the example below. Note that TaQL expression results have data type Bool, Int64,
 Double, DComplex, String, or MVTime.
                                                                                             
@@ -8326,14 +8322,14 @@ Double, DComplex, String, or MVTime.
  <br />    expr.get (row, data);
  <br />  }
 </div>
-<!--l. 5554--><p class="nopar" >
-</p><!--l. 5556--><p class="indent" >   Class RecordGram can also be used to apply TaQL to C++ vectors of values or Records. The
+<!--l. 5547--><p class="nopar" >
+</p><!--l. 5549--><p class="indent" >   Class RecordGram can also be used to apply TaQL to C++ vectors of values or Records. The
 RecordGram class documentation and its test program describe these features in more detail.
-</p><!--l. 5560--><p class="noindent" >
+</p><!--l. 5553--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">13.4.3   </span> <a 
  id="x1-13000013.4.3"></a>Expression classes</h5>
-<!--l. 5561--><p class="noindent" >The other expression interface is a true C++ interface having the advantage that C++ variables can be used
+<!--l. 5554--><p class="noindent" >The other expression interface is a true C++ interface having the advantage that C++ variables can be used
 directly. Class <a 
 href="../html/classcasa_1_1Table.html" >Table</a> contains functions to sort a table or to select columns or rows. When selecting rows class
 <a 
@@ -8348,32 +8344,32 @@ class="cmtt-10x-x-109">Table</span>. E.g.
  <br />  Table tab (&#x0022;mytable&#x0022;);
  <br />  Table seltab = tab(tab.col(&#x0022;column1&#x0022;) &#x003E; limit);
 </div>
-<!--l. 5574--><p class="nopar" > does the same as the ﬁrst example shown above. See classes <a 
+<!--l. 5567--><p class="nopar" > does the same as the ﬁrst example shown above. See classes <a 
 href="../html/classcasa_1_1Table.html" >Table</a>, <a 
 href="../html/classcasa_1_1TableExprNode.html" >TableExprNode</a>, and <a 
 href="../html/classcasa_1_1TableExprNodeSet.html" >TableExprNodeSet</a>
 for more information on how to construct a WHERE expression.
-</p><!--l. 5584--><p class="noindent" >
+</p><!--l. 5577--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">14   </span> <a 
  id="x1-13100014"></a>Writing user deﬁned functions</h3>
-<!--l. 5585--><p class="noindent" >A C++ user deﬁned function has to be written as a class derived from the abstract base class
+<!--l. 5578--><p class="noindent" >A C++ user deﬁned function has to be written as a class derived from the abstract base class
 <a 
 href="../html/classcasa_1_1UDFBase.html" >UDFBase</a>. The documentation of this base class describes how to write a UDF. Furthermore
 one can look at class <a 
 href="../html/classcasa_1_1UDFMSCal.html" >UDFMSCal</a> that contains the UDFs described in subsection <a 
 href="#x1-690004.10.17">User deﬁned
 functions</a>.
-</p><!--l. 5594--><p class="indent" >   It is possible to write a UDF that operates on an individual expression (for each table row) and returns
+</p><!--l. 5587--><p class="indent" >   It is possible to write a UDF that operates on an individual expression (for each table row) and returns
 the result. It is, however, also possible to write a UDF acting as an aggregate function. In that case it will
 return a result based on the values of all rows in a group. See the desription of the <a 
 href="#x1-260003.7">GROUPBY clause</a> for
 more information on the GROUPBY clause and aggregate functions.
-</p><!--l. 5602--><p class="indent" >   Note that a class can contain multiple UDFs as done in UDFMSCal. Also note that a single UDF can
+</p><!--l. 5595--><p class="indent" >   Note that a class can contain multiple UDFs as done in UDFMSCal. Also note that a single UDF can
 operate on multiple data types which is similar to a function like <span 
 class="cmtt-10x-x-109">min </span>that can operate on scalars and arrays
 of diﬀerent data types.
-</p><!--l. 5607--><p class="indent" >   A UDF class can contain a <span 
+</p><!--l. 5600--><p class="indent" >   A UDF class can contain a <span 
 class="cmtt-10x-x-109">HELP </span>function, which should return help information. This function is called
 by a help command like
                                                                                             
@@ -8382,7 +8378,7 @@ by a help command like
    <div class="verbatim" id="verbatim-214">
    show function meas [subtype]
 </div>
-<!--l. 5611--><p class="nopar" > It returns an overview of the functions in the UDF class and possible other information. The optional
+<!--l. 5604--><p class="nopar" > It returns an overview of the functions in the UDF class and possible other information. The optional
 <span 
 class="cmtt-10x-x-109">subtype </span>argument can be used to return more speciﬁc information. Note that the same result is given
 by
@@ -8392,24 +8388,24 @@ by
    <div class="verbatim" id="verbatim-215">
    meas.help(’subtype’)
 </div>
-<!--l. 5618--><p class="nopar" >
-</p><!--l. 5620--><p class="indent" >   TaQL ﬁnds a UDF by looking in a dictionary mapping the UDF name to a function constructing an
+<!--l. 5611--><p class="nopar" >
+</p><!--l. 5613--><p class="indent" >   TaQL ﬁnds a UDF by looking in a dictionary mapping the UDF name to a function constructing an
 object of the UDF class. If not found, it tries to load the shared library with the lowercase name of the
 library part of the UDF (like in <span 
 class="cmtt-10x-x-109">derivedmscal.pa1</span>). If the load is successful, it calls an initialization
 function in the shared library that should add all UDF functions in the library to the dictionary. The
 description of the <a 
 href="../html/classcasa_1_1UDFBase.html" >UDFBase</a> class shows how this should be done.
-</p><!--l. 5629--><p class="noindent" >
+</p><!--l. 5622--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">14.1   </span> <a 
  id="x1-13200014.1"></a>UDFs in Python</h4>
-<!--l. 5630--><p class="noindent" >NOTE: This section is for a future version of TaQL. It has not been fully implemented yet.
-</p><!--l. 5633--><p class="indent" >   For performance reasons User Deﬁned Functions will usually be implemented in C++. It is, however,
+<!--l. 5623--><p class="noindent" >NOTE: This section is for a future version of TaQL. It has not been fully implemented yet.
+</p><!--l. 5626--><p class="indent" >   For performance reasons User Deﬁned Functions will usually be implemented in C++. It is, however,
 possible to implement them in Python, both regular functions and aggregate functions. This can be done by
 means of the <span 
 class="cmtt-10x-x-109">pytaql </span>module of Casacore.
-</p><!--l. 5638--><p class="indent" >   A UDF has to be implemented in Python by subclassing <span 
+</p><!--l. 5631--><p class="indent" >   A UDF has to be implemented in Python by subclassing <span 
 class="cmtt-10x-x-109">pytaqlbase</span>, that can be imported from
 <span 
 class="cmtt-10x-x-109">Casacore.python</span>. The subclass has to implement a few functions, some are optional. The functions are
@@ -8442,7 +8438,7 @@ class="cmtt-10x-x-109">needTable </span>returns
      <div class="verbatim" id="verbatim-216">
          self.tab = pyrap.tables.table (tab, _oper=3)
 </div>
-     <!--l. 5662--><p class="nopar" >
+     <!--l. 5655--><p class="nopar" >
      </p></li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">setup(self, valuetypes, datatypes, units)</span><br 
@@ -8458,7 +8454,7 @@ class="newline" />This function is called once at the beginning. It gets the val
       <br />                       4=string 6=date
       <br /> units       strings   unit of each argument (empty=no unit)
 </div>
-     <!--l. 5675--><p class="nopar" > The UDF should check if the argument types are correct and determine the result type. It has to
+     <!--l. 5668--><p class="nopar" > The UDF should check if the argument types are correct and determine the result type. It has to
      return a dict containing the following ﬁelds:
                                                                                             
                                                                                             
@@ -8471,7 +8467,7 @@ class="newline" />This function is called once at the beginning. It gets the val
       <br /> unit      string    optional unit of result
       <br /> isaggr    bool      True = UDF is aggregate function
 </div>
-     <!--l. 5686--><p class="nopar" >
+     <!--l. 5679--><p class="nopar" >
      </p></li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">getValue(self, argValues, rownr)</span><br 
@@ -8493,10 +8489,10 @@ class="newline" />This function must return the value of the aggregate function 
      <div class="verbatim" id="verbatim-219">
          getArgValues(self, rownr)
 </div>
-     <!--l. 5701--><p class="nopar" >
+     <!--l. 5694--><p class="nopar" >
 </p>
      </li></ul>
-<!--l. 5704--><p class="noindent" >Such a UDF can be called in TaQL like <span 
+<!--l. 5697--><p class="noindent" >Such a UDF can be called in TaQL like <span 
 class="cmtt-10x-x-109">py.module.class </span>where the class defaults to the module name.
 <br 
 class="newline" />An example of UDFs in Python is given below. The ﬁrst one is a regular UDF, the second one an aggregate
@@ -8579,12 +8575,12 @@ UDF.
  <br />                v -= argValues[1].sum()
  <br />        return v
 </div>
-<!--l. 5780--><p class="nopar" >
-</p><!--l. 5783--><p class="noindent" >
+<!--l. 5773--><p class="nopar" >
+</p><!--l. 5776--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">15   </span> <a 
  id="x1-13300015"></a>Possible future developments</h3>
-<!--l. 5784--><p class="noindent" >In the near or far future TaQL can be enhanced by adding new features and by doing optimizations.
+<!--l. 5777--><p class="noindent" >In the near or far future TaQL can be enhanced by adding new features and by doing optimizations.
 </p>
      <ul class="itemize1">
      <li class="itemize">Add ROLLUP/CUBE to the GROUPBY clause.
