@@ -553,7 +553,7 @@ inconsistencies.
 The TIME column in MAIN is defined as the mid-point of the nominal
 sampling interval, as specified in the column, INTERVAL. The EXPOSURE
 column, in contrast to INTERVAL, defines the effective integration
-time, including the effects of missing data. The centroid of the
+time which excludes missing or bad data. The centroid of the
 effective data interval is not represented in the current MS
 definition, but does contain distinct information. It is added here as
 a new non-key attribute:
@@ -1462,11 +1462,11 @@ index into the PROCESSOR sub-table $rownr$.
 \item[FIELD\_ID] Field identifier ($\geq 0$).
 
 \item[INTERVAL] Data sampling interval. This is the nominal data
-interval and does not include the effects of bad data or partial
-integration.
+interval that fully integrates the intervals of both good
+and bad or missing data.
 
-\item[EXPOSURE] Effective data interval, including bad data and
-partial averaging.
+\item[EXPOSURE] Effective data interval, which evaluates a to a partial
+integration in the presence of bad or missing data.
 
 \item[PULSAR\_BIN] Pulsar bin number for the data record. Pulsar data
 may be measured for a limited number of pulse phase bins. The pulse
