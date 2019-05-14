@@ -515,14 +515,16 @@ The second example uses no mask (thus all pixels are designated good)
 and the third example uses mask \texttt{othermask}.
 
 \medskip\noindent
-Note that if the image name is enclosed in quotes, the mask name
-should be enclosed too. It means that a colon cannot be part of
-an image name.
+Note that even if the image name, colon and mask are enclosed in
+quotes, the colon is seen as the separator between image and mask
+name. However, if the colon in a quoted string is escaped with a
+backslash, the colon is seen as part of the name and is not treated as
+a separator.
 
 \medskip\noindent
 It is also possible to use a mask from another image like
 \begin{verbatim}
-  myimage.data:nomask[myotherimage::othermask]
+  myimage.data:nomask[myotherimage:othermask]
 \end{verbatim}
 This syntax is explained in the section describing
 \htmlref{regions}{LEL:REGIONS}
@@ -747,7 +749,8 @@ The documentation in the classes
 gives you more information about the various regions.
 
 \medskip\noindent At this moment a region can not be defined in LEL itself. It is
-only possible to use regions predefined in an image or another table.
+only possible to use regions predefined in an image or another table
+which is indicated using two colons.
 
 \medskip\noindent When using Python (as will normally be done), it is also possible to use
 a region defined in Python using the \$-notation.  This is explained in
