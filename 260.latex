@@ -16,10 +16,10 @@
 
 \title{NOTE 260 -- Table System File Formats}
 \author{Ger van Diepen, ASTRON Dwingeloo}
-\date{November 10, 2010}
+\date{November 10, 2017}
 \maketitle
 \begin{abstract}
-The Casacore Table System (CacTS) uses several files to store data in. Each
+The Casacore Table Data System (CTDS) uses several files to store data in. Each
 storage manager has its own files. The document describes the formats
 of all files that can be used by the Table system.
 \end{abstract}

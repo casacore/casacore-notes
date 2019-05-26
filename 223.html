@@ -5,11 +5,10 @@
 > 
 <head><title>NOTE 223 – Lattice Expression Language</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="223.tex" /> 
-<meta name="date" content="2015-08-05 15:59:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -125,8 +124,8 @@ math .textsf { font-family: sans-serif; }
 math .textbf { font-weight: bold; }  
 mo.MathClass-op + mi{margin-left:0.3em}  
 mi + mo.MathClass-op{margin-left:0.3em}  
-math mstyle[mathvariant="bold"] mi { font-weight: bold; font-style: normal; }  
-math mstyle[mathvariant="normal"] mi { font-weight: normal; font-style: normal; }  
+math mi[mathvariant="bold"] { font-weight: bold; font-style: normal; }  
+math mi[mathvariant="normal"] { font-weight: normal; font-style: normal; }  
 .partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}  
 .index-item, .index-subitem, .index-subsubitem {display:block}  
 div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}  
@@ -383,7 +382,7 @@ class="newline" />For a region it forms the complement.
 class="description">Binary <!--l. 158--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
-class="MathClass-bin">&and;</mo></math><span 
+class="MathClass-bin">∧</mo></math><span 
 class="cmbx-10x-x-109">,</span>
      <span 
 class="cmbx-10x-x-109">*, /, %, +</span>, and <span 
@@ -543,7 +542,7 @@ automatically promoted where needed.
    <h5 class="subsubsectionHead"><span class="titlemark">2.3.1   </span> <a 
  id="x1-60002.3.1"></a>Mathematical functions</h5>
 <!--l. 213--><p class="noindent" >Several functions can operate on real or complex arguments. The data types of
-such arguments are given as &#x2019;numeric&#x2019;.
+such arguments are given as ’numeric’.
      </p><dl class="description"><dt class="description">
  <span 
 class="cmtt-10x-x-109">Double PI()</span> </dt><dd 
@@ -872,8 +871,8 @@ class="description">It returns a “position angle” (in degrees) from the two
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>1</mn><mn>8</mn><mn>0</mn><mo 
 class="MathClass-bin">∕</mo><mi 
->&pi;</mi> <mo 
-class="MathClass-bin">&lowast;</mo> <mi 
+>π</mi> <mo 
+class="MathClass-bin">∗</mo> <mi 
 >a</mi><mi 
 >t</mi><mi 
 >a</mi><mi 
@@ -933,7 +932,7 @@ class="description">The ﬁrst argument has to be a lattice
      (expression). It defaults to 0. <br 
 class="newline" />The result of the function is a copy of the ﬁrst argument, where each
      masked-oﬀ element in the ﬁrst argument is replaced by the corresponding
-     element in the second argument. The result&#x2019;s mask is a copy of the mask of
+     element in the second argument. The result’s mask is a copy of the mask of
      the ﬁrst argument.
                                                                      
 
@@ -1089,7 +1088,7 @@ double quotes. E.g.
    <div class="verbatim" id="verbatim-16">
   ~/myimage.data
  <br />  ~/myimage.data\-old
- <br />  &#x2019;~/myimage.data-old&#x2019;
+ <br />  ’~/myimage.data-old’
 </div>
 <!--l. 475--><p class="nopar" >
 </p><!--l. 477--><p class="noindent" >Note that when LEL is used from Python, it is also possible to use a Python
@@ -1129,33 +1128,35 @@ class="cmtt-10x-x-109">nomask </span>or the name of the alternative mask.
    <div class="verbatim" id="verbatim-17">
   myimage.data
  <br />  myimage.data:nomask
- <br />  &#x2019;myimage.data:othermask&#x2019;
+ <br />  ’myimage.data:othermask’
 </div>
 <!--l. 510--><p class="nopar" >
 </p><!--l. 512--><p class="noindent" >The ﬁrst example uses the default mask (if the image has one). The second
 example uses no mask (thus all pixels are designated good) and the third
 example uses mask <span 
 class="cmtt-10x-x-109">othermask</span>.
-</p><!--l. 517--><p class="noindent" >Note that if the image name is enclosed in quotes, the mask name should be
-enclosed too. It means that a colon cannot be part of an image name.
-</p><!--l. 522--><p class="noindent" >It is also possible to use a mask from another image like
+</p><!--l. 517--><p class="noindent" >Note that even if the image name, colon and mask are enclosed in quotes, the
+colon is seen as the separator between image and mask name. However, if the
+colon in a quoted string is escaped with a backslash, the colon is seen as part of
+the name and is not treated as a separator.
+</p><!--l. 524--><p class="noindent" >It is also possible to use a mask from another image like
                                                                      
 
                                                                      
 </p>
    <div class="verbatim" id="verbatim-18">
-  myimage.data:nomask[myotherimage::othermask]
+  myimage.data:nomask[myotherimage:othermask]
 </div>
-<!--l. 526--><p class="nopar" > This syntax is explained in the section describing <a 
+<!--l. 528--><p class="nopar" > This syntax is explained in the section describing <a 
 href="#x1-150004">regions</a>
-</p><!--l. 531--><p class="noindent" >
+</p><!--l. 533--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
  id="x1-130003.2"></a>Lattice Condition Mask</h4>
-<!--l. 533--><p class="noindent" >We have seen in the previous section that lattices (in this case images) can have
+<!--l. 535--><p class="noindent" >We have seen in the previous section that lattices (in this case images) can have
 an associated mask. These masks are stored with the image – they are
 persistent.
-</p><!--l. 537--><p class="noindent" >It is also possible to create transient masks when a LEL expression is executed
+</p><!--l. 539--><p class="noindent" >It is also possible to create transient masks when a LEL expression is executed
 (dawn, usually). This is done with the operator <span 
 class="cmtt-10x-x-109">[] </span>and a boolean expression. For
 example,
@@ -1166,7 +1167,7 @@ example,
    <div class="verbatim" id="verbatim-19">
   sum( lat1[lat1&#x003C;5 &#x0026;&#x0026; lat1&#x003E;10] )
 </div>
-<!--l. 543--><p class="nopar" > creates a mask for <span 
+<!--l. 545--><p class="nopar" > creates a mask for <span 
 class="cmtt-10x-x-109">lat1 </span>indicating that only its elements fulﬁlling the boolean
 condition should be taken into account in the <span 
 class="cmtt-10x-x-109">sum </span>function. Note that the mask is
@@ -1178,7 +1179,7 @@ local to that part of the expression. So in the expression
    <div class="verbatim" id="verbatim-20">
   sum( lat1[lat1&#x003C;5 &#x0026;&#x0026; lat1&#x003E;10] ) + sum(lat1)
 </div>
-<!--l. 551--><p class="nopar" > the second <span 
+<!--l. 553--><p class="nopar" > the second <span 
 class="cmtt-10x-x-109">sum </span>function takes all elements into account. Masking can also be
 applied to more complex expressions and it is recursive.
                                                                      
@@ -1190,7 +1191,7 @@ applied to more complex expressions and it is recursive.
  <br />  sum( lat1[lat1&#x003C;5][lat1&#x003E;10] )
  <br />  (lat1 + lat2[lat3&#x003C;lat4]) [lat1&#x003C;5]
 </div>
-<!--l. 559--><p class="nopar" > The ﬁrst example applies the mask generated by the <span 
+<!--l. 561--><p class="nopar" > The ﬁrst example applies the mask generated by the <span 
 class="cmtt-10x-x-109">[] </span>operator to the
 expression <span 
 class="cmtt-10x-x-109">lat1+lat2</span>. The second example shows the recursion (which ANDs the
@@ -1199,17 +1200,17 @@ subsection. In the last example, the expression inside the parentheses is only
 evaluated where the condition <span 
 class="cmtt-10x-x-109">[lat1&#x003C;5] </span>is true and the resulting expression has
 a mask associated with it.
-</p><!--l. 568--><p class="indent" >   Please note that it is possible to select pixels on an axis by means of the
+</p><!--l. 570--><p class="indent" >   Please note that it is possible to select pixels on an axis by means of the
 function <span 
 class="cmtt-10x-x-109">INDEXIN </span>(or by the <span 
 class="cmtt-10x-x-109">INDEXi IN </span>expression) as shown in the previous
 section about <a 
 href="#x1-80002.3.3">miscellaneous functions</a>.
-</p><!--l. 574--><p class="noindent" >
+</p><!--l. 576--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.3   </span> <a 
  id="x1-140003.3"></a>Mask Handling</h4>
-<!--l. 576--><p class="noindent" >As explained in the previous subsections, lattices can have a mask. Examples are
+<!--l. 578--><p class="noindent" >As explained in the previous subsections, lattices can have a mask. Examples are
 a <a 
 href="#x1-110003">mask</a> of good pixels in an image, a mask created using a <a 
 href="#x1-130003.2">boolean condition</a> and
@@ -1222,12 +1223,12 @@ pixel is False. Functions like <span
 class="cmtt-10x-x-109">max </span>ignore the bad pixels. <br 
 class="newline" />Note that in a MeasurementSet a False mask value indicates a good visibility.
 Alas this is a historically grown distinction in radio-astronomy.
-</p><!--l. 589--><p class="noindent" >Image masks are combined and propagated throughout an expression. E.g. when
+</p><!--l. 591--><p class="noindent" >Image masks are combined and propagated throughout an expression. E.g. when
 two lattices are added, the mask of the result is formed by and-ing the masks of
 the two lattices. That is, the resultant mask is True where the mask of lattice one
 is true AND the mask of lattice 2 is True. Otherwise, the resultant mask is
 False.
-</p><!--l. 596--><p class="noindent" >In general the mask of a subexpression is formed by and-ing the masks of the
+</p><!--l. 598--><p class="noindent" >In general the mask of a subexpression is formed by and-ing the masks of the
 operands. This is true for e.g. +, *, <span 
 class="cmtt-10x-x-109">atan2</span>, etc.. However, there are a few special
 cases:
@@ -1249,7 +1250,7 @@ class="cmtt-10x-x-109">lat2</span>
      <div class="verbatim" id="verbatim-22">
        sum( lat1[lat2&#x003C;5] )
 </div>
-     <!--l. 609--><p class="nopar" > the <span 
+     <!--l. 611--><p class="nopar" > the <span 
 class="cmtt-10x-x-109">sum </span>function will only sum those elements for which the mask of <span 
 class="cmtt-10x-x-109">lat1</span>
      and <span 
@@ -1263,7 +1264,7 @@ class="cmtt-10x-x-109">lat2 </span>is valid and for which the condition is true.
      <div class="verbatim" id="verbatim-23">
        lat1[lat1&#x003C;0 &#x0026;&#x0026; lat2&#x003E;0]
 </div>
-     <!--l. 620--><p class="nopar" > Let us say both <span 
+     <!--l. 622--><p class="nopar" > Let us say both <span 
 class="cmtt-10x-x-109">lat1 </span>and <span 
 class="cmtt-10x-x-109">lat2 </span>have masks. The operand <span 
 class="cmtt-10x-x-109">lat1&#x003C;0 </span>is
@@ -1275,7 +1276,7 @@ class="cmtt-10x-x-109">lat2 &#x003E; 0</span>. The
      true. If the left operand is false, the right operand is no longer
      relevant. It is, in fact, 3-valued logic with the values true, false, and
      undeﬁned.
-     </p><!--l. 629--><p class="noindent" >Thus, the full expression generates a lattice with a mask. The mask is true
+     </p><!--l. 631--><p class="noindent" >Thus, the full expression generates a lattice with a mask. The mask is true
      when the condition in the <span 
 class="cmtt-10x-x-109">[] </span>operator is true, and false otherwise.
      The values of the output lattice are only deﬁned where its mask is
@@ -1313,7 +1314,7 @@ class="cmtt-10x-x-109">mask </span>function returns the mask of a value. The ret
      boolean lattice and has no mask itself. When the value has no mask, it
      returns a mask consisting of all True values. When applied to an image, it
      returns its default mask.</li></ul>
-<!--l. 665--><p class="indent" >   Consider the following more or less equivalent examples:
+<!--l. 667--><p class="indent" >   Consider the following more or less equivalent examples:
                                                                      
 
                                                                      
@@ -1323,7 +1324,7 @@ class="cmtt-10x-x-109">mask </span>function returns the mask of a value. The ret
  <br />   image1:nomask[mask(image2)]
  <br />   image1:nomask[image2::mask0]
 </div>
-<!--l. 670--><p class="nopar" > The ﬁrst two use the default mask of <span 
+<!--l. 672--><p class="nopar" > The ﬁrst two use the default mask of <span 
 class="cmtt-10x-x-109">image2 </span>as the mask for <span 
 class="cmtt-10x-x-109">image1</span>.
 <br 
@@ -1334,7 +1335,7 @@ class="cmtt-10x-x-109">image1</span>. It is equivalent to the
 ﬁrst two examples if <span 
 class="cmtt-10x-x-109">mask0 </span>is the default mask of <span 
 class="cmtt-10x-x-109">image2</span>.
-</p><!--l. 678--><p class="noindent" >It is possible that the entire mask of a subexpression is false. For example, if the
+</p><!--l. 680--><p class="noindent" >It is possible that the entire mask of a subexpression is false. For example, if the
 mean of such a subexpression is taken, the result is undeﬁned. This is fully
 supported by LEL, because a scalar value also has a mask associated with
 it. One can see a masked-oﬀ scalar as a lattice with an all false mask.
@@ -1360,14 +1361,14 @@ class="newline" />ignore the mask because only the shape of the lattice matters.
                                                                      
 
                                                                      
-<!--l. 699--><p class="noindent" >You should also be aware that if you remove a mask from an image, the values of
+<!--l. 701--><p class="noindent" >You should also be aware that if you remove a mask from an image, the values of
 the image that were previously masked bad may have values that are
 meaningless.
-</p><!--l. 704--><p class="noindent" >
+</p><!--l. 706--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
  id="x1-150004"></a>Regions</h3>
-<!--l. 706--><p class="noindent" >A region-of-interest generally speciﬁes a portion of a lattice which you
+<!--l. 708--><p class="noindent" >A region-of-interest generally speciﬁes a portion of a lattice which you
 are interested in for some astronomical purpose (e.g. what is the ﬂux
 density of this source). Quite a rich variety of regions are supported in
 AIPS++. There are simple regions like a box or a polygon, and compound
@@ -1376,23 +1377,23 @@ regions like unions and intersections. Regions may contain their own
 by the vertices, the bounding box and a mask which says whether a
 pixel inside the bounding box is inside of the polygon or outside of the
 polygon.
-</p><!--l. 716--><p class="noindent" >In addition, although masks and regions are used somewhat diﬀerently by the
+</p><!--l. 718--><p class="noindent" >In addition, although masks and regions are used somewhat diﬀerently by the
 user, a mask is really a special kind of region; they are implemented with the
 same underlying code.
-</p><!--l. 720--><p class="noindent" >Like masks, regions can be persistently stored in image. From Python, regions
+</p><!--l. 722--><p class="noindent" >Like masks, regions can be persistently stored in image. From Python, regions
 are generated, manipulated and stored with the <span 
 class="cmbx-10x-x-109">??</span> tool.
-</p><!--l. 724--><p class="noindent" >We saw in the previous section how the condition operator <span 
+</p><!--l. 726--><p class="noindent" >We saw in the previous section how the condition operator <span 
 class="cmtt-10x-x-109">[] </span>could be used to
 generate masks with logical expressions. This operator has a further talent. A
 region of any type can be applied to a lattice with the <span 
 class="cmtt-10x-x-109">[] </span>operator. You can think
 of the region as also eﬀectively being a logical expression. The only diﬀerence
 with what we have seen before is that it results in a lattice with the
-shape of the region&#x2019;s bounding box. If the lattice or the region (as in
-the polygon above) has a mask, they are and-ed to form the result&#x2019;s
+shape of the region’s bounding box. If the lattice or the region (as in
+the polygon above) has a mask, they are and-ed to form the result’s
 mask.
-</p><!--l. 733--><p class="noindent" >All types of regions supported in AIPS++ can be used, thus:
+</p><!--l. 735--><p class="noindent" >All types of regions supported in AIPS++ can be used, thus:
 </p>
      <ul class="itemize1">
      <li class="itemize">regions in pixel or world coordinates
@@ -1409,20 +1410,21 @@ mask.
      <li class="itemize">extension of a region or group of regions to higher dimensions
      </li>
      <li class="itemize">masks</li></ul>
-<!--l. 743--><p class="noindent" >The documentation in the classes <a 
+<!--l. 745--><p class="noindent" >The documentation in the classes <a 
 href="../html/classcasa_1_1LCRegion.html" >LCRegion</a>, <a 
 href="../html/classcasa_1_1LCSlicer.html" >LCSlicer</a>, and <a 
 href="../html/classcasa_1_1WCRegion.html" >WCRegion</a>) gives you
 more information about the various regions.
-</p><!--l. 749--><p class="noindent" >At this moment a region can not be deﬁned in LEL itself. It is only possible to
-use regions predeﬁned in an image or another table.
-</p><!--l. 752--><p class="noindent" >When using Python (as will normally be done), it is also possible to use a region
+</p><!--l. 751--><p class="noindent" >At this moment a region can not be deﬁned in LEL itself. It is only possible to
+use regions predeﬁned in an image or another table which is indicated using two
+colons.
+</p><!--l. 755--><p class="noindent" >When using Python (as will normally be done), it is also possible to use a region
 deﬁned in Python using the $-notation. This is explained in more detail in the
 section discussing the <a 
 href="#x1-190006">interface to LEL</a>.
-</p><!--l. 757--><p class="noindent" >A predeﬁned region can be used by specifying its name. There are three ways to
+</p><!--l. 760--><p class="noindent" >A predeﬁned region can be used by specifying its name. There are three ways to
 specify a region name:
-</p><!--l. 760--><p class="indent" >
+</p><!--l. 763--><p class="indent" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-15002x1"><span 
@@ -1445,7 +1447,7 @@ class="newline" />Is  usually  equivalent  to  above.  However,  there  is  no  
 class="cmtt-10x-x-109">:: </span>in the previous
      way tells that the name should only be looked up as a region.
      </li></ol>
-<!--l. 778--><p class="indent" >   Examples are
+<!--l. 781--><p class="indent" >   Examples are
                                                                      
 
                                                                      
@@ -1456,7 +1458,7 @@ class="cmtt-10x-x-109">:: </span>in the previous
  <br />  (myimage.data - otherimage)[myimage.data::reg1]
  <br />  myimage.data:nomask[myotherimage::othermask]
 </div>
-<!--l. 785--><p class="nopar" > In the ﬁrst example region <span 
+<!--l. 788--><p class="nopar" > In the ﬁrst example region <span 
 class="cmtt-10x-x-109">reg1 </span>is looked up in image <span 
 class="cmtt-10x-x-109">myimage.data</span>. It is
 assumed that <span 
@@ -1464,17 +1466,17 @@ class="cmtt-10x-x-109">reg1 </span>is not the name of an image or lattice. It re
 a lattice whose shape is the shape of the bounding box of the region.
 The mask of the result is the and of the region mask and the lattice
 mask.
-</p><!--l. 793--><p class="noindent" >In the second example it is stated explicitly that <span 
+</p><!--l. 796--><p class="noindent" >In the second example it is stated explicitly that <span 
 class="cmtt-10x-x-109">reg1 </span>is a region by using the ::
 syntax. The region is looked up in <span 
 class="cmtt-10x-x-109">otherimage</span>, because that is the last table
 used in the expression. The result is a lattice with the shape of the bounding box
 of the region.
-</p><!--l. 799--><p class="noindent" >In the third example the region is looked up in <span 
+</p><!--l. 802--><p class="noindent" >In the third example the region is looked up in <span 
 class="cmtt-10x-x-109">myimage.data</span>. Note that the this
 and the previous example also show that a region can be applied to a
 subexpression.
-</p><!--l. 803--><p class="noindent" >In the fourth example we have been very cunning. We have taken advantage of
+</p><!--l. 806--><p class="noindent" >In the fourth example we have been very cunning. We have taken advantage of
 the fact that masks are special sorts of regions. We have told the image
 <span 
 class="cmtt-10x-x-109">myimage.data </span>not to apply any of its own masks. We have then used
@@ -1484,7 +1486,7 @@ image, <span
 class="cmtt-10x-x-109">myotherimage</span>. This eﬀectively applies the mask from one image
 to another. Apart from copying the mask, this is the only way to do
 this.
-</p><!--l. 811--><p class="noindent" >Unions, intersections, diﬀerences and complements of regions can be
+</p><!--l. 814--><p class="noindent" >Unions, intersections, diﬀerences and complements of regions can be
 generated and stored (in C++ and Python). However, it is also possible to
 form a union, etc. in LEL itself. However, that can only be done if the
 regions have the same type (i.e. both in world or in pixel coordinates).
@@ -1506,7 +1508,7 @@ class="cmtt-10x-x-109">reg1 - reg2 </span>to form the diﬀerence.
      </li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">!reg1 </span>to form the complement.</li></ul>
-<!--l. 825--><p class="indent" >   The normal AIPS++ rules are used when a region is applied:
+<!--l. 828--><p class="indent" >   The normal AIPS++ rules are used when a region is applied:
 </p>
      <ul class="itemize1">
      <li class="itemize">A region in world or relative coordinates can only be applied to an
@@ -1519,17 +1521,17 @@ class="cmtt-10x-x-109">!reg1 </span>to form the complement.</li></ul>
      <li class="itemize">If  a  region  has  fewer  axes  than  the  image  or  lattice  the  region  is
      automatically extended to the full image by taking the full length of
      the missing axes.</li></ul>
-<!--l. 839--><p class="noindent" >
+<!--l. 842--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
  id="x1-160005"></a>Some further remarks</h3>
-<!--l. 841--><p class="noindent" >
+<!--l. 844--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
  id="x1-170005.1"></a>Optimization</h4>
-<!--l. 842--><p class="noindent" >When giving a LEL expression, it is important to keep an eye on performance
+<!--l. 845--><p class="noindent" >When giving a LEL expression, it is important to keep an eye on performance
 issues.
-</p><!--l. 845--><p class="indent" >   LEL itself will do some optimization: </p>
+</p><!--l. 848--><p class="indent" >   LEL itself will do some optimization: </p>
                                                                      
 
                                                                      
@@ -1544,7 +1546,7 @@ issues.
        lat1 + mean(lat2)
       <br />  
 </div>
-     <!--l. 853--><p class="nopar" > the subexpression <span 
+     <!--l. 856--><p class="nopar" > the subexpression <span 
 class="cmtt-10x-x-109">mean(lat2) </span>is executed only once and not over and over
      again when the user gets chunks.
      </p></li>
@@ -1560,7 +1562,7 @@ href="#x1-110003">masked-oﬀ scalar</a> in a subexpression, it does not
      masked-oﬀ scalar. Exceptions are the operators AND and OR and function
      <span 
 class="cmtt-10x-x-109">iif</span>, because their masks depend on the operand values.</li></ul>
-<!--l. 868--><p class="indent" >   The user can optimize by specifying the expression carefully. </p>
+<!--l. 871--><p class="indent" >   The user can optimize by specifying the expression carefully. </p>
      <ul class="itemize1">
      <li class="itemize">It is strongly recommended to combine scalars into a subexpression to
      avoid unnecessary scalar-lattice operations. E.g.
@@ -1570,7 +1572,7 @@ class="cmtt-10x-x-109">iif</span>, because their masks depend on the operand val
      <div class="verbatim" id="verbatim-27">
        2 * lat1 * pi()
 </div>
-     <!--l. 875--><p class="nopar" > should be written as
+     <!--l. 878--><p class="nopar" > should be written as
                                                                      
 
                                                                      
@@ -1580,7 +1582,7 @@ class="cmtt-10x-x-109">iif</span>, because their masks depend on the operand val
       <br />or
       <br />  2 * pi() * lat1
 </div>
-     <!--l. 881--><p class="nopar" > because in that way the scalars form a scalar subexpression which is
+     <!--l. 884--><p class="nopar" > because in that way the scalars form a scalar subexpression which is
      calculated only once. Note that the subexpression parentheses are needed in
      the ﬁrst case, because multiplications are done from left to right.
      <br 
@@ -1603,7 +1605,7 @@ class="cmtt-10x-x-109">lat2 </span>are single
      <div class="verbatim" id="verbatim-29">
        atan2(lat1,lat2) + pi()/2
 </div>
-     <!--l. 899--><p class="nopar" > The result of <span 
+     <!--l. 902--><p class="nopar" > The result of <span 
 class="cmtt-10x-x-109">atan2 </span>is single precision, because both operands are single
      precision. However, <span 
 class="cmtt-10x-x-109">pi </span>is double precision, so the result of <span 
@@ -1617,7 +1619,7 @@ class="cmtt-10x-x-109">atan2 </span>is
      <div class="verbatim" id="verbatim-30">
        atan2(lat1,lat2) + float(pi())/2
 </div>
-     <!--l. 906--><p class="nopar" > avoids that (expensive) data type promotion.
+     <!--l. 909--><p class="nopar" > avoids that (expensive) data type promotion.
      </p></li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">POW(LAT,2) </span>or <span 
@@ -1636,7 +1638,7 @@ class="cmtt-10x-x-109">0.5 </span>or <span
 class="cmtt-10x-x-109">POW(LAT,0.5)</span>
      </li>
      <li class="itemize"><span 
-class="cmtt-10x-x-109">POW(U,2) + POW(V,2) </span><!--l. 919--><math 
+class="cmtt-10x-x-109">POW(U,2) + POW(V,2) </span><!--l. 922--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
@@ -1646,7 +1648,7 @@ class="cmtt-10x-x-109">^</span></span></span><span
 class="cmtt-10x-x-109">2 </span>is considerably faster than <br 
 class="newline" /><span 
 class="cmtt-10x-x-109">SQRT(SQUARE(U) + SQUARE(V))</span>
-     <!--l. 921--><math 
+     <!--l. 924--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
@@ -1677,11 +1679,11 @@ class="cmtt-10x-x-109">LatticeExprNode</span>, one
                                                                      
 
                                                                      
-<!--l. 944--><p class="noindent" >
+<!--l. 947--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">5.2   </span> <a 
  id="x1-180005.2"></a>Mask Storage</h4>
-<!--l. 946--><p class="noindent" >In many of the expressions we have looked at in the examples, a mask has
+<!--l. 949--><p class="noindent" >In many of the expressions we have looked at in the examples, a mask has
 been generated. What happens to this mask and indeed the values of the
 expression depends upon the implementation. If for example, the function you
 are invoking with LEL writes out the result, then both the mask and
@@ -1690,18 +1692,18 @@ expressions but never write out the results to disk. In this case, no data or
 mask is written to disk. You can read more about this in the <a 
 href="#x1-190006">interface</a>
 section.
-</p><!--l. 956--><p class="noindent" >
+</p><!--l. 959--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
  id="x1-190006"></a>Interface to LEL</h3>
-<!--l. 958--><p class="noindent" >There are two interfaces to LEL. One is from Python and the other from C++. It
+<!--l. 961--><p class="noindent" >There are two interfaces to LEL. One is from Python and the other from C++. It
 depends upon your needs which one to use. Most high level users of AIPS++ will
 access LEL only via the Python interface.
-</p><!--l. 963--><p class="noindent" >
+</p><!--l. 966--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">6.1   </span> <a 
  id="x1-200006.1"></a>Python Interface</h4>
-<!--l. 965--><p class="noindent" >The LEL interface in Python is provided in the <a 
+<!--l. 968--><p class="noindent" >The LEL interface in Python is provided in the <a 
 href="../../../pyrap/docs/pyrap_images.html" >pyrap.images</a> package. The main
 constructor makes it possible to open an image expression as a virtual
 image.
@@ -1711,51 +1713,51 @@ image.
 </p>
    <div class="verbatim" id="verbatim-31">
   from pyrap.images import *
- <br />  im = image(&#x2019;inimage1+inimage2&#x2019;)
+ <br />  im = image(’inimage1+inimage2’)
  <br />  im.statistics();
 </div>
-<!--l. 974--><p class="nopar" >
-</p><!--l. 976--><p class="indent" >   Sometimes you need to double quote the ﬁle names in your expression. For
+<!--l. 977--><p class="nopar" >
+</p><!--l. 979--><p class="indent" >   Sometimes you need to double quote the ﬁle names in your expression. For
 example, if the images reside in a diﬀerent directory as in this example.
                                                                      
 
                                                                      
 </p>
    <div class="verbatim" id="verbatim-32">
-  im = image(&#x2019;&#x0022;dir1/im1&#x0022; + &#x0022;/nfs/data/im2&#x0022;&#x2019;);
+  im = image(’&#x0022;dir1/im1&#x0022; + &#x0022;/nfs/data/im2&#x0022;’);
 </div>
-<!--l. 982--><p class="nopar" >
-</p><!--l. 984--><p class="noindent" >
+<!--l. 985--><p class="nopar" >
+</p><!--l. 987--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.1.1   </span> <a 
  id="x1-210006.1.1"></a>Substitution of Pyhon variables</h5>
-<!--l. 986--><p class="noindent" >Images created/opened in Python can directly be used in a LEL expression by
+<!--l. 989--><p class="noindent" >Images created/opened in Python can directly be used in a LEL expression by
 preﬁxing their name with a $. Other Python variables and even Python
 expressions can be used in the same way using <span 
 class="cmtt-10x-x-109">$variable </span>or <span 
 class="cmtt-10x-x-109">$(expression) </span>in
 the LEL command. A variable can be a standard numeric scalar. An expression
 has to result in a numeric scalar.
-</p><!--l. 994--><p class="indent" >   A somewhat artiﬁcial example:
+</p><!--l. 997--><p class="indent" >   A somewhat artiﬁcial example:
                                                                      
 
                                                                      
 </p>
    <div class="verbatim" id="verbatim-33">
     factor = 2
- <br />    img1 = image(&#x2019;&#x0022;/data/inimage1&#x0022;&#x2019;);
- <br />    img2 = image(&#x2019;&#x0022;/data/inimage2&#x0022;&#x2019;);
- <br />    img3 = image(&#x2019;$img1 + $factor*$img2&#x2019;)
+ <br />    img1 = image(’&#x0022;/data/inimage1&#x0022;’);
+ <br />    img2 = image(’&#x0022;/data/inimage2&#x0022;’);
+ <br />    img3 = image(’$img1 + $factor*$img2’)
 </div>
-<!--l. 1000--><p class="nopar" >
-</p><!--l. 1002--><p class="noindent" >The substitution mechanism is described in more detail in <a 
+<!--l. 1003--><p class="nopar" >
+</p><!--l. 1005--><p class="noindent" >The substitution mechanism is described in more detail in <a 
 href="../../../pyrap/docs/pyrap_util.html" >pyrap.util</a>.
-</p><!--l. 1005--><p class="noindent" >
+</p><!--l. 1008--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">6.2   </span> <a 
  id="x1-220006.2"></a>C++ interface</h4>
-<!--l. 1006--><p class="noindent" >This consists of 2 parts.
-</p><!--l. 1008--><p class="indent" >
+<!--l. 1009--><p class="noindent" >This consists of 2 parts.
+</p><!--l. 1011--><p class="indent" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-22002x1">The function <span 
@@ -1771,7 +1773,7 @@ href="../html/classcasa_1_1LatticeExprNode.html" >LatticeExprNode</a> object.
        LatticeExprNode seltab1 = ImageExprParse::command
       <br />         (&#x0022;imagein1 + imagein2&#x0022;);
 </div>
-     <!--l. 1020--><p class="nopar" > This example does the same as the Python one shown above.
+     <!--l. 1023--><p class="nopar" > This example does the same as the Python one shown above.
      </p></li>
      <li 
   class="enumerate" id="x1-22004x2">The other interface is a true C++ interface having the advantage that
@@ -1787,7 +1789,7 @@ href="../html/classcasa_1_1LatticeExprNode.html" >LatticeExprNode</a> contains f
       <br />  PagedImage&#x003C;Float&#x003E; image(&#x0022;imagein&#x0022;);
       <br />  LatticeExpr&#x003C;Float&#x003E; expr(min(image,clipValue));
 </div>
-     <!--l. 1035--><p class="nopar" > forms an expression to clip the image. Note that the expression is written
+     <!--l. 1038--><p class="nopar" > forms an expression to clip the image. Note that the expression is written
      as a normal C++ expression. The overloaded operators and functions in
      class <a 
 href="../html/classcasa_1_1LatticeExprNode.html" >LatticeExprNode</a> ensure that the expression is formed in the correct
@@ -1809,16 +1811,16 @@ class="newline" />So far the expression is only formed, but not evaluated. Evalu
        PagedImage&#x003C;Float&#x003E; imout(&#x0022;imageout&#x0022;);
       <br />  imout.copyData (expr);
 </div>
-     <!--l. 1051--><p class="nopar" >
+     <!--l. 1054--><p class="nopar" >
 </p>
      </li></ol>
-<!--l. 1056--><p class="noindent" >
+<!--l. 1059--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">7   </span> <a 
  id="x1-230007"></a>Examples</h3>
-<!--l. 1057--><p class="noindent" >The following examples show some LEL expressions (equally valid in C++ or
+<!--l. 1060--><p class="noindent" >The following examples show some LEL expressions (equally valid in C++ or
 Python).
-</p><!--l. 1060--><p class="indent" >   Note that LEL is readonly; i.e. it does not change any value in the images
+</p><!--l. 1063--><p class="indent" >   Note that LEL is readonly; i.e. it does not change any value in the images
 given. A function in the <span 
 class="cmtt-10x-x-109">image </span>client has to be used to do something with the
 result (e.g. storing in another image).
@@ -1866,7 +1868,7 @@ class="cmtt-10x-x-109">myregion </span>in the image..
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
-class="cmtt-10x-x-109">lat1[lat1</span><!--l. 1082--><math 
+class="cmtt-10x-x-109">lat1[lat1</span><!--l. 1085--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math><span 
@@ -1884,7 +1886,7 @@ class="cmtt-10x-x-109">lat1 </span>is replaced
      </dd><dt class="description">
  </dt><dd 
 class="description"><span 
-class="cmtt-10x-x-109">iif(lat1</span><!--l. 1088--><math 
+class="cmtt-10x-x-109">iif(lat1</span><!--l. 1091--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math><span 
@@ -1892,7 +1894,7 @@ class="cmtt-10x-x-109">mean(lat1),lat1*2,lat1/2)</span>
      <br 
 class="newline" />results in a lattice where the elements less than the mean are doubled
      and the elements greater or equal to the mean are divided by 2.</dd></dl>
-<!--l. 1094--><p class="indent" >   Here follows a sample Python session showing some of the LEL capabilities
+<!--l. 1097--><p class="indent" >   Here follows a sample Python session showing some of the LEL capabilities
 and how Python variables can be used in LEL.
                                                                      
 
@@ -1901,7 +1903,7 @@ and how Python variables can be used in LEL.
    <div class="verbatim" id="verbatim-37">
 duw01&#x003E; glish -l image.g
  <br />- a := array(1:50,5,10)              # make some data
- <br />- global im1 := imagefromarray(&#x2019;im1&#x2019;, a);   # fill an image with it
+ <br />- global im1 := imagefromarray(’im1’, a);   # fill an image with it
  <br />- im1.shape()
  <br />[5 10]
  <br />- local pixels, mask
@@ -1910,7 +1912,7 @@ duw01&#x003E; glish -l image.g
  <br />- mask[3,4] := F
  <br />- im1.putregion(mask=mask);          # put new mask back
  <br />- global reg:=drm.box([1,1],[4,4]);  # a box region
- <br />- im2 := imagecalc(pixels=&#x2019;$im1[$reg]&#x2019;)     # read-only image applying region
+ <br />- im2 := imagecalc(pixels=’$im1[$reg]’)     # read-only image applying region
  <br />- local pixels2, mask2
  <br />- im2.getregion(pixels2, mask2);     # get the pixels and mask
  <br />- print pixels2
@@ -1925,7 +1927,7 @@ duw01&#x003E; glish -l image.g
  <br />    T T T T
  <br />    T T T F
  <br />    T T T T]
- <br />- im1.replacemaskedpixels (&#x2019;mean(im2)&#x2019;); # replace masked-off values
+ <br />- im1.replacemaskedpixels (’mean(im2)’); # replace masked-off values
  <br />- im1.getregion (pixels2, mask2);        # by mean of masked-on in im2
  <br />- print pixels2
  <br />[[1:5,]
@@ -1938,12 +1940,12 @@ duw01&#x003E; glish -l image.g
 
                                                                      
 </div>
-<!--l. 1132--><p class="nopar" >
-</p><!--l. 1134--><p class="noindent" >
+<!--l. 1135--><p class="nopar" >
+</p><!--l. 1137--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">8   </span> <a 
  id="x1-240008"></a>Future developments</h3>
-<!--l. 1135--><p class="noindent" >In the near or more distant future LEL will be enhanced by adding new features
+<!--l. 1138--><p class="noindent" >In the near or more distant future LEL will be enhanced by adding new features
 and by doing optimizations. </p>
      <ul class="itemize1">
      <li class="itemize">Handle slices like <span 

@@ -5,11 +5,10 @@
 > 
 <head><title>NOTE 260 – Table System File Formats</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="260.tex" /> 
-<meta name="date" content="2015-08-05 16:00:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -18,6 +17,8 @@
 .cmex-10{font-size:90%;}  
 .cmr-10{font-size:90%;}  
 .cmr-10x-x-109{}  
+.cmbx-10x-x-109{ font-weight: bold;}  
+.cmbx-10x-x-109{ font-weight: bold;}  
 .cmbsy-10x-x-109{font-weight: bold;}  
 .cmbsy-10x-x-109{font-weight: bold;}  
 .cmbsy-10x-x-109{font-weight: bold;}  
@@ -38,6 +39,7 @@
 .cmr-17{font-size:154%;}  
 .cmr-12{font-size:109%;}  
 .cmbx-10{font-size:90%; font-weight: bold;}  
+.cmbx-10{ font-weight: bold;}  
 .cmtt-10x-x-109{font-family: monospace;}  
 p.noindent { text-indent: 0em }  
 td p.noindent { text-indent: 0em; margin-top:0em; }  
@@ -125,8 +127,8 @@ math .textsf { font-family: sans-serif; }
 math .textbf { font-weight: bold; }  
 mo.MathClass-op + mi{margin-left:0.3em}  
 mi + mo.MathClass-op{margin-left:0.3em}  
-math mstyle[mathvariant="bold"] mi { font-weight: bold; font-style: normal; }  
-math mstyle[mathvariant="normal"] mi { font-weight: normal; font-style: normal; }  
+math mi[mathvariant="bold"] { font-weight: bold; font-style: normal; }  
+math mi[mathvariant="normal"] { font-weight: normal; font-style: normal; }  
 .partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}  
 .index-item, .index-subitem, .index-subsubitem {display:block}  
 div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}  
@@ -165,7 +167,7 @@ div.abstract {width:100%;}
 <div class="author" ><span 
 class="cmr-12">Ger van Diepen, ASTRON Dwingeloo</span></div><br />
 <div class="date" ><span 
-class="cmr-12">November 10, 2010</span></div>
+class="cmr-12">November 10, 2017</span></div>
    </div><div 
 class="abstract" 
 >
@@ -175,11 +177,11 @@ class="abstract"
 </p><!--l. 21--><p class="noindent" ><span 
 class="cmbx-10">Abstract</span></p></div>
      <!--l. 22--><p class="indent" >    <span 
-class="cmr-10">The Casacore Table System (CacTS) uses several ﬁles to store data in. Each storage manager</span>
+class="cmr-10">The Casacore Table Data System (CTDS) uses several ﬁles to store data in. Each storage</span>
      <span 
-class="cmr-10">has its own ﬁles. The document describes the formats of all ﬁles that can be used by the Table</span>
+class="cmr-10">manager has its own ﬁles. The document describes the formats of all ﬁles that can be used by</span>
      <span 
-class="cmr-10">system.</span>
+class="cmr-10">the Table system.</span>
 </p>
 </div> <a 
 href="260.pdf" >A pdf version of this note is available.</a>
@@ -191,104 +193,153 @@ href="#x1-20001" id="QQ2-1-2">Introduction</a></span>
 <br />   <span class="sectionToc" >2 <a 
 href="#x1-30002" id="QQ2-1-3">AipsIO</a></span>
 <br />    <span class="subsectionToc" >2.1 <a 
-href="#x1-40002.1" id="QQ2-1-4">Array objects</a></span>
+href="#x1-40002.1" id="QQ2-1-4">Array object</a></span>
 <br />    <span class="subsectionToc" >2.2 <a 
 href="#x1-50002.2" id="QQ2-1-5">IPosition object</a></span>
 <br />    <span class="subsectionToc" >2.3 <a 
-href="#x1-60002.3" id="QQ2-1-6">TableRecord object</a></span>
+href="#x1-60002.3" id="QQ2-1-6">SimpleOrderedMap object</a></span>
+<br />    <span class="subsectionToc" >2.4 <a 
+href="#x1-70002.4" id="QQ2-1-7">TableRecord object</a></span>
 <br />   <span class="sectionToc" >3 <a 
-href="#x1-70003" id="QQ2-1-7">PlainTable</a></span>
+href="#x1-80003" id="QQ2-1-8">PlainTable</a></span>
 <br />    <span class="subsectionToc" >3.1 <a 
-href="#x1-80003.1" id="QQ2-1-8">General ﬁle table.dat</a></span>
+href="#x1-90003.1" id="QQ2-1-9">General ﬁle table.dat</a></span>
 <br />     <span class="subsubsectionToc" >3.1.1 <a 
-href="#x1-90003.1.1" id="QQ2-1-9">Table Description</a></span>
+href="#x1-100003.1.1" id="QQ2-1-10">Table Description</a></span>
 <br />     <span class="subsubsectionToc" >3.1.2 <a 
-href="#x1-100003.1.2" id="QQ2-1-10">ColumnSet</a></span>
+href="#x1-110003.1.2" id="QQ2-1-11">ColumnSet</a></span>
 <br />    <span class="subsectionToc" >3.2 <a 
-href="#x1-110003.2" id="QQ2-1-11">Info ﬁle table.info</a></span>
+href="#x1-140003.2" id="QQ2-1-14">Info ﬁle table.info</a></span>
 <br />    <span class="subsectionToc" >3.3 <a 
-href="#x1-120003.3" id="QQ2-1-12">Lock ﬁle table.lock</a></span>
+href="#x1-150003.3" id="QQ2-1-15">Lock ﬁle table.lock</a></span>
 <br />    <span class="subsectionToc" >3.4 <a 
-href="#x1-130003.4" id="QQ2-1-13">Storage Managers</a></span>
-<br />     <span class="subsubsectionToc" >3.4.1 <a 
-href="#x1-140003.4.1" id="QQ2-1-14">StandardStMan</a></span>
+href="#x1-160003.4" id="QQ2-1-16">Storage Managers</a></span>
                                                                                          
 
                                                                                          
+<br />     <span class="subsubsectionToc" >3.4.1 <a 
+href="#x1-170003.4.1" id="QQ2-1-17">Array File</a></span>
 <br />     <span class="subsubsectionToc" >3.4.2 <a 
-href="#x1-150003.4.2" id="QQ2-1-15">IncrementalStMan</a></span>
+href="#x1-180003.4.2" id="QQ2-1-18">StandardStMan</a></span>
 <br />     <span class="subsubsectionToc" >3.4.3 <a 
-href="#x1-160003.4.3" id="QQ2-1-16">TiledStMan</a></span>
+href="#x1-250003.4.3" id="QQ2-1-25">IncrementalStMan</a></span>
 <br />     <span class="subsubsectionToc" >3.4.4 <a 
-href="#x1-170003.4.4" id="QQ2-1-17">AipsIOStMan</a></span>
+href="#x1-330003.4.4" id="QQ2-1-33">TiledStMan</a></span>
+<br />     <span class="subsubsectionToc" >3.4.5 <a 
+href="#x1-340003.4.5" id="QQ2-1-34">AipsIOStMan</a></span>
+<br />     <span class="subsubsectionToc" >3.4.6 <a 
+href="#x1-350003.4.6" id="QQ2-1-35">Indirect Array File</a></span>
 <br />    <span class="subsectionToc" >3.5 <a 
-href="#x1-180003.5" id="QQ2-1-18">Virtual Column Engines</a></span>
+href="#x1-360003.5" id="QQ2-1-36">Virtual Column Engines</a></span>
+<br />     <span class="subsubsectionToc" >3.5.1 <a 
+href="#x1-370003.5.1" id="QQ2-1-37">ForwardColumnEngine</a></span>
+<br />     <span class="subsubsectionToc" >3.5.2 <a 
+href="#x1-380003.5.2" id="QQ2-1-38">ScaledComplex</a></span>
+<br />     <span class="subsubsectionToc" >3.5.3 <a 
+href="#x1-390003.5.3" id="QQ2-1-39">VirtualTaQLColumn</a></span>
 <br />   <span class="sectionToc" >4 <a 
-href="#x1-190004" id="QQ2-1-19">RefTable</a></span>
+href="#x1-400004" id="QQ2-1-40">RefTable</a></span>
 <br />   <span class="sectionToc" >5 <a 
-href="#x1-200005" id="QQ2-1-20">ConcatTable</a></span>
+href="#x1-410005" id="QQ2-1-41">ConcatTable</a></span>
+<br />   <span class="sectionToc" >6 <a 
+href="#x1-420006" id="QQ2-1-42">MultiFile</a></span>
    </div>
                                                                                          
 
                                                                                          
    <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
  id="x1-20001"></a>Introduction</h3>
-<!--l. 5--><p class="noindent" >The Casacore Table System (CacTS) is an RDBMS-like system to store data in tables consisting of a
-number of columns and rows. A table and each column can have an associated set of keywords to deﬁne
-global data (like subtables or the unit of a column containing numeric data). Also called TAOSS (Tabular
-Array-Oriented Storage System)
+<!--l. 5--><p class="noindent" >The Casacore Table Data System (CTDS) is an RDBMS-like system to store data in tables consisting of a
+number of columns and rows. The table and each column can have an associated set of keywords to
+deﬁne global table data (such as subtable names) or column speciﬁc data (such as units). The
+keywords are meant for small amounts of data. The bulk data will be stored in the column-row
+cells.
 </p><!--l. 12--><p class="indent" >   Besides the usual scalar data, a table column or keyword can hold N-dimensional arrays. The data
-type of a scalar or array can be Bool, Char, uChar, Short, uShort, Int, uInt, Float, Double, Complex,
-DComplex, or String. Furthermore a keyword can be an Int64,
-</p><!--l. 18--><p class="indent" >   The keywords are meant for small amounts of data. The bulk data will be stored in columns. There is
-a strict distinction between the logical and physical model for the data columns. The table description
-deﬁnes the logical model, while data managers (storage managers and virtual data managers) implement
-the physical model.
-</p><!--l. 26--><p class="indent" >   On disk a CaCTS table is a directory containing a number of ﬁles to hold data and meta data. The
-formats of these ﬁles are quite varying and can be quite complicated. <br 
-class="newline" />Furthermore a table can have a zero or more subtables that are usually stored as a subdirectory of the
-main table. A good example of this is the casacore MeasurementSet (see note 229).
-</p><!--l. 33--><p class="indent" >   A CaCTS table can be a reference to one or more other tables which is comparable to a view in a
-relational data base. CaCTS supports a few types of tables. </p>
+type of a keyword and scalar or array column can be: </p>
      <ul class="itemize1">
-     <li class="itemize">A PlainTable is the basic table type. It contains all data.
+     <li class="itemize">Bool, boolean values which are often stored as bits
+     </li>
+     <li class="itemize">uChar, unsigned 8-bit integer
+     </li>
+     <li class="itemize">Short, signed 16-bit integer
+     </li>
+     <li class="itemize">uShort, unsigned 16-bit integer
+     </li>
+     <li class="itemize">Int, signed 32-bit integer
+     </li>
+     <li class="itemize">uInt, unsigned 32-bit integer
+     </li>
+     <li class="itemize">Int64, signed 64-bit integer
+     </li>
+     <li class="itemize">Float, 32-bit IEEE ﬂoating point
+     </li>
+     <li class="itemize">Double, 64-bit IEEE ﬂoating point
+     </li>
+     <li class="itemize">Complex, real and imaginary 32-bit ﬂoat
+     </li>
+     <li class="itemize">DComplex, real and imaginary 64-bit ﬂoat
+     </li>
+     <li class="itemize">String, ASCII string array with a ﬁxed or variable size</li></ul>
+<!--l. 30--><p class="indent" >   Besides these basic types it is also possible to store (Table)Record objects which are basically maps of
+name strings to values of one of the data types mentioned above. The records can be nested arbitrarily
+deeply. When stored in a column, a record is serialized (using <a 
+href="#x1-30002">AipsIO</a>) to a uChar array and stored as
+such.
+                                                                                         
+
+                                                                                         
+</p><!--l. 36--><p class="indent" >   There is a strict distinction between the logical and physical model of the data columns. The table
+description deﬁnes the logical model, while data managers (storage managers and virtual data managers)
+implement the physical model.
+</p><!--l. 42--><p class="indent" >   On disk a CTDS table is a directory containing a number of ﬁles to hold data and meta data. The
+formats of these ﬁles vary and can have quite complicated structures. <br 
+class="newline" />A table can have a zero or more subtables that are usually stored as a subdirectory of the main table. A
+good example of such a table is the Casacore MeasurementSet (see <a 
+href="casacore.github.io/casacore-notes/229.html" >note 229</a>.
+</p><!--l. 50--><p class="indent" >   A CTDS table can be a reference to one or more other tables which is comparable to a view in a
+relational data base. CTDS supports a few types of tables. </p>
+     <ul class="itemize1">
+     <li class="itemize">A PlainTable is the basic table type. It contains all data, either stored on disk using storage
+     managers or calculated on-the-ﬂy using virtual data managers.
      </li>
      <li class="itemize">A RefTable is a referencing table. It only references rows in another table. Usually it is the
-     result of a select, sort, or iteration of another table. The subtables of a RefTable are the same
-     as those of its parent; it references them.
+     result of a select, sort, or iteration operation on another table. The subtables of a RefTable
+     are the same as those of its parent; it references them.
      </li>
      <li class="itemize">A ConcatTable is the virtual concatenation of tables with an identical structure (identical
      columns). It only references the tables to be concatenated. The subtables of a ConcatTable
      can be concatenated at will. It means that a subtable can be the subtable of the ﬁrst table
      or a concatenation of the subtable in all tables.</li></ul>
-<!--l. 54--><p class="indent" >   All table types consist of a directory with the name of the table and several ﬁles. The following two
-ﬁles are always present. A PlainTable can contain several more ﬁles. </p>
+<!--l. 73--><p class="indent" >   On disk all table types consist of a directory with the name of the table and several ﬁles. The following
+two ﬁles are always present. A PlainTable can contain several more ﬁles. </p>
      <ul class="itemize1">
      <li class="itemize"><span 
-class="cmtt-10x-x-109">table.dat </span>is a binary ﬁle holding the table deﬁnition. The ﬁrst part of its contents is the
-     same for all table types. The remainder is type speciﬁc.
+class="cmtt-10x-x-109">table.dat </span>is a binary ﬁle holding the table meta data. It contains the table description and
+     the information how columns are mapped to data managers. It also contains the keyword sets.
+     The ﬁrst part of its contents is the same for all table types. The remainder is type speciﬁc.
      </li>
      <li class="itemize"><span 
 class="cmtt-10x-x-109">table.info </span>is a text ﬁle containing a brief description of the table.</li></ul>
-<!--l. 67--><p class="indent" >   This document describes the format of all ﬁles supported natively by CaCTS. CaCTS can use
-arbitrary storage managers dynamically loaded from a shared library. The ﬁle formats of such third party
-storage managers are not described in this document.
+<!--l. 89--><p class="indent" >   This document describes the format of all ﬁles that are part of the core CTDS. Note that CTDS can
+also use arbitrary storage managers dynamically loaded from a shared library. The ﬁle formats of such
+third party storage managers are not described in this document.
+</p><!--l. 94--><p class="indent" >   CTDS is designed such that it is fully backward compatible. Version information make it possible that
+even tables from the very ﬁrst days can be read back despite the fact that the format has changed
+considerably. <br 
+class="newline" />CTDS understands both little and big endian data representations. At table creation time it is decided
+which one to use which normally is the local endian type.
                                                                                          
 
                                                                                          
-</p><!--l. 72--><p class="indent" >   CaCTS is designed such that it is fully backward compatible. Even tables from the very ﬁrst days can
-be read back despite the fact that the format has changed considerably. <br 
-class="newline" />CaCTS understands both little and big endian data representations. At table creation time it is decided
-which one to use.
-</p><!--l. 79--><p class="noindent" >
+</p><!--l. 103--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-30002"></a>AipsIO</h3>
-<!--l. 80--><p class="noindent" >CacTS makes heavily use of the AipsIO class to store its meta data. Therefore a brief description of the
-AipsIO format is given.
-</p><!--l. 83--><p class="indent" >   AipsIO is basically a mechanism to write a C++ object into a stream of bytes and to read it back. The
-format consists of a header followed by the object&#x2019;s data. It can be nested arbitrarily deeply.
-<br 
+<!--l. 104--><p class="noindent" >CTDS makes heavily use of the AipsIO class to store its meta data. Therefore a brief description of the
+AipsIO format is given. <br 
+class="newline" />AipsIO is basically a mechanism to serialize a C++ object into a stream of bytes and to read it back. The
+format consists of a header followed by the object’s data. The objects can be nested arbitrarily deeply.
+The maximum total size is 4 GBytes. <br 
 class="newline" />The header contains the following ﬁelds:
 </p>
    <div class="tabular"> <table id="TBL-2" class="tabular" 
@@ -299,33 +350,35 @@ id="TBL-2-2" /></colgroup><tr
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-2-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-1-1"  
 class="td11">Data Type</td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-1-2"  
-class="td11">Description   </td>
+class="td11">Description                                 </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-2-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-1"  
 class="td11">uInt          </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-2"  
-class="td11">Object length</td>
+class="td11">Object length (including the header)</td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-3-1"  
 class="td11">String       </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-3-2"  
-class="td11">Object type  </td>
+class="td11">Object type                                 </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-2-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-4-1"  
 class="td11">uInt          </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-4-2"  
-class="td11">Version        </td></tr><tr 
+class="td11">Version                                       </td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-2-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-5-1"  
 class="td11"> </td> </tr></table>
 </div>
-<!--l. 98--><p class="indent" >   The version can be used to make the software fully backward compatible in case an object changes
-over time. This feature is used a lot by CaCTS. <br 
+<!--l. 122--><p class="indent" >   The version can be used to make software fully backward compatible in case an object changes over
+time. This feature is used a lot by CTDS to be able to access tables created by older CTDS versions.
+<br 
 class="newline" />The object data are stored after the header as a stream of bytes. The data are unaligned in the stream,
-thus, say, an integer does not need to start on a multiple of 4 bytes. <br 
+thus, say, a ﬂoat does not need to start at a multiple of 4 bytes. <br 
 class="newline" />The length of an object is the total length; it includes the length of the header and the length of possibly
 nested objects. Of course, each nested object has its own header. <br 
-class="newline" />The following data types are natively supported. Other data types (classes) can be supported by writing
-the appropriate shift functions (a la iostream).
+class="newline" />The following native data types are supported. Other data types (classes) can be supported by writing the
+appropriate shift functions (similar to the C++ std::iostream). A few such objects used by CTDS are
+described in subsequent sections.
 </p>
    <div class="tabular"> <table id="TBL-3" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -335,73 +388,74 @@ id="TBL-3-2" /></colgroup><tr
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-1-1"  
 class="td11">Bool                </td><td  style="text-align:left;" id="TBL-3-1-2"  
-class="td11"><!--l. 112--><p class="noindent" >1 byte                                                                                     </p></td>
+class="td11"><!--l. 138--><p class="noindent" >1 byte                                                                                     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-2-1"  
 class="td11">Char and uChar </td><td  style="text-align:left;" id="TBL-3-2-2"  
-class="td11"><!--l. 113--><p class="noindent" >1 byte                                                                                     </p></td>
+class="td11"><!--l. 139--><p class="noindent" >1 byte                                                                                     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-3-1"  
 class="td11">Short and uShort</td><td  style="text-align:left;" id="TBL-3-3-2"  
-class="td11"><!--l. 114--><p class="noindent" >2 bytes                                                                                    </p></td>
+class="td11"><!--l. 140--><p class="noindent" >2 bytes                                                                                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-4-1"  
 class="td11">Int and uInt       </td><td  style="text-align:left;" id="TBL-3-4-2"  
-class="td11"><!--l. 115--><p class="noindent" >4 bytes                                                                                    </p></td>
+class="td11"><!--l. 141--><p class="noindent" >4 bytes                                                                                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-5-1"  
 class="td11">Int64 and uInt64 </td><td  style="text-align:left;" id="TBL-3-5-2"  
-class="td11"><!--l. 116--><p class="noindent" >8 bytes                                                                                    </p></td>
+class="td11"><!--l. 142--><p class="noindent" >8 bytes                                                                                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-6-1"  
 class="td11">Float                </td><td  style="text-align:left;" id="TBL-3-6-2"  
-class="td11"><!--l. 117--><p class="noindent" >4 bytes IEEE                                                                            </p></td>
+class="td11"><!--l. 143--><p class="noindent" >4 bytes IEEE                                                                            </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-7-1"  
 class="td11">Double              </td><td  style="text-align:left;" id="TBL-3-7-2"  
-class="td11"><!--l. 118--><p class="noindent" >8 bytes IEEE                                                                            </p></td>
+class="td11"><!--l. 144--><p class="noindent" >8 bytes IEEE                                                                            </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-8-1"  
 class="td11">Complex           </td><td  style="text-align:left;" id="TBL-3-8-2"  
-class="td11"><!--l. 119--><p class="noindent" >2 Floats                                                                                   </p></td>
+class="td11"><!--l. 145--><p class="noindent" >2 Floats                                                                                   </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-9-1"  
 class="td11">DComplex         </td><td  style="text-align:left;" id="TBL-3-9-2"  
-class="td11"><!--l. 120--><p class="noindent" >2 Doubles                                                                                 </p></td>
+class="td11"><!--l. 146--><p class="noindent" >2 Doubles                                                                                 </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-10-1"  
 class="td11">String               </td><td  style="text-align:left;" id="TBL-3-10-2"  
-class="td11"><!--l. 121--><p class="noindent" >uInt length followed by its characters (can be length 0)                     </p></td>
+class="td11"><!--l. 147--><p class="noindent" >uInt length followed by its characters (can be length 0)                     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-11-1"  
 class="td11">C-array             </td><td  style="text-align:left;" id="TBL-3-11-2"  
-class="td11"><!--l. 122--><p class="noindent" >uInt length followed by its elements (can be length 0).                      </p></td>
+class="td11"><!--l. 148--><p class="noindent" >uInt length followed by its elements (can be length 0).                      </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-12-1"  
 class="td11">               </td><td  style="text-align:left;" id="TBL-3-12-2"  
-class="td11"><!--l. 123--><p class="noindent" >A bool array is compressed to bits.                                                </p></td>
+class="td11"><!--l. 149--><p class="noindent" >A bool C-array is compressed to bits.                                            </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-13-1"  
 class="td11">               </td> </tr></table></div>
-<!--l. 128--><p class="indent" >   AipsIO can store the data in little or big endian order. In fact, it can also handle old VAX/VMS and
-IBM/360 data formats. <br 
-class="newline" />CaCTS only uses the canonical AipsIO format (which is big endian).
+<!--l. 154--><p class="indent" >   AipsIO can store the data in little or big endian order. In fact, it can also handle the old VAX/VMS
+and IBM/360 data formats. <br 
+class="newline" />CTDS only uses the canonical AipsIO format (which is big endian).
+</p><!--l. 159--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
+ id="x1-40002.1"></a>Array object</h4>
                                                                                          
 
                                                                                          
-</p><!--l. 132--><p class="noindent" >
-</p>
-   <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
- id="x1-40002.1"></a>Array objects</h4>
-<!--l. 133--><p class="noindent" >Templated Array<!--l. 133--><math 
+<!--l. 160--><p class="noindent" >Templated Array<!--l. 160--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x003C;</mo></math>T<!--l. 133--><math 
+class="MathClass-rel">&#x003C;</mo></math>T<!--l. 160--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003E;</mo></math>
-objects are used quite heavily in casacore. In AipsIO they are stored as follows.
+objects are used quite heavily in Casacore. Only arrays with a size up to 2**31 bytes can be stored in
+AipsIO. An Array object is stored as follows.
 </p>
    <div class="tabular"> <table id="TBL-4" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -410,59 +464,59 @@ id="TBL-4-1" /></colgroup><colgroup id="TBL-4-2g"><col
 id="TBL-4-2" /></colgroup><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-4-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-1-1"  
-class="td11">header  </td><td  style="text-align:left;" id="TBL-4-1-2"  
-class="td11"><!--l. 138--><p class="noindent" >Array (version 3)                                                                               </p></td>
+class="td11">header    </td><td  style="text-align:left;" id="TBL-4-1-2"  
+class="td11"><!--l. 166--><p class="noindent" >Array (version 1, 2, or 3)                                                                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-4-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-2-1"  
-class="td11">uInt      </td><td  style="text-align:left;" id="TBL-4-2-2"  
-class="td11"><!--l. 139--><p class="noindent" >number of dimensions                                                                         </p></td></tr><tr  
+class="td11">uInt        </td><td  style="text-align:left;" id="TBL-4-2-2"  
+class="td11"><!--l. 167--><p class="noindent" >number of dimensions                                                                         </p></td>
+</tr><tr  
  style="vertical-align:baseline;" id="TBL-4-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-3-1"  
-class="td11">ndim Int</td> <td  style="text-align:left;" id="TBL-4-3-2"  
-class="td11"><!--l. 140--><p class="noindent" >shape</p></td>
+class="td11">uInt[ndim]</td><td  style="text-align:left;" id="TBL-4-3-2"  
+class="td11"><!--l. 168--><p class="noindent" >ndim shape values                                                                             </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-4-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-4-1"  
-class="td11">ndim Int</td><td  style="text-align:left;" id="TBL-4-4-2"  
-class="td11"><!--l. 141--><p class="noindent" >origin                         (only                         for                         version
-<!--l. 141--><math 
+class="td11">Int[ndim]  </td><td  style="text-align:left;" id="TBL-4-4-2"  
+class="td11"><!--l. 169--><p class="noindent" >origin                (only                present                for                version
+<!--l. 169--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>
-3)                                                                                                   </p></td>
+3); it is ignored                                                                                 </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-4-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-5-1"  
-class="td11">T         </td><td  style="text-align:left;" id="TBL-4-5-2"  
-class="td11"><!--l. 142--><p class="noindent" >all array values. Bools are compressed to bits.                                         </p></td>
+class="td11">T[nelem]  </td><td  style="text-align:left;" id="TBL-4-5-2"  
+class="td11"><!--l. 170--><p class="noindent" >all array values. Bools are compressed to bits.                                         </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-4-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-4-6-1"  
-class="td11">       </td> </tr></table></div>
+class="td11">         </td> </tr></table></div>
      <ul class="itemize1">
      <li class="itemize">Casacore Array objects hold their data in Fortran order (fastest varying axis ﬁrst). The shape
      and data are also stored that way.
      </li>
-     <li class="itemize">In principle the template parameter can be of any type. However, CaCTS only uses Arrays
-     of the standard types.
+     <li class="itemize">In principle the template parameter can be of any type. However, CTDS only uses Arrays of
+     the standard types.
      </li>
      <li class="itemize">Until 1995 the Array class supported an origin. It has been removed because it was a source
      of errors. Theoretically an origin can still be present in Array objects in very old tables. If
      so, it is read and silently discarded.
      </li>
-     <li class="itemize">Before RTTI was fully supported in C++, casacore used its own RTTI functionality. At that
-     time the name of the template parameter was made part of the AipsIO header, for example
-     <span 
-class="cmtt-10x-x-109">Array&#x003C;Int&#x003E;</span>. After the standard C++ RTTI was used, this was not done anymore and an
-     array of any type has the same header name <span 
-class="cmtt-10x-x-109">Array</span>. When reading an older Array object from
-     AipsIO, the template part in the name is still recognized, but not used anymore.</li></ul>
-<!--l. 165--><p class="noindent" >
+     <li class="itemize">Before RTTI was fully supported in C++, Casacore used its own RTTI functionality. At
+     that time the name of the template parameter was made part of the AipsIO header, for
+     example <span 
+class="cmtt-10x-x-109">Array&#x003C;Int&#x003E;</span>. Once the standard C++ RTTI was used by Casacore, this was not
+     done anymore and an array of any type has the same header name <span 
+class="cmtt-10x-x-109">Array</span>. When reading an
+     older Array object from AipsIO, the template part in the name (enclosed in angle brackets)
+     is still recognized, but not used anymore.</li></ul>
+<!--l. 195--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
  id="x1-50002.2"></a>IPosition object</h4>
-<!--l. 166--><p class="noindent" >An IPosition object deﬁnes the shape of an Array object. It will be stored in AipsIO as follows.
+<!--l. 196--><p class="noindent" >An IPosition object deﬁnes a shape of an array or a location in an array. It is stored in AipsIO as
+follows.
 </p>
-                                                                                         
-
-                                                                                         
    <div class="tabular"> <table id="TBL-5" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
 ><colgroup id="TBL-5-1g"><col 
@@ -471,41 +525,49 @@ id="TBL-5-2" /></colgroup><tr
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-5-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-5-1-1"  
 class="td11">header     </td><td  style="text-align:left;" id="TBL-5-1-2"  
-class="td11"><!--l. 171--><p class="noindent" >IPosition (version 1 or 2)                                                                    </p></td>
+class="td11"><!--l. 201--><p class="noindent" >IPosition (version 1 or 2)                                                                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-5-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-5-2-1"  
-class="td11">uInt         </td><td  style="text-align:left;" id="TBL-5-2-2"  
-class="td11"><!--l. 172--><p class="noindent" >number of dimensions                                                                         </p></td>
+class="td11">uInt          </td><td  style="text-align:left;" id="TBL-5-2-2"  
+class="td11"><!--l. 202--><p class="noindent" >number of dimensions                                                                         </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-5-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-5-3-1"  
-class="td11">ndim Int   </td><td  style="text-align:left;" id="TBL-5-3-2"  
-class="td11"><!--l. 173--><p class="noindent" >shape (for version 1)                                                                          </p></td>
+class="td11">Int[ndim]   </td><td  style="text-align:left;" id="TBL-5-3-2"  
+class="td11"><!--l. 203--><p class="noindent" >shape (for version 1)                                                                          </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-5-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-5-4-1"  
-class="td11">ndim Int64</td><td  style="text-align:left;" id="TBL-5-4-2"  
-class="td11"><!--l. 174--><p class="noindent" >shape (for version 2)                                                                          </p></td>
+class="td11">Int64[ndim]</td><td  style="text-align:left;" id="TBL-5-4-2"  
+class="td11"><!--l. 204--><p class="noindent" >shape (for version 2)                                                                          </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-5-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-5-5-1"  
-class="td11">         </td> </tr></table></div>
-<!--l. 179--><p class="indent" >   Until 2009 a shape element was represented as a 32-bit integer, thereafter as a 64-bit integer. To be as
+class="td11">          </td> </tr></table></div>
+                                                                                         
+
+                                                                                         
+<!--l. 209--><p class="indent" >   Until 2009 a shape element was represented as a 32-bit integer, thereafter as a 64-bit integer. To be as
 forward compatible as possible, an IPosition is still stored as version 1 if all elements in the shape have a
 value ﬁtting in a 32-bit integer.
-</p><!--l. 184--><p class="noindent" >
+</p><!--l. 215--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">2.3   </span> <a 
- id="x1-60002.3"></a>TableRecord object</h4>
-<!--l. 185--><p class="noindent" >A TableRecord object holds a set of keyword/value pairs. They are used in CaCTS to represent the
-keyword set attached to the table and each column. <br 
-class="newline" />A value can be a scalar or array of one the standard data types including complex and string values.
-Furthermore a value can be a TableRecord in itself; the nesting can be arbitrarily deep. Finally a value
-can be a Table object which is used to hold the subtables of a table.
-</p><!--l. 192--><p class="indent" >   A TableRecord is described by a RecordDesc object that also contains the descriptions of possible
-nested records. A TableRecord can have a ﬁxed or variable format. In CaCTS only variable fomat
-TableRecords are used.
-</p><!--l. 197--><p class="indent" >   In the very early days of CaCTS a keyword set was stored in a very diﬀerent way. Reading back such
-keyword sets is still supported in the code.
-</p><!--l. 201--><p class="indent" >   A TableRecord is stored in AipsIO as follows:
+ id="x1-60002.3"></a>SimpleOrderedMap object</h4>
+<!--l. 216--><p class="noindent" >The SimpleOrderedMap<!--l. 216--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>K,V<!--l. 216--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>
+class is similar to the std::map<!--l. 216--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>K,V<!--l. 216--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>
+class. The class was developed as part of Casacore long before std::map came into existence. A
+SimpleOrderedMap object is stored in AipsIO as follows.
 </p>
    <div class="tabular"> <table id="TBL-6" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -514,51 +576,43 @@ id="TBL-6-1" /></colgroup><colgroup id="TBL-6-2g"><col
 id="TBL-6-2" /></colgroup><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-6-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-1-1"  
-class="td11">Data Type    </td><td  style="text-align:left;" id="TBL-6-1-2"  
-class="td11"><!--l. 205--><p class="noindent" >Description                                                                                      </p></td>
-</tr><tr 
-class="hline"><td><hr /></td><td><hr /></td></tr><tr 
-class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+class="td11">header       </td><td  style="text-align:left;" id="TBL-6-1-2"  
+class="td11"><!--l. 223--><p class="noindent" >SimpleOrderedMap (version 1)                                                             </p></td>
+</tr><tr  
  style="vertical-align:baseline;" id="TBL-6-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-2-1"  
-class="td11">AipsIO header</td><td  style="text-align:left;" id="TBL-6-2-2"  
-class="td11"><!--l. 206--><p class="noindent" >TableRecord (version 1)                                                                      </p></td>
+class="td11">V              </td><td  style="text-align:left;" id="TBL-6-2-2"  
+class="td11"><!--l. 224--><p class="noindent" >default value                                                                                     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-3-1"  
-class="td11">RecordDesc    </td><td  style="text-align:left;" id="TBL-6-3-2"  
-class="td11"><!--l. 207--><p class="noindent" >The TableRecord description                                                               </p></td>
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-6-3-2"  
+class="td11"><!--l. 225--><p class="noindent" >nentries (number of key-value pairs)                                                      </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-4-1"  
-class="td11">Int               </td><td  style="text-align:left;" id="TBL-6-4-2"  
-class="td11"><!--l. 208--><p class="noindent" >record type (CaCTS always uses variable format records)                          </p></td>
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-6-4-2"  
+class="td11"><!--l. 226--><p class="noindent" >increment (number of entries to add when the map is extended)                 </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-6-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-5-1"  
-class="td11">any              </td><td  style="text-align:left;" id="TBL-6-5-2"  
-class="td11"><!--l. 209--><p class="noindent" >All  values  are  stored  consecutevily.  Their  data  types  are  deﬁned  in  the
-RecordDesc.                                                                                     </p></td>
-</tr><tr  
- style="vertical-align:baseline;" id="TBL-6-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-6-1"  
-class="td11">            </td><td  style="text-align:left;" id="TBL-6-6-2"  
-class="td11"><!--l. 211--><p class="noindent" >Scalars and arrays are stored in the standard AipsIO way.                         </p></td>
-</tr><tr  
- style="vertical-align:baseline;" id="TBL-6-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-7-1"  
-class="td11">            </td><td  style="text-align:left;" id="TBL-6-7-2"  
-class="td11"><!--l. 212--><p class="noindent" >For a nested TableRecord only the values are stored, because its description is
-part of the record description. However, a nested empty TableRecord is stored
-as such.                                                                                           </p></td>
-</tr><tr  
- style="vertical-align:baseline;" id="TBL-6-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-8-1"  
-class="td11">            </td><td  style="text-align:left;" id="TBL-6-8-2"  
-class="td11"><!--l. 215--><p class="noindent" >If a value is a Table, only the table name is stored. The name is tried to be
-made relative to the name of the parent table. In that way moving a table has
-no eﬀect its subtable names. A relative name is preﬁxed with ././ if the full
-parent table name has to be used as directory, while the preﬁx ./ is used if the
-directory name of the parent table has to be used. Note that in all practical
-cases (like a MeasurementSet) ././ is used as preﬁx.                                 </p></td>
+class="td11">KV[nentries]</td><td  style="text-align:left;" id="TBL-6-5-2"  
+class="td11"><!--l. 227--><p class="noindent" >nentries key-value pairs (ﬁrst the key, then the value)                               </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-6-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-9-1"  
-class="td11">            </td> </tr></table></div>
-<!--l. 227--><p class="indent" >   The RecordDesc is stored as follows:
+ style="vertical-align:baseline;" id="TBL-6-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-6-1"  
+class="td11">          </td> </tr></table></div>
+<!--l. 233--><p class="noindent" >
+</p>
+   <h4 class="subsectionHead"><span class="titlemark">2.4   </span> <a 
+ id="x1-70002.4"></a>TableRecord object</h4>
+<!--l. 234--><p class="noindent" >A TableRecord object holds a set of keyword/value pairs. They are used in CTDS to represent the
+keyword set attached to the table and each column. <br 
+class="newline" />A value can be a scalar or array of one the standard data types including complex and string values.
+Furthermore a value can be a TableRecord in itself; the nesting can be arbitrarily deep. Finally a value
+can be a Table object which is used to hold the subtables of a table.
+</p><!--l. 241--><p class="indent" >   A TableRecord is described by a RecordDesc object that also contains the descriptions of possible
+nested records. A TableRecord can have a ﬁxed or variable format. In CTDS only variable format
+TableRecords are used. <br 
+class="newline" />In the very early days of CTDS a keyword set was stored in a very diﬀerent way. Reading back such
+keyword sets is still supported in the code.
+</p><!--l. 249--><p class="indent" >   A TableRecord is stored in AipsIO as follows:
 </p>
                                                                                          
 
@@ -571,79 +625,50 @@ id="TBL-7-2" /></colgroup><tr
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-7-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-1-1"  
 class="td11">Data Type    </td><td  style="text-align:left;" id="TBL-7-1-2"  
-class="td11"><!--l. 231--><p class="noindent" >Description                                                                                      </p></td>
+class="td11"><!--l. 253--><p class="noindent" >Description                                                                                      </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-7-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-2-1"  
 class="td11">AipsIO header</td><td  style="text-align:left;" id="TBL-7-2-2"  
-class="td11"><!--l. 232--><p class="noindent" >RecordDesc (version 2)                                                                       </p></td>
+class="td11"><!--l. 254--><p class="noindent" >TableRecord (version 1)                                                                      </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-3-1"  
-class="td11">uInt              </td><td  style="text-align:left;" id="TBL-7-3-2"  
-class="td11"><!--l. 233--><p class="noindent" >number of keywords                                                                           </p></td>
+class="td11">RecordDesc    </td><td  style="text-align:left;" id="TBL-7-3-2"  
+class="td11"><!--l. 255--><p class="noindent" >The TableRecord description                                                               </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-4-1"  
-class="td11">String           </td><td  style="text-align:left;" id="TBL-7-4-2"  
-class="td11"><!--l. 234--><p class="noindent" >keyword name                                                                                  </p></td>
+class="td11">Int               </td><td  style="text-align:left;" id="TBL-7-4-2"  
+class="td11"><!--l. 256--><p class="noindent" >record type (CTDS always uses variable format records)                           </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-5-1"  
-class="td11">Int               </td><td  style="text-align:left;" id="TBL-7-5-2"  
-class="td11"><!--l. 235--><p class="noindent" >data type (from DataType.h)                                                               </p></td>
+class="td11">any              </td><td  style="text-align:left;" id="TBL-7-5-2"  
+class="td11"><!--l. 257--><p class="noindent" >All  values  are  stored  consecutively.  Their  data  types  are  deﬁned  in  the
+RecordDesc.                                                                                     </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-6-1"  
-class="td11">Speciﬁc         </td><td  style="text-align:left;" id="TBL-7-6-2"  
-class="td11"><!--l. 236--><p class="noindent" >speciﬁc info for a value containing an array, Table, or Record.                    </p></td>
+class="td11">            </td><td  style="text-align:left;" id="TBL-7-6-2"  
+class="td11"><!--l. 259--><p class="noindent" >Scalars and arrays are stored in the standard AipsIO way.                         </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-7-1"  
 class="td11">            </td><td  style="text-align:left;" id="TBL-7-7-2"  
-class="td11"><!--l. 237--><p class="noindent" >- shape for an array (shape [-1] means it is not ﬁxed). A shape is stored as a
-vector of Int values.                                                                           </p></td>
+class="td11"><!--l. 260--><p class="noindent" >For a nested TableRecord only the values are stored, because its description is
+part of the record description. However, a nested empty TableRecord is stored
+as such.                                                                                           </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-7-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-8-1"  
 class="td11">            </td><td  style="text-align:left;" id="TBL-7-8-2"  
-class="td11"><!--l. 239--><p class="noindent" >- TableDesc name for a Table (empty name means it is not ﬁxed).              </p></td>
-</tr><tr  
- style="vertical-align:baseline;" id="TBL-7-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-9-1"  
-class="td11">            </td><td  style="text-align:left;" id="TBL-7-9-2"  
-class="td11"><!--l. 240--><p class="noindent" >- description for a Record.                                                                   </p></td>
-</tr><tr  
- style="vertical-align:baseline;" id="TBL-7-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-10-1"  
-class="td11">String           </td><td  style="text-align:left;" id="TBL-7-10-2"  
-class="td11"><!--l. 241--><p class="noindent" >comment to explain the meaning of a keyword (not in version 1)                 </p></td>
+class="td11"><!--l. 263--><p class="noindent" >If a value is a Table, only the table name is stored. It is tried to make the
+name relative to the name of the parent table. In that way moving a table has
+no eﬀect its subtable names. A relative name is preﬁxed with ././ if the full
+parent table name has to be used as directory, while the preﬁx ./ is used if the
+directory name of the parent table has to be used. Note that in all practical
+cases (like a MeasurementSet) ././ is used as preﬁx.                                 </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-7-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-11-1"  
+ style="vertical-align:baseline;" id="TBL-7-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-9-1"  
 class="td11">            </td> </tr></table></div>
-<!--l. 246--><p class="indent" >   The latter 4 ﬁelds are repeated for each keyword.
-</p><!--l. 248--><p class="noindent" >
-</p>
-   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
- id="x1-70003"></a>PlainTable</h3>
-<!--l. 249--><p class="noindent" >A PlainTable object represent a basic CaCTS table with its own keywords, columns, and associated data
-managers. It is a directory containing several ﬁles named <span 
-class="cmtt-10x-x-109">table.*</span>. <br 
-class="newline" />Besides the ﬁles <span 
-class="cmtt-10x-x-109">table.dat </span>and <span 
-class="cmtt-10x-x-109">table.info </span>a PlainTable consists of the following ﬁles. </p>
-     <ul class="itemize1">
-     <li class="itemize"><span 
-class="cmtt-10x-x-109">table.lock </span>is used to facilitate concurrent access to a table. Locks are acquired and released
-     for this ﬁle. Furthermore it contains information telling another process if a table has changed.
-     </li>
-     <li class="itemize">The ﬁles <span 
-class="cmtt-10x-x-109">table.f&#x003C;i&#x003E;* </span>are used by storage managers to store the data. The storage managers
-     are numbered 0..n and use the number as the suﬃx <span 
-class="cmtt-10x-x-109">i </span>in the ﬁle name. Note that the numbers
-     do not need to be consecutive. This can happen in case a storage manager has been deleted
-     or a virtual data manager is used.</li></ul>
-<!--l. 268--><p class="noindent" >
-</p>
-   <h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
- id="x1-80003.1"></a>General ﬁle table.dat</h4>
-<!--l. 269--><p class="noindent" >This ﬁle is the main table ﬁle. It contains the table deﬁnition, the keywords and their values, and the
-binding of columns to data managers. It is basically a single AipsIO object containing the following
-ﬁelds.
+<!--l. 275--><p class="indent" >   The RecordDesc is stored as follows:
 </p>
    <div class="tabular"> <table id="TBL-8" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -652,60 +677,94 @@ id="TBL-8-1" /></colgroup><colgroup id="TBL-8-2g"><col
 id="TBL-8-2" /></colgroup><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-8-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-1-1"  
-class="td11">Data Type    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-1-2"  
-class="td11">Description                                                     </td>
+class="td11">Data Type    </td><td  style="text-align:left;" id="TBL-8-1-2"  
+class="td11"><!--l. 279--><p class="noindent" >Description                                                                                      </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-8-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-2-1"  
-class="td11">AipsIO header</td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-2-2"  
-class="td11">Table (version 2)                                              </td>
+class="td11">AipsIO header</td><td  style="text-align:left;" id="TBL-8-2-2"  
+class="td11"><!--l. 280--><p class="noindent" >RecordDesc (version 1 or 2)                                                                 </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-3-1"  
-class="td11">uInt              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-3-2"  
-class="td11">number of table rows                                         </td>
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-8-3-2"  
+class="td11"><!--l. 281--><p class="noindent" >number of keywords                                                                           </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-4-1"  
-class="td11">uInt              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-4-2"  
-class="td11">endianness (0=little, 1=big)                               </td>
+class="td11">String           </td><td  style="text-align:left;" id="TBL-8-4-2"  
+class="td11"><!--l. 282--><p class="noindent" >keyword name                                                                                  </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-5-1"  
-class="td11">String           </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-5-2"  
-class="td11">table type (PlainTable)                                      </td>
+class="td11">Int               </td><td  style="text-align:left;" id="TBL-8-5-2"  
+class="td11"><!--l. 283--><p class="noindent" >data type (from DataType.h)                                                               </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-6-1"  
-class="td11">TableDesc      </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-6-2"  
-class="td11">table description and table keyword set                 </td>
+class="td11">Speciﬁc         </td><td  style="text-align:left;" id="TBL-8-6-2"  
+class="td11"><!--l. 284--><p class="noindent" >speciﬁc info for a value containing an array, Table, or Record.                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-7-1"  
-class="td11">TableRecord   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-7-2"  
-class="td11">table keyword set (in version 1 only)                    </td>
+class="td11">            </td><td  style="text-align:left;" id="TBL-8-7-2"  
+class="td11"><!--l. 285--><p class="noindent" >- shape for an array (shape [-1] means it is not ﬁxed). A shape is stored as a
+vector of Int values.                                                                           </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-8-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-8-1"  
-class="td11">ColumnSet     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-8-8-2"  
-class="td11">column data manager info and column keyword sets</td>
+class="td11">            </td><td  style="text-align:left;" id="TBL-8-8-2"  
+class="td11"><!--l. 287--><p class="noindent" >- TableDesc name for a Table (empty name means it is not ﬁxed).              </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-8-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-9-1"  
+class="td11">            </td><td  style="text-align:left;" id="TBL-8-9-2"  
+class="td11"><!--l. 288--><p class="noindent" >- description for a Record.                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-8-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-10-1"  
+class="td11">String           </td><td  style="text-align:left;" id="TBL-8-10-2"  
+class="td11"><!--l. 289--><p class="noindent" >comment to explain the meaning of a keyword (not in version 1)                 </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-8-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-9-1"  
+ style="vertical-align:baseline;" id="TBL-8-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-8-11-1"  
 class="td11">            </td> </tr></table></div>
+<!--l. 294--><p class="indent" >   The latter 4 ﬁelds are repeated for each keyword.
+</p><!--l. 296--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+ id="x1-80003"></a>PlainTable</h3>
+<!--l. 297--><p class="noindent" >A PlainTable object represents a basic CTDS table with its own keywords, columns, and associated data
+managers. It is a directory containing several ﬁles named <span 
+class="cmtt-10x-x-109">table.*</span>. <br 
+class="newline" />Besides the ﬁles <span 
+class="cmtt-10x-x-109">table.dat </span>and <span 
+class="cmtt-10x-x-109">table.info </span>a PlainTable consists of the following ﬁles. </p>
+     <ul class="itemize1">
+     <li class="itemize"><span 
+class="cmtt-10x-x-109">table.lock </span>is used to facilitate concurrent SWMR access (single writer, multiple readers) to
+     a table. Locks are acquired and released for this ﬁle as described (see <a 
+href="casacore.github.io/casacore-notes/256.html" >note 256</a>. Furthermore,
+     it contains information telling another process if a table has changed.
+     </li>
+     <li class="itemize">Each storage manager has a ﬁle <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E;* </span>to store the data. The storage managers are
                                                                                          
 
                                                                                          
-<!--l. 288--><p class="indent" >   Note that the set of table and column keywords is part of the table description. Only in
-the very ﬁrst CaCTS version (before 1995), the table keyword set was stored separately. For
-backward compatibility it is still possible to read such a keyword set, but it is not stored
-anymore.
-</p><!--l. 295--><p class="indent" >   It is instructive to use the UNIX <span 
-class="cmtt-10x-x-109">strings </span>command on a table.dat ﬁle. It shows all the strings
-mentioned in this section.
-</p><!--l. 299--><p class="noindent" >
+     numbered 0..n and use the number as the suﬃx <span 
+class="cmtt-10x-x-109">i </span>in the ﬁle name. Note that the numbers do
+     not need to be consecutive. This can happen in case a storage manager has been deleted or
+     a virtual data manager is used.
+     </li>
+     <li class="itemize">A storage manager can use extra ﬁles, typically called <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E;i </span>to store so-called indirect
+     arrays. The TiledStMan can use extra ﬁles called <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E;</span><span 
+class="cmtt-10x-x-109">_TSM&#x003C;j&#x003E;</span>.</li></ul>
+<!--l. 321--><p class="noindent" >Note it is possible to combine these ﬁles into a single so-called <a 
+href="#x1-420006">MultiFile</a> to reduce the number of actual
+ﬁles.
+</p><!--l. 325--><p class="noindent" >
 </p>
-   <h5 class="subsubsectionHead"><span class="titlemark">3.1.1   </span> <a 
- id="x1-90003.1.1"></a>Table Description</h5>
-<!--l. 300--><p class="noindent" >The TableDesc object contains the table description deﬁning the logical view of a table. It contains the
-name, data type, and some extra info of each column. Furthermore it contains the keyword set attached to
-the table and each column. Finally it contains a private keyword set that is used by the TableDesc object
-to hold some extra meta data.
+   <h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
+ id="x1-90003.1"></a>General ﬁle table.dat</h4>
+<!--l. 326--><p class="noindent" >This ﬁle is the main table ﬁle. It contains the table deﬁnition, the keywords and their values, and the
+binding of columns to data managers. It is basically a nested AipsIO object containing the following
+ﬁelds.
 </p>
    <div class="tabular"> <table id="TBL-9" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
@@ -714,46 +773,57 @@ id="TBL-9-1" /></colgroup><colgroup id="TBL-9-2g"><col
 id="TBL-9-2" /></colgroup><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-9-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-1-1"  
-class="td11">Data Type    </td><td  style="text-align:left;" id="TBL-9-1-2"  
-class="td11"><!--l. 309--><p class="noindent" >Description                                                                                      </p></td>
+class="td11">Data Type    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-1-2"  
+class="td11">Description                                                     </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-9-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-2-1"  
-class="td11">AipsIO header</td><td  style="text-align:left;" id="TBL-9-2-2"  
-class="td11"><!--l. 310--><p class="noindent" >TableDesc (version 2)                                                                         </p></td>
+class="td11">AipsIO header</td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-2-2"  
+class="td11">Table (version 1 or 2)                                        </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-9-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-3-1"  
-class="td11">String           </td><td  style="text-align:left;" id="TBL-9-3-2"  
-class="td11"><!--l. 311--><p class="noindent" >name of table description                                                                    </p></td>
+class="td11">uInt              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-3-2"  
+class="td11">number of table rows                                         </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-9-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-4-1"  
-class="td11">String           </td><td  style="text-align:left;" id="TBL-9-4-2"  
-class="td11"><!--l. 312--><p class="noindent" >version info of table description                                                            </p></td>
+class="td11">uInt              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-4-2"  
+class="td11">endianness (0=little, 1=big)                               </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-9-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-5-1"  
-class="td11">String           </td><td  style="text-align:left;" id="TBL-9-5-2"  
-class="td11"><!--l. 313--><p class="noindent" >comment about table description                                                          </p></td>
+class="td11">String           </td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-5-2"  
+class="td11">table type (PlainTable)                                      </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-9-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-6-1"  
-class="td11">TableRecord   </td><td  style="text-align:left;" id="TBL-9-6-2"  
-class="td11"><!--l. 314--><p class="noindent" >table keyword set                                                                              </p></td>
+class="td11">TableDesc      </td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-6-2"  
+class="td11">table description and table keyword set                 </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-9-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-7-1"  
-class="td11">TableRecord   </td><td  style="text-align:left;" id="TBL-9-7-2"  
-class="td11"><!--l. 315--><p class="noindent" >private table keyword set (not in version 1)                                            </p></td>
+class="td11">TableRecord   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-7-2"  
+class="td11">table keyword set (in version 1 only)                    </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-9-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-8-1"  
-class="td11">uInt              </td><td  style="text-align:left;" id="TBL-9-8-2"  
-class="td11"><!--l. 316--><p class="noindent" >number of columns                                                                            </p></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-9-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-9-1"  
-class="td11">ColumnDesc </td> <td  style="text-align:left;" id="TBL-9-9-2"  
-class="td11"><!--l. 317--><p class="noindent" >info of each column</p></td>
+class="td11">ColumnSet     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-9-8-2"  
+class="td11">column data manager info and column keyword sets</td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-9-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-10-1"  
+ style="vertical-align:baseline;" id="TBL-9-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-9-9-1"  
 class="td11">            </td> </tr></table></div>
-<!--l. 322--><p class="indent" >   The info of each column is stored in a standard way.
+<!--l. 345--><p class="indent" >   Note that the set of table and column keywords is part of the table description. Only in
+the very ﬁrst CTDS version (before 1995), the table keyword set was stored separately. For
+backward compatibility it is still possible to read such a keyword set, but it is not stored
+anymore.
+</p><!--l. 352--><p class="indent" >   It is instructive to use the UNIX <span 
+class="cmtt-10x-x-109">strings </span>command on a table.dat ﬁle. It shows all the strings
+mentioned in this section.
+</p><!--l. 356--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.1.1   </span> <a 
+ id="x1-100003.1.1"></a>Table Description</h5>
+<!--l. 357--><p class="noindent" >The TableDesc object contains the table description deﬁning the logical view of a table. It contains the
+name, data type, and some extra info of each column. Furthermore it contains the keyword set attached to
+the table and each column. Finally it contains a private keyword set that is used by the TableDesc object
+to hold some extra meta data.
 </p>
                                                                                          
 
@@ -765,213 +835,440 @@ id="TBL-10-1" /></colgroup><colgroup id="TBL-10-2g"><col
 id="TBL-10-2" /></colgroup><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-10-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-1-1"  
-class="td11">Data Type </td><td  style="text-align:left;" id="TBL-10-1-2"  
-class="td11"><!--l. 326--><p class="noindent" >Description                                                                                      </p></td>
+class="td11">Data Type        </td><td  style="text-align:left;" id="TBL-10-1-2"  
+class="td11"><!--l. 366--><p class="noindent" >Description                                                                                      </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-10-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-2-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-2-2"  
-class="td11"><!--l. 327--><p class="noindent" >ColumnDesc version (=1)                                                                    </p></td>
+class="td11">AipsIO header    </td><td  style="text-align:left;" id="TBL-10-2-2"  
+class="td11"><!--l. 367--><p class="noindent" >TableDesc (version 1 or 2)                                                                   </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-10-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-3-1"  
-class="td11">String        </td><td  style="text-align:left;" id="TBL-10-3-2"  
-class="td11"><!--l. 328--><p class="noindent" >Type of column using the name of the object containing the description. It
-can have one of the following values:                                                     </p></td>
+class="td11">String               </td><td  style="text-align:left;" id="TBL-10-3-2"  
+class="td11"><!--l. 368--><p class="noindent" >name of table description                                                                    </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-10-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-4-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-4-2"  
-class="td11"><!--l. 330--><p class="noindent" >- ScalarColumnDesc<!--l. 330--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" > <mo 
-class="MathClass-rel">&#x003C;</mo></math>T </p> </td>
+class="td11">String               </td><td  style="text-align:left;" id="TBL-10-4-2"  
+class="td11"><!--l. 369--><p class="noindent" >version info of table description                                                            </p></td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-10-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-5-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-5-2"  
-class="td11"><!--l. 331--><p class="noindent" >- ArrayColumnDesc<!--l. 331--><math 
+class="td11">String               </td><td  style="text-align:left;" id="TBL-10-5-2"  
+class="td11"><!--l. 370--><p class="noindent" >comment about table description                                                          </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-10-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-6-1"  
+class="td11">TableRecord       </td><td  style="text-align:left;" id="TBL-10-6-2"  
+class="td11"><!--l. 371--><p class="noindent" >table keyword set                                                                              </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-10-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-7-1"  
+class="td11">TableRecord       </td><td  style="text-align:left;" id="TBL-10-7-2"  
+class="td11"><!--l. 372--><p class="noindent" >private table keyword set (not in version 1)                                            </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-10-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-8-1"  
+class="td11">uInt                  </td><td  style="text-align:left;" id="TBL-10-8-2"  
+class="td11"><!--l. 373--><p class="noindent" >ncol (number of columns)                                                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-10-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-9-1"  
+class="td11">ColumnDesc[ncol]</td><td  style="text-align:left;" id="TBL-10-9-2"  
+class="td11"><!--l. 374--><p class="noindent" >description of each column                                                                  </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-10-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-10-1"  
+class="td11">               </td> </tr></table></div>
+<!--l. 379--><p class="indent" >   A ColumnDesc object deﬁnes a column and is stored as follows.
+</p>
+   <div class="tabular"> <table id="TBL-11" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-11-1g"><col 
+id="TBL-11-1" /></colgroup><colgroup id="TBL-11-2g"><col 
+id="TBL-11-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-11-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-1-1"  
+class="td11">Data Type </td><td  style="text-align:left;" id="TBL-11-1-2"  
+class="td11"><!--l. 383--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-11-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-2-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-2-2"  
+class="td11"><!--l. 384--><p class="noindent" >ColumnDesc version (=1)                                                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-11-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-3-1"  
+class="td11">String        </td><td  style="text-align:left;" id="TBL-11-3-2"  
+class="td11"><!--l. 385--><p class="noindent" >Type of column using the name of the object containing the description. It
+can have one of the following values:                                                     </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-11-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-4-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-4-2"  
+class="td11"><!--l. 387--><p class="noindent" >- ScalarColumnDesc<!--l. 387--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
 class="MathClass-rel">&#x003C;</mo></math>T </p> </td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-6-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-6-2"  
-class="td11"><!--l. 332--><p class="noindent" >- ScalarRecordColumnDesc                                                                  </p></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-7-1"  
-class="td11"> </td> <td  style="text-align:left;" id="TBL-10-7-2"  
-class="td11"><!--l. 333--><p class="noindent" >- SubTableDesc</p></td>
+ style="vertical-align:baseline;" id="TBL-11-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-5-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-5-2"  
+class="td11"><!--l. 388--><p class="noindent" >- ArrayColumnDesc<!--l. 388--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>T </p> </td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-8-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-8-2"  
-class="td11"><!--l. 334--><p class="noindent" >where T is a string deﬁning the type. It can be: Bool, uChar, Short, uShort,
-Int, uInt, ﬂoat, double, Complex, DComplex, and String.                          </p></td>
+ style="vertical-align:baseline;" id="TBL-11-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-6-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-6-2"  
+class="td11"><!--l. 389--><p class="noindent" >- ScalarRecordColumnDesc                                                                  </p></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-11-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-7-1"  
+class="td11"> </td> <td  style="text-align:left;" id="TBL-11-7-2"  
+class="td11"><!--l. 390--><p class="noindent" >- SubTableDesc</p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-11-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-8-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-8-2"  
+class="td11"><!--l. 391--><p class="noindent" >where T is a string deﬁning the type. It can be: Bool, uChar, Short, uShort,
+Int, uInt, Int64, ﬂoat, double, Complex, DComplex, and String.                  </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-9-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-9-2"  
-class="td11"><!--l. 338--><p class="noindent" >BaseColumnDesc version (=1)                                                             </p></td>
+ style="vertical-align:baseline;" id="TBL-11-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-9-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-9-2"  
+class="td11"><!--l. 395--><p class="noindent" >BaseColumnDesc version (=1)                                                             </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-10-1"  
-class="td11">String        </td><td  style="text-align:left;" id="TBL-10-10-2"  
-class="td11"><!--l. 339--><p class="noindent" >column name                                                                                    </p></td>
+ style="vertical-align:baseline;" id="TBL-11-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-10-1"  
+class="td11">String        </td><td  style="text-align:left;" id="TBL-11-10-2"  
+class="td11"><!--l. 396--><p class="noindent" >column name                                                                                    </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-11-1"  
-class="td11">String        </td><td  style="text-align:left;" id="TBL-10-11-2"  
-class="td11"><!--l. 340--><p class="noindent" >comment                                                                                         </p></td>
+ style="vertical-align:baseline;" id="TBL-11-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-11-1"  
+class="td11">String        </td><td  style="text-align:left;" id="TBL-11-11-2"  
+class="td11"><!--l. 397--><p class="noindent" >comment                                                                                         </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-12-1"  
-class="td11">String        </td><td  style="text-align:left;" id="TBL-10-12-2"  
-class="td11"><!--l. 341--><p class="noindent" >default data manager type                                                                  </p></td>
+ style="vertical-align:baseline;" id="TBL-11-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-12-1"  
+class="td11">String        </td><td  style="text-align:left;" id="TBL-11-12-2"  
+class="td11"><!--l. 398--><p class="noindent" >default data manager type                                                                  </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-13-1"  
-class="td11">String        </td><td  style="text-align:left;" id="TBL-10-13-2"  
-class="td11"><!--l. 342--><p class="noindent" >default data manager group                                                                 </p></td>
+ style="vertical-align:baseline;" id="TBL-11-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-13-1"  
+class="td11">String        </td><td  style="text-align:left;" id="TBL-11-13-2"  
+class="td11"><!--l. 399--><p class="noindent" >default data manager group                                                                 </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-14-1"  
-class="td11">Int             </td><td  style="text-align:left;" id="TBL-10-14-2"  
-class="td11"><!--l. 343--><p class="noindent" >data type (like TpInt from DataType.h¿. It must match the type in the column
-type string.                                                                                      </p></td>
+ style="vertical-align:baseline;" id="TBL-11-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-14-1"  
+class="td11">Int             </td><td  style="text-align:left;" id="TBL-11-14-2"  
+class="td11"><!--l. 400--><p class="noindent" >data type (enum from DataType.h, e.g., TpInt). It must match the type in
+the column type string.                                                                       </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-15-1"  
-class="td11">Int             </td><td  style="text-align:left;" id="TBL-10-15-2"  
-class="td11"><!--l. 345--><p class="noindent" >column options                                                                                 </p></td>
+ style="vertical-align:baseline;" id="TBL-11-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-15-1"  
+class="td11">Int             </td><td  style="text-align:left;" id="TBL-11-15-2"  
+class="td11"><!--l. 402--><p class="noindent" >column options                                                                                 </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-16-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-16-2"  
-class="td11"><!--l. 346--><p class="noindent" >1 = direct array; meant for small ﬁxed sized arrays for which a storage manager
+ style="vertical-align:baseline;" id="TBL-11-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-16-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-16-2"  
+class="td11"><!--l. 403--><p class="noindent" >1 = direct array; meant for small ﬁxed sized arrays for which a storage manager
 can decide to put it directly.                                                                </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-17-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-17-2"  
-class="td11"><!--l. 348--><p class="noindent" >2 = undeﬁned value can exist (not used).                                               </p></td>
+ style="vertical-align:baseline;" id="TBL-11-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-17-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-17-2"  
+class="td11"><!--l. 405--><p class="noindent" >2 = undeﬁned value can exist (not used).                                               </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-18-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-18-2"  
-class="td11"><!--l. 349--><p class="noindent" >4 = array has a ﬁxed shape.                                                                </p></td>
+ style="vertical-align:baseline;" id="TBL-11-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-18-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-18-2"  
+class="td11"><!--l. 406--><p class="noindent" >4 = array has a ﬁxed shape.                                                                </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-19-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-19-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-19-2"  
-class="td11"><!--l. 350--><p class="noindent" >array dimensionality (-1 means scalar)                                                   </p></td>
+ style="vertical-align:baseline;" id="TBL-11-19-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-19-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-19-2"  
+class="td11"><!--l. 407--><p class="noindent" >array dimensionality (-1 means scalar)                                                   </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-20-1"  
-class="td11">IPosition     </td><td  style="text-align:left;" id="TBL-10-20-2"  
-class="td11"><!--l. 351--><p class="noindent" >ﬁxed array shape (only for columns containing arrays)                              </p></td>
+ style="vertical-align:baseline;" id="TBL-11-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-20-1"  
+class="td11">IPosition     </td><td  style="text-align:left;" id="TBL-11-20-2"  
+class="td11"><!--l. 408--><p class="noindent" >ﬁxed array shape (only for columns containing arrays)                              </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-21-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-21-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-21-2"  
-class="td11"><!--l. 352--><p class="noindent" >maximum length of a string value (0 = no maximum)                               </p></td>
+ style="vertical-align:baseline;" id="TBL-11-21-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-21-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-21-2"  
+class="td11"><!--l. 409--><p class="noindent" >maximum length of a string value (0 = no maximum)                               </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-22-1"  
-class="td11">TableRecord</td><td  style="text-align:left;" id="TBL-10-22-2"  
-class="td11"><!--l. 353--><p class="noindent" >column keyword set                                                                           </p></td>
+ style="vertical-align:baseline;" id="TBL-11-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-22-1"  
+class="td11">TableRecord</td><td  style="text-align:left;" id="TBL-11-22-2"  
+class="td11"><!--l. 410--><p class="noindent" >column keyword set                                                                           </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-23-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-10-23-1"  
+ style="vertical-align:baseline;" id="TBL-11-23-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-11-23-1"  
 class="td11">                         <div class="multicolumn"  style="text-align:center; white-space:nowrap;">For a column containing scalars</div>
 </td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-24-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-24-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-24-2"  
-class="td11"><!--l. 357--><p class="noindent" >ScalarColumnDesc version (=1)                                                           </p></td>
+ style="vertical-align:baseline;" id="TBL-11-24-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-24-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-24-2"  
+class="td11"><!--l. 414--><p class="noindent" >ScalarColumnDesc version (=1)                                                           </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-25-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-25-1"  
-class="td11">T              </td><td  style="text-align:left;" id="TBL-10-25-2"  
-class="td11"><!--l. 358--><p class="noindent" >default value (stored according to the data type)                                     </p></td>
+ style="vertical-align:baseline;" id="TBL-11-25-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-25-1"  
+class="td11">T              </td><td  style="text-align:left;" id="TBL-11-25-2"  
+class="td11"><!--l. 415--><p class="noindent" >default value (stored according to the data type)                                     </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-26-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-10-26-1"  
+ style="vertical-align:baseline;" id="TBL-11-26-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-11-26-1"  
 class="td11">                         <div class="multicolumn"  style="text-align:center; white-space:nowrap;">For a column containing arrays</div>
 </td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-27-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-27-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-27-2"  
-class="td11"><!--l. 362--><p class="noindent" >ArrayColumnDesc version (=1)                                                            </p></td>
+ style="vertical-align:baseline;" id="TBL-11-27-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-27-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-27-2"  
+class="td11"><!--l. 419--><p class="noindent" >ArrayColumnDesc version (=1)                                                            </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-28-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-28-1"  
-class="td11">Bool          </td><td  style="text-align:left;" id="TBL-10-28-2"  
-class="td11"><!--l. 363--><p class="noindent" >dummy ﬂag (always False); is present for backward compatibility                </p></td>
+ style="vertical-align:baseline;" id="TBL-11-28-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-28-1"  
+class="td11">Bool          </td><td  style="text-align:left;" id="TBL-11-28-2"  
+class="td11"><!--l. 420--><p class="noindent" >dummy ﬂag (always False); is present for backward compatibility                </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-29-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-10-29-1"  
+ style="vertical-align:baseline;" id="TBL-11-29-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-11-29-1"  
 class="td11">                         <div class="multicolumn"  style="text-align:center; white-space:nowrap;">For a column containing records</div>
 </td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-30-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-30-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-30-2"  
-class="td11"><!--l. 367--><p class="noindent" >RecordScalarColumnDesc version (=1)                                                  </p></td>
+ style="vertical-align:baseline;" id="TBL-11-30-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-30-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-30-2"  
+class="td11"><!--l. 424--><p class="noindent" >ScalarRecordColumnDesc version (=1)                                                  </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-31-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-10-31-1"  
+ style="vertical-align:baseline;" id="TBL-11-31-"><td colspan="2" style="text-align:center; white-space:nowrap;" id="TBL-11-31-1"  
 class="td11">                        <div class="multicolumn"  style="text-align:center; white-space:nowrap;">For a column containing subtables</div>
 </td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-32-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-32-1"  
-class="td11">uInt           </td><td  style="text-align:left;" id="TBL-10-32-2"  
-class="td11"><!--l. 371--><p class="noindent" >SubTableDesc version (=1)                                                                  </p></td>
+ style="vertical-align:baseline;" id="TBL-11-32-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-32-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-11-32-2"  
+class="td11"><!--l. 428--><p class="noindent" >SubTableDesc version (=1)                                                                  </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-33-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-33-1"  
-class="td11">String        </td><td  style="text-align:left;" id="TBL-10-33-2"  
-class="td11"><!--l. 372--><p class="noindent" >TableDesc name                                                                                </p></td>
+ style="vertical-align:baseline;" id="TBL-11-33-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-33-1"  
+class="td11">String        </td><td  style="text-align:left;" id="TBL-11-33-2"  
+class="td11"><!--l. 429--><p class="noindent" >TableDesc name                                                                                </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-34-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-34-1"  
-class="td11">Bool          </td><td  style="text-align:left;" id="TBL-10-34-2"  
-class="td11"><!--l. 373--><p class="noindent" >Flag telling how the description of the subtable is found.                           </p></td>
+ style="vertical-align:baseline;" id="TBL-11-34-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-34-1"  
+class="td11">Bool          </td><td  style="text-align:left;" id="TBL-11-34-2"  
+class="td11"><!--l. 430--><p class="noindent" >Flag telling how the description of the subtable is found.                           </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-35-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-35-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-35-2"  
-class="td11"><!--l. 374--><p class="noindent" >True = table description is by name, thus in a ﬁle with that name.             </p></td>
+ style="vertical-align:baseline;" id="TBL-11-35-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-35-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-35-2"  
+class="td11"><!--l. 431--><p class="noindent" >True = table description is by name, thus in a ﬁle with that name.             </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-36-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-36-1"  
-class="td11">          </td><td  style="text-align:left;" id="TBL-10-36-2"  
-class="td11"><!--l. 376--><p class="noindent" >False = table description is in the next ﬁeld.                                           </p></td>
+ style="vertical-align:baseline;" id="TBL-11-36-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-36-1"  
+class="td11">          </td><td  style="text-align:left;" id="TBL-11-36-2"  
+class="td11"><!--l. 433--><p class="noindent" >False = table description is in the next ﬁeld.                                           </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-10-37-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-37-1"  
-class="td11">TableDesc   </td><td  style="text-align:left;" id="TBL-10-37-2"  
-class="td11"><!--l. 377--><p class="noindent" >the description of the subtable (only if ﬂag=False)                                   </p></td>
+ style="vertical-align:baseline;" id="TBL-11-37-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-37-1"  
+class="td11">TableDesc   </td><td  style="text-align:left;" id="TBL-11-37-2"  
+class="td11"><!--l. 434--><p class="noindent" >the description of the subtable (only if ﬂag=False)                                   </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-10-38-"><td  style="text-align:left; white-space:nowrap;" id="TBL-10-38-1"  
+ style="vertical-align:baseline;" id="TBL-11-38-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-38-1"  
 class="td11">          </td> </tr></table></div>
-     <ul class="itemize1">
-     <li class="itemize">A column containing records makes it possible to store arbitrary data in a column. It is
-     handed as an AipsIO byte stream (vector of uChar) to the data managers.
-     </li>
-     <li class="itemize">A column containing subtables is supported in the description, but it has never been fully
-     implemented in CaCTS, so it cannot be used. This feature is only used in a test program.</li></ul>
-<!--l. 391--><p class="noindent" >
                                                                                          
 
                                                                                          
+     <ul class="itemize1">
+     <li class="itemize">A column containing records makes it possible to store arbitrary data in a column. It is
+     handled as an AipsIO byte stream (vector of uChar) by the data managers. No Record
+     description is kept, so the record can diﬀer from row to row.
+     </li>
+     <li class="itemize">A column containing subtables is supported in the description, but it has never been fully
+     implemented in CTDS, so it cannot be used. This feature is only used in a test program.</li></ul>
+<!--l. 449--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.1.2   </span> <a 
- id="x1-100003.1.2"></a>ColumnSet</h5>
-<!--l. 393--><p class="noindent" >
+ id="x1-110003.1.2"></a>ColumnSet</h5>
+<!--l. 450--><p class="noindent" >The ColumnSet class contains the information how the logical table columns are mapped to their physical
+counterparts served by the data managers. As part of the table.dat ﬁle it is written into the TableDesc’s
+AipsIO as follows,
+</p>
+   <div class="tabular"> <table id="TBL-12" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-12-1g"><col 
+id="TBL-12-1" /></colgroup><colgroup id="TBL-12-2g"><col 
+id="TBL-12-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-1-1"  
+class="td11">Data Type                                   </td><td  style="text-align:left;" id="TBL-12-1-2"  
+class="td11"><!--l. 457--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-2-1"  
+class="td11">Int                                              </td><td  style="text-align:left;" id="TBL-12-2-2"  
+class="td11"><!--l. 458--><p class="noindent" >version       as       a       negative       number       (only       for       version
+<!--l. 458--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>
+1)                                                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-3-1"  
+class="td11">uInt or Int64                                 </td><td  style="text-align:left;" id="TBL-12-3-2"  
+class="td11"><!--l. 459--><p class="noindent" >number of rows (Int64 for version <!--l. 459--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>=
+3)                                                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-4-1"  
+class="td11">Int                                              </td><td  style="text-align:left;" id="TBL-12-4-2"  
+class="td11"><!--l. 460--><p class="noindent" >StorageOption::Option); only for version <!--l. 460--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>=
+3                                                                                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-5-1"  
+class="td11">uInt                                             </td><td  style="text-align:left;" id="TBL-12-5-2"  
+class="td11"><!--l. 461--><p class="noindent" >StorageOption::blockSize; only for version <!--l. 461--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>=
+3                                                                                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-6-1"  
+class="td11">uInt                                             </td><td  style="text-align:left;" id="TBL-12-6-2"  
+class="td11"><!--l. 462--><p class="noindent" >highest data manager sequence number used                                           </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-7-1"  
+class="td11">uInt                                             </td><td  style="text-align:left;" id="TBL-12-7-2"  
+class="td11"><!--l. 463--><p class="noindent" >nrdm; number of data managers used                                                    </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-8-1"  
+class="td11">for each data manager (nrdm entries):</td><td  style="text-align:left;" id="TBL-12-8-2"  
+class="td11"><!--l. 466--><p class="noindent" >                                                                </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-9-1"  
+class="td11">string                                           </td><td  style="text-align:left;" id="TBL-12-9-2"  
+class="td11"><!--l. 466--><p class="noindent" >name of the data manager                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-10-1"  
+class="td11">uInt                                             </td><td  style="text-align:left;" id="TBL-12-10-2"  
+class="td11"><!--l. 467--><p class="noindent" >sequence number of the data manager (as used in <span 
+class="cmtt-10x-x-109">f&#x003C;i&#x003E; </span>in ﬁle name)           </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-11-1"  
+class="td11">ColumnInfo[nrcol]                          </td><td  style="text-align:left;" id="TBL-12-11-2"  
+class="td11"><!--l. 470--><p class="noindent" >info about each column (see below)                                                       </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-12-1"  
+class="td11">DMInfo[nrdm]                               </td><td  style="text-align:left;" id="TBL-12-12-2"  
+class="td11"><!--l. 471--><p class="noindent" >info about each data manager (see below)                                              </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-12-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-12-13-1"  
+class="td11">                                </td> </tr></table></div>
+     <ul class="itemize1">
+     <li class="itemize">In the ﬁrst versions of CTDS the version value was not written; instead the ﬁrst value written
+     was the number of rows (as Int). In later versions the version value was added and was written
+     as a negative number to distinguish it from the non-negative number of rows.
+     </li>
+     <li class="itemize">Usually  the  highest  data  manager  sequence  number  is  the  same  as  the  number  of  data
+     managers used. However, if a data manager gets deleted (because all its columns are deleted),
+     the number of data managers decreases, but the highest sequence number does not. In this
+     way it is ensured that a new data manager always has a unique sequence number.
+                                                                                         
+
+                                                                                         
+     </li>
+     <li class="itemize">The number of columns is not stored in ColumnSet, but is taken from the Table Description.
+     </li>
+     <li class="itemize">For version 1 the columns are stored in order of name. For later versions they are stored in
+     order of time of addition.</li></ul>
+<!--l. 496--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-120003.1.2"></a><span 
+class="cmbx-10x-x-109">ColumnInfo</span><br 
+class="newline" /></span>
+   For each column some information is stored in the ColumnSet’s AipsIO structure.
+</p>
+   <div class="tabular"> <table id="TBL-13" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-13-1g"><col 
+id="TBL-13-1" /></colgroup><colgroup id="TBL-13-2g"><col 
+id="TBL-13-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-1-1"  
+class="td11">Data Type           </td><td  style="text-align:left;" id="TBL-13-1-2"  
+class="td11"><!--l. 502--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-2-1"  
+class="td11">Int                      </td><td  style="text-align:left;" id="TBL-13-2-2"  
+class="td11"><!--l. 503--><p class="noindent" >version (1 or 2)                                                                                 </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-3-1"  
+class="td11">TableRecord         </td><td  style="text-align:left;" id="TBL-13-3-2"  
+class="td11"><!--l. 504--><p class="noindent" >column keywordset; only for version 1                                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-4-1"  
+class="td11">String                  </td><td  style="text-align:left;" id="TBL-13-4-2"  
+class="td11"><!--l. 505--><p class="noindent" >original column name (the name used at table creation, thus without a possible
+rename)                                                                                           </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-5-1"  
+class="td11">derived column info</td><td  style="text-align:left;" id="TBL-13-5-2"  
+class="td11"><!--l. 508--><p class="noindent" >                                                                </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-6-1"  
+class="td11">uInt                    </td><td  style="text-align:left;" id="TBL-13-6-2"  
+class="td11"><!--l. 509--><p class="noindent" >version (1)                                                                                       </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-7-1"  
+class="td11">uInt                    </td><td  style="text-align:left;" id="TBL-13-7-2"  
+class="td11"><!--l. 510--><p class="noindent" >data manager sequence number                                                            </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-8-1"  
+class="td11">for array columns   </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-9-1"  
+class="td11">Bool                    </td><td  style="text-align:left;" id="TBL-13-9-2"  
+class="td11"><!--l. 514--><p class="noindent" >shapeColDef; has the column a ﬁxed shape?                                           </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-10-1"  
+class="td11">IPosition              </td><td  style="text-align:left;" id="TBL-13-10-2"  
+class="td11"><!--l. 515--><p class="noindent" >the shape of each array in the column; only if shapeColDef is True              </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-13-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-13-11-1"  
+class="td11">                </td> </tr></table></div>
+<!--l. 521--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-130003.1.2"></a><span 
+class="cmbx-10x-x-109">DMInfo</span><br 
+class="newline" /></span>
+   Each data manager can write some short information into the ColumnSet’s AipsIO structure. This is
+kept as an array of bytes, stored as a length (uInt) followed by the bytes. The data manager is responsible
+for the coding and decoding of these bytes.
+</p><!--l. 528--><p class="indent" >   Most data managers do not write anything, thus for them only the length 0 is stored. Only the
+<a 
+href="#x1-180003.4.2">StandardStMan</a> and <a 
+href="#x1-250003.4.3">IncrementalStMan</a> write some info which is described in the <span 
+class="cmbx-10x-x-109">Header </span>paragraphs of
+the respective sections.
+</p><!--l. 536--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
- id="x1-110003.2"></a>Info ﬁle table.info</h4>
-<!--l. 394--><p class="noindent" >This ﬁle is a text ﬁle giving some brief info about the table. It is read and written by class <span 
+ id="x1-140003.2"></a>Info ﬁle table.info</h4>
+<!--l. 537--><p class="noindent" >This ﬁle is a text ﬁle giving some brief info about the table. It is read and written by class <span 
 class="cmtt-10x-x-109">TableInfo</span>.
 <br 
 class="newline" />It contains the following lines: </p>
      <ul class="itemize1">
      <li class="itemize">The table type like <span 
 class="cmtt-10x-x-109">Type = MeasurementSet</span>
+                                                                                         
+
+                                                                                         
      </li>
-     <li class="itemize">The table subtype like<span 
+     <li class="itemize">The table subtype like <span 
 class="cmtt-10x-x-109">SubType =</span>
      </li>
      <li class="itemize">Zero or more lines giving some more explanation.</li></ul>
-<!--l. 403--><p class="noindent" >
+<!--l. 546--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.3   </span> <a 
- id="x1-120003.3"></a>Lock ﬁle table.lock</h4>
-<!--l. 404--><p class="noindent" >CaCTS supports concurrent access to a table. One writer or multiple readers can be active at the same
-time. A lock needs to be acquired to access the table, although there is a mode to bypass locking when
-reading. See <a 
-href="../256.html" >note 256</a> for more info about how locking is done.
-</p><!--l. 410--><p class="indent" >   The ﬁrst few bytes in the lock ﬁle are used by the concurrency mechanism of CaCTS to manage a read
+ id="x1-150003.3"></a>Lock ﬁle table.lock</h4>
+<!--l. 547--><p class="noindent" >CTDS supports concurrent access to a table. One writer or multiple readers can be active at the same
+time. A lock needs to be acquired to access the table, although there is a mode to bypass locking
+when reading or to bypass locking entirely. See <a 
+href="casacore.github.io/casacore-notes/256.html" >note 256</a> for more info about how locking is
+done.
+</p><!--l. 554--><p class="indent" >   The ﬁrst few bytes in the lock ﬁle are used by the concurrency mechanism of CTDS to manage a read
 or write lock (on the entire table). </p>
      <ul class="itemize1">
-     <li class="itemize">The ﬁrst byte is used to acquire/release a lock using the system&#x2019;s ﬁle locking mechanism
+     <li class="itemize">The ﬁrst byte is used to acquire/release a lock using the system’s ﬁle locking mechanism
      (<span 
 class="cmtt-10x-x-109">fcntl</span>). The lock can be shared (for read) or exclusive (for write).
      </li>
@@ -982,109 +1279,932 @@ class="cmtt-10x-x-109">fcntl</span>). The lock can be shared (for read) or exclu
      table. It is also using a shared lock.
      </li>
      <li class="itemize">The fourth till sixth byte are used for special internal lock purposes.</li></ul>
-<!--l. 423--><p class="indent" >   The lock ﬁle contains two data structures to assist processes in acquiring locks and synchronizing their
+<!--l. 567--><p class="indent" >   The lock ﬁle contains two data structures to assist processes in acquiring locks and synchronizing their
 internal data structures with table data changes made in another process. All data are written in
 big-endian format. </p>
+     <ul class="itemize1">
+     <li class="itemize">A list of process identiﬁcations is kept in the ﬁrst 260 bytes of the ﬁle. Note that the ﬁrst 6
+     bytes of that list are using to do the locking as described above. The list contains the host id
+     and process id of processes wanting to acquire a lock, but cannot because another process is
+     holding the lock. <br 
+class="newline" />The list consists of 4-byte integers, where the ﬁrst value contains the number of processes in
+     the list. The other values are pairs of host id and process id, so the list can contain up to 32
+     processes.
                                                                                          
 
                                                                                          
-     <ul class="itemize1">
-     <li class="itemize">A list of process identiﬁcations is kept in the ﬁrst 260 bytes of the ﬁle. The list contains
-     the host and process ids of processes wanting to acquire a lock, but cannot because another
-     process is holding the lock. <br 
-class="newline" />The list consists of 4-byte integers, where the ﬁrst value contains the number of processes in
-     the list. The list can contain up to 32 processes.
      </li>
      <li class="itemize">Info telling if and how table data have changed. It is written when a write lock is released. It
      is used by a process acquiring a lock to synchronize its internal data objects. <br 
 class="newline" />The info is written as an AipsIO stream described below. Bytes 260-263 of the lock ﬁle contain
      the length of the info stream. Thereafter the AipsIO stream is written.</li></ul>
-   <div class="tabular"> <table id="TBL-11" class="tabular" 
+   <div class="tabular"> <table id="TBL-14" class="tabular" 
 cellspacing="0" cellpadding="0" rules="groups" 
-><colgroup id="TBL-11-1g"><col 
-id="TBL-11-1" /></colgroup><colgroup id="TBL-11-2g"><col 
-id="TBL-11-2" /></colgroup><tr 
+><colgroup id="TBL-14-1g"><col 
+id="TBL-14-1" /></colgroup><colgroup id="TBL-14-2g"><col 
+id="TBL-14-2" /></colgroup><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-11-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-1-1"  
-class="td11">Data Type                                                                                                                                                                                                                                                               </td><td  style="text-align:left;" id="TBL-11-1-2"  
-class="td11"><!--l. 444--><p class="noindent" >Description                                                                                      </p></td>
+ style="vertical-align:baseline;" id="TBL-14-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-1-1"  
+class="td11">Data Type                                                                                                                                                                                                                                                               </td><td  style="text-align:left;" id="TBL-14-1-2"  
+class="td11"><!--l. 591--><p class="noindent" >Description                                                                                      </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-11-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-2-1"  
-class="td11">AipsIO header                                                                                                                                                                                                                                                           </td><td  style="text-align:left;" id="TBL-11-2-2"  
-class="td11"><!--l. 445--><p class="noindent" >sync (version 1)                                                                                 </p></td>
+ style="vertical-align:baseline;" id="TBL-14-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-2-1"  
+class="td11">AipsIO header                                                                                                                                                                                                                                                           </td><td  style="text-align:left;" id="TBL-14-2-2"  
+class="td11"><!--l. 592--><p class="noindent" >sync (version 1 or 2)                                                                          </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-11-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-3-1"  
-class="td11">uInt                                                                                                                                                                                                                                                                         </td><td  style="text-align:left;" id="TBL-11-3-2"  
-class="td11"><!--l. 446--><p class="noindent" >number of table rows                                                                          </p></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-11-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-4-1"  
-class="td11">uInt </td> <td  style="text-align:left;" id="TBL-11-4-2"  
-class="td11"><!--l. 447--><p class="noindent" >number of table columns</p></td>
+ style="vertical-align:baseline;" id="TBL-14-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-3-1"  
+class="td11">uInt or uInt64                                                                                                                                                                                                                                                            </td><td  style="text-align:left;" id="TBL-14-3-2"  
+class="td11"><!--l. 593--><p class="noindent" >number of table rows (uInt in version 1; uInt64 in version 2)                      </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-11-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-5-1"  
-class="td11">uInt                                                                                                                                                                                                                                                                         </td><td  style="text-align:left;" id="TBL-11-5-2"  
-class="td11"><!--l. 448--><p class="noindent" >modify counter                                                                                 </p></td>
+ style="vertical-align:baseline;" id="TBL-14-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-4-1"  
+class="td11">uInt                                                                                                                                                                                                                                                                         </td><td  style="text-align:left;" id="TBL-14-4-2"  
+class="td11"><!--l. 595--><p class="noindent" >number of table columns                                                                     </p></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-14-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-5-1"  
+class="td11">uInt </td> <td  style="text-align:left;" id="TBL-14-5-2"  
+class="td11"><!--l. 596--><p class="noindent" >modify counter</p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-11-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-6-1"  
-class="td11">uInt                                                                                                                                                                                                                                                                         </td><td  style="text-align:left;" id="TBL-11-6-2"  
-class="td11"><!--l. 449--><p class="noindent" >table  change  counter.  The  counter  is  incremented  if  the  table.dat  ﬁle  has
+ style="vertical-align:baseline;" id="TBL-14-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-6-1"  
+class="td11">uInt                                                                                                                                                                                                                                                                         </td><td  style="text-align:left;" id="TBL-14-6-2"  
+class="td11"><!--l. 597--><p class="noindent" >table change counter. The counter is incremented if the <span 
+class="cmtt-10x-x-109">table.dat </span>ﬁle has
 changed (e.g. by adding a keyword).                                                      </p></td>
 </tr><tr  
- style="vertical-align:baseline;" id="TBL-11-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-7-1"  
-class="td11">Block<!--l. 451--><math 
+ style="vertical-align:baseline;" id="TBL-14-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-7-1"  
+class="td11">Block<!--l. 599--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x003C;</mo></math>uint<!--l. 451--><math 
+class="MathClass-rel">&#x003C;</mo></math>uInt<!--l. 599--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">&#x003E;</mo></math></td><td  style="text-align:left;" id="TBL-11-7-2"  
-class="td11"><!--l. 451--><p class="noindent" >change  counter  per  data  manager.  A  counter  is  incremented  if  that  data
+class="MathClass-rel">&#x003E;</mo></math></td><td  style="text-align:left;" id="TBL-14-7-2"  
+class="td11"><!--l. 599--><p class="noindent" >change  counter  per  data  manager.  A  counter  is  incremented  if  that  data
 manager has written data.                                                                   </p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
- style="vertical-align:baseline;" id="TBL-11-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-11-8-1"  
-class="td11">                                                                                                                                                                           </td> </tr></table>
+ style="vertical-align:baseline;" id="TBL-14-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-14-8-1"  
+class="td11">                                                                                                                                                                            </td> </tr></table>
 </div>
-<!--l. 457--><p class="indent" >   A process acquiring a lock detects if the main table ﬁle or a data manager ﬁle has changed by
+<!--l. 605--><p class="indent" >   A process acquiring a lock detects if the main table ﬁle or a data manager ﬁle has changed by
 comparing its change counters with the ones in the lock ﬁle.
-</p><!--l. 461--><p class="noindent" >
+</p><!--l. 609--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.4   </span> <a 
- id="x1-130003.4"></a>Storage Managers</h4>
-<!--l. 463--><p class="noindent" >
+ id="x1-160003.4"></a>Storage Managers</h4>
+<!--l. 610--><p class="noindent" >There are several storage managers, each writing the data in its own way. They write their data in ﬁles
+called <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E; </span>where <span 
+class="cmtt-10x-x-109">&#x003C;i&#x003E; </span>is the sequence number of the storage manager. The sequence number can
+be seen using the program <span 
+class="cmtt-10x-x-109">showtableinfo</span>. As described above storage managers can use extra
+ﬁles.
+</p><!--l. 616--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.4.1   </span> <a 
- id="x1-140003.4.1"></a>StandardStMan</h5>
-<!--l. 464--><p class="noindent" >- header block - index - data
-</p><!--l. 468--><p class="noindent" >
+ id="x1-170003.4.1"></a>Array File</h5>
+<!--l. 618--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.4.2   </span> <a 
- id="x1-150003.4.2"></a>IncrementalStMan</h5>
+ id="x1-180003.4.2"></a>StandardStMan</h5>
+<!--l. 619--><p class="noindent" >The data of the columns bound to this storage manager are stored in equally sized buckets. The buckets
+are stored sequentially in the ﬁle, so the bucket number determines the ﬁle oﬀset. Indices tell which rows
+and columns are contained in the buckets.
+</p><!--l. 624--><p class="indent" >   StandardStMan uses the main ﬁle <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E; </span>in the table directory where <span 
+class="cmtt-10x-x-109">&#x003C;i&#x003E; </span>is the sequence
+number. For indirect arrays it uses another ﬁle called <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E;i</span>. The main ﬁle consists of four types of
+data: </p>
                                                                                          
 
                                                                                          
-<!--l. 470--><p class="noindent" >
+     <ul class="itemize1">
+     <li class="itemize">The header is stored in the ﬁrst 512 bytes of the ﬁle and describes some general properties.
+     It is followed by the buckets.
+     </li>
+     <li class="itemize">The data buckets containing the ﬁxed size data.
+     </li>
+     <li class="itemize">String heap buckets containing variable sized strings and string arrays.
+     </li>
+     <li class="itemize">Index buckets containing indices on the data buckets.</li></ul>
+<!--l. 639--><p class="indent" >   However, this initial simple scheme can get more complex when rows and/or columns are
+added or removed. Such operations can have the eﬀect that buckets do not contain the same
+number of rows and that possibly new indices are created for groups of new columns. The
+storage manager will maintain a list of free buckets in case all data from a bucket are removed.
+</p>
+     <ul class="itemize1">
+     <li class="itemize">The addition of rows is done at the end of the last bucket. If it is full, a new bucket is allocated
+     and the indices are updated accordingly.
+     </li>
+     <li class="itemize">The removal of a column is done by adding the space it took to a free space map. Since
+     each bucket has space for N rows, the free space is the same for each bucket. Therefore the
+     free space map is kept in the index. The free space map will combine adjacent free space (if
+     e.g. another column is removed later). When all columns stored in a bucket are removed, all
+     buckets occupied by these columns are added to the free bucket list.
+     </li>
+     <li class="itemize">The addition of a column is done by looking if indices have free space (resulting from column
+     removal). It tries to reuse the free space that ﬁts best. If no free space is available, a new set
+     of buckets is allocated for the column(s) to be added. Also a new index will be created to
+     describe the new set of columns and buckets.
+     </li>
+     <li class="itemize">The removal of a row is done in the bucket(s) containing the row. It is done by shifting for
+     each column in that bucket the data after the deleted row to the left. It means that the oﬀsets
+     of the columns in the buckets do not change. It also means that other buckets ocuupied by
+     these columns are not aﬀected.
+     </li>
+     <li class="itemize">The addition of a row in last bucket.</li></ul>
+<!--l. 669--><p class="indent" >   It is possible to remove rows, which is done by removing the row from its bucket and shifting the other
+rows in that bucket. Other buckets are not touched. Therefore not all buckets need to contain the same
+number of rows. An index block tells the starting row of each bucket. If all rows of a bucket are removed,
+the bucket is added to the empty bucket list. An empty bucket can be reused if a new bucket needs to be
+acquired when adding data to the table.
+                                                                                         
+
+                                                                                         
+</p><!--l. 678--><p class="indent" >   Initially all columns are combined in a single set and are stored jointly in the buckets. However, if
+columns are added to a table, they do not ﬁt in the current set of buckets. They will be stored as a new
+set of columns having its own index block.
+</p><!--l. 684--><p class="indent" >   Small ﬁxed sized data are stored directly in a data bucket. Such data are
+numeric scalar values and small arrays such as UVW coordinates. Small strings
+(<!--l. 686--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>= 8
+bytes) and ﬁxed sized strings are also stored directly. Larger strings are stored in heap buckets which are
+referred to in the data buckets. Strings can be span multiple heap buckets, thus it is possible to store
+extremely large strings.
+</p>
+<!--l. 692--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-190003.4.2"></a><span 
+class="cmbx-10x-x-109">Header</span><br 
+class="newline" /></span>
+   The header block is contained in the ﬁrst 512 bytes of the <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E; </span>ﬁle. It contains the following
+AipsIO structure.
+</p>
+   <div class="tabular"> <table id="TBL-15" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-15-1g"><col 
+id="TBL-15-1" /></colgroup><colgroup id="TBL-15-2g"><col 
+id="TBL-15-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-1-1"  
+class="td11">Data Type    </td><td  style="text-align:left;" id="TBL-15-1-2"  
+class="td11"><!--l. 698--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-2-1"  
+class="td11">AipsIO header</td><td  style="text-align:left;" id="TBL-15-2-2"  
+class="td11"><!--l. 699--><p class="noindent" >StandardStMan (version 1, 2, 3 or 4)                                                     </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-3-1"  
+class="td11">Bool             </td><td  style="text-align:left;" id="TBL-15-3-2"  
+class="td11"><!--l. 700--><p class="noindent" >data    stored    in    big    endian    format?    (not    present    for    version
+<!--l. 700--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>=
+2)                                                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-4-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-4-2"  
+class="td11"><!--l. 701--><p class="noindent" >bucket size in bytes                                                                            </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-5-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-5-2"  
+class="td11"><!--l. 702--><p class="noindent" >number of buckets                                                                             </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-6-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-6-2"  
+class="td11"><!--l. 703--><p class="noindent" >Persistent cache size (in buckets)                                                          </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-7-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-7-2"  
+class="td11"><!--l. 704--><p class="noindent" >number of free buckets                                                                       </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-8-1"  
+class="td11">Int               </td><td  style="text-align:left;" id="TBL-15-8-2"  
+class="td11"><!--l. 705--><p class="noindent" >ﬁrst free bucket (-1 is no free bucket)                                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-9-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-9-2"  
+class="td11"><!--l. 706--><p class="noindent" >number of index buckets                                                                     </p></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-10-1"  
+class="td11">Int </td> <td  style="text-align:left;" id="TBL-15-10-2"  
+class="td11"><!--l. 707--><p class="noindent" >ﬁrst index bucket</p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-11-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-11-2"  
+class="td11"><!--l. 708--><p class="noindent" >oﬀset    of    index    in    bucket    (not    present    for    version    1);    if
+<!--l. 708--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>0,
+index ﬁts in a single bucket                                                                 </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-12-1"  
+class="td11">Int               </td><td  style="text-align:left;" id="TBL-15-12-2"  
+class="td11"><!--l. 710--><p class="noindent" >last string heap bucket (-1 is no string heap)                                           </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-13-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-13-2"  
+class="td11"><!--l. 711--><p class="noindent" >index length (in bytes)                                                                       </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-14-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-15-14-2"  
+class="td11"><!--l. 712--><p class="noindent" >number of indices                                                                              </p></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-15-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-15-15-1"  
+class="td11"> </td> </tr></table>
+</div>
+<!--l. 717--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-200003.4.2"></a><span 
+class="cmbx-10x-x-109">DMInfo</span><br 
+class="newline" /></span>
+   StandardStMan stores the following data manager info in the <a 
+href="#x1-130003.1.2">DMInfo</a> part of the <a 
+href="#x1-110003.1.2">ColumnSet</a> AipsIO
+structure.
+</p>
+   <div class="tabular"> <table id="TBL-16" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-16-1g"><col 
+id="TBL-16-1" /></colgroup><colgroup id="TBL-16-2g"><col 
+id="TBL-16-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-16-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-16-1-1"  
+class="td11">uInt[ncolumn]</td><td  style="text-align:left;" id="TBL-16-1-2"  
+class="td11"><!--l. 724--><p class="noindent" >the number of the column set each column belongs to                               </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-16-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-16-2-1"  
+class="td11">uInt[ncolumn] </td><td  style="text-align:left;" id="TBL-16-2-2"  
+class="td11"><!--l. 725--><p class="noindent" >the oﬀset of each column in the data buckets                                          </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-16-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-16-3-1"  
+class="td11">            </td> </tr></table>
+</div> The number of columns is deﬁned in the table description.
+                                                                                         
+
+                                                                                         
+<!--l. 731--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-210003.4.2"></a><span 
+class="cmbx-10x-x-109">Data Buckets</span><br 
+class="newline" /></span>
+   The columns handled by this storage manager are grouped into sets. At table creation time there is a
+single set, but sets might be added as columns are added to this storage manager at a later stage.
+Similarly, sets might be removed as columns are removed. Each set of columns has its own set of data
+buckets and its own index to describe the contents of the buckets.
+</p><!--l. 739--><p class="indent" >   For a particular set of columns a bucket can store N rows where N depends on the size of the bucket
+and the sizes of the columns’ data types. The data are stored in a columnar way in each bucket, thus each
+bucket contains N rows of column 1, thereafter N rows of column 2, etc. without any padding.
+Boolean values are storeds as bits. Note that the column data types are deﬁned in the <a 
+href="#x1-100003.1.1">Table
+Description</a> and not in the storage manager. The oﬀset of a column is ﬁxed and the same
+in the data buckets is ﬁxed. It will never change, even when rows or columns are removed.
+In principle the ﬁrst bucket contains rows 0..N, the next bucket contains rows N..2N, etc.
+However, this can change as rows are deleted. Row deletion only aﬀects the bucket the row is in.
+<br 
+class="newline" />The index deﬁnes which rows are contained in the buckets by keeping the last row number for each
+bucket. The index is described in a next paragraph.
+</p><!--l. 756--><p class="indent" >   Data with a ﬁxed length are stored directly in the data buckets, other data (variable length strings
+and arrays) are stored elsewhere and referred to from the data buckets. StandardStMan can store all
+scalar and array following data types supported by CTDS (as little or big endian).
+</p>
+   <div class="tabular"> <table id="TBL-17" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-17-1g"><col 
+id="TBL-17-1" /></colgroup><colgroup id="TBL-17-2g"><col 
+id="TBL-17-2" /></colgroup><colgroup id="TBL-17-3g"><col 
+id="TBL-17-3" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-1-1"  
+class="td11">Data Type                                                                                                                                                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-1-2"  
+class="td11">Size                        </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-1-3"  
+class="td11">Directly                                                                                                                                                                              </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-2-1"  
+class="td11">Scalar                                                                                                                                                          </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-2-2"  
+class="td11">                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-2-3"  
+class="td11">                                                                                                                     </td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-3-1"  
+class="td11">Bool </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-17-3-2"  
+class="td11">1 byte </td> <td  style="text-align:left; white-space:nowrap;" id="TBL-17-3-3"  
+class="td11">yes</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-4-1"  
+class="td11">uChar                                                                                                                                                          </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-4-2"  
+class="td11">1 byte                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-4-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-5-1"  
+class="td11">Short                                                                                                                                                           </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-5-2"  
+class="td11">1 byte                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-5-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-6-1"  
+class="td11">uShort                                                                                                                                                         </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-6-2"  
+class="td11">2 byte                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-6-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-7-1"  
+class="td11">Int                                                                                                                                                              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-7-2"  
+class="td11">4 byte                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-7-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-8-1"  
+class="td11">uInt                                                                                                                                                             </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-8-2"  
+class="td11">4 byte                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-8-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-9-1"  
+class="td11">Int64                                                                                                                                                           </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-9-2"  
+class="td11">8 byte                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-9-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-10-1"  
+class="td11">Float                                                                                                                                                           </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-10-2"  
+class="td11">4 byte                     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-10-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-11-1"  
+class="td11">Double                                                                                                                                                         </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-11-2"  
+class="td11">8 bytes                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-11-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-12-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-12-1"  
+class="td11">Complex                                                                                                                                                       </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-12-2"  
+class="td11">8 bytes                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-12-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-13-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-13-1"  
+class="td11">DComplex                                                                                                                                                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-13-2"  
+class="td11">16 bytes                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-13-3"  
+class="td11">yes                                                                                                                                                                                    </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-14-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-14-1"  
+class="td11">String with max length                                                                                                                                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-14-2"  
+class="td11">maxlen bytes            </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-14-3"  
+class="td11">yes; has trailing zero if string size <!--l. 776--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math> maxlen</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-15-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-15-1"  
+class="td11">Variable String <!--l. 777--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>= 8 bytes</td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-15-2"  
+class="td11">12 bytes                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-15-3"  
+class="td11">yes; 8 string bytes followed by Int giving length                                                                                                                          </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-16-1"  
+class="td11">Variable string <!--l. 778--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math> 8 bytes   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-16-2"  
+class="td11">12 bytes                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-16-3"  
+class="td11">reference to heap bucket as Int[3] (bucketnr, oﬀset, length)                                                                                                           </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-17-1"  
+class="td11">Direct Arrays                                                                                                                                                </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-17-2"  
+class="td11">                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-17-3"  
+class="td11">                                                                                                                     </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-18-1"  
+class="td11">Bool .. DComplex                                                                                                                                           </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-18-2"  
+class="td11">nelem * data type size</td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-18-3"  
+class="td11">yes; (the shape is known in the Table Description); Bool arrays are stored as bits                                                                             </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-19-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-19-1"  
+class="td11">String                                                                                                                                                          </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-19-2"  
+class="td11">12 bytes                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-19-3"  
+class="td11">reference to heap bucket as Int[3] (bucketnr, oﬀset, length)                                                                                                           </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-20-1"  
+class="td11">Indirect Arrays                                                                                                                                              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-20-2"  
+class="td11">                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-20-3"  
+class="td11">                                                                                                                     </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-21-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-21-1"  
+class="td11">all types                                                                                                                                                       </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-21-2"  
+class="td11">8 bytes                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-21-3"  
+class="td11">oﬀset in the indirect ﬁle                                                                                                                                                         </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-17-22-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-22-1"  
+class="td11">                                                                                                       </td> </tr></table>
+</div>
+<!--l. 791--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-220003.4.2"></a><span 
+class="cmbx-10x-x-109">String Heap Buckets</span><br 
+class="newline" /></span>
+   These buckets contain arrays of strings and variable length scalar strings. Each bucket start with a
+small header of 4 integers whereafter the string data are stored.
+</p>
+   <div class="tabular"> <table id="TBL-18" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-18-1g"><col 
+id="TBL-18-1" /></colgroup><colgroup id="TBL-18-2g"><col 
+id="TBL-18-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-18-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-18-1-1"  
+class="td11">Data Type</td><td  style="text-align:left;" id="TBL-18-1-2"  
+class="td11"><!--l. 798--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-18-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-18-2-1"  
+class="td11">Int           </td><td  style="text-align:left;" id="TBL-18-2-2"  
+class="td11"><!--l. 799--><p class="noindent" >reserved for the free bucket list                                                             </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-18-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-18-3-1"  
+class="td11">Int           </td><td  style="text-align:left;" id="TBL-18-3-2"  
+class="td11"><!--l. 800--><p class="noindent" >used length; the number of bytes used (including gaps), thus the next free byte
+in the bucket.                                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-18-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-18-4-1"  
+class="td11">Int           </td><td  style="text-align:left;" id="TBL-18-4-2"  
+class="td11"><!--l. 801--><p class="noindent" >ndeleted; the total length of the gaps arising from deletion or updating a value
+with a shorter string.                                                                         </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-18-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-18-5-1"  
+class="td11">Int           </td><td  style="text-align:left;" id="TBL-18-5-2"  
+class="td11"><!--l. 803--><p class="noindent" >next bucket; the bucket containing the possible continuation of the last string
+(array) in this bucket. -1 means no continuation. Note that the continuation
+can be continued again.                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-18-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-18-6-1"  
+class="td11">          </td> </tr></table></div>
+<!--l. 810--><p class="indent" >   Strings are stored consecutevily in the buckets. A long string and an array of strings are continued in
+another bucket if they do not ﬁt entirely in the current bucket. As described above the continuation is
+continued as well if it is very, very long.
+</p><!--l. 815--><p class="indent" >   It is possible in CTDS to change an existing value, thus a string (array) can be replaced by another
+one. If possible the new value is written at the same location, where a gap arises if the new value is
+shorter. If it is longer, it has to be stored at a new location and the old location will be a gap. Similarly, a
+gap arises if a string is deleted because a row or column is deleted. Only the total size of gaps is
+administered, not their locations. Thus usually gap space will be lost. Only if it is at the end
+of the used part of a bucket it can be deducted from the used length and be reused. Note
+that if all string space in a bucket is deleted, the bucket will be added to the free bucket
+list.
+</p><!--l. 828--><p class="indent" >   A string (array) is stored in the heap buckets depending on its type. </p>
+     <ul class="itemize1">
+     <li class="itemize">For a scalar string only its characters are stored. Its length is already stored in the data
+     bucket.
+     </li>
+     <li class="itemize">A ﬁxed shaped array of strings is stored as a string of bytes. Each string is stored as a
+     length-value pair. The length is a 32-bit integer and a value is the formed by the string
+     characters. Note that the shapoe of the array is known in the table description, thus does not
+     need to be stored.
+     </li>
+     <li class="itemize">A variable shaped array of string is stored in the same way as the ﬁxed shaped array, but is
+     preceeded by the shape and a boolean ﬂag. The shape is stored as an array of <span 
+class="cmtt-10x-x-109">ndim+1 </span>32-bit
+     integers; the number of axes followed by the axes lengths. A True ﬂag value indicates that
+     the shape is followed by string data because it is possible that the array shape is deﬁned
+     independently from the writing of the actual strings.</li></ul>
+<!--l. 844--><p class="noindent" >The data bucket refers to the string (array) by means of a bucket number, oﬀset and length. In case of
+continuation that bucket number is the ﬁrst bucket. The length is the total length, thus including shape
+and ﬂag if applicable.
+                                                                                         
+
+                                                                                         
+</p>
+<!--l. 849--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-230003.4.2"></a><span 
+class="cmbx-10x-x-109">Index Buckets</span><br 
+class="newline" /></span>
+   The overall index contains one or more indices, one for each set of columns. An index deﬁnes the rows
+contained in the buckets used by the set of columns. This is done by keeping the last row number per
+bucket. The index is needed to cope with the possibly variable number of rows in the buckets due to
+removed rows.
+</p><!--l. 857--><p class="indent" >   An index also contains information about free space in the data buckets due to removed columns
+because that space can possibly be reused when a column is added later. The map consists of a
+<a 
+href="#x1-60002.3"><span 
+class="cmtt-10x-x-109">SimpleOrderedMap</span><!--l. 860--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math><span 
+class="cmtt-10x-x-109">Int,Int</span><!--l. 860--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math></a>
+object telling the oﬀset and length of each free space part in a data bucket. Note it is the same for each
+data bucket described by the index.
+</p><!--l. 864--><p class="indent" >   The indices to write are serialized and stored in one or more buckets. The ﬁrst 8 bytes of the index
+buckets contain the bucket number of the next part of the serialized indices as 2 big-endian signed integer
+values. This could be done in 4 bytes, but for redundancy purposes it is done twice. A value -1 indicates
+no next index bucket.
+</p><!--l. 871--><p class="indent" >   When rewriting the index, care is taken that it is done in diﬀerent buckets to assure that the index is
+always present in case the system crashes in the middle of writing the index. Once the index is written
+successfully, the header is updated and the old index buckets are removed and added to the free bucket
+list. <br 
+class="newline" />If the serialized index ﬁts in half a bucket (which is often the case), that bucket is reused in subsequent
+index rewrites by alternating between both parts of the bucket. The index oﬀset ﬁeld in the header (see
+above) tells the oﬀset of the index in the bucket.
+</p><!--l. 881--><p class="indent" >   The indices are serialized in the following AipsIO structure. Note that the number of indices is part of
+the header.
+</p>
+   <div class="tabular"> <table id="TBL-19" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-19-1g"><col 
+id="TBL-19-1" /></colgroup><colgroup id="TBL-19-2g"><col 
+id="TBL-19-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-1-1"  
+class="td11">Data Type                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   </td><td  style="text-align:left;" id="TBL-19-1-2"  
+class="td11"><!--l. 886--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-2-1"  
+class="td11">AipsIO header                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                </td><td  style="text-align:left;" id="TBL-19-2-2"  
+class="td11"><!--l. 887--><p class="noindent" >SSMIndex (version 1 or 2)                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-3-1"  
+class="td11">uInt                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             </td><td  style="text-align:left;" id="TBL-19-3-2"  
+class="td11"><!--l. 888--><p class="noindent" >Number of index entries                                                                      </p></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-4-1"  
+class="td11">uInt </td> <td  style="text-align:left;" id="TBL-19-4-2"  
+class="td11"><!--l. 889--><p class="noindent" >Number of rows ﬁtting in a bucket</p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-5-1"  
+class="td11">Int                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               </td><td  style="text-align:left;" id="TBL-19-5-2"  
+class="td11"><!--l. 890--><p class="noindent" >Number of columns served by this index                                                </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-6-1"  
+class="td11">SimpleOrderedMap<!--l. 891--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>Int,Int<!--l. 891--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>                                                                                                                                                                                                                        </td><td  style="text-align:left;" id="TBL-19-6-2"  
+class="td11"><!--l. 891--><p class="noindent" >Free space map                                                                                 </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-7-1"  
+class="td11">Block<!--l. 892--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>uInt<!--l. 892--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math> or Block<!--l. 892--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>Int64<!--l. 892--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math></td><td  style="text-align:left;" id="TBL-19-7-2"  
+class="td11"><!--l. 892--><p class="noindent" >Last        row        in        each        bucket;        Int64        for        version
+<!--l. 892--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003E;</mo></math>1 </p> </td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-19-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-19-8-1"  
+class="td11">                                                                                                                                                                                                                                                                                                                                                           </td> </tr></table>
+</div>
+<!--l. 897--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-240003.4.2"></a><span 
+class="cmbx-10x-x-109">Free Buckets</span><br 
+class="newline" /></span>
+   A bucket is added to of the free bucket list once it does not contain any data anymore. The ﬁrst free
+bucket is given in the header, the others form a list by maintaining the next bucket number in the ﬁrst 4
+bytes of the bucket in big endian format.
+</p><!--l. 904--><p class="indent" >   Actually, a free bucket is added to the head of the list to avoid having to update the last free bucket.
+Thus the current ﬁrst free bucket is put at the start of the new free bucket, which in its turn becomes the
+ﬁrst free bucket to be stored in the header.
+                                                                                         
+
+                                                                                         
+</p><!--l. 910--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.4.3   </span> <a 
- id="x1-160003.4.3"></a>TiledStMan</h5>
-<!--l. 471--><p class="noindent" >- index - cell, column, shape stman
-</p><!--l. 474--><p class="noindent" >
+ id="x1-250003.4.3"></a>IncrementalStMan</h5>
+<!--l. 911--><p class="noindent" >The IncrementalStMan is meant for data that changes seldomly, so they can be stored in a compressed
+way by storing the number of rows the data value is the same. It can be done for scalars as well as
+arrays.
+</p><!--l. 915--><p class="indent" >   The storage manager cannot add nor remove columns, but it can add and remove rows. The data
+structures in the ﬁles are designed for these properties.
+</p>
+<!--l. 918--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-260003.4.3"></a><span 
+class="cmbx-10x-x-109">Header</span><br 
+class="newline" /></span>
+   The header block is contained in the ﬁrst 512 bytes of the <span 
+class="cmtt-10x-x-109">table.f&#x003C;i&#x003E; </span>ﬁle. It contains the following
+AipsIO structure.
+</p>
+   <div class="tabular"> <table id="TBL-20" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-20-1g"><col 
+id="TBL-20-1" /></colgroup><colgroup id="TBL-20-2g"><col 
+id="TBL-20-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-1-1"  
+class="td11">Data Type    </td><td  style="text-align:left;" id="TBL-20-1-2"  
+class="td11"><!--l. 924--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-2-1"  
+class="td11">AipsIO header</td><td  style="text-align:left;" id="TBL-20-2-2"  
+class="td11"><!--l. 925--><p class="noindent" >IncrementalStMan (version 1, 2, 3, 4 or 5)                                              </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-3-1"  
+class="td11">Bool             </td><td  style="text-align:left;" id="TBL-20-3-2"  
+class="td11"><!--l. 926--><p class="noindent" >data    stored    in    big    endian    format?    (not    present    for    version
+<!--l. 926--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>=
+2=4)                                                                                               </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-4-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-20-4-2"  
+class="td11"><!--l. 927--><p class="noindent" >bucket size in bytes                                                                            </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-5-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-20-5-2"  
+class="td11"><!--l. 928--><p class="noindent" >number of buckets                                                                             </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-6-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-20-6-2"  
+class="td11"><!--l. 929--><p class="noindent" >Persistent cache size (in buckets)                                                          </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-7-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-7-1"  
+class="td11">uInt              </td><td  style="text-align:left;" id="TBL-20-7-2"  
+class="td11"><!--l. 930--><p class="noindent" >unique column number                                                                       </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-8-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-8-1"  
+class="td11">columns added</td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-9-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-9-1"  
+class="td11">uInt</td><td  style="text-align:left;" id="TBL-20-9-2"  
+class="td11"><!--l. 932--><p class="noindent" >number of free buckets                                                                       </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-10-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-10-1"  
+class="td11">Int                </td><td  style="text-align:left;" id="TBL-20-10-2"  
+class="td11"><!--l. 933--><p class="noindent" >ﬁrst free bucket (-1 is no free bucket)                                                    </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-20-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-20-11-1"  
+class="td11">            </td> </tr></table></div>
+     <ul class="itemize1">
+     <li class="itemize">The unique column number was only used by older versions (<!--l. 940--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" > <mo 
+class="MathClass-rel">&#x003C;</mo></math>=
+     2) of the IncrementalStMan. For those older versions each indirect array column stored its
+     data in a separate ﬁle for which the unique column number to make the ﬁle name unique.
+     The current version does not do that, but uses a single ﬁle to store all indirect array column
+     data.</li></ul>
+<!--l. 948--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-270003.4.3"></a><span 
+class="cmbx-10x-x-109">DMInfo</span><br 
+class="newline" /></span>
+   IncrementalStMan stores the following data manager info in the <a 
+href="#x1-130003.1.2">DMInfo</a> part of the <a 
+href="#x1-110003.1.2">ColumnSet</a>
+AipsIO structure.
+</p>
+                                                                                         
+
+                                                                                         
+   <div class="tabular"> <table id="TBL-21" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-21-1g"><col 
+id="TBL-21-1" /></colgroup><colgroup id="TBL-21-2g"><col 
+id="TBL-21-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-21-1-1"  
+class="td11">uInt[ncolumn]</td><td  style="text-align:left;" id="TBL-21-1-2"  
+class="td11"><!--l. 955--><p class="noindent" >the number of the column set each column belongs to                               </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-21-2-1"  
+class="td11">uInt[ncolumn] </td><td  style="text-align:left;" id="TBL-21-2-2"  
+class="td11"><!--l. 956--><p class="noindent" >the oﬀset of each column in the data buckets                                          </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-21-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-21-3-1"  
+class="td11">            </td> </tr></table>
+</div> The number of columns is deﬁned in the table description.
+<!--l. 962--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-280003.4.3"></a><span 
+class="cmbx-10x-x-109">Data Bucket</span><br 
+class="newline" /></span>
+   A data bucket contains the data of all columns for a given number of rows. It is split into a data part
+(at the beginning of each bucket) and an index part (at the end of each bucket). The ﬁrst 4 bytes of
+each bucket give the oﬀset of the index part (thus also imply the length of the data part).
+<br 
+class="newline" />The endianness of the data and index part is the endianness set for the table.
+</p>
+   <div class="tabular"> <table id="TBL-22" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-22-1g"><col 
+id="TBL-22-1" /></colgroup><colgroup id="TBL-22-2g"><col 
+id="TBL-22-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-22-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-22-1-1"  
+class="td11">Data Type  </td><td  style="text-align:left;" id="TBL-22-1-2"  
+class="td11"><!--l. 972--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-22-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-22-2-1"  
+class="td11">uInt           </td><td  style="text-align:left;" id="TBL-22-2-2"  
+class="td11"><!--l. 973--><p class="noindent" >oﬀset of the index in this bucket. The high byte of the oﬀset deﬁnes if row
+numbers are stored as 32 or 64 bits (0 = 32 bits).                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-22-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-22-3-1"  
+class="td11">byte[oﬀset-4]</td><td  style="text-align:left;" id="TBL-22-3-2"  
+class="td11"><!--l. 976--><p class="noindent" >the data part                                                                                    </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-22-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-22-4-1"  
+class="td11">byte[N]       </td><td  style="text-align:left;" id="TBL-22-4-2"  
+class="td11"><!--l. 977--><p class="noindent" >the index part as described below                                                         </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-22-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-22-5-1"  
+class="td11">           </td> </tr></table></div>
+<!--l. 982--><p class="indent" >   Data rows can be added to a bucket until it is full, after which a new bucket is created. When a value
+in a bucket gets updated, it may not ﬁt in the bucket anymore. In that case the bucket is split and a new
+bucket is created. When a row is removed, a bucket may get empty and added to the free bucket list.
+<br 
+class="newline" />Note that this storage manager cannot remove columns.
+</p>
+<!--l. 989--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-290003.4.3"></a><span 
+class="cmbx-10x-x-109">Data Part</span><br 
+class="newline" /></span>
+   The data part contains the values of all columns bound to this storage manager. Scalars and ﬁxed
+shaped arrays of all data types (including strings) can be stored. However, a string cannot span buckets.
+Variable sized arrays are stored in the <span 
+class="cmbx-10x-x-109">??</span>; their oﬀsets in that ﬁle are stored in the bucket’s data
+part.
+</p><!--l. 997--><p class="indent" >   All values in the data part are stored consecutively. Bool arrays are stored as bits. The index part
+points to the correct data value. Note that the shape of a ﬁxed shaped array is not stored since it is part
+of the table description. The shape of a variable sized array is stored with its data in the array
+ﬁle.
+</p>
+<!--l. 1003--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-300003.4.3"></a><span 
+class="cmbx-10x-x-109">Index Part</span><br 
+class="newline" /></span>
+   The bucket index deﬁnes the starting and end row of the data in a bucket. The index part in each
+bucket deﬁnes per column which rows have which values. Subsequent rows can have the same
+                                                                                         
+
+                                                                                         
+value, thus the index part deﬁnes the ﬁrst and last row number in the bucket having that
+value. In fact, it only deﬁnes the ﬁrst row number, because the ﬁrst row number of the next
+value deﬁnes the last row number of this value. Note that these row numbers start at 0. The
+bucket index deﬁnes the actual row number; it also deﬁnes the last row number of the last
+value.
+</p><!--l. 1014--><p class="indent" >   The index part contains per column the following information. It is stored consecutively for all
+columns.
+</p>
+   <div class="tabular"> <table id="TBL-23" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-23-1g"><col 
+id="TBL-23-1" /></colgroup><colgroup id="TBL-23-2g"><col 
+id="TBL-23-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-23-1-1"  
+class="td11">Data Type      </td><td  style="text-align:left;" id="TBL-23-1-2"  
+class="td11"><!--l. 1019--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-23-2-1"  
+class="td11">uInt                </td><td  style="text-align:left;" id="TBL-23-2-2"  
+class="td11"><!--l. 1020--><p class="noindent" >number of values                                                                               </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-23-3-1"  
+class="td11">uInt or Int64[nr]</td><td  style="text-align:left;" id="TBL-23-3-2"  
+class="td11"><!--l. 1021--><p class="noindent" >ﬁrst row number in bucket having the corresponding value. It starts at 0.     </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-23-4-1"  
+class="td11">uInt[nr]            </td><td  style="text-align:left;" id="TBL-23-4-2"  
+class="td11"><!--l. 1023--><p class="noindent" >oﬀset in data part for value given by the row number                               </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-23-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-23-5-1"  
+class="td11">              </td> </tr></table></div>
+<!--l. 1028--><p class="indent" >   The row number is stored as a 32-bit or 64-bit integer which depends on the highest row number in
+the bucket. Note that the ﬁrst byte in the bucket tells if it is 32 or 64 bits.
+</p><!--l. 1032--><p class="indent" >   Until 2018 Casacore stored the row numbers always as 32 bits. It means that storing it as 64 bits is
+fully backward compatible since the high byte of the oﬀset was always 0.
+</p>
+<!--l. 1036--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-310003.4.3"></a><span 
+class="cmbx-10x-x-109">Bucket Index</span><br 
+class="newline" /></span>
+   The bucket index deﬁnes which rows are contained in each bucket. It is written at the end of the ﬁle,
+thus after the last bucket, as an AipsIO structure with the following ﬁelds.
+</p>
+   <div class="tabular"> <table id="TBL-24" class="tabular" 
+cellspacing="0" cellpadding="0" rules="groups" 
+><colgroup id="TBL-24-1g"><col 
+id="TBL-24-1" /></colgroup><colgroup id="TBL-24-2g"><col 
+id="TBL-24-2" /></colgroup><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-24-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-24-1-1"  
+class="td11">Data Type          </td><td  style="text-align:left;" id="TBL-24-1-2"  
+class="td11"><!--l. 1043--><p class="noindent" >Description                                                                                      </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-24-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-24-2-1"  
+class="td11">AipsIO header      </td><td  style="text-align:left;" id="TBL-24-2-2"  
+class="td11"><!--l. 1044--><p class="noindent" >ISMIndex (version 1 or 2)                                                                   </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-24-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-24-3-1"  
+class="td11">uInt                    </td><td  style="text-align:left;" id="TBL-24-3-2"  
+class="td11"><!--l. 1045--><p class="noindent" >number of buckets                                                                             </p></td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-24-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-24-4-1"  
+class="td11">uInt or Int64[nr+1]</td><td  style="text-align:left;" id="TBL-24-4-2"  
+class="td11"><!--l. 1046--><p class="noindent" >ﬁrst row number in each bucket                                                            </p></td>
+</tr><tr 
+class="hline"><td><hr /></td><td><hr /></td></tr><tr  
+ style="vertical-align:baseline;" id="TBL-24-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-24-5-1"  
+class="td11">                </td> </tr></table></div>
+     <ul class="itemize1">
+     <li class="itemize">Version 1 is used if row numbers are stored as 32-bit integers, version 2 is used for 64-bit
+     integers. The highest row number determines how they are stored.
+     </li>
+     <li class="itemize">The last row number stored is the number of rows + 1; it can be seen as the ﬁrst row number
+     if a next bucket.</li></ul>
+<!--l. 1059--><p class="noindent" ><span class="paragraphHead"><a 
+ id="x1-320003.4.3"></a><span 
+class="cmbx-10x-x-109">Free Buckets</span><br 
+class="newline" /></span>
+   A bucket is added to of the free bucket list once it does not contain any data anymore. The ﬁrst free
+bucket is given in the header, the others form a list by maintaining the next bucket number in the ﬁrst 4
+                                                                                         
+
+                                                                                         
+bytes of the bucket in big endian format.
+</p><!--l. 1066--><p class="indent" >   Actually, a free bucket is added to the head of the list to avoid having to update the last free bucket.
+Thus the current ﬁrst free bucket is put at the start of the new free bucket, which in its turn becomes the
+ﬁrst free bucket to be stored in the header.
+</p><!--l. 1072--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">3.4.4   </span> <a 
- id="x1-170003.4.4"></a>AipsIOStMan</h5>
-<!--l. 476--><p class="noindent" >
+ id="x1-330003.4.4"></a>TiledStMan</h5>
+<!--l. 1074--><p class="noindent" >- index - cell, column, shape stman
+</p><!--l. 1077--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.4.5   </span> <a 
+ id="x1-340003.4.5"></a>AipsIOStMan</h5>
+<!--l. 1079--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.4.6   </span> <a 
+ id="x1-350003.4.6"></a>Indirect Array File</h5>
+<!--l. 1082--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.5   </span> <a 
- id="x1-180003.5"></a>Virtual Column Engines</h4>
-<!--l. 478--><p class="noindent" >
+ id="x1-360003.5"></a>Virtual Column Engines</h4>
+<!--l. 1084--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.5.1   </span> <a 
+ id="x1-370003.5.1"></a>ForwardColumnEngine</h5>
+<!--l. 1086--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.5.2   </span> <a 
+ id="x1-380003.5.2"></a>ScaledComplex</h5>
+<!--l. 1088--><p class="noindent" >
+</p>
+   <h5 class="subsubsectionHead"><span class="titlemark">3.5.3   </span> <a 
+ id="x1-390003.5.3"></a>VirtualTaQLColumn</h5>
+                                                                                         
+
+                                                                                         
+<!--l. 1091--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
- id="x1-190004"></a>RefTable</h3>
-<!--l. 480--><p class="noindent" >
+ id="x1-400004"></a>RefTable</h3>
+<!--l. 1093--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
- id="x1-200005"></a>ConcatTable</h3>
+ id="x1-410005"></a>ConcatTable</h3>
+<!--l. 1095--><p class="noindent" >
+</p>
+   <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
+ id="x1-420006"></a>MultiFile</h3>
     
 </body></html> 
 

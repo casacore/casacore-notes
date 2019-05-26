@@ -5,11 +5,11 @@
 > 
 <head><title>MeasurementSet Selection Syntax</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="263.tex" /> 
-<meta name="date" content="2015-09-20 10:46:00" /> 
+<meta name="date" content="2016-10-23 22:19:00" /> 
  
 <style type="text/css"> 
 <!--  
@@ -98,6 +98,7 @@ a img { border-top: 0; border-left: 0; border-right: 0; }
 center { margin-top:1em; margin-bottom:1em; }  
 td center { margin-top:0em; margin-bottom:0em; }  
 .Canvas { position:relative; }  
+math { text-indent: 0em; }  
 li p.indent { text-indent: 0em }  
 li p:first-child{ margin-top:0em; }  
 li p:last-child, li div:last-child { margin-bottom:0.5em; }  
@@ -156,25 +157,30 @@ span.TEX span.E{ position:relative;top:0.5ex;left:-0.0417em;}
 a span.TEX span.E {text-decoration: none; }  
 span.LATEX span.A{ position:relative; top:-0.5ex; left:-0.4em; font-size:85%;}  
 span.LATEX span.TEX{ position:relative; left: -0.4em; }  
-div.float img, div.float .caption {text-align:center;}  
-div.figure img, div.figure .caption {text-align:center;}  
+div.float, div.figure {margin-left: auto; margin-right: auto;}  
+div.float img {text-align:center;}  
+div.figure img {text-align:center;}  
 .marginpar {width:20%; float:right; text-align:left; margin-left:auto; margin-top:0.5em; font-size:85%; text-decoration:underline;}  
 .marginpar p{margin-top:0.4em; margin-bottom:0.4em;}  
 .equation td{text-align:center; vertical-align:middle; }  
 td.eq-no{ width:5%; }  
 table.equation { width:100%; }  
 div.math-display, div.par-math-display{text-align:center;}  
+mtr.hline mtd{ border-bottom:black solid 1px; padding-top:2px; padding-bottom:0em; }  
+mtr.hline mtd mo{ display:none }  
 math .texttt { font-family: monospace; }  
 math .textit { font-style: italic; }  
 math .textsl { font-style: oblique; }  
 math .textsf { font-family: sans-serif; }  
 math .textbf { font-weight: bold; }  
-math mstyle[mathvariant="bold"] mi { font-weight: bold; font-style: normal; }  
-math mstyle[mathvariant="normal"] mi { font-weight: normal; font-style: normal; }  
+mo.MathClass-op + mi{margin-left:0.3em}  
+mi + mo.MathClass-op{margin-left:0.3em}  
+math mi[mathvariant="bold"] { font-weight: bold; font-style: normal; }  
+math mi[mathvariant="normal"] { font-weight: normal; font-style: normal; }  
 .partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}  
 .index-item, .index-subitem, .index-subsubitem {display:block}  
-.caption td.id{font-weight: bold; white-space: nowrap; }  
-table.caption {text-align:center;}  
+div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}  
+div.caption span.id{font-weight: bold; white-space: nowrap; }  
 h1.partHead{text-align: center}  
 p.bibitem { text-indent: -2em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }  
 p.bibitem-p { text-indent: 0em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }  
@@ -195,6 +201,8 @@ table.equation-star { width:100%; }
 mtd.align-odd{margin-left:2em; text-align:right;}  
 mtd.align-even{margin-right:2em; text-align:left;}  
 .boxed{border: 1px solid black; padding-left:2px; padding-right:2px;}  
+mo.qopname + mi{margin-left:0.3em}  
+mi + mo.qopname{margin-left:0.3em}  
 .figure img.graphics {margin-left:10%;}  
 .lstlisting .label{margin-right:0.5em; }  
 div.lstlisting{font-family: monospace; white-space: nowrap; margin-top:0.5em; margin-bottom:0.5em; }  
@@ -547,7 +555,7 @@ for details of regular expression and patterns.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-1">
    ','   ';' '&#x0022;'  '/'  ':' and NEWLINE
 </div>
 <!--l. 188--><p class="nopar" > (these are reserved characters for <span 
@@ -645,13 +653,12 @@ defaults as explained below.
                                                                                             
 <!--l. 249--><p class="indent" >   <a 
  id="x1-80011"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 1: </td><td  
-class="content">Railroad diagram for the syntax of time/time-range selection expression.</td></tr></table><!--tex4ht:label?: x1-80011 -->
+ <div class="caption" 
+><span class="id">Table 1: </span><span  
+class="content">Railroad diagram for the syntax of time/time-range selection expression.</span></div><!--tex4ht:label?: x1-80011 -->
 <div class="center" 
 >
 <!--l. 251--><p class="noindent" >
@@ -672,14 +679,14 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-2-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-1"  
 class="td11">TIME Expression</td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-2"  
 class="td11"><img 
-src="263.dir/TIME-EXPR.png" alt="PIC"  
+src="263.dir/TIME-EXPR.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-2-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-3-1"  
 class="td11">TIME-RANGE     </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-3-2"  
 class="td11"><img 
-src="263.dir/TIME-RANGE.png" alt="PIC"  
+src="263.dir/TIME-RANGE.png" alt="PIC" width="800px"
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
@@ -687,7 +694,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">             </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <h4 class="subsectionHead"><span class="titlemark">2.1    </span> <a 
  id="x1-90002.1"></a>Syntax</h4>
@@ -863,14 +870,13 @@ href="#x1-100012">2<!--tex4ht:ref: Tab:RAILROAD_BASELINE --></a> and explained i
                                                                                             
 <!--l. 361--><p class="indent" >   <a 
  id="x1-100012"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 2: </td><td  
+ <div class="caption" 
+><span class="id">Table 2: </span><span  
 class="content">Railroad diagrams for the syntax of full baseline selection expression. Note that
-this is also referred to as “antenna selection” expression.</td></tr></table><!--tex4ht:label?: x1-100012 -->
+this is also referred to as “antenna selection” expression.</span></div><!--tex4ht:label?: x1-100012 -->
 <div class="center" 
 >
 <!--l. 364--><p class="noindent" >
@@ -891,14 +897,14 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-3-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-2-1"  
 class="td11">BASELINE Expression         </td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-2-2"  
 class="td11"><img 
-src="263.dir/BASELINE-EXPR.png" alt="PIC"  
+src="263.dir/BASELINE-EXPR.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-3-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-3-1"  
 class="td11">Antenna Expression              </td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-3-2"  
 class="td11"><img 
-src="263.dir/ANT-EXPR.png" alt="PIC"  
+src="263.dir/ANT-EXPR.png" alt="PIC" width="800px"
  />                   </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-4-1"  
@@ -909,7 +915,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-3-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-5-1"  
 class="td11">Antenna/Station Spec.          </td><td  style="text-align:left; white-space:nowrap;" id="TBL-3-5-2"  
 class="td11"><img 
-src="263.dir/ANT-STATION-SPEC.png" alt="PIC"  
+src="263.dir/ANT-STATION-SPEC.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr  
  style="vertical-align:baseline;" id="TBL-3-6-"><td  style="text-align:left; white-space:nowrap;" id="TBL-3-6-1"  
@@ -921,7 +927,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">                     </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <h4 class="subsectionHead"><span class="titlemark">3.1    </span> <a 
  id="x1-110003.1"></a>Syntax</h4>
@@ -1039,13 +1045,12 @@ class="pcrr7t-x-x-120">'&#x0026;'</span>):
                                                                                             
 <!--l. 464--><p class="indent" >   <a 
  id="x1-140013"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 3: </td><td  
-class="content">Table of allowed baseline selection operators and their meaning.</td></tr></table><!--tex4ht:label?: x1-140013 -->
+ <div class="caption" 
+><span class="id">Table 3: </span><span  
+class="content">Table of allowed baseline selection operators and their meaning.</span></div><!--tex4ht:label?: x1-140013 -->
 <div class="center" 
 >
 <!--l. 466--><p class="noindent" >
@@ -1087,7 +1092,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">           </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
 <!--l. 487--><p class="indent" >   Possible forms of baseline speciﬁcations are tabulated in Table <a 
 href="#x1-140024">4<!--tex4ht:ref: BASELINE:TAB --></a>. </p><div class="table">
@@ -1095,19 +1100,18 @@ href="#x1-140024">4<!--tex4ht:ref: BASELINE:TAB --></a>. </p><div class="table">
                                                                                             
 <!--l. 489--><p class="indent" >   <a 
  id="x1-140024"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 4: </td><td  
+ <div class="caption" 
+><span class="id">Table 4: </span><span  
 class="content">Baseline speciﬁcation syntax: ANT, ANT1 and ANT2 in the table below represent a
 comma-separated list of antennas names or a list of <span 
 class="pcrr7t-x-x-120">ANT@STATION </span>speciﬁcations. <span 
 class="pcrr7t-x-x-120">ANT </span>and
 <span 
 class="pcrr7t-x-x-120">STATION </span>in <span 
-class="pcrr7t-x-x-120">ANT@STATION </span>can themselves be comma-separated lists enclosed in braces.</td></tr></table><!--tex4ht:label?: x1-140024 -->
+class="pcrr7t-x-x-120">ANT@STATION </span>can themselves be comma-separated lists enclosed in braces.</span></div><!--tex4ht:label?: x1-140024 -->
 <div class="center" 
 >
 <!--l. 495--><p class="noindent" >
@@ -1271,7 +1275,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">               </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
 <!--l. 539--><p class="indent" >   Formally,  baseline  speciﬁcation  is  of  the  form
 <span 
@@ -1357,7 +1361,7 @@ that name. Thus
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-2">
       ̂VLA:N⋆
 </div>
 <!--l. 580--><p class="nopar" > means all antennas except <span 
@@ -1561,13 +1565,12 @@ below.
                                                                                             
 <!--l. 710--><p class="indent" >   <a 
  id="x1-210015"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 5: </td><td  
-class="content">Railroad diagrams for the syntax of UV-distance selection expression.</td></tr></table><!--tex4ht:label?: x1-210015 -->
+ <div class="caption" 
+><span class="id">Table 5: </span><span  
+class="content">Railroad diagrams for the syntax of UV-distance selection expression.</span></div><!--tex4ht:label?: x1-210015 -->
 <div class="center" 
 >
 <!--l. 712--><p class="noindent" >
@@ -1588,21 +1591,21 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-6-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-2-1"  
 class="td11">UVDIST Expression          </td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-2-2"  
 class="td11"><img 
-src="263.dir/UVDIST-EXPR.png" alt="PIC"  
+src="263.dir/UVDIST-EXPR.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-6-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-3-1"  
 class="td11">UVDIST-UNIT                   </td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-3-2"  
 class="td11"><img 
-src="263.dir/UVDIST-UNIT.png" alt="PIC"  
+src="263.dir/UVDIST-UNIT.png" alt="PIC" width="800px"
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-6-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-6-4-1"  
 class="td11">UVDIST-PRECENT-EXPR</td><td  style="text-align:left; white-space:nowrap;" id="TBL-6-4-2"  
 class="td11"><img 
-src="263.dir/UVDIST-PERCENT-EXPR.png" alt="PIC"  
+src="263.dir/UVDIST-PERCENT-EXPR.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
@@ -1610,7 +1613,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">                   </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <h4 class="subsectionHead"><span class="titlemark">5.1    </span> <a 
  id="x1-220005.1"></a>Syntax</h4>
@@ -1813,7 +1816,7 @@ form:
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-3">
       SPWSPEC[:FREQSPEC]
 </div>
 <!--l. 786--><p class="nopar" > where SPW is the spectral window speciﬁcation and FREQSPEC is the optional frequency
@@ -1832,13 +1835,12 @@ following sections.
                                                                                             
 <!--l. 801--><p class="indent" >   <a 
  id="x1-230016"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 6: </td><td  
-class="content">Railroad diagrams for the syntax of full frequency selection expression.</td></tr></table><!--tex4ht:label?: x1-230016 -->
+ <div class="caption" 
+><span class="id">Table 6: </span><span  
+class="content">Railroad diagrams for the syntax of full frequency selection expression.</span></div><!--tex4ht:label?: x1-230016 -->
 <div class="center" 
 >
 <!--l. 803--><p class="noindent" >
@@ -1859,28 +1861,28 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
  style="vertical-align:baseline;" id="TBL-7-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-2-1"  
 class="td11">SPWSPEC[:FREQSPEC] expression</td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-2-2"  
 class="td11"><img 
-src="263.dir/SPW-EXPR.png" alt="PIC"  
+src="263.dir/SPW-EXPR.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-7-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-3-1"  
 class="td11">SPWSPEC                                         </td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-3-2"  
 class="td11"><img 
-src="263.dir/SPWID.png" alt="PIC"  
+src="263.dir/SPWID.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-7-4-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-4-1"  
 class="td11">FREQSPEC                                       </td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-4-2"  
 class="td11"><img 
-src="263.dir/FREQ.png" alt="PIC"  
+src="263.dir/FREQ.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-7-5-"><td  style="text-align:left; white-space:nowrap;" id="TBL-7-5-1"  
 class="td11">RANGESPEC                                    </td><td  style="text-align:left; white-space:nowrap;" id="TBL-7-5-2"  
 class="td11"><img 
-src="263.dir/RANGE.png" alt="PIC"  
+src="263.dir/RANGE.png" alt="PIC" width="800px" 
  />                   </td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td></tr><tr  
@@ -1888,7 +1890,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">                           </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <h4 class="subsectionHead"><span class="titlemark">6.1    </span> <a 
  id="x1-240006.1"></a>Spectral Window Speciﬁcation Syntax</h4>
@@ -2260,7 +2262,7 @@ class="pcrr7t-x-x-120">1.65GHz : 1.6</span><!--l. 1001--><math
 display="inline" ><mo 
 class="MathClass-rel">∼</mo></math><span 
 class="pcrr7t-x-x-120">1.7GHz</span>
-      same as above, with SPW1 selected via integer ID
+      will select all channels from <span class="underline">only</span> SPW1 which is selected via frequecy speciﬁcation
       </li>
       <li class="itemize">freq=<span 
 class="pcrr7t-x-x-120">1 : 1.6</span><!--l. 1003--><math 
@@ -2271,16 +2273,15 @@ class="pcrr7t-x-x-120">1.7GHz</span>
       same as above, with SPW1 selected via integer ID
       </li></ul>
 <hr class="figure" /><div class="figure" 
-><table class="figure"><tr class="figure"><td class="figure" 
 ><a 
  id="x1-290011"></a><div  
 class="centerline">                                          <img 
 src="263.dir/FreqSettingExample.png" alt="PIC"  
  />                                              </div>
-<br /> <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Figure 1: </td><td  
-class="content">Frequency setup with two overlapping SPWs.</td></tr></table><!--tex4ht:label?: x1-290011 -->
-   </td></tr></table></div><hr class="endfigure" />
+<br /> <div class="caption" 
+><span class="id">Figure 1: </span><span  
+class="content">Frequency setup with two overlapping SPWs.</span></div><!--tex4ht:label?: x1-290011 -->
+   </div><hr class="endfigure" />
 <!--l. 1016--><p class="noindent" >
 </p>
    <h5 class="subsubsectionHead"><span class="titlemark">6.3.1    </span> <a 
@@ -2397,13 +2398,12 @@ selection based on these intents.
                                                                                             
 <!--l. 1104--><p class="indent" >   <a 
  id="x1-320017"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 7: </td><td  
-class="content">Railroad diagrams for the syntax of scan-intent expression.</td></tr></table><!--tex4ht:label?: x1-320017 -->
+ <div class="caption" 
+><span class="id">Table 7: </span><span  
+class="content">Railroad diagrams for the syntax of scan-intent expression.</span></div><!--tex4ht:label?: x1-320017 -->
 <div class="center" 
 >
 <!--l. 1106--><p class="noindent" >
@@ -2432,7 +2432,7 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">                  </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <h4 class="subsectionHead"><span class="titlemark">8.1    </span> <a 
  id="x1-330008.1"></a>Syntax</h4>
@@ -2501,13 +2501,12 @@ href="#x1-340018">8<!--tex4ht:ref: Tab:SCANINTENT --></a>.
                                                                                             
 <!--l. 1156--><p class="indent" >   <a 
  id="x1-340018"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 8: </td><td  
-class="content">Example scan-intent table</td></tr></table><!--tex4ht:label?: x1-340018 -->
+ <div class="caption" 
+><span class="id">Table 8: </span><span  
+class="content">Example scan-intent table</span></div><!--tex4ht:label?: x1-340018 -->
 <div class="center" 
 >
 <!--l. 1158--><p class="noindent" >
@@ -2559,21 +2558,20 @@ class="hline"><td><hr /></td><td><hr /></td></tr><tr
 class="td11">       </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <div class="table">
                                                                                             
                                                                                             
 <!--l. 1172--><p class="indent" >   <a 
  id="x1-340029"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 9: </td><td  
+ <div class="caption" 
+><span class="id">Table 9: </span><span  
 class="content">Examples of scan-intent selection expressions for intents shown in Table <a 
-href="#x1-340018">8<!--tex4ht:ref: Tab:SCANINTENT --></a></td></tr></table><!--tex4ht:label?: x1-340029 -->
+href="#x1-340018">8<!--tex4ht:ref: Tab:SCANINTENT --></a></span></div><!--tex4ht:label?: x1-340029 -->
 <div class="center" 
 >
 <!--l. 1175--><p class="noindent" >
@@ -2730,7 +2728,7 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr
 class="td11">                     </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <h3 class="sectionHead"><span class="titlemark">9    </span> <a 
  id="x1-350009"></a>Scan/Sub-array Selection</h3>
@@ -2825,7 +2823,7 @@ following
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-4">
  select from MS where mscal.baseline('sel1') || mscal.baseline('sel2')
 </div>
 <!--l. 1269--><p class="nopar" > <span 
@@ -2852,7 +2850,6 @@ shown in Fig. <a
 href="#x1-380022">2<!--tex4ht:ref: FIG:MSSERROR --></a>.
 </p>
    <hr class="figure" /><div class="figure" 
-><table class="figure"><tr class="figure"><td class="figure" 
 >
                                                                                             
                                                                                             
@@ -2865,13 +2862,13 @@ href="#x1-380022">2<!--tex4ht:ref: FIG:MSSERROR --></a>.
 class="centerline">                                          <img 
 src="263.dir/MSSError.png" alt="PIC"  
  />                                              </div>
-<br /> <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Figure 2: </td><td  
+<br /> <div class="caption" 
+><span class="id">Figure 2: </span><span  
 class="content">Class diagram for the objects used for error reporting via C++ exceptions in the
-MSSelection module.</td></tr></table><!--tex4ht:label?: x1-380022 -->
+MSSelection module.</span></div><!--tex4ht:label?: x1-380022 -->
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfigure" />
+   </div><hr class="endfigure" />
 <!--l. 1312--><p class="indent" >   All parsing errors are reported by throwing the <span 
 class="pcrr7t-x-x-120">MSSelection</span><span 
 class="cmsy-10x-x-120">{</span><span 
@@ -2912,7 +2909,7 @@ character. E.g.
                                                                                             
                                                                                             
 </p>
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-5">
  Spw Expression: No match found for &#x0022;LBAN&#x0022; (near char. 4 in string &#x0022;LBAN&#x0022;)
 </div>
 <!--l. 1333--><p class="nopar" >
@@ -2947,9 +2944,9 @@ href="#x1-39002r1">1<!--tex4ht:ref: FIG:EHCODE --></a>.
 </p><!--l. 1356-->
 <a 
  id="x1-39003"></a>
-<br /> <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing 1: </td><td  
-class="content">Code snippet showing use of external error handlers.</td></tr></table><!--tex4ht:label?: x1-39002rA --><div class="lstlisting" id="listing-1"><span class="label"><a 
+<br /> <div class="caption" 
+><span class="id">Listing 1: </span><span  
+class="content">Code snippet showing use of external error handlers.</span></div><!--tex4ht:label?: x1-39002rA --><div class="lstlisting" id="listing-1"><span class="label"><a 
  id="x1-39004r1"></a><span 
 class="phvr7t-x-x-60">1</span></span><span 
 class="pcrr7t-"> </span><span 
@@ -3238,7 +3235,6 @@ database related classes to exist outside the CASACore package. The inheritance 
 <span 
 class="pcrr7t-x-x-120">MSSelectableTable </span>line of classes is shown in Fig. <a 
 href="#x1-400023">3<!--tex4ht:ref: FIG:MSSTABS --></a>. </p><hr class="figure" /><div class="figure" 
-><table class="figure"><tr class="figure"><td class="figure" 
 >
                                                                                             
                                                                                             
@@ -3252,14 +3248,14 @@ href="#x1-400023">3<!--tex4ht:ref: FIG:MSSTABS --></a>. </p><hr class="figure" /
 class="centerline">                                          <img 
 src="263.dir/MSSelectableTable.png" alt="PIC"  
  />                                              </div>
-<br /> <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Figure 3: </td><td  
+<br /> <div class="caption" 
+><span class="id">Figure 3: </span><span  
 class="content">Class diagram of the implementations of the <span 
 class="pcrr7t-x-x-120">MSSelectableTable </span>pure-virtual
-base-class.</td></tr></table><!--tex4ht:label?: x1-400023 -->
+base-class.</span></div><!--tex4ht:label?: x1-400023 -->
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfigure" />
+   </div><hr class="endfigure" />
 <!--l. 1429--><p class="indent" >   For using the <span 
 class="pcrr7t-x-x-120">MSSelection</span> module on the Measurement Sets, the <span 
 class="pcrr7t-x-x-120">MSInterface </span>object can
@@ -3270,10 +3266,10 @@ shown in Listing <a
 href="#x1-40003r2">2<!--tex4ht:ref: LIST:MSCODE --></a>. </p><!--l. 1433-->
 <a 
  id="x1-40004"></a>
-<br /> <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing 2: </td><td  
+<br /> <div class="caption" 
+><span class="id">Listing 2: </span><span  
 class="content">Code snippet showing usage of <span 
-class="pcrr7t-x-x-120">MSSelection</span> for Measurement Sets.</td></tr></table><!--tex4ht:label?: x1-40003rB --><div class="lstlisting" id="listing-2"><span class="label"><a 
+class="pcrr7t-x-x-120">MSSelection</span> for Measurement Sets.</span></div><!--tex4ht:label?: x1-40003rB --><div class="lstlisting" id="listing-2"><span class="label"><a 
  id="x1-40005r1"></a><span 
 class="phvr7t-x-x-60">1</span></span><span 
 class="pcrr7t-"> </span><span 
@@ -3566,10 +3562,10 @@ href="#x1-41002r3">3<!--tex4ht:ref: LIST:CTCODE --></a>.
 </p><!--l. 1475-->
 <a 
  id="x1-41003"></a>
-<br /> <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Listing 3: </td><td  
+<br /> <div class="caption" 
+><span class="id">Listing 3: </span><span  
 class="content">Code snippet showing usage of <span 
-class="pcrr7t-x-x-120">MSSelection</span> for (New)CalTables.</td></tr></table><!--tex4ht:label?: x1-41002rB --><div class="lstlisting" id="listing-3"><span class="label"><a 
+class="pcrr7t-x-x-120">MSSelection</span> for (New)CalTables.</span></div><!--tex4ht:label?: x1-41002rB --><div class="lstlisting" id="listing-3"><span class="label"><a 
  id="x1-41004r1"></a><span 
 class="phvr7t-x-x-60">1</span></span><span 
 class="pcrr7t-"> </span><span 
@@ -3785,13 +3781,12 @@ class="pcrr7t-">);</span>
                                                                                             
 <!--l. 1496--><p class="indent" >   <a 
  id="x1-4200110"></a></p><hr class="float" /><div class="float" 
-><table class="float"><tr class="float"><td class="float" 
 >
                                                                                             
                                                                                             
- <table class="caption" 
-><tr style="vertical-align:baseline;" class="caption"><td class="id">Table 10: </td><td  
-class="content">Summary of the MS used</td></tr></table><!--tex4ht:label?: x1-4200110 -->
+ <div class="caption" 
+><span class="id">Table 10: </span><span  
+class="content">Summary of the MS used</span></div><!--tex4ht:label?: x1-4200110 -->
 <div class="center" 
 >
 <!--l. 1498--><p class="noindent" >
@@ -3868,13 +3863,13 @@ class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
 class="td11">       </td></tr></table></div></div>
                                                                                             
                                                                                             
-   </td></tr></table></div><hr class="endfloat" />
+   </div><hr class="endfloat" />
    </div>
    <h4 class="subsectionHead"><span class="titlemark">C.1    </span> <a 
  id="x1-43000C.1"></a>Example 1</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-6">
 --------------------------------------------------------------------
  <br />Select field IDs 0,1,2 and field Named KTIP
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -3911,7 +3906,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-44000C.2"></a>Example 2</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-7">
 --------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -3948,7 +3943,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-45000C.3"></a>Example 3</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-8">
 -------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -3986,7 +3981,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-46000C.4"></a>Example 4</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-9">
 -------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -4022,7 +4017,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-47000C.5"></a>Example 5</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-10">
 -------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -4058,7 +4053,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-48000C.6"></a>Example 6</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-11">
 -------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -4084,7 +4079,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-49000C.7"></a>Example 7</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-12">
 -------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -4120,7 +4115,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-50000C.8"></a>Example 8</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-13">
 -------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: 25/22:40:0 to 26/03:30:0
@@ -4157,7 +4152,7 @@ class="td11">       </td></tr></table></div></div>
  id="x1-51000C.9"></a>Example 9</h4>
                                                                                             
                                                                                             
-   <div class="verbatim">
+   <div class="verbatim" id="verbatim-14">
 -------------------------------------------------------------------
  <br />Select field Named K⋆ (wild card usage)
  <br />       Time range: Error in range operator
