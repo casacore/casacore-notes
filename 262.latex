@@ -44,13 +44,13 @@ purposes the standard output of a test run can be compared with
 the expected output.
 Casacore uses a few scripts doing the actual execution of a test.
 
-A test be embedded in a script for optional preprocessing or postprocessing
+A test can be embedded in a script for optional preprocessing or postprocessing
 of a test or to run a test in multiple ways.
-\\Such a script can also be used to test an application (like {\tt taql}).
+\\Such a script can also be used to test an application (such as {\tt taql}).
 
 \section{Casacore build system}
 Casacore uses the cmake system to build the code and test programs.
-Ctest is used to execute the test programs and to check for
+ctest is used to execute the test programs and to check for
 success or failure.
 
 \subsection{Source code structure}
@@ -62,8 +62,8 @@ the test programs. Schematically it is organized like:
   casacore
     module1        # 
       package1
-        *.h
-        *cc
+        X.h
+        X.cc
         test
           tX.cc
 \end{verbatim}

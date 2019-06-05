@@ -1397,7 +1397,7 @@ can be given (in any order):
     \\A large subset of the MVTime formats is supported.
     A DateTime has to be specified as \texttt{date/time}
     or \texttt{date-time}, where the time part (including
-    the space, -, or / delimiter) is optional.
+    the space, -, / or T delimiter) is optional. If not given, it is 0.
     The possible date formats are:
     \\- YYYY/MM/DD, YYYY-MM-DD, or DD-MM-YYYY where DD and MM must
     be 2 digits and YYYY 4 digits.
@@ -1406,6 +1406,7 @@ can be given (in any order):
     DD can be 1 or 2 digits and YY 1 to 4 digits. 2000 is added if YY$<$50 and
     1900 is added if 50$<=$YY$<$100.
     \\If MM$>$12, YYYY will be incremented accordingly.
+    \\The date and time part must be separated by a -, /, T or space.
     \\The general time format in a DateTime constant is:
     \\- hh:mm:ss.s
     \\where the delimiter \textbf{h} or \textbf{H} can be used
@@ -2245,6 +2246,7 @@ The optional time/angle formats and modifiers are:
  YMD\_ONLY & YMD without the time (same as YMD$|$NO\_TIME)\\
  DMY & dd-Mon-yyyy/hh:mm:ss.sss\\
  FITS & yyyy-mm-ddThh:mm:ss.sss\\
+ ISO & yyyy-mm-ddThh:mm:ss.sssZ (same as FITS$|$USE\_Z)\\
  BOOST & the same as DMY$|$USE\_SPACE\\
  NO\_H, NO\_D & suppress
 		the output of hours (or degrees): useful for offsets\\
@@ -2259,6 +2261,7 @@ The optional time/angle formats and modifiers are:
  ANGLE & +ddd.mm.ss.ttt\\
  TIME & hh:mm:ss.ttt\\
  USE\_SPACE & use a space between date and time (and day and date)\\
+ USE\_Z & put a Z after the time to denote UTC\\
  DIG2 & get angle/time in range -90:+90 or -12:+12\\
  LOCAL & local time; in FITS mode append time zone
   as +hh:mm\\
@@ -2939,6 +2942,8 @@ usually works faster because, unlike GAGGR, it is non-lazy.
     between each position in the first argument and each position in
     the second argument. Only if both arguments contain a single
     position, the result is a scalar.
+  \item[] \texttt{double NORMANGLE(angle)}\\
+    normalizes an angle between -pi and pi radians.
   \item[] \texttt{anytype IIF(cond,arg1,arg2)}\\
     This is a special funtion which operates like the ternary \texttt{?:}
     operator in C++. 
