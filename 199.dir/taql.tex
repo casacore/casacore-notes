@@ -4475,9 +4475,9 @@ A value 0 means an array of any dimensionality. A positive value means
 an array with the given dimensionality.
 \item \texttt{SHAPE=[d1,d2,...]} makes it possible to define the exact
 array shape.
+\\If given and if NDIM is positive, they should be consistent.
 \item \texttt{DIRECT=1} tells that a fixed shaped array column has to be
   stored directly. The default is 0.
-\\If given and if NDIM is positive, they should be consistent.
 \item \texttt{UNIT='s'} defines the unit to be used for the column.
 \\It can be any valid unit (simple or compound). It is a string,
 thus must always be enclosed in quotes. 
@@ -5009,9 +5009,9 @@ a data type.
 
 \subsubsection{\label{TAQL:RUNEXAMPLES}Applying running median to an image}
 The following command shows how a running median can 
-be applied to an Casacore image.
+be applied to a Casacore image.
 \begin{verbatim}
-  update my.imgd set map = map - runningmedian(map,25,25)')
+  update my.imgd set map = map - runningmedian(map,25,25))
 \end{verbatim}
 The running medians are
 subtracted from the data in the copy. It uses a half window size 
@@ -5128,7 +5128,7 @@ if the original data needs to be kept.
 \subsubsection{Obtaining the flux density from visibility data}
 The Miriad program \texttt{uvflux} estimates the source I flux density and its standard deviation at the phase center without having to make an image. 
 A single, not too complicated TaQL command (courtesy Dijkema, Heald)
-provides the same functionality on a MeasurementSet. 
+provides the same functionality on a MeasurementSet using the XX and YY data.
 For LOFAR it is best to use baselines with a length between 5 and 10 km.
 The command shows various aspects of TaQL that are explained below. 
 The numbers at the beginning of the lines point to the text following
@@ -5137,30 +5137,24 @@ the example.
 4.    select gstddev(SUMMED) as STDVALS,
 4.           gmean(SUMMED) as MEANVALS,
 4.           gcount(SUMMED) as NVALS
-3.    from (select gmean(
-1.                  sum(iif(FLAG[,0:4:3], 0, abs(DATA[,0:4:3])))
-1.                   / nfalse(FLAG[,::3])
-3.                 ) as SUMMED
+1.    from (select 
+3.          gmean(abs(DATA[::3][FLAG[::3]])) as SUMMED
             from ~/data/GER.MS
-2.          where mscal.baseline('5km~10km’) && !all(FLAG)
+2.          where mscal.baseline("5km~10km") && !all(FLAG)
 3.          groupby TIME)
 \end{verbatim}
-A subquery is used to get the average flux (I = 0.5*(XX+YY)) per time
-slot.
+A subquery is used to get the average flux (I = 0.5*(XX+YY)) per time slot.
 \begin{enumerate}
-\item For each baseline it gets the mean of the channels. Note that it 
-  uses \texttt{sum/n} to ignore flagged visibilities. The \texttt{iif} function
-  tells to use 0 for them. Also note that XX is the 1st and YY the 4th
-  polarisation, hence [0:4:3] (or [::3]) indexes these polarisations. 
-  Once masked arrays are supported by TaQL, it could be written as:
-  \texttt{  mean(DATA[,::3][FLAG[,::3]])}
+\item This is the subquery. The outer query operates on the result of it.
 \item It only uses the baselines with lengths between 5 and 10 km
   where not all visibilities are flagged. Note that a \texttt{mscal}
   user defined function is used for the baseline selection as described
   in \htmlref{section \ref{TAQL:MSFUNC}}{TAQL:MSFUNC}.
-\item Thereafter the average flux per time slot is determined in the
-  subquery using the \texttt{gmean} aggregation and GROUPBY functionality. The
+\item Per time slot the average flux of all unmasked XX and YY data is determined
+  using the \texttt{gmean} aggregation and GROUPBY functionality. The
   result is an intermediate table with one column called SUMMED and a row per time slot. 
+  Note that XX is the 1st and YY the 4th
+  polarisation, hence [0:4:3] (or [::3]) indexes these polarisations. 
 \item Finally, the outer query uses aggregate functions to calculate
   the overall mean, standard deviation, and number of time slots from
   the result of the subquery. The
@@ -5172,53 +5166,74 @@ The example below counts per antenna the number of fully
 flagged baselines, excluding the autocorrelations. It uses grouping
 and aggregate functions twice; first per baseline, thereafter per
 antenna.
-It also uses the \htmlref{concatenation}{TAQL:CONCTAB} and
-\htmlref{backreferencing}{TAQL:BACKREF} features. It also shows the
-results when using the {\tt time} keyword, which shows that the
-processing time is dominated by the first query.
+It uses the \htmlref{concatenation}{TAQL:CONCTAB} and the
+\htmlref{WITH}{TAQL:WITH} features. The timings of the
+various query parts are shown
+by using the {\tt time} keyword. It shows that the
+processing time is dominated by the first query on the
+MeasurementSet used (which has a size of 1.3 GByte).
 \begin{verbatim}
-time select gsum(t1.cnt), t1.ANTENNA,
-       (select NAME from ~/data/3C343.MS::ANTENNA)[t1.ANTENNA] as NAME
-  from (select gcount() as cnt, ANTENNA1 as ANTENNA, ANTENNA2
-          from ~/data/3C343.MS where all(FLAG) and ANTENNA1!=ANTENNA2
-          groupby ANTENNA1,ANTENNA2) t0,
-  [t0,
-   (select cnt, ANTENNA2 as ANTENNA, 0 as ANTENNA2 from t0),
-   (select 0 as cnt, rowid() as ANTENNA, 0 as ANTENNA2
-           from ~/data/3C343.MS::ANTENNA)] t1
-  groupby t1.ANTENNA orderby t1.ANTENNA
+time with (select gcount() as cnt, ANTENNA1 as ANTENNA, ANTENNA2
+           from ~/data/3C343.MS
+           where all(FLAG) and ANTENNA1!=ANTENNA2
+           groupby ANTENNA1,ANTENNA2) t0
+     select gsum(cnt) as NR, ANTENNA,
+            (select NAME from ~/data/3C343.MS::ANTENNA)[ANTENNA] as NAME
+     from [t0,
+           (select cnt, ANTENNA2 as ANTENNA, 0 as ANTENNA2 from t0),
+           (select 0 as cnt, rowid() as ANTENNA, 0 as ANTENNA2
+                   from ~/data/3C343.MS::ANTENNA)]
+     groupby ANTENNA orderby ANTENNA
 
-  From query          0.8 real        0.58 user        0.08 system
+  From query         0.54 real         0.4 user        0.11 system
   From query            0 real           0 user           0 system
   From query            0 real           0 user           0 system
   Subquery              0 real           0 user           0 system
   Groupby               0 real           0 user           0 system
   Orderby               0 real           0 user           0 system
   Projection            0 real           0 user           0 system
- Total time          0.83 real         0.6 user        0.08 system
+ Total time          0.59 real         0.4 user        0.12 system
+
+3 selected columns:  NR ANTENNA NAME
+2896	0	RT0
+2889	1	RT1
+2893	2	RT2
+2879	3	RT3
+2882	4	RT4
+2884	5	RT5
+2882	6	RT6
+2879	7	RT7
+2882	8	RT8
+2895	9	RT9
+2896	10	RTA
+2888	11	RTB
+2898	12	RTC
+2903	13	RTD
+21555	14	RTE
+21555	15	RTF
 \end{verbatim}
+There is a lot to say about this query, which is quite complex. It
+shows that the WITH clause and table concatenation are nice features.
 \begin{enumerate}
 \item
-The first inner select counts the number
-of fully flagged baselines per baseline and stores the result with the
-antennas making up a baseline in a
-temporary table with shorthand {\tt t0}.. In this way the expensive
-counting part needs to be executed only once.
+The WITH part creates a temporary table with shorthand {\tt t0}
+containing the number of fully flagged rows per baseline.
+The table also contains the antenna numbers making up a baseline.
+In this way the expensive counting part needs to be executed only once.
 \item
-This table has to be
-summed for both antennas of the baselines, which is done in the second part
-creating a concatenated table with shorthand {\tt t1}.
-It backreferences the first table {\tt t0} twice. First to use it
-directly to count for ANTENNA1, thereafter to count for ANTENNA2 by doing a
+The result has to be per antenna, so the temporary table has to be
+summed for both antennas of the baselines. It is done by using the
+table twice by means of concatenation. First to use it
+directly to count for ANTENNA, thereafter to count for ANTENNA2 using a
 select to make the ANTENNA2 the ANTENNA column. 
 \item
-The table does not contain the antennas having no fully flagged
-baselines. Therefore the third part of the concatenation
-copies the ANTENNA table to insert zero counts for all antennas.
+The temporary table does not contain the antennas having no fully flagged
+rows. Therefore the third part of the concatenation
+uses the ANTENNA table to insert zero counts for all antennas.
 \item
-Finally the outer select (in the first line) sums the values in the
-concatenated table per antenna. It also retrieves the name of the
-antenna by indexing  in the selection of all antenna names.
+Finally the final select (in the fifth line) sums the values in the
+concatenated table per antenna. It also retrieves the name of an
+antenna by indexing in the selection of all antenna names.
 \end{enumerate}
 
 
