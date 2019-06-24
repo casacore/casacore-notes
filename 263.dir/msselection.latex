@@ -572,7 +572,7 @@ expression {\tt "1,2,!5,8"} is syntactically incorrect.
 
 \subsubsection{Baseline negation and Regular Expression negation}
 Since antenna names in a antenna/baseline selection can be a regular
-expression or a pattern, one can preceed a name, pattern or regex by
+expression or a pattern, one can precede a name, pattern or regex by
 ``\^'' (the regular expression negation operator) to negate that
 name. Thus
 \begin{verbatim}
@@ -583,7 +583,7 @@ means all antennas except {\tt VLA:N*}.  Note that {\tt {}\^{}VLA:N*} and
 cross-correlation baselines of the antenna in the remaining arms with
 all antenna (also VLA:N antenna). Thus {\tt {}\^{}VLA:N*} is the same as
 {\tt VLA:[SE]*}. The second one has all baselines between the antenna
-in the remaining arms, but also autocorr between VLA:N antenna.
+in the remaining arms, but also auto-correlation between VLA:N antenna.
 
 \subsubsection{Examples}
 In the most common usage, an atomic ANT selects all baselines
@@ -683,12 +683,16 @@ any field name, the given name/regular expression/pattern are matched
 against the field code.  If still no field is selected, an exception
 of type MSSelectionFieldParseError is thrown.
 
-Field specifications can also be give by their integer IDs.  IDs can
-be a single ID or a \hyperref[Sec:RANGE]{range (section~\ref{Sec:RANGE})} %\hyperref{range}{range (see Section }{)}{Sec:RANGE}
-of IDs (N0$\sim$N1).  Field ID selection can also be done using a
-boolean expression.  For a field specification of the form "$>$ID",
-all field IDs greater than ID are selected.  Similarly for "$<$ID" all
-field IDs smaller than ID are selected.
+Field specifications can also be give by their integer IDs.  IDs can be a single ID or a
+\hyperref[Sec:RANGE]{range
+  (section~\ref{Sec:RANGE})} %\hyperref{range}{range (see Section }{)}{Sec:RANGE}
+of IDs (N0$\sim$N1).  Integer IDs greater than or equal to the total number fields
+(typically the number of of rows in the FIELD sub-table of the MS) are matched as strings
+against the NAME column.  This allows using field names which parse as integers.  IDs
+less than the number fields are used normal integer IDs (row index in the FIELD sub-table
+of the MS).  Using field ID, selection can also be done using a boolean expression.  For a field
+specification of the form "$>$ID", all field IDs greater than ID are selected.  Similarly
+for "$<$ID" all field IDs smaller than ID are selected.
 
 The field selection expression is a comma-separated list of field
 specifications.  E.g.
@@ -828,7 +832,10 @@ Spectral windows (SPW) specification can be of the following types:
 or a regular expression/pattern)
 \item a frequency value (value with a unit).  
 \end{enumerate}
-
+Integer IDs greater than or equal to the total number SPWs (typically the number of of
+rows in the SPECTRAL\_WINDOW sub-table of the MS) are matched as strings against the NAME
+column.  This allows using SPW names which parse as integers.  IDs less than the number
+fields are used normal integer IDs (row index in the SPW sub-table of the MS).
 \subsubsection{Selection by ID}
 
 SPWSPEC can be single integer, a list or a range of integers.  It can also be
@@ -999,7 +1006,7 @@ from SPW0 \underline{\bf and} SPW1. E.g.
 \item freq={\tt 0 : 1.6$\sim$1.7GHz} will select all channels
   from \underline{only} SPW0 that are in the range
 \item freq={\tt 1.65GHz : 1.6$\sim$1.7GHz} will select all channels
-  from \underline{only} SPW1 which is selected via frequecy specification
+  from \underline{only} SPW1 which is selected via frequency specification
 \item freq={\tt 1 : 1.6$\sim$1.7GHz} same as above, with SPW1
   selected via integer ID
 
@@ -1075,7 +1082,7 @@ The {\tt POL} specification is a semi-colon separated list of
 polarization products (i.e., it is a baseline based selection).
 E.g. {\tt POL} can be {\tt "RR"} or {\tt "LL"} or {\tt "RR;LR"} or
 {\tt "RR;LL;LR;RL"}, etc.  Without the qualifiers, comma can also be
-used as a separater.  Polarization specifications in the list can be
+used as a separator.  Polarization specifications in the list can be
 in any order.  A number of {\tt [SPW:]POL} specifications can be given
 as a comma separated list.  E.g.
 
@@ -1108,7 +1115,7 @@ based on these intents.
 \hline
 \small {Syntax of} & \small{Railroad Diagram}\\
 \hline
-   Scan Intent expresssion    &  \includegraphics[width=8cm]{INTENT-EXPR.png}  \\
+   Scan Intent expression    &  \includegraphics[width=8cm]{INTENT-EXPR.png}  \\
 \hline
 \end{tabular}
 \label{Tab:RAILROAD_INTENT}
@@ -1260,7 +1267,7 @@ therefore can also be supplied pure-TaQL expressions which are used
 as-is along with any of the \MSS\ expressions. Internally, the
 pure-TaQL expression will be treated as just another \MSS\ expression.
 
-While it is natual to be able to use TaQL expressions via the \MSS\
+While it is natural to be able to use TaQL expressions via the \MSS\
 module for selection on an MS, it is also possible to embed \MSS\
 expressions in TaQL expressions via the {\tt MSCal} user-defined
 functions (UDF).  E.g. in a TaQL expression like the following
