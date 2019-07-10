@@ -57,7 +57,7 @@
 \author{ MS v3.0 working group:\\
   Dijkema T., Golap K., Hiriart R., Nakazato T., Pokorny M., Pouzols F., Raba,R., van Diepen G.
 }
-\date{October, 2018}
+\date{July, 2019}
 \maketitle
 
 \ifpdf
@@ -66,25 +66,35 @@
 \fi
 
 \tableofcontents 
-\section{Summary} 
 
-This note describes a revised MeasurementSet definition which extends
-that previously given in casa/casacore Note 229(Kemball and Wieringa
-2000).  The new definition is designed to support features that were
-felt missing from v2.0 or tedious to deal with, provide support for
-VLBI processing and non dish arrays.
+
 
 \section{Introduction}
 
 The MeasurementSet (MS) defines a format in which interferometer
-visibilities and single-dish data are stored. It will be implemented in
-software packages using casa/casacore code.  This document will define
-the schematic layout of information stored in the MeasurementSet
-(refered to as MS or ms in this documnent).  No attempt is being made
-here to suggest implementation and we tried to distance the schematic
-from implementation issues (although we may attach an addendum in the
-future, to this document, to describe implementation choices
-especially with regards to IO rates and large data issues).
+visibilities and single-dish data are stored. It is implemented in
+software packages using casa/casacore code. The version 2.0 (Note 229;
+Kemball and Wieringa 2000) of the MS has been in use since 2000 in
+different packages and at different telescopes. This revision is to
+correct or help in common usages by adding missing data that was felt
+needed for data reduction. In V2.0 we feel that sometimes schema
+structure was defined to help with efficiency issues that was forseen
+(e.g definition of a FLOAT\_DATA column for single dish).  In this
+document we try to not do that. We realize that a given data structure
+can be implemented in different ways in software to achieve maximum
+efficiency or speed. This is the reason why we have tried to keep the
+information redundancy to a minimum and focussed on
+completeness(although we may attach an addendum in the future, to this
+document, to describe implementation choices especially with regards
+to IO rates and large data issues) .
+
+The changes are not backward compatible; so converters will be needed
+between v2.0 and v3.0 and vice versa. Some of the changes are to help
+common needs and complaints like column versioning (removing the need
+of CORRECTED\_DATA or FLAG\_VERSION) others are expansion for VLBI and
+non-dish arrays (e.g LOFAR).
+
+
 
 Here are some of the major changes from MS V2.0:
 
@@ -1204,8 +1214,7 @@ CORR\_PRODUCT &  Int(2, NUM\_CORR) &  & & Receptor cross-products \\
 \begin{description}
 
 \item[Notes:] This table defines the polarization labeling of the DATA
-array in MAIN, and is directly indexed from the DATA\_DESCRIPTION
-table via POLARIZATION\_ID.
+array in MAIN, and is directly indexed by  POLARIZATION\_ID.
 
 \item[NUM\_CORR] The number of correlation polarization products. For
 example, for (RR) this value would be 1, for (RR, LL) it would be 2,
