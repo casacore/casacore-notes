@@ -122,7 +122,8 @@ first table list.
 \begin{verbatim}
   INSERT INTO table_list SET column=expr, column=expr, ...
 or
-  INSERT INTO table_list [(column_list)] VALUES (expr_list)
+  INSERT INTO table_list [(column_list)]
+         VALUES (expr_list),(expr_list),... [LIMIT n]
 or
   INSERT INTO table_list [(column_list)] SELECT_command
 \end{verbatim}
@@ -152,7 +153,7 @@ clause and aggregate functions in the SELECT command.
   CALC expression [FROM table_list]
 \end{verbatim}
 It can be used to calculate an expression, in which columns
-in a table can be used.
+in a table can be used. It returns a list of values instead of a table.
 
 \item table creation
 \begin{verbatim}
@@ -178,11 +179,19 @@ Optionally specific table and data manager info can be given.
     [DROP KEYWORD keyword_list]
     [ADD ROW nrow]
 \end{verbatim}
-The subcommands of the ALTER TABLE command (shown above) can be used
+The subcommands of the ALTER TABLE command can be used
 to add, rename, and remove columns and keywords and to add rows.
 Multiple such subcommands can be given, separated by white space.
 
 \end{itemize}
+The SELECT, COUNT, CREATE TABLE and ALTER TABLE commands can be used
+as a table in another command making it possible to directly use the
+resulting table. The following example creates a table (with column
+NAME) and puts values into the column.
+\begin{verbatim}
+  INSERT INTO [CREATE TABLE a.tab [NAME string]]
+         VALUES ('name1'), ('name2')
+\end{verbatim}
 All TaQL commands, except SHOW, can be preceded by the clause
 \begin{verbatim}
   WITH table_list
@@ -195,18 +204,20 @@ contains a detailed description of this clause.
 The commands and verbs in the commands are
 case-insensitive, but case is important in string values and
 in names of columns and keywords. Whitespace (blanks and tabs) can
-be used at will.
-\\\htmlref{Section \ref{TAQL:MODIFYING} (Modifying a table)}{TAQL:MODIFYING} 
-explains the UPDATE, INSERT, and DELETE commands in more detail.
-The CREATE TABLE command is
-explained in 
-\htmlref{section \ref{TAQL:CREATETABLE} (Creating a table)}{TAQL:CREATETABLE}.
-The ALTER TABLE command is explained in 
+be used at will. The HELP command can be used to obtain brief
+information about each command and the available functions.
+\\The SELECT command is fully explained in
+\htmlref{Section \ref{TAQL:SELECT} (Making a selection from a table)}{TAQL:SELECT} 
+\\The UPDATE, INSERT and DELETE commands are explained in
+\htmlref{Section \ref{TAQL:MODIFYING} (Modifying a table)}{TAQL:MODIFYING} 
+\\The CREATE TABLE command is explained in 
+\htmlref{section \ref{TAQL:CREATETABLE} (Creating a  table)}{TAQL:CREATETABLE}
+\\The ALTER TABLE command is explained in 
 \htmlref{section \ref{TAQL:ALTERTABLE} (Modifying the table structure)}{TAQL:ALTERTABLE}.
-\\\htmlref{Section \ref{TAQL:COUNTING} (Counting in a table)}{TAQL:COUNTING}
-explains the COUNT command in more detail.
-\\\htmlref{Section \ref{TAQL:CALCULATING} (Calculations on a table)}{TAQL:CALCULATING}
-explains the CALC command in more detail.
+\\The CALC command is explained in
+\htmlref{Section \ref{TAQL:CALCULATING} (Calculations on a table)}{TAQL:CALCULATING}
+\\The COUNT command is explained in 
+\htmlref{Section \ref{TAQL:COUNTING} (Counting in a table)}{TAQL:COUNTING}
 
 \subsection{\label{TAQL:USINGSTYLE}Using a style}
 TaQL can be used from different languages, in particular Python and
@@ -268,7 +279,7 @@ by TaQL as well as the synonym \texttt{py} for \texttt{pytaql}.
 \subsubsection{Tracing}
 It is possible to get tracing output during the execution of a TaQL
 command by using the case-insensitive value \texttt{TRACE} in the
-\texttt{using style} command. It can bes useful for debugging purposes.
+\texttt{using style} command. It can be useful for debugging purposes.
 
 \subsubsection{Timing}
 It is possible to time a TaQL command by using the case-insensitive
@@ -333,7 +344,7 @@ might become clear. It means: use unit \texttt{in} (inch) for column
 \\Note this is unlike SQL where quotes have to be used to use a
 reserved word as a column name.
 
-\section{Selection from a table}
+\section{Making of a selection from a table}
 The SELECT is the main TaQL command. It can be used to select a subset
 of rows and/or columns from a table and to generate new columns based
 on expressions.
@@ -365,7 +376,7 @@ MeasurementSet with a subtable like the ANTENNA table using a
 Joins are explained further in
 \htmlref{section \ref{TAQL:JOIN}}{TAQL:JOIN}.
 
-\subsection{\label{TAQL:SELECT}SELECT command overview}
+\subsection{\label{TAQL:SELECT}Selection from a table}
 The SELECT command consists of various clauses of which most are
 optional. The full command looks as follows where the optional
 parts are shown in square brackets.
@@ -395,8 +406,8 @@ The clauses are executed in a somewhat different order.
 \item LIMIT (or TOP) and OFFSET to ignore entries in the sorted result.
 \item DMINFO to define the data managers to be used if the result is
   stored in a plain table.
-\item GIVING/INTO to store the final result.
-  stored in a plain table. See
+\item GIVING/INTO to write the final result,
+  possibly stored in a plain table. See
  \htmlref{section \ref{TAQL:DMINFO}}{TAQL:DMINFO} how to specify them.
 \end{enumerate}
 All clauses are explained in full detail in the subsequent sections.
@@ -428,7 +439,7 @@ and \htmlref{keyword names}{TAQL:KEYWORDS} for more details.
 
 \subsection{\label{TAQL:WITH}WITH table\_list}
 Sometimes it is useful to create a temporary table to be used
-thereafter in a SELECT command (or another TaQL command) containing
+in a SELECT command (or another TaQL command) containing
 subqueries. It can make the command more clear or it can optimize the
 command by factoring out subqueries that are used multiple times.
 For example:
@@ -445,7 +456,7 @@ For example:
 This command counts the number of flagged visibilities per antenna.
 It looks somewhat complicated and can only be fully understood
 once the entire TaQL note has been read.
-\\The imporant thing is that the WITH command creates a small
+\\The important thing is that the WITH command creates a small
 temporary table containing the number of 
 flagged visibilities per baseline. It is used twice in the subsequent
 SELECT command (by concatenation). First for ANTENNA1, thereafter
@@ -463,6 +474,7 @@ because it processes all flags in the MeasurementSet  only once instead of twice
 
 It is important to note that, unlike the SQL WITH clause, the order is
 'WITH table AS alias'. This is the same order as used in the FROM clause.
+\\Another property is that WITH is nestable, thus can be used in a nested query.
 
 \subsection{\label{TAQL:COLUMNLIST}SELECT column\_list}
 Columns to be selected can be given as
@@ -1106,11 +1118,12 @@ it is possible to specify the data type of a column.
 The following case-insensitive values can be used to specify a type:
 \begin{verbatim}
   B          BOOL       BOOLEAN
-  U1         UCHAR      BYTE
+  U1   UC    UCHAR      BYTE
   I2         SHORT      SMALLINT
   U2   UI2   USHORT     USMALLINT
   I4         INT        INTEGER
   U4   UI4   UINT       UINTEGER
+  I8         LONG       BIGINT
   R4   FLT   FLOAT
   R8   DBL   DOUBLE
   C4   FC    FCOMPLEX   COMPLEX
@@ -1384,7 +1397,7 @@ can be given (in any order):
     \\A large subset of the MVTime formats is supported.
     A DateTime has to be specified as \texttt{date/time}
     or \texttt{date-time}, where the time part (including
-    the space, -, or / delimiter) is optional.
+    the space, -, / or T delimiter) is optional. If not given, it is 0.
     The possible date formats are:
     \\- YYYY/MM/DD, YYYY-MM-DD, or DD-MM-YYYY where DD and MM must
     be 2 digits and YYYY 4 digits.
@@ -1393,6 +1406,7 @@ can be given (in any order):
     DD can be 1 or 2 digits and YY 1 to 4 digits. 2000 is added if YY$<$50 and
     1900 is added if 50$<=$YY$<$100.
     \\If MM$>$12, YYYY will be incremented accordingly.
+    \\The date and time part must be separated by a -, /, T or space.
     \\The general time format in a DateTime constant is:
     \\- hh:mm:ss.s
     \\where the delimiter \textbf{h} or \textbf{H} can be used
@@ -2053,6 +2067,8 @@ These functions can be used on a scalar or an array argument.
     Capitalize a string  by making the first letter of each word
     uppercase and the rest of the word lowercase. A word is delimited
     by a non-alphanumeric  character.
+  \item[] \texttt{string REVERSESTRING(string), string SREVERSE(string)}\\
+    Reverse the characters of a string.
   \item[] \texttt{string LTRIM(string)}\\
     Removes leading whitespace.
   \item[] \texttt{string RTRIM(string)}\\
@@ -2230,6 +2246,7 @@ The optional time/angle formats and modifiers are:
  YMD\_ONLY & YMD without the time (same as YMD$|$NO\_TIME)\\
  DMY & dd-Mon-yyyy/hh:mm:ss.sss\\
  FITS & yyyy-mm-ddThh:mm:ss.sss\\
+ ISO & yyyy-mm-ddThh:mm:ss.sssZ (same as FITS$|$USE\_Z)\\
  BOOST & the same as DMY$|$USE\_SPACE\\
  NO\_H, NO\_D & suppress
 		the output of hours (or degrees): useful for offsets\\
@@ -2244,6 +2261,7 @@ The optional time/angle formats and modifiers are:
  ANGLE & +ddd.mm.ss.ttt\\
  TIME & hh:mm:ss.ttt\\
  USE\_SPACE & use a space between date and time (and day and date)\\
+ USE\_Z & put a Z after the time to denote UTC\\
  DIG2 & get angle/time in range -90:+90 or -12:+12\\
  LOCAL & local time; in FITS mode append time zone
   as +hh:mm\\
@@ -2374,12 +2392,20 @@ They are meant for an array, but can also be used for a scalar.
     Return maximum of all elements.
   \item[] \texttt{dnumeric MEAN(numeric), dnumeric AVG(numeric)}\\
     Return mean of all elements.
-  \item[] \texttt{double VARIANCE(real)}\\
-    Return variance (the sum of
+  \item[] \texttt{double VARIANCE(numeric)}\\
+    Return population variance (the sum of
+    \\\texttt{(a(i) - mean(a))**2/nelements(a)}.
+    \\Note that the variance of a complex value uses the absolute
+    value and is the same as the sum of the
+    variances of the real and imaginary parts. 
+  \item[] \texttt{double SAMPLEVARIANCE(numeric)}\\
+    Return sample variance (the sum of
     \\\texttt{(a(i) - mean(a))**2/(nelements(a) - 1)}.
-  \item[] \texttt{double STDDEV(real)}\\
-    Return standard deviation (the square root of the variance).
-  \item[] \texttt{double AVDEV(real)}\\
+  \item[] \texttt{double STDDEV(numeric)}\\
+    Return population standard deviation (the square root of the variance).
+  \item[] \texttt{double SAMPLESTDDEV(numeric)}\\
+    Return sample standard deviation (the square root of the sample variance).
+  \item[] \texttt{double AVDEV(numeric)}\\
     Return average deviation. (the sum of
     \\\texttt{abs(a[i] - mean(a))/nelements(a)}.
   \item[] \texttt{double RMS(real)}\\
@@ -2435,12 +2461,17 @@ They can only be used for arrays, thus not for scalars.
     Return maximum of elements.
   \item[] \texttt{dnumeric MEANS(numeric), dnumeric AVGS(numeric)}\\
     Return mean of elements.
-  \item[] \texttt{double VARIANCES(real)}\\
-    Return variance (the sum of
+  \item[] \texttt{double VARIANCES(numeric)}\\
+    Return population variance (the sum of
+    \\\texttt{(a(i) - mean(a))**2/nelements(a)}.
+  \item[] \texttt{double SAMPLEVARIANCES(numeric)}\\
+    Return sample variance (the sum of
     \\\texttt{(a(i) - mean(a))**2/(nelements(a) - 1)}.
-  \item[] \texttt{double STDDEVS(real)}\\
-    Return standard deviation (the square root of the variance).
-  \item[] \texttt{double AVDEVS(real)}\\
+  \item[] \texttt{double STDDEVS(numeric)}\\
+    Return population standard deviation (the square root of the variance).
+  \item[] \texttt{double SAMPLESTDDEVS(numeric)}\\
+    Return sample standard deviation (the square root of the sample variance).
+  \item[] \texttt{double AVDEVS(numeric)}\\
     Return average deviation. (the sum of 
     \\\texttt{abs(a(i) - mean(a))/nelements(a)}.
   \item[] \texttt{double RMSS(real)}\\
@@ -2491,12 +2522,17 @@ if it does not fit integrally.
     Return maximum of elements.
   \item[] \texttt{dnumeric BOXEDMEAN(numeric), dnumeric BOXEDAVG(numeric)}\\
     Return mean of elements.
-  \item[] \texttt{double BOXEDVARIANCE(real)}\\
-    Return variance (the sum of
+  \item[] \texttt{double BOXEDVARIANCE(numeric)}\\
+    Return population variance (the sum of
+    \\\texttt{(a(i) - mean(a))**2/nelements(a)}.
+  \item[] \texttt{double BOXEDSAMPLEVARIANCE(numeric)}\\
+    Return sample variance (the sum of
     \\\texttt{(a(i) - mean(a))**2/(nelements(a) - 1)}.
-  \item[] \texttt{double BOXEDSTDDEV(real)}\\
-    Return standard deviation (the square root of the variance).
-  \item[] \texttt{double BOXEDAVDEV(real)}\\
+  \item[] \texttt{double BOXEDSTDDEV(numeric)}\\
+    Return population standard deviation (the square root of the variance).
+  \item[] \texttt{double BOXEDSAMPLESTDDEV(numeric)}\\
+    Return sample standard deviation (the square root of the sample variance).
+  \item[] \texttt{double BOXEDAVDEV(numeric)}\\
     Return average deviation. (the sum of 
     \\\texttt{abs(a(i) - mean(a))/nelements(a)}.
   \item[] \texttt{double BOXEDRMS(real)}\\
@@ -2546,12 +2582,17 @@ window can be applied) are set to 0 (or False).
     Return maximum of elements.
   \item[] \texttt{dnumeric RUNNINGMEAN(numeric), dnumeric RUNNINGAVG(numeric)}\\
     Return mean of elements.
-  \item[] \texttt{double RUNNINGVARIANCE(real)}\\
-    Return variance (the sum of
+  \item[] \texttt{double RUNNINGVARIANCE(numeric)}\\
+    Return population variance (the sum of
+    \\\texttt{(a(i) - mean(a))**2/nelements(a)}.
+  \item[] \texttt{double RUNNINGSAMPLEVARIANCE(numeric)}\\
+    Return sample variance (the sum of
     \\\texttt{(a(i) - mean(a))**2/(nelements(a) - 1)}.
-  \item[] \texttt{double RUNNINGSTDDEV(real)}\\
-    Return standard deviation (the square root of the variance).
-  \item[] \texttt{double RUNNINGAVDEV(real)}\\
+  \item[] \texttt{double RUNNINGSTDDEV(numeric)}\\
+    Return population standard deviation (the square root of the variance).
+  \item[] \texttt{double RUNNINGSAMPLESTDDEV(numeric)}\\
+    Return sample standard deviation (the square root of the sample variance).
+  \item[] \texttt{double RUNNINGAVDEV(numeric)}\\
     Return average deviation. (the sum of 
     \\\texttt{abs(a(i) - mean(a))/nelements(a)}.
   \item[] \texttt{double RUNNINGRMS(real)}\\
@@ -2596,6 +2637,10 @@ below. They can operate on scalars and arrays.
 \end{description}
 
 \subsubsection{Array creation functions}
+The following functions create an array value with or without a mask.
+Function \texttt{marray} creates a new masked array, the other
+functions return a masked array if the input was masked, otherwise an
+unmasked array.
 \begin{description}
   \item[] \texttt{anytypearray ARRAY(anytype,shape)}\\
     This function creates an unmasked array of the given type and shape.
@@ -2615,6 +2660,7 @@ below. They can operate on scalars and arrays.
     This function offers another way to create a masked array. The
     mask must be given in the second argument; its shape must be the
     same as the shape of the data array.
+    If the argument is a scalar, it returns a 1-dim array with one element.
   \item[] \texttt{anytypearray NULLARRAY(anytype)}\\
     This function creates a null array. Its data type is determined by
     the data type of the argument. The argument value itself is not
@@ -2645,6 +2691,13 @@ below. They can operate on scalars and arrays.
     first axes in the output array. Non-given axes follow thereafter
     in their natural order.
     \\A possible mask is transposed as well.
+  \item[] \texttt{anytypearray REVERSEARRAY(anytypearray[,axes])}  (or \texttt{AREVERSE})\\
+    This function reverses the elements of the given axes in an N-dim array.
+    For example, reversing the outer axis of [[0,1],[2,3]] results in
+    [[2,3],[0,1]], while reversing the inner axis results in [[1,0],[3,2]]
+    If no axes are given, all axes are done resulting in a fully
+    reversed array ([3,2],[1,0]] in the example).
+    \\A possible mask is reversed as well.
   \item[] \texttt{anytypearray DIAGONAL(anytypearray[,firstaxis[,diag]])}\\
     This function takes the diagonal of 2-dim subarrays in an N-dim array resulting in
     an array with 1 dimension less. For a 2-dim array, it is simply the
@@ -2656,33 +2709,37 @@ below. They can operate on scalars and arrays.
     \\The \texttt{diag} argument tells which diagonal has to be
     taken. The default 0 means the main diagonal. A negative value means
     below the main diagonal, while positive means above the main diagonal.
+    \\A possible mask is diagonaled as well.
  \item[] \texttt{anytypearray ARRAYDATA(anytype)}\\
     This function returns the array without a mask, thus removes the mask.
-    If the operand is a scalar, it returns a 1-dim array with one element.
+    If the argument is a scalar, it returns a 1-dim array with one element.
+  \item[] \texttt{boolarray ARRAYMASK(anytype), boolarray MASK(anytype)}\\
+    This function returns the mask of an array. If the array has no
+    mask, it returns a boolean array of the same shape with all values
+    set to False.
+    If the argument is a scalar, it returns an 1-dim array with one False
+    element.
  \item[] \texttt{anytypearray NEGATEMASK(anytype)}\\
     This function returns the array with the negated mask. If the array has
     no mask, it returns the array with a mask of all Trues.
-    If the operand is a scalar, it returns a 1-dim array with one element.
+    If the argument is a scalar, it returns a 1-dim array with one element.
  \item[] \texttt{anytypearray REPLACEMASKED(anytype, anytype)}\\
     This function replaces the masked elements in the first argument
     by the corresponding value in the second argument (which can be a
     scalar value).
     If the first argument has no mask, the function is a no-op.
+    If the first argument is a scalar, it returns a 1-dim array with one element.
  \item[] \texttt{anytypearray REPLACEUNMASKED(anytype, anytype)}\\
     This function replaces the unmasked elements in the first argument
     by the corresponding value in the second argument (which can be a
     scalar value).
-    If the first argument has no mask, the function is a no-op.
-  \item[] \texttt{boolarray ARRAYMASK(anytype), boolarray MASK(anytype)}\\
-    This function returns the mask of an array. If the array has no
-    mask, it returns a boolean array of the same shape with all values
-    set to False.
-    If the operand is a scalar, it returns an 1-dim array with one False
-    element.
+    If the first argument has no mask, the replacement value is
+    returned; a scalar replacement is expanded to the array shape.
+    If the first argument is a scalar, it returns a 1-dim array with one element.
   \item[] \texttt{anytypearray FLATTEN(anytype)}\\
     This function flattens an N-dim array to a 1-dim array keeping the
     unmasked elements only.
-    If the operand is a scalar, it returns a 1-dim array with one element.
+    If the argument is a scalar, it returns a 1-dim array with one element.
 \end{description}
 
 \subsubsection{\label{TAQL:AGGRFUNC}Aggregate functions}
@@ -2756,11 +2813,16 @@ implemented in a lazy way.
     Return maximum of all elements.
   \item[] \texttt{dnumeric GMEAN(numeric), dnumeric GAVG(numeric)}\\
     Return mean of all elements.
-  \item[] \texttt{double GVARIANCE(real)}\\
-    Return variance (the sum of
+  \item[] \texttt{double GVARIANCE(numeric)}\\
+    Return population variance (the sum of
+    \\\texttt{(a(i) - mean(a))**2/nelements(a)}.
+  \item[] \texttt{double GSAMPLEVARIANCE(numeric)}\\
+    Return sample variance (the sum of
     \\\texttt{(a(i) - mean(a))**2/(nelements(a) - 1)}.
-  \item[] \texttt{double GSTDDEV(real)}\\
-    Return standard deviation (the square root of the variance).
+  \item[] \texttt{double GSTDDEV(numeric)}\\
+    Return population standard deviation (the square root of the variance).
+  \item[] \texttt{double GSAMPLESTDDEV(numeric)}\\
+    Return sample standard deviation (the square root of the sample variance).
   \item[] \texttt{double GAVDEV(real)}\\
     Return average deviation. (the sum of
     \\\texttt{abs(a[i] - mean(a))/nelements(a)}.
@@ -2802,10 +2864,11 @@ Not only it is a shorthand for \texttt{MEANS(GAGGR(DATA), 0)}, but it
 usually works faster because, unlike GAGGR, it is non-lazy.
 \\The functions available are:
 \begin{verbatim}
-  GANYS   GALLS      GNTRUES     GNFALSES
+  GANYS   GALLS      GNTRUES      GNFALSES
   GMINS   GMAXS
-  GSUMS   GPRODUCTS  GSUMSQRS    GSUMSQUARES
-  GMEANS  GAVGS      GVARIANCES  GSTDDEVS  GRMSS
+  GSUMS   GPRODUCTS  GSUMSQRS     GSUMSQUARES
+  GMEANS  GAVGS      GVARIANCES   GSTDDEVS
+  GRMSS         GSAMPLEVARIANCES  GSAMPLESTDDEVS
 \end{verbatim}
 
 
@@ -2879,6 +2942,8 @@ usually works faster because, unlike GAGGR, it is non-lazy.
     between each position in the first argument and each position in
     the second argument. Only if both arguments contain a single
     position, the result is a scalar.
+  \item[] \texttt{double NORMANGLE(angle)}\\
+    normalizes an angle between -pi and pi radians.
   \item[] \texttt{anytype IIF(cond,arg1,arg2)}\\
     This is a special funtion which operates like the ternary \texttt{?:}
     operator in C++. 
@@ -3259,7 +3324,7 @@ be a string.
 These functions make it possible to convert Casacore measures (e.g.,
 directions) from one reference frame to another.  The prefix
 \texttt{MEAS.} has to be used for all these functions. The MEAS
-library libcasa_meas.so (or .dylib) will be loaded if not loaded yet.
+library libcasa\_meas.so (or .dylib) will be loaded if not loaded yet.
 All conversions supported by Casacore's 
 \htmladdnormallink{Measures}{../html/group__Measures__module.html}
 are possible. It is quite flexible; for instance, source
@@ -4260,8 +4325,8 @@ The slice or mask is applied to both columns.
 The \texttt{INSERT} command adds rows to the table. It can take three forms:
 \begin{verbatim}
   INSERT INTO table_list SET column=expr, column=expr, ...
-  INSERT INTO table_list [(column_list)] VALUES (exprlist),(exprlist),
-         ... [LIMIT n]
+  INSERT INTO table_list [(column_list)]
+         VALUES (exprlist),(exprlist),... [LIMIT n]
   INSERT INTO table_list [(column_list)] SELECT_command
 \end{verbatim}
 The first form adds a single row setting the values in the same way
@@ -4410,9 +4475,9 @@ A value 0 means an array of any dimensionality. A positive value means
 an array with the given dimensionality.
 \item \texttt{SHAPE=[d1,d2,...]} makes it possible to define the exact
 array shape.
+\\If given and if NDIM is positive, they should be consistent.
 \item \texttt{DIRECT=1} tells that a fixed shaped array column has to be
   stored directly. The default is 0.
-\\If given and if NDIM is positive, they should be consistent.
 \item \texttt{UNIT='s'} defines the unit to be used for the column.
 \\It can be any valid unit (simple or compound). It is a string,
 thus must always be enclosed in quotes. 
@@ -4465,7 +4530,7 @@ The following subcommands can be given. They are explained in
 the next subsections.
 \begin{verbatim}
   ADD COLUMN colspecs DMINFO datamanagers
-  COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
+   future: COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
   RENAME COLUMN old TO new, old TO new, ...
   DELETE COLUMN column_list
   SET KEYWORD name=value AS dtype, ...
@@ -4505,6 +4570,8 @@ adds two columns, a 4-byte floating point scalar column and an 8-byte
 floating point 3-dim array column. They will be stored with StandardStMan.
 
 \subsection{COPY COLUMN}
+{\bf NOTE:} This subcommand cannot be used yet and will give a parser
+error when used.
 \begin{verbatim}
   COPY COLUMN spec1, spec2, ...
 \end{verbatim}
@@ -4517,20 +4584,13 @@ The new column gets the same description, but it is possible to define
 a new data type and/or tile shape. If the \texttt{SET} keyword is
 given values are written into the new column. If given, the value of an expression is
 stored in the new column, otherwise the contents of the input column.
-In its simplest form it copies a column
-adds one or more columns to the table.
-The specification of the columns and the optional data managers is the
-same as used in the
-\htmlref{CREATE TABLE}{TAQL:CREATETABLE} command. Thus for each column
-a data type, dimensionality or shape, and unit  can be given.
-The data manager(s) for the new columns can be specified in the DMINFO
-part. If not given, StandardStMan will be used.
-For example:
+In its simplest form it copies a column to another column in the table.
+
+{\bf Note} that copying a column to a new table can be done like:
 \begin{verbatim}
-  ADD COLUMN NCol1 R4, NCol2 R8 [UNIT="m", NDIM=3]
+  select COL from a.tab giving new.tab as plain
 \end{verbatim}
-adds two columns, a 4-byte floating point scalar column and an 8-byte
-floating point 3-dim array column. They will be stored with StandardStMan.
+The 'as plain' part takes care that a true copy is made (thus no references).
 
 \subsection{RENAME COLUMN}
 \begin{verbatim}
@@ -4949,9 +5009,9 @@ a data type.
 
 \subsubsection{\label{TAQL:RUNEXAMPLES}Applying running median to an image}
 The following command shows how a running median can 
-be applied to an Casacore image.
+be applied to a Casacore image.
 \begin{verbatim}
-  update my.imgd set map = map - runningmedian(map,25,25)')
+  update my.imgd set map = map - runningmedian(map,25,25))
 \end{verbatim}
 The running medians are
 subtracted from the data in the copy. It uses a half window size 
@@ -5068,7 +5128,7 @@ if the original data needs to be kept.
 \subsubsection{Obtaining the flux density from visibility data}
 The Miriad program \texttt{uvflux} estimates the source I flux density and its standard deviation at the phase center without having to make an image. 
 A single, not too complicated TaQL command (courtesy Dijkema, Heald)
-provides the same functionality on a MeasurementSet. 
+provides the same functionality on a MeasurementSet using the XX and YY data.
 For LOFAR it is best to use baselines with a length between 5 and 10 km.
 The command shows various aspects of TaQL that are explained below. 
 The numbers at the beginning of the lines point to the text following
@@ -5077,30 +5137,24 @@ the example.
 4.    select gstddev(SUMMED) as STDVALS,
 4.           gmean(SUMMED) as MEANVALS,
 4.           gcount(SUMMED) as NVALS
-3.    from (select gmean(
-1.                  sum(iif(FLAG[,0:4:3], 0, abs(DATA[,0:4:3])))
-1.                   / nfalse(FLAG[,::3])
-3.                 ) as SUMMED
+1.    from (select 
+3.          gmean(abs(DATA[::3][FLAG[::3]])) as SUMMED
             from ~/data/GER.MS
-2.          where mscal.baseline('5km~10km’) && !all(FLAG)
+2.          where mscal.baseline("5km~10km") && !all(FLAG)
 3.          groupby TIME)
 \end{verbatim}
-A subquery is used to get the average flux (I = 0.5*(XX+YY)) per time
-slot.
+A subquery is used to get the average flux (I = 0.5*(XX+YY)) per time slot.
 \begin{enumerate}
-\item For each baseline it gets the mean of the channels. Note that it 
-  uses \texttt{sum/n} to ignore flagged visibilities. The \texttt{iif} function
-  tells to use 0 for them. Also note that XX is the 1st and YY the 4th
-  polarisation, hence [0:4:3] (or [::3]) indexes these polarisations. 
-  Once masked arrays are supported by TaQL, it could be written as:
-  \texttt{  mean(DATA[,::3][FLAG[,::3]])}
+\item This is the subquery. The outer query operates on the result of it.
 \item It only uses the baselines with lengths between 5 and 10 km
   where not all visibilities are flagged. Note that a \texttt{mscal}
   user defined function is used for the baseline selection as described
   in \htmlref{section \ref{TAQL:MSFUNC}}{TAQL:MSFUNC}.
-\item Thereafter the average flux per time slot is determined in the
-  subquery using the \texttt{gmean} aggregation and GROUPBY functionality. The
+\item Per time slot the average flux of all unmasked XX and YY data is determined
+  using the \texttt{gmean} aggregation and GROUPBY functionality. The
   result is an intermediate table with one column called SUMMED and a row per time slot. 
+  Note that XX is the 1st and YY the 4th
+  polarisation, hence [0:4:3] (or [::3]) indexes these polarisations. 
 \item Finally, the outer query uses aggregate functions to calculate
   the overall mean, standard deviation, and number of time slots from
   the result of the subquery. The
@@ -5112,53 +5166,74 @@ The example below counts per antenna the number of fully
 flagged baselines, excluding the autocorrelations. It uses grouping
 and aggregate functions twice; first per baseline, thereafter per
 antenna.
-It also uses the \htmlref{concatenation}{TAQL:CONCTAB} and
-\htmlref{backreferencing}{TAQL:BACKREF} features. It also shows the
-results when using the {\tt time} keyword, which shows that the
-processing time is dominated by the first query.
+It uses the \htmlref{concatenation}{TAQL:CONCTAB} and the
+\htmlref{WITH}{TAQL:WITH} features. The timings of the
+various query parts are shown
+by using the {\tt time} keyword. It shows that the
+processing time is dominated by the first query on the
+MeasurementSet used (which has a size of 1.3 GByte).
 \begin{verbatim}
-time select gsum(t1.cnt), t1.ANTENNA,
-       (select NAME from ~/data/3C343.MS::ANTENNA)[t1.ANTENNA] as NAME
-  from (select gcount() as cnt, ANTENNA1 as ANTENNA, ANTENNA2
-          from ~/data/3C343.MS where all(FLAG) and ANTENNA1!=ANTENNA2
-          groupby ANTENNA1,ANTENNA2) t0,
-  [t0,
-   (select cnt, ANTENNA2 as ANTENNA, 0 as ANTENNA2 from t0),
-   (select 0 as cnt, rowid() as ANTENNA, 0 as ANTENNA2
-           from ~/data/3C343.MS::ANTENNA)] t1
-  groupby t1.ANTENNA orderby t1.ANTENNA
+time with (select gcount() as cnt, ANTENNA1 as ANTENNA, ANTENNA2
+           from ~/data/3C343.MS
+           where all(FLAG) and ANTENNA1!=ANTENNA2
+           groupby ANTENNA1,ANTENNA2) t0
+     select gsum(cnt) as NR, ANTENNA,
+            (select NAME from ~/data/3C343.MS::ANTENNA)[ANTENNA] as NAME
+     from [t0,
+           (select cnt, ANTENNA2 as ANTENNA, 0 as ANTENNA2 from t0),
+           (select 0 as cnt, rowid() as ANTENNA, 0 as ANTENNA2
+                   from ~/data/3C343.MS::ANTENNA)]
+     groupby ANTENNA orderby ANTENNA
 
-  From query          0.8 real        0.58 user        0.08 system
+  From query         0.54 real         0.4 user        0.11 system
   From query            0 real           0 user           0 system
   From query            0 real           0 user           0 system
   Subquery              0 real           0 user           0 system
   Groupby               0 real           0 user           0 system
   Orderby               0 real           0 user           0 system
   Projection            0 real           0 user           0 system
- Total time          0.83 real         0.6 user        0.08 system
+ Total time          0.59 real         0.4 user        0.12 system
+
+3 selected columns:  NR ANTENNA NAME
+2896	0	RT0
+2889	1	RT1
+2893	2	RT2
+2879	3	RT3
+2882	4	RT4
+2884	5	RT5
+2882	6	RT6
+2879	7	RT7
+2882	8	RT8
+2895	9	RT9
+2896	10	RTA
+2888	11	RTB
+2898	12	RTC
+2903	13	RTD
+21555	14	RTE
+21555	15	RTF
 \end{verbatim}
+There is a lot to say about this query, which is quite complex. It
+shows that the WITH clause and table concatenation are nice features.
 \begin{enumerate}
 \item
-The first inner select counts the number
-of fully flagged baselines per baseline and stores the result with the
-antennas making up a baseline in a
-temporary table with shorthand {\tt t0}.. In this way the expensive
-counting part needs to be executed only once.
+The WITH part creates a temporary table with shorthand {\tt t0}
+containing the number of fully flagged rows per baseline.
+The table also contains the antenna numbers making up a baseline.
+In this way the expensive counting part needs to be executed only once.
 \item
-This table has to be
-summed for both antennas of the baselines, which is done in the second part
-creating a concatenated table with shorthand {\tt t1}.
-It backreferences the first table {\tt t0} twice. First to use it
-directly to count for ANTENNA1, thereafter to count for ANTENNA2 by doing a
+The result has to be per antenna, so the temporary table has to be
+summed for both antennas of the baselines. It is done by using the
+table twice by means of concatenation. First to use it
+directly to count for ANTENNA, thereafter to count for ANTENNA2 using a
 select to make the ANTENNA2 the ANTENNA column. 
 \item
-The table does not contain the antennas having no fully flagged
-baselines. Therefore the third part of the concatenation
-copies the ANTENNA table to insert zero counts for all antennas.
+The temporary table does not contain the antennas having no fully flagged
+rows. Therefore the third part of the concatenation
+uses the ANTENNA table to insert zero counts for all antennas.
 \item
-Finally the outer select (in the first line) sums the values in the
-concatenated table per antenna. It also retrieves the name of the
-antenna by indexing  in the selection of all antenna names.
+Finally the final select (in the fifth line) sums the values in the
+concatenated table per antenna. It also retrieves the name of an
+antenna by indexing in the selection of all antenna names.
 \end{enumerate}
 
 
@@ -5271,10 +5346,10 @@ form the programmer interface.
   The program \texttt{taql} makes it possible to execute TaQL commands
   from the shell. Commands can be given in different ways:
   \begin {itemize}
-  \item The TaQL command can be given directly as command line
+  \item A TaQL command can be given directly as command line
     arguments to the {\em taql}
     program. The arguments will be combined to a single command
-    (separated by a space). Note
+    (separated by spaces). Note
     that using multiple arguments instead of a single (quoted)
     argument makes it easier to use tab-completion for the
     table name.
@@ -5282,9 +5357,10 @@ form the programmer interface.
   \item Using the -f option, the name of a file containing one or more TaQL
     commands can be given. The commands can be split over multiple
     lines, where a \# can be used for comments. A semicolon has to be
-    used to separate commands. The special commands listed below
-    for the interactive case, can also be given.
-  \item The program is run interactively if no command nor -f is given.
+    used to separate commands.
+    This can be nested arbitrarily deep, thus a command file can
+    execute another command file using a -f option.
+  \item The program is run interactively if neither command nor -f is given.
     It will run until the user stops via the  command \texttt{exit},
     \texttt{quit}, or \texttt{q} or by giving Ctrl/D. Command editing
     and recall is possible, unless taql was built without readline
@@ -5293,41 +5369,134 @@ form the programmer interface.
     over multiple lines and no semicolon is needed to separate commands.
     Interactive commands are kept in \$HOME/.taql\_history making
     command recall possible across multiple taql sessions.
-    \\A few types of commands can be given:
-    \begin{itemize}
-    \item \texttt{h}, \texttt{-h}, or \texttt{--help} shows brief help information.
-    \item A full TaQL command. Note that \texttt{help} or
-      \texttt{show} can be used to show info about TaQL.
-    \item A full TaQL command preceded by \texttt{varname=}, where
-      \texttt{varname} is the name under which the resulting table is
-      kept in this session. Thus the result is not a persistent table
-      (unless GIVING was given), but it is kept temporarily.
-      The \texttt{varname} can be used in subsequent commands like
-      \texttt{SELECT FROM \$varname} or \texttt{SHOW TABLE \$varname}.
-    \item \texttt{?} shows the varnames.
-    \item \texttt{varname=} without a further command removes the
-      temporary result.
-    \item \texttt{varname} shows the number of rows in the temporary
-      result. It can be followed by one or more question marks to show
-      the column names and details about them.
-      \\Note that if an unknown varname is given, it is treated as a
-      TaQL command resulting in a parse error.
-    \item Comments can be given after the hash (\#) character. Empty
-      lines are ignored.
-    \end{itemize}
   \end{itemize}
-  If columns are selected in the TaQL command, their values are
-  printed. By default they are separated by tabs, but the -d option can
-  be used to define another delimiter.
-  Epoch, position, and direction measures are printed in a
-  formatted way.  Note that TaQL's \texttt{str} function offers nice
-  formatting for any value. Also the result of
-  CALC commands is printed. Otherwise only the number of selected (or
-  updated or deleted) rows is printed.
-  Options like {\em -nops} can be given to suppress printing the results.
+  The commands can be given in a fully recursive way. For example, a command
+  in an input file can invoke another TaQL command file using -f.
+  \\The following commands can be given:
+  \begin{itemize}
+  \item \texttt{h}, \texttt{-h}, or \texttt{--help} shows brief help
+    information about the {\em taql} program itself. 
+  \item \texttt{v} shows the {\em taql} version.
+  \item \texttt{o} shows the current options settings (see below) on stderr.
+  \item A full TaQL command. Note that the command \texttt{help} or
+    \texttt{show} shows help info about the TaQL syntax
+    and functionality.
+  \item A full TaQL command preceded by \texttt{varname=}, where
+    \texttt{varname} is the name under which the resulting table is
+    kept in this session. Thus the result is not a persistent table
+    (unless GIVING was given), but it is kept temporarily.
+    The \texttt{varname} can be used in subsequent commands such as
+    \texttt{SELECT FROM \$varname} or \texttt{SHOW TABLE \$varname}.
+    \\If a command is not recognized, it is assumed an expression is
+    given with an implicit SELECT. In this way it is easily possible to calculate expressions. Note
+    that multiple expressions (separated by a comma) can be given,
+    because it is the very same as selecting multiple column expressions in TaQL.
+  \item \texttt{?} shows the varnames.
+  \item \texttt{varname=} without a further command removes the
+    temporary result.
+  \item \texttt{varname} shows the number of rows in the temporary
+    result. It can be followed by one or more question marks to show
+    the column names and details about them.
+    \\Note that if an unknown varname is given, it is treated as a
+    TaQL command resulting in a parse error.
+  \item Comments can be given after the hash (\#) character. Empty
+    lines are ignored.
+  \end{itemize}
+  A command can be preceded by zero or more options to specify if,
+  how and where the results of a TaQL selection are printed. The
+  options can be given at various levels:
+  \begin{itemize}
+  \item The initial default options can be overridden by the options
+    given when starting the {\em taql} program. These are global 
+    settings and used for all subsequent TaQL commands.
+  \item A TaQL command can be preceded by options to override the
+    global settings for that TaQL command only. However, when only
+    giving options on a command line, the are persistent, thus get
+    new global settings.
+  \item The options usage in a TaQL command file behaves in a similar
+    way. The initial option values are the settings of the level above
+    which can be overridden temporarily or permanently by options on
+    the command lines in the file. A nested command file inherits the
+    settings from the level above. Note that persistent options
+    settings do not go upwards. 
+  \end{itemize}
 
-  By default the program {\em taql} uses the Python style. The {\em -s}
-  option can be used to specify a style.
+  The output of a TaQL command can be printed. Most commands (such as
+  UPDATE) will only show  the expanded command and the number of rows
+  affected. However, the CALC and SELECT command can also show the
+  the results of the selected expressions.
+  \\The result of a CALC command is always printed.
+  \\Selected columns in a SELECT command are optionally printed. If an
+  implicit SELECT is done (thus if SELECT was added to the command) or
+  if -ps is in effect, all results are printed. Otherwise if -pa is in effect, the
+  first N rows are printed where N is defined by the -m option.
+
+  The following print options are available.
+  \begin{itemize}
+  \item \texttt{-ps} or \texttt{--printselect} defines if all rows
+    of selected columns will be printed. Note that all rows of an
+    implicit SELECT are always printed.
+  \item \texttt{-pa} or \texttt{--printauto} defines if auto printing
+    is in effect meaning that only the first N rows of selected
+    columns are printed. N is defined by the -m option.
+  \item \texttt{-pm} or \texttt{--printmeasure} defines if values with
+    a reference frame (such as times, positions, directions, ...) are
+    pretty printed. Note that TaQL's \texttt{str} function offers very
+    flexible pretty printing.
+  \item \texttt{-ph} or \texttt{--printheader} defines if a header
+    will be printed consisting of the names of the selected columns.
+  \item \texttt{-pc} or \texttt{--printcommand} defines if the
+    expanded TaQL command (as executed) will be printed.
+  \item \texttt{-pr} or \texttt{--printnrows} defines if the number of
+    rows handled by the command will be printed.
+  \item \texttt{-p} or \texttt{--printall} defines all 5 print options
+    (except -pa) above.
+  \item \texttt{-m} defines the maximum number of rows to print if
+    auto printing is used. It defaults to 50.
+  \item \texttt{-d separator} defines the separator between printed
+    columns. The default is a tab.
+  \item \texttt{-o filename} defines the file in which to write the
+    output. {\em stdout} and {\em stderr} are special
+    names. Default is stdout.
+  \end{itemize}
+  All -p options can be preceded by \texttt{no} to negate settings.
+  \\The initial default settings are '-nops -pa -ph -pm -nopc -pr -m 50'.
+  \\Note that an implicit SELECT always uses -noph -nopc -nopr
+  regardless of their settings.
+  \\A few other options are available.
+  \begin{itemize}
+  \item \texttt{-s style} or \texttt{--style style} defines the
+    default TaQL style. It defaults to 'python'.
+  \item \texttt{-h} or \texttt{--help} shows the help about the {\em
+      taql} program (same as command \texttt{h}).
+  \item \texttt{-v} or \texttt{--version} shows the {\em taql}
+    version (same as command \texttt{v}). 
+    \item \texttt{-f filename} executes the TaQL commands in the given file.
+  \end{itemize}
+  Note that '--' can be used to indicate the end of the
+  options. This can be useful if the following TaQL command starts with
+  a minus sign.
+
+  For example:
+\begin{verbatim}
+    taql 'cos(pi())'
+        -1
+    taql -d xx 1,2
+        1xx2
+    taql -f t.cmd      # execute commands in file t.cmd
+    taql               # start interactive session
+     o                 # show options
+     help              # help about TaQL commands
+     h                 # help about taql program
+     -f t.cmd          # execute commands in file t.cmd
+     cos(pi())
+     unique TIME from an.ms              # implicit SELECT with printing
+     -ps select unique TIME from an.ms   # explicit SELECT with printing
+     select unique TIME from an.ms       # SELECT with auto printing
+     -ps               # persistently set to print SELECT results
+     select unique TIME from an.ms       # explicit SELECT with printing
+     q                 # stop interactive session
+\end{verbatim}
 
 \subsection{C++ interface}
 The C++ programmer can use TaQL commands and expressions at various levels,
@@ -5336,14 +5505,22 @@ The C++ programmer can use TaQL commands and expressions at various levels,
     \htmladdnormallink{TableParse.h}
     {../html/classcasa_1_1TableParse.html}
     can be used to execute a TaQL command. The result is a
+    \htmladdnormallink{TaQLResult}{../html/classcasa_1_1TaQLResult.html}
+    object. Its function \texttt{isTable()} tells if the result
+    contains a 
     \htmladdnormallink{Table}{../html/classcasa_1_1Table.html}
-    object. E.g.,
+    object or an
+    \htmladdnormallink{TableExprNode}{../html/classcasa_1_1TableExprNode.html}
+    object. The latter results from a CALC command.
+ . E.g.,
 \begin{verbatim}
-  Table seltab1 = tableCommand
+  TaQLResult result1 = tableCommand
          ("select from mytable where column1>0");
+  AlwaysAssertExit (result1.isTable());
+  Table seltab1 = result1.table();
   Table seltab2 = tableCommand
          ("select column1,column2 from $1 where column2>5"
-          " orderby time giving result.tab", seltab1);
+          " orderby time giving result.tab", seltab1).table();
 \end{verbatim}
     These examples do the same as the Python ones shown above.
     \\Note that in the second function call the table name

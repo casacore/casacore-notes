@@ -1927,7 +1927,7 @@ OBSERVATION\_ID  & Int   &          &        & Points to OBSERVATION table\\
 MESSAGE  & String &    &      & Log message\\
 PRIORITY & String & & & Message priority\\
 ORIGIN   & String & & & Code origin\\
-OBJECT\_ID & String & & & Originating ObjectID \\
+OBJECT\_ID & Int & & & Originating ObjectID \\
 APPLICATION & String & & & Application name\\
 CLI\_COMMAND & String(*) & & & CLI command sequence \\
 APP\_PARAMS   & String(*) & & & Application paramters\\
@@ -1949,7 +1949,7 @@ same TIME Measure reference as used in MAIN.
 
 \item[ORIGIN] Source code origin from which message originated.
 
-\item[OBJECT\_ID] Originating ObjectID, if available, else blank.
+\item[OBJECT\_ID] Originating ObjectID, if available, else 0.
 
 \item[APPLICATION] Application name.
 
