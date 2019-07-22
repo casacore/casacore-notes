@@ -52,10 +52,10 @@
 
 \begin{document}
 
-\title{MeasurementSet definition version 3.0\\WORK IN PROGRESS}
+\title{MeasurementSet definition version 3.0$\beta$}
 
 \author{ MS v3.0 working group:\\
-  Dijkema T., Golap K., Hiriart R., Nakazato T., Pokorny M., Pouzols F., Raba,R., van Diepen G.
+  Dijkema T.J., Golap K., Hiriart R., Nakazato T., Pokorny M., Pouzols F., Raba,R., van Diepen G.
 }
 \date{July, 2019}
 \maketitle
@@ -73,14 +73,14 @@
 
 The MeasurementSet (MS) defines a format in which interferometer
 visibilities and single-dish data are stored. It is implemented in
-software packages using casa/casacore code. The version 2.0 (Note 229;
-Kemball and Wieringa 2000) of the MS has been in use since 2000 in
+software packages using casa/casacore code. Version 2.0 (Note 229;
+Kemball and Wieringa 2000) of the MeasurementSet has been in use since 2000 in
 different packages and at different telescopes. This revision is to
 correct or help in common usages by adding missing data that was felt
 needed for data reduction. In V2.0 we feel that sometimes schema
 structure was defined to help with efficiency issues that was forseen
 (e.g definition of a FLOAT\_DATA column for single dish).  In this
-document we try to not do that. We realize that a given data structure
+revision we try to not do that. We realize that a given data structure
 can be implemented in different ways in software to achieve maximum
 efficiency or speed. This is the reason why we have tried to keep the
 information redundancy to a minimum and focussed on
@@ -96,7 +96,7 @@ non-dish arrays (e.g LOFAR).
 
 
 
-Here are some of the major changes from MS V2.0:
+Here are some of the major changes from MS V2.0 to MS V3.0:
 
 
 
@@ -110,14 +110,14 @@ Here are some of the major changes from MS V2.0:
   an MS without the need to reindex the data in the main table or any
   subtables.}
 
-\item{{\bf Single-dish processing:} FLOAT\_DATA is going to be
+\item{{\bf Single-dish processing:} FLOAT\_DATA is 
   replaced by DATA unifying it with interferometer. It is left to the
   software column implementation to store floats efficiently rather
   than have multiple columns defined for different data types. We
-  donot need to define in the schematic how the data is to be stored
+  do not need to define in the schematic how the data is to be stored
   and accessed for efficiency purposes. The implementation can decide
   to compress data or keep as float or integers but on request a given
-  DATA column cell, for e.g, single precision Complex numbers are
+  DATA column cell, for e.g, single precision complex numbers are
   served.}
 
 
@@ -128,18 +128,18 @@ Here are some of the major changes from MS V2.0:
 
 \item{{\bf Data,weight, flag versioning} Non standard columns (e.g
     CORRECTED\_DATA) or kludges have been used by casa (for e.g) to
-    deal with having version of data, flag or weight. These 3 columns
-    are having the same shapes in every row of an msv3.0.  Whenever
-    changes are made, example flagging or calibration, and a new version
+    deal with having version of data, flag or weight. These three columns
+    have the same shapes in every row of an MS V3.0.  Whenever
+    changes are made, e.g. in flagging or calibration, and a new version
     is needed a new triplet of columns will be made. It is left to
     software implementation to do the smart thing (not making
     unnecessary copies). E.g if flagging only is done and need to be
     saved in a new version of FLAG column, the new version of DATA an
-    WEIGHT are going to be just virtual columns pointing back to the
+    WEIGHT are just virtual columns pointing back to the
     previous version.}
 
 \item{{\bf Data Description}The concept of data description is being
-    deprecated it saved a column of integers but users found it
+    deprecated. It saved a column of integers but users found it
     confusing. SPECTRAL\_WINDOW\_ID and POLARIZATION\_ID are explicit
     columns in the main table.}
 
@@ -169,7 +169,7 @@ Some features and reasons for some changes made and not made:
   at different telescopes and software packages has found lacking.}
 
 \item{{\bf Compatibility:} Some of the changes proposed here are not
-  backwards compatible but converters can written to move data between
+  backwards compatible but converters can be written to move data between
   version 2.0 and 3.0. As there is more information in version 3.0
   going to version 2.0 may be lossy.}
 
