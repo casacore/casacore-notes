@@ -2207,15 +2207,21 @@ in a variety of ways.
 The value can be of any type (except Regex) and can be a scalar or
 array. The optional format must be a scalar string or numeric value.
 If no format is given, an appropriate default format will be used.
+\\By default a value is
+right adjusted, but can be left adjusted by giving a negative width.
+\\A bool value is prettyfied as 'True' or 'False'. Using format '\%d'
+it is prettyfied as 1 or 0.
 \begin{itemize}
 \item A numeric format value defines the width and/or precision. For example:
 \begin{verbatim}
   8        defines width 8 and default precision
+  -8       the same, but left adjusted
   20.12    defines width 20 and precision 12
   .8       defines precision 8 and default width
 \end{verbatim}
-In this way precision represents all digits, not only the ones behind
-the decimal point. A default width or precision is used if not given.
+  Note that precision represents all digits, not only the ones behind
+  the decimal point. Thus 10.3 is not the same as '\%10.3d' as the
+  latter defines 3 decimals.
 \item A string format value can contain a \texttt{printf}-style format
   string, which must include the \%-sign.
   Note that the real and imaginary part of a complex value are
@@ -2226,8 +2232,10 @@ the decimal point. A default width or precision is used if not given.
   format specifiers.
   For example:
 \begin{verbatim}
-  %10d     decimal with width 10
+  %10d     decimal with width 10 (right adjusted)
+  %-10d    decimal with width 10 (left adjusted)
   %010d    decimal with width 10 and filled with zeroes
+  %10.3f   defines width 10 and 3 decimals
   %f+%fi   to format a complex value as a+bi
 \end{verbatim}
   Apart from a \texttt{printf}-style format string, it is also possible
@@ -2235,18 +2243,22 @@ the decimal point. A default width or precision is used if not given.
   automatically converted to radians if containing units).
   \\Such a format string contains one or more format values as defined in
   class \htmladdnormallink{MVTime}{../html/classcasa_1_1MVTime.html}.
-  A vertical bar (with optional whitespace) must be used as separator.
-  A string part can be a numeric value defining the precision of the
-  time/angle. Default precision is 6 (thus hh:mm:ss).
-The optional time/angle formats and modifiers are:
+  A vertical bar or a comma (with optional whitespace) must be used as
+  separator; they cannot be mixed.
+  A  numeric value can be part of the string to define the precision of the
+  time/angle. The default precision is 6 (thus hh:mm:ss).
+  \\The optional time/angle formats and modifiers are:
 
 \begin{tabular}{ll}
   Format & Description \\ \hline
+ ANGLE & +ddd.mm.ss.ttt\\
+ TIME & hh:mm:ss.ttt\\
+ ALPHA & use d,m instead of . in angles and h,m instead of : in times\\
  YMD & yyyy/mm/dd/hh:mm:ss.sss\\
  YMD\_ONLY & YMD without the time (same as YMD$|$NO\_TIME)\\
  DMY & dd-Mon-yyyy/hh:mm:ss.sss\\
  FITS & yyyy-mm-ddThh:mm:ss.sss\\
- ISO & yyyy-mm-ddThh:mm:ss.sssZ (same as FITS$|$USE\_Z)\\
+ ISO & yyyy-mm-dd hh:mm:ss.sssZ (same as FITS$|$USE\_Z$|$USE\_SPACE$|$CLEAN)\\
  BOOST & the same as DMY$|$USE\_SPACE\\
  NO\_H, NO\_D & suppress
 		the output of hours (or degrees): useful for offsets\\
@@ -2258,14 +2270,14 @@ The optional time/angle formats and modifiers are:
             & are printed (e.g., when giving NO\_H or 4 decimals)\\
  DAY & precede the output with Day- (e.g., Wed-)\\
  NO\_TIME & suppress printing of time\\
- ANGLE & +ddd.mm.ss.ttt\\
- TIME & hh:mm:ss.ttt\\
  USE\_SPACE & use a space between date and time (and day and date)\\
  USE\_Z & put a Z after the time to denote UTC\\
  DIG2 & get angle/time in range -90:+90 or -12:+12\\
  LOCAL & local time; in FITS mode append time zone
   as +hh:mm\\
 \end{tabular}
+Note that giving a width for a date/time or angle defines the number
+of digits in the time or angle part.
 
   For example:
 \begin{verbatim}
@@ -2347,7 +2359,7 @@ Standard mathematical can be used on scalar and array arguments (and a mix of th
   \item[] \texttt{double IMAG(numeric)}\\
     Imaginary part of a complex number. Returns 0 if argument is real.
   \item[] \texttt{real NORM(numeric)}
-  \item[] \texttt{real ABS(numeric),  real AMPLITUDE(numeric)}
+  \item[] \texttt{real ABS(numeric),  real AMPLITUDE(numeric), real AMPL(numeric)}
   \item[] \texttt{double ARG(numeric),  double PHASE(numeric)}
   \item[] \texttt{numeric MIN(numeric, numeric)}
   \item[] \texttt{numeric MAX(numeric, numeric)}

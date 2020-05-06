@@ -3,19 +3,19 @@
 "http://www.w3.org/Math/DTD/mathml2/xhtml-math11-f.dtd" > 
 <html xmlns="http://www.w3.org/1999/xhtml"  
 > 
-<head><title>NOTE 256 –AIPS++ Table Locking</title> 
+<head><title>NOTE 256 –Casacore Table Locking</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="generator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.cse.ohio-state.edu/~gurari/TeX4ht/)" /> 
+<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="256.tex" /> 
-<meta name="date" content="2015-08-05 16:00:00" /> 
  
 <style type="text/css"> 
 <!--  
  
 /* start css.sty */  
 .cmex-10{font-size:90%;}  
+.cmr-10{font-size:90%;}  
 .cmr-10x-x-109{}  
 .cmbsy-10x-x-109{font-weight: bold;}  
 .cmbsy-10x-x-109{font-weight: bold;}  
@@ -36,7 +36,9 @@
 .cmsy-6{font-size:54%;}  
 .cmr-17{font-size:154%;}  
 .cmr-12{font-size:109%;}  
+.cmbx-10{font-size:90%; font-weight: bold;}  
 .cmtt-10x-x-109{font-family: monospace;}  
+.cmti-10x-x-109{ font-style: italic;}  
 p.noindent { text-indent: 0em }  
 td p.noindent { text-indent: 0em; margin-top:0em; }  
 p.nopar { text-indent: 0em; }  
@@ -123,8 +125,8 @@ math .textsf { font-family: sans-serif; }
 math .textbf { font-weight: bold; }  
 mo.MathClass-op + mi{margin-left:0.3em}  
 mi + mo.MathClass-op{margin-left:0.3em}  
-math mstyle[mathvariant="bold"] mi { font-weight: bold; font-style: normal; }  
-math mstyle[mathvariant="normal"] mi { font-weight: normal; font-style: normal; }  
+math mi[mathvariant="bold"] { font-weight: bold; font-style: normal; }  
+math mi[mathvariant="normal"] { font-weight: normal; font-style: normal; }  
 .partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}  
 .index-item, .index-subitem, .index-subsubitem {display:block}  
 div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}  
@@ -159,20 +161,61 @@ div.abstract {width:100%;}
 
                                                                      
 
-<h2 class="titleHead">NOTE 256 –AIPS++ Table Locking</h2>
+<h2 class="titleHead">NOTE 256 –Casacore Table Locking</h2>
 <div class="author" ><span 
 class="cmr-12">Ger van Diepen, ASTRON Dwingeloo</span></div><br />
 <div class="date" ><span 
-class="cmr-12">2003 February 10</span></div>
-   </div><a 
+class="cmr-12">2020 March 3</span></div>
+   </div><div 
+class="abstract" 
+>
+<div class="center" 
+>
+<!--l. 17--><p class="noindent" >
+</p><!--l. 17--><p class="noindent" ><span 
+class="cmbx-10">Abstract</span></p></div>
+     <!--l. 18--><p class="indent" >    <span 
+class="cmr-10">The Casacore Table Data System (CTDS) supports single writer</span>
+     <span 
+class="cmr-10">and multiple readers by means of table locking (which uses the OS ﬁle</span>
+     <span 
+class="cmr-10">locking). However, if the OS has no or limited support of ﬁle locking,</span>
+     <span 
+class="cmr-10">it is possible to disable table locking.</span>
+</p>
+</div>
+   <div class="tabular"> <table id="TBL-2" class="tabular" 
+cellspacing="0" cellpadding="0"  
+><colgroup id="TBL-2-1g"><col 
+id="TBL-2-1" /><col 
+id="TBL-2-2" /><col 
+id="TBL-2-3" /></colgroup><tr  
+ style="vertical-align:baseline;" id="TBL-2-1-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-1-1"  
+class="td11">1.0</td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-1-2"  
+class="td11">2003 Feb 10</td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-1-3"  
+class="td11">Original version             </td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-2-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-1"  
+class="td11">2.0 </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-2"  
+class="td11">2020 Mar 3 </td><td  style="text-align:left; white-space:nowrap;" id="TBL-2-2-3"  
+class="td11">Describe nolocking modes</td>
+</tr><tr  
+ style="vertical-align:baseline;" id="TBL-2-3-"><td  style="text-align:left; white-space:nowrap;" id="TBL-2-3-1"  
+class="td11">   </td> </tr></table>
+</div>
+<!--l. 33--><p class="indent" >   <a 
 href="256.pdf" >A pdf version of this note is available.</a>
+</p>
    <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
  id="x1-10001"></a>Introduction</h3>
 <!--l. 2--><p class="noindent" >The <a 
-href="../255.html" >AIPS++ Table System</a> is used to store all data in the AIPS++
-environment. The Table System supports concurrent access by means of table
-locking. The user can control how the table locking is used which may have
+href="../255.html" >Casacore Table Data System</a> (CTDS) is used to store all data in the
+Casacore environment. CTDS supports concurrent access by means of table
+locking. The user can control if and how the table locking is used which may have
 impact on the performance of the Table System. This note describes the
+                                                                     
+
+                                                                     
 various ways in which a table can be locked and the best ways to use
 them.
 </p><!--l. 10--><p class="noindent" >
@@ -187,25 +230,41 @@ in most systems there are two types of locks: </p>
      read lock on the same table (hence shared lock).
      </li>
      <li class="itemize">A write lock (also called exclusive lock) is used to grant a process
-                                                                     
-
-                                                                     
      write-access to a table. At a given time only one process can have a
      write lock on a table (hence exclusive). If a write lock is acquired, no
      read lock on that table can exist at the same time. Thus at a single
      time there can be one writer or multiple readers.</li></ul>
-<!--l. 23--><p class="noindent" >The locking assures that the internal buﬀers of the Table System are synchronized
-and kept consistent.
-</p><!--l. 26--><p class="indent" >   Note, however, that the Table System also supports the so-called
-NoReadLocking mode, which makes it possible to read a table without a lock.
-That implies that no synchronization is done before the read, unless it is
-explicitly done. It is described in a <a 
-href="#x1-110006">later section</a>.
-</p><!--l. 32--><p class="indent" >   The Table System only supports locks on the entire table; there is no
-ﬁne-grained page or row locking. Thus if a process is updating a table, no other
-process can read or update any part of that table.
-</p><!--l. 37--><p class="indent" >   Basically there are two functions in the Table System to handle locking.
-</p>
+<!--l. 23--><p class="noindent" >The locking assures that the internal buﬀers of CTDS are synchronized and kept
+consistent.
+</p><!--l. 26--><p class="indent" >   Note, however, that CTDS also supports modes to skip table locking which
+can be useful for systems with no or limited support of ﬁle locking (such as
+Lustre). </p>
+     <ul class="itemize1">
+     <li class="itemize">CTDS  can  be  built  with  -DAIPS_TABLE_NOLOCKING  which
+     disables table locking entirely.
+     </li>
+     <li class="itemize">Similarly,  setting  the  <span 
+class="cmti-10x-x-109">aipsrc  </span>variable  <span 
+class="cmtt-10x-x-109">table.nolocking </span>to  True
+     disables table locking.
+     </li>
+     <li class="itemize">Table lock option NoLocking can be used to disable locking for the
+     table opened with that option.
+     </li>
+     <li class="itemize">Table lock option NoReadLocking can be used to read a table without
+                                                                     
+
+                                                                     
+     locking. That implies that no synchronization is done before the read,
+     unless it is explicitly done. It is described in a <a 
+href="#x1-110006">later section</a>.</li></ul>
+<!--l. 42--><p class="indent" >   Of course, disabling locking should be used with great care. One has to be
+sure that no race conditions can occur.
+</p><!--l. 46--><p class="indent" >   CTDS only supports locks on the entire table; there is no ﬁne-grained page or
+row locking. Thus if a process is updating a table, no other process can read or
+update any part of that table. Of course, diﬀerent tables can be accessed
+simultaneously.
+</p><!--l. 52--><p class="indent" >   Basically there are two functions in CTDS to handle locking. </p>
      <ul class="itemize1">
      <li class="itemize"><span 
 class="cmtt-10x-x-109">Table::lock </span>can be used to acquire a read or write lock. Note that
@@ -215,60 +274,58 @@ class="cmtt-10x-x-109">Table::lock </span>can be used to acquire a read or write
      <li class="itemize"><span 
 class="cmtt-10x-x-109">Table::unlock </span>can be used to release a lock. It will ﬂush the internal
      data buﬀers to disk if they are changed.</li></ul>
-<!--l. 47--><p class="noindent" >
+<!--l. 62--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
  id="x1-30002.1"></a>Synchronization</h4>
-<!--l. 48--><p class="noindent" >The Table System uses a special lock ﬁle (<span 
-class="cmtt-10x-x-109">table.lock</span>) in the table directory to
-hold information about the storage managers containing data changed in a
+<!--l. 63--><p class="noindent" >CTDS uses a special lock ﬁle (<span 
+class="cmtt-10x-x-109">table.lock</span>) in the table directory to hold
+information about the storage managers containing data changed in a
 lock/unlock cycle. That information is used to achieve that a process acquiring a
 lock only refreshes the buﬀers really needed. This saves a lot of needless buﬀer
 refreshing.
-</p><!--l. 54--><p class="indent" >   Apart from changing data, a table can also change by adding or removing
+</p><!--l. 69--><p class="indent" >   Apart from changing data, a table can also change by adding or removing
 rows, keywords, or columns. These changes are also synchronized with
 the exception of added or removed columns. Such changes mean that
 the layout of the table is changed. Alas the Table System cannot cope
 with such changes yet (it will in a future version). If it detects that a
+column is added or removed, the synchronization function throws an
+exception.
+</p><!--l. 78--><p class="indent" >   CTDS uses the ﬁle locking functions provided by the operating system to do
+the actual locking. For UNIX systems it means that the <span 
+class="cmtt-10x-x-109">fcntl </span>function is used.
+This also works ﬁne for NFS ﬁles provided that the <span 
+class="cmtt-10x-x-109">lockd </span>and <span 
+class="cmtt-10x-x-109">statd </span>deamons
+are running (which is usually the case).
                                                                      
 
                                                                      
-column is added or removed, the synchronization function throws an
-exception.
-</p><!--l. 63--><p class="indent" >   The Table System uses the ﬁle locking functions provided by the
-operating system to do the actual locking. For UNIX systems it means that
-the <span 
-class="cmtt-10x-x-109">fcntl </span>function is used. This also works ﬁne for NFS ﬁles provided
-that the <span 
-class="cmtt-10x-x-109">lockd </span>and <span 
-class="cmtt-10x-x-109">statd </span>deamons are running (which is usually the
-case).
-</p><!--l. 70--><p class="indent" >   The ﬁrst few bytes of the lock ﬁle form the data part that is being used for
+</p><!--l. 85--><p class="indent" >   The ﬁrst few bytes of the lock ﬁle form the data part that is being used for
 the locking. <br 
 class="newline" />Furthermore an extra lock is used to keep track of the tables that are open in any
-process. This is used by the Table System to prevent a table from being deleted
-while another process is still accessing it.
-</p><!--l. 78--><p class="indent" >   Note that on a UNIX system ﬁle locks are handled per inode. That
-means that if the same ﬁle is opened twice an unlock on one the the ﬁle
-descriptors also unlocks the other ﬁle descriptor. The Table System usually
-opens a table only once. However, if opened with a diﬀerent name, the
-Table System might not recognize that the ﬁle bas been opened already
-and open it again in the same process. However, in practice it never
-happens.
-</p><!--l. 87--><p class="noindent" >
+process. This is used by CTDS to prevent a table from being deleted while
+another process is still accessing it.
+</p><!--l. 93--><p class="indent" >   Note that on a UNIX system ﬁle locks are handled per inode. That means
+that if the same ﬁle is opened twice an unlock on one the the ﬁle descriptors also
+unlocks the other ﬁle descriptor. CTDS usually opens a table only once. However,
+if opened with a diﬀerent name, CTDS might not recognize that the ﬁle bas been
+opened already and open it again in the same process. However, in practice it
+never happens.
+</p><!--l. 102--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
  id="x1-40003"></a>Locking Modes</h3>
-<!--l. 88--><p class="noindent" >Data base systems usually hold locks only for a short period of time. It means
+<!--l. 103--><p class="noindent" >Data base systems usually hold locks only for a short period of time. It means
 that buﬀers have to be ﬂushed often because another process needs up-to-date
 data. A ﬂush can be expensive as it involves I/O. <br 
-class="newline" />It was believed that this would be too limiting for the Table System, because
-many AIPS++ processes like to lock a table for as long as possible to avoid too
-many ﬂushes. Therefore three locking modes are supported by AIPS++. They
-can be given when a <span 
+class="newline" />It was believed that this would be too limiting for CTDS, because many
+processes prefer to lock a table for as long as possible to avoid too many ﬂushes.
+Therefore three locking modes are supported by Casacore. They can be
+given when a <span 
 class="cmtt-10x-x-109">Table </span>object is constructed. In order high to low they
 are:
-</p><!--l. 98--><p class="indent" >
+</p><!--l. 113--><p class="indent" >
      </p><ol  class="enumerate1" >
      <li 
   class="enumerate" id="x1-4002x1"><span 
@@ -276,9 +333,6 @@ class="cmtt-10x-x-109">PermanentLocking </span>locks the table for the full sess
      process can use it. It is always locked for read. It is locked for write if
      the table is not opened as readonly. <br 
 class="newline" />This  mode  is  rarely  used,  because  it  makes  concurrent  access
-                                                                     
-
-                                                                     
      impossible (unless another process uses NoReadLocking). However, in
      some circumstances it might be useful. Note that in this mode lock
      and unlock calls can still be done, but they are not doing anything.
@@ -289,6 +343,9 @@ class="cmtt-10x-x-109">AutoLocking </span>locks automatically when a read or wri
      done and the table does not have an appropriate lock yet. Unlocking
      is done automatically at an appropriate time. <br 
 class="newline" />This mode makes concurrent access possible and tries to hold the lock
+                                                                     
+
+                                                                     
      as long as possible. Furthermore the programmer does not have to
      worry about (un)locking, although it is still possible to do explicit
      locking and unlocking. <br 
@@ -328,17 +385,22 @@ href="#x1-110006">another
   class="enumerate" id="x1-4012x6"><span 
 class="cmtt-10x-x-109">DefaultLocking </span>is  the  same  as  <span 
 class="cmtt-10x-x-109">AutoLocking</span>.  It  is  lower  in  the
+     hierarchy when merging locking modes (see next section).
+     </li>
+     <li 
+  class="enumerate" id="x1-4014x7"><span 
+class="cmtt-10x-x-109">NoLocking </span>disables read and write locking for the given table. in the
      hierarchy when merging locking modes (see next section).</li></ol>
-<!--l. 137--><p class="noindent" >The default locking mode is <span 
+<!--l. 154--><p class="noindent" >The default locking mode is <span 
 class="cmtt-10x-x-109">DefaultLocking</span>.
-                                                                     
-
-                                                                     
-</p><!--l. 139--><p class="noindent" >
+</p><!--l. 156--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
  id="x1-50003.1"></a>Locking Mode Merge</h4>
-<!--l. 140--><p class="noindent" >It is possible that in a process multiple <span 
+                                                                     
+
+                                                                     
+<!--l. 157--><p class="noindent" >It is possible that in a process multiple <span 
 class="cmtt-10x-x-109">Table </span>objects are created for the same
 table. These <span 
 class="cmtt-10x-x-109">Table </span>objects share the same underlying <span 
@@ -350,11 +412,11 @@ class="cmtt-10x-x-109">BaseTable </span>object. The
 merge result is the locking mode with the highest position in the <a 
 href="#x1-40003">locking mode
 table</a>.
-</p><!--l. 148--><p class="noindent" >
+</p><!--l. 165--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">3.2   </span> <a 
  id="x1-60003.2"></a>Locking Mode for a Subtable</h4>
-<!--l. 149--><p class="noindent" ><span 
+<!--l. 166--><p class="noindent" ><span 
 class="cmtt-10x-x-109">Table </span>objects for subtables are created automatically when the table is retrieved
 from a keyword set like:
                                                                      
@@ -362,22 +424,22 @@ from a keyword set like:
                                                                      
 </p>
    <div class="verbatim" id="verbatim-1">
-    Table tab(‘‘test.ms&#x2019;&#x2019;);
- <br />    Table anttab(tab.keywordSet().asTable(‘‘ANTENNA&#x2019;&#x2019;));
+    Table tab(‘‘test.ms’’);
+ <br />    Table anttab(tab.keywordSet().asTable(‘‘ANTENNA’’));
 </div>
-<!--l. 154--><p class="nopar" > In this way it inherits the locking mode of its parent <span 
+<!--l. 171--><p class="nopar" > In this way it inherits the locking mode of its parent <span 
 class="cmtt-10x-x-109">(Base)Table </span>object.
 <br 
 class="newline" />However, there is a second <span 
 class="cmtt-10x-x-109">asTable </span>function accepting a locking mode. In that
 way a subtable can be opened with a given locking mode.
-</p><!--l. 161--><p class="noindent" >
+</p><!--l. 178--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
  id="x1-70004"></a>How to lock and unlock</h3>
-<!--l. 162--><p class="noindent" >As explained above locking and unlocking has to be done explicitly for
+<!--l. 179--><p class="noindent" >As explained above locking and unlocking has to be done explicitly for
 UserLocking and can optionally be done for AutoLocking.
-</p><!--l. 166--><p class="indent" >   Function <span 
+</p><!--l. 183--><p class="indent" >   Function <span 
 class="cmtt-10x-x-109">Table::lock </span>is used to acquire a lock. It can be speciﬁed if a read
 or write lock is needed. If the lock cannot be acquired immediately, the process
 will be added to a list (in the lock ﬁle) to indicate that it needs a lock. The list is
@@ -390,16 +452,16 @@ table lock. If the lock could be acquired, the process is removed from the list.
 <br 
 class="newline" />Having acquired a lock means that the internal table and storage manager buﬀers
 are refreshed as needed.
-</p><!--l. 179--><p class="indent" >   Function <span 
+</p><!--l. 196--><p class="indent" >   Function <span 
 class="cmtt-10x-x-109">Table::unlock </span>releases a lock. If table data have been changed
 since the lock was acquired, it will ﬂush the changed table and storage
 manager buﬀers and indicate in the lock ﬁle which storage managers were
 changed.
-</p><!--l. 184--><p class="noindent" >
+</p><!--l. 201--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
  id="x1-80004.1"></a>class TableLocker</h4>
-<!--l. 185--><p class="noindent" >It should be clear that when using lock/unlock explicitly, care should be taken
+<!--l. 202--><p class="noindent" >It should be clear that when using lock/unlock explicitly, care should be taken
 that the unlock is also done in case of exceptions. This can be quite cumbersome.
                                                                      
 
@@ -413,20 +475,20 @@ destructor automatically. E.g.
                                                                      
 </p>
    <div class="verbatim" id="verbatim-2">
-  Table tab(‘‘test.ms&#x2019;&#x2019;, Table::UserLocking);
+  Table tab(‘‘test.ms’’, Table::UserLocking);
  <br />  {
  <br />    TableLocker locker(tab, FileLocker::Read);  // acquire read lock
  <br />    ... write data into the table ...
  <br />  }  // end of scope, so TableLocker destructor is called
 </div>
-<!--l. 197--><p class="nopar" > The nicest thing of using <span 
+<!--l. 214--><p class="nopar" > The nicest thing of using <span 
 class="cmtt-10x-x-109">TableLocker </span>in this way is that in case of an exception
 its destructor is called, thus the lock is always released.
-</p><!--l. 202--><p class="noindent" >
+</p><!--l. 219--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">5   </span> <a 
  id="x1-90005"></a>AutoLocking working</h3>
-<!--l. 203--><p class="noindent" >AutoLocking is a handy mode because it frees the user from having to do explicit
+<!--l. 220--><p class="noindent" >AutoLocking is a handy mode because it frees the user from having to do explicit
 locking and unlocking. Furthermore it has the advantage that it does
 not release a lock before another process needs it. This advantage is
 at the same time the weakness of AutoLocking, because it may take a
@@ -441,13 +503,13 @@ class="cmtt-10x-x-109">TableLock::maxWait</span>
      as the maximum number of attempts (default is trying forever).
      </li>
      <li 
-  class="enumerate" id="x1-9004x2">Unlocking is also done automatically. After some I/O-s are done, the
-     Table System inspects the list in the lock ﬁle to see if another process
-     needs the lock. If so, it releases the lock. The inspection interval can
-     be deﬁned in the <span 
+  class="enumerate" id="x1-9004x2">Unlocking  is  also  done  automatically.  After  some  I/O-s  are  done,
+     CTDS inspects the list in the lock ﬁle to see if another process needs
+     the lock. If so, it releases the lock. The inspection interval can be
+     deﬁned in the <span 
 class="cmtt-10x-x-109">TableLock </span>constructor and defaults to 5 seconds.</li></ol>
-<!--l. 221--><p class="noindent" >In general this scheme works ﬁne, but the problem is that if no I/O is done, the
-Table System does not check if another process needs a lock. This is especially
+<!--l. 238--><p class="noindent" >In general this scheme works ﬁne, but the problem is that if no I/O is done,
+CTDS does not check if another process needs a lock. This is especially
 a problem for glish clients as they can be idle for some time waiting
 for a command to be given. To circumvent this problem the function
                                                                      
@@ -457,11 +519,11 @@ for a command to be given. To circumvent this problem the function
 class="cmtt-10x-x-109">Table::relinquishAutoLocks </span>can be used to release locks on tables using
 AutoLocking. Either all such tables are unlocked or only the tables needed by
 another process.
-</p><!--l. 229--><p class="noindent" >
+</p><!--l. 246--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">5.1   </span> <a 
  id="x1-100005.1"></a>Releasing AutoLocks in Glish Clients</h4>
-<!--l. 230--><p class="noindent" >Care has been taken that glish clients do not hold AutoLocks too long. Glish
+<!--l. 247--><p class="noindent" >Care has been taken that glish clients do not hold AutoLocks too long. Glish
 clients time out after some period and call <span 
 class="cmtt-10x-x-109">Table::relinquishAutoLocks </span>to
 release AutoLocks at regular intervals. The time out period is controlled by two
@@ -476,12 +538,12 @@ class="cmtt-10x-x-109">table.relinquish.reqautolocks.interval </span>deﬁnes th
 class="cmtt-10x-x-109">table.relinquish.allautolocks.interval </span>deﬁnes the number of
      seconds to wait before relinquishing all autolocks. The default is 60
      seconds.</li></ul>
-<!--l. 243--><p class="noindent" >The user can deﬁne these variables at will, but usually the defaults suﬃce.
-</p><!--l. 246--><p class="noindent" >
+<!--l. 260--><p class="noindent" >The user can deﬁne these variables at will, but usually the defaults suﬃce.
+</p><!--l. 263--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">6   </span> <a 
  id="x1-110006"></a>NoReadLocking</h3>
-<!--l. 247--><p class="noindent" >Normally locking should be used to read data from a table because in that way it
+<!--l. 264--><p class="noindent" >Normally locking should be used to read data from a table because in that way it
 is assured that the data is always consistent. However, in some cases it
 might be useful to be able to read data from a table without having to
 acquire a lock. That could, for instance, be the case for an online process
@@ -489,7 +551,7 @@ acquire a lock. That could, for instance, be the case for an online process
 to wait for a write lock because some other process is holding a read
 lock. NoReadLocking is possible with AutoLocking and UserLocking
 modes.
-</p><!--l. 256--><p class="indent" >   The NoReadLocking option makes it possible to read table data without
+</p><!--l. 273--><p class="indent" >   The NoReadLocking option makes it possible to read table data without
 acquiring a read lock. It means that the internal buﬀers are not automatically
 synchronized with the data on disk. It is possible though to do that explicitly
                                                                      
@@ -499,14 +561,14 @@ using the function <span
 class="cmtt-10x-x-109">Table::resync</span>. For this to work well, the writer should ﬂush
 its data regularly, otherwise it may take a long while before data appears on
 disk.
-</p><!--l. 264--><p class="indent" >   Often a NoReadLocking reader is coupled to the writer by means of
+</p><!--l. 281--><p class="indent" >   Often a NoReadLocking reader is coupled to the writer by means of
 interprocess communication. In such cases it is best that the writer tells the
 reader when it should resync and read.
-</p><!--l. 268--><p class="noindent" >
+</p><!--l. 285--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">7   </span> <a 
  id="x1-120007"></a>Lock Information</h3>
-<!--l. 269--><p class="noindent" >Sometimes it is not clear which process is holding a lock. A glish function in <span 
+<!--l. 286--><p class="noindent" >Sometimes it is not clear which process is holding a lock. A glish function in <span 
 class="cmtt-10x-x-109">os.g</span>
 has been made to tell the user if a table has been opened in some process and if
 and how it has been locked.
@@ -515,41 +577,41 @@ and how it has been locked.
                                                                      
 </p>
    <div class="verbatim" id="verbatim-3">
-  dos.showtableuse (&#x2019;test.ms&#x2019;)
+  dos.showtableuse (’test.ms’)
 </div>
-<!--l. 274--><p class="nopar" > prints this information for the given table. The function <span 
+<!--l. 291--><p class="nopar" > prints this information for the given table. The function <span 
 class="cmtt-10x-x-109">dos.lockinfo </span>returns
 this information in a glish record.
-</p><!--l. 278--><p class="indent" >   The information contains the PID of a process holding the lock or having
+</p><!--l. 295--><p class="indent" >   The information contains the PID of a process holding the lock or having
 opened the table. Note that in case of a read lock multiple processes may
 hold a lock. The PID of only one process is given in the information
 though.
-</p><!--l. 284--><p class="noindent" >
+</p><!--l. 301--><p class="noindent" >
 </p>
    <h3 class="sectionHead"><span class="titlemark">8   </span> <a 
  id="x1-130008"></a>Overview of classes/functions related to locking</h3>
-<!--l. 285--><p class="noindent" >A brief overview is given. For detailed information the relevant documentation
+<!--l. 302--><p class="noindent" >A brief overview is given. For detailed information the relevant documentation
 should be examined.
-</p><!--l. 289--><p class="noindent" >
+</p><!--l. 306--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">8.1   </span> <a 
  id="x1-140008.1"></a>class <a 
 href="../html/classcasa_1_1TableLock.html" >TableLock</a></h4>
-<!--l. 290--><p class="noindent" >This class deﬁnes the locking mode which can be given to the <span 
+<!--l. 307--><p class="noindent" >This class deﬁnes the locking mode which can be given to the <span 
 class="cmtt-10x-x-109">Table </span>constructor.
 For AutoLocking mode a few parameters can be set.
-</p><!--l. 294--><p class="noindent" >
+</p><!--l. 311--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">8.2   </span> <a 
  id="x1-150008.2"></a>class <a 
 href="../html/classcasa_1_1TableLocker.html" >TableLocker</a></h4>
-<!--l. 295--><p class="noindent" >This class can be used to acquire and release a lock, especially in UserLocking
+<!--l. 312--><p class="noindent" >This class can be used to acquire and release a lock, especially in UserLocking
 mode. As described above, it is particularly useful to ensure that a lock is
 released in case of an exception.
                                                                      
 
                                                                      
-</p><!--l. 300--><p class="noindent" >
+</p><!--l. 317--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">8.3   </span> <a 
  id="x1-160008.3"></a><a 
@@ -597,15 +659,15 @@ class="cmtt-10x-x-109">relinquishAutoLocks </span>is  a  static  function  relea
                                                                      
 
                                                                      
-<!--l. 319--><p class="noindent" >
+<!--l. 336--><p class="noindent" >
 </p>
    <h4 class="subsectionHead"><span class="titlemark">8.4   </span> <a 
  id="x1-170008.4"></a>python and glish</h4>
-<!--l. 320--><p class="noindent" ><a 
+<!--l. 337--><p class="noindent" ><a 
 href="../../../pyrap/docs/pyrap_tables.html" >pyrap</a> contains the python interface <span 
-class="cmtt-10x-x-109">pyrap.tables </span>to the table system. It has
-lock functions similar to the ones in class Table.
-</p><!--l. 324--><p class="indent" >   The same is true for the old glish interface <span 
+class="cmtt-10x-x-109">pyrap.tables </span>to CTDS. It has lock
+functions similar to the ones in class Table.
+</p><!--l. 341--><p class="indent" >   The same is true for the old glish interface <span 
 class="cmtt-10x-x-109">table.g </span><br 
 class="newline" />In <span 
 class="cmtt-10x-x-109">os.g </span>the functions <span 

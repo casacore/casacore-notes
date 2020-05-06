@@ -1,8 +1,8 @@
 \section{Introduction}
-The \href{../255.html}{AIPS++ Table System}
-is used to store all data in the AIPS++ environment.
-The Table System supports concurrent access by means of table locking.
-The user can control how the table locking is used which may have
+The \href{../255.html}{Casacore Table Data System} (CTDS)
+is used to store all data in the Casacore environment.
+CTDS supports concurrent access by means of table locking.
+The user can control if and how the table locking is used which may have
 impact on the performance of the Table System.
 This note describes the various ways in which a table can be locked
 and the best ways to use them.
@@ -20,21 +20,36 @@ have a write lock on a table (hence exclusive). If a write lock
 is acquired, no read lock on that table can exist at the same time.
 Thus at a single time there can be one writer or multiple readers.
 \end{itemize}
-The locking assures that the internal buffers of the Table
-System are synchronized and kept consistent.
+The locking assures that the internal buffers of CTDS
+are synchronized and kept consistent.
 
-Note, however, that the Table System also supports the so-called
-NoReadLocking mode, which makes it possible to read a table without a
-lock. That implies that no synchronization is done before the read,
+Note, however, that CTDS also supports modes to skip table locking
+which can be useful for systems with no or limited support of file
+locking (such as Lustre).
+\begin{itemize}
+\item CTDS can be built with -DAIPS\_TABLE\_NOLOCKING which disables
+  table locking entirely.
+\item Similarly, setting the {\it aipsrc} variable {\tt
+    table.nolocking} to True disables table locking.
+\item Table lock option NoLocking can be used to disable locking for
+  the table opened with that option.
+\item Table lock option NoReadLocking can be used to read a table without 
+locking. That implies that no synchronization is done before the read,
 unless it is explicitly done. It is described in a
 \htmlref{later section}{TABLELOCK:NOREADLOCKING}.
+\end{itemize}
 
-The Table System only supports locks on the entire table; there is
-no fine-grained page or row locking. Thus if a process is updating a
-table, no other process can read or update any part of that table.
+Of course, disabling locking should be used with great care. One has
+to be sure that no race conditions can occur.
 
 \medskip
-Basically there are two functions in the Table System to handle
+CTDS only supports locks on the entire table; there is
+no fine-grained page or row locking. Thus if a process is updating a
+table, no other process can read or update any part of that table.
+Of course, different tables can be accessed simultaneously.
+
+\medskip
+Basically there are two functions in CTDS to handle
 locking.
 \begin{itemize}
 \item \texttt{Table::lock} can be used to acquire a read or write
@@ -45,7 +60,7 @@ It will flush the internal data buffers to disk if they are changed.
 \end{itemize}
 
 \subsection{Synchronization}
-The Table System uses a special lock file (\texttt{table.lock}) in the table
+CTDS uses a special lock file (\texttt{table.lock}) in the table
 directory to hold information about the storage managers containing
 data changed in a lock/unlock cycle. That information is used to
 achieve that a process acquiring a lock only refreshes the buffers
@@ -60,7 +75,7 @@ version). If it detects that a column is added or removed, the
 synchronization function throws an exception.
 
 \medskip
-The Table System uses the file locking functions provided by the
+CTDS uses the file locking functions provided by the
 operating system
 to do the actual locking. For UNIX systems it means that the
 \texttt{fcntl} function is used. This also works fine for NFS files
@@ -70,7 +85,7 @@ running (which is usually the case).
 The first few bytes of the lock file form the data part
 that is being used for the locking.
 \\Furthermore an extra lock is used to keep track of the tables that are
-open in any process. This is used by the Table System to prevent
+open in any process. This is used by CTDS to prevent
 a table from being deleted while another process is still accessing
 it.
 
@@ -78,8 +93,8 @@ it.
 Note that on a UNIX system file locks are handled per inode. That
 means that if the same file is opened twice an unlock on one the the
 file descriptors also unlocks the other file descriptor.
-The Table System usually opens a table only once. However, if opened
-with a different name, the Table System might not recognize that
+CTDS usually opens a table only once. However, if opened
+with a different name, CTDS might not recognize that
 the file bas been opened already and open it again in the same process.
 However, in practice it never happens.
 
@@ -88,10 +103,10 @@ However, in practice it never happens.
 Data base systems usually hold locks only for a short period of time. It means
 that buffers have to be flushed often because another process needs
 up-to-date data. A flush can be expensive as it involves I/O.
-\\It was believed that this would be too limiting for the Table
-System, because many AIPS++ processes like to lock a table for as
+\\It was believed that this would be too limiting for CTDS,
+because many processes prefer to lock a table for as
 long as possible to avoid too many flushes.
-Therefore three locking modes are supported by AIPS++. They can be
+Therefore three locking modes are supported by Casacore. They can be
 given when a \texttt{Table} object is constructed. In order high to low
 they are:
 
@@ -132,6 +147,8 @@ read or write is done before an appropriate lock is acquired.
 locks are needed when reading the table. NoReadLocking is discussed in
 \htmlref{another section}{TABLELOCK:NOREADLOCKING}.
 \item \texttt{DefaultLocking} is the same as \texttt{AutoLocking}. It is lower
+in the hierarchy when merging locking modes (see next section).
+\item \texttt{NoLocking} disables read and write locking for the given table.
 in the hierarchy when merging locking modes (see next section).
 \end{enumerate}
 The default locking mode is \texttt{DefaultLocking}.
@@ -213,13 +230,13 @@ appropriately locked. If not, it is tried to acquire a lock
 with \texttt{TableLock::maxWait} as the maximum number of attempts
 (default is trying forever).
 \item Unlocking is also done automatically. After some I/O-s are done,
-the Table System inspects the list in the lock file to see if another
+CTDS inspects the list in the lock file to see if another
 process needs the lock. If so, it releases the lock.
 The inspection interval can be defined in the \texttt{TableLock}
 constructor and defaults to 5 seconds.
 \end{enumerate}
 In general this scheme works fine, but the problem is that if no I/O is
-done, the Table System does not check if another process needs a lock.
+done, CTDS does not check if another process needs a lock.
 This is especially a problem for glish clients as they can be idle for
 some time waiting for a command to be given. To circumvent this problem
 the function \texttt{Table::relinquishAutoLocks} can be used to
@@ -318,7 +335,7 @@ or all AutoLocks.
 
 \subsection{python and glish}
 \htmladdnormallink{pyrap}{../../../pyrap/docs/pyrap_tables.html}
-contains the python interface \texttt{pyrap.tables} to the table system.
+contains the python interface \texttt{pyrap.tables} to CTDS.
 It has lock functions similar to the ones in class Table.
 
 The same is true for the old glish interface \texttt{table.g}
