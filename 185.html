@@ -9,7 +9,7 @@ AIPS++ Implementation Note nr 185</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
 <meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
 <meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<!-- xhtml,mathml,fn-in,css-in, charset=utf-8,html --> 
+<!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="185.tex" /> 
  
 <style type="text/css"> 
@@ -29,23 +29,6 @@ AIPS++ Implementation Note nr 185</title>
 .cmbsy-6{font-size:54%;font-weight: bold;}  
 .cmbsy-6{font-weight: bold;}  
 .cmbsy-6{font-weight: bold;}  
-.cmss-10x-x-109{ font-family: sans-serif;}  
-.cmss-10x-x-109{ font-family: sans-serif;}  
-.cmss-10x-x-109{ font-family: sans-serif;}  
-.cmss-10x-x-109{ font-family: sans-serif;}  
-.cmss-8{font-size:72%; font-family: sans-serif;}  
-.cmss-8{ font-family: sans-serif;}  
-.cmss-8{ font-family: sans-serif;}  
-.cmss-8{ font-family: sans-serif;}  
-.cmss-8x-x-75{font-size:54%; font-family: sans-serif;}  
-.cmss-8x-x-75{ font-family: sans-serif;}  
-.cmss-8x-x-75{ font-family: sans-serif;}  
-.cmss-8x-x-75{ font-family: sans-serif;}  
-.cmtt-10x-x-109{font-family: monospace;}  
-.cmtt-10x-x-109{font-family: monospace;}  
-.cmti-10x-x-109{ font-style: italic;}  
-.cmsl-10x-x-109{font-style: oblique;}  
-.cmsl-10x-x-109{font-style: oblique;}  
 .cmr-8{font-size:72%;}  
 .cmr-6{font-size:54%;}  
 .cmmi-10x-x-109{font-style: italic;}  
@@ -57,16 +40,17 @@ AIPS++ Implementation Note nr 185</title>
 .cmr-17{font-size:154%;}  
 .cmr-12{font-size:109%;}  
 .cmti-12{font-size:109%; font-style: italic;}  
+.cmtt-10x-x-109{font-family: monospace;}  
+.cmtt-10x-x-109{font-family: monospace;}  
+.cmsl-10x-x-109{font-style: oblique;}  
+.cmsl-10x-x-109{font-style: oblique;}  
+.cmti-10x-x-109{ font-style: italic;}  
 .cmr-9{font-size:81%;}  
-.cmmi-9{font-size:81%;font-style: italic;}  
-.cmsy-9{font-size:81%;}  
-.cmss-9{font-size:81%; font-family: sans-serif;}  
-.cmss-9{ font-family: sans-serif;}  
-.cmss-9{ font-family: sans-serif;}  
-.cmss-9{ font-family: sans-serif;}  
-.cmti-9{font-size:81%; font-style: italic;}  
 .cmsl-9{font-size:81%;font-style: oblique;}  
 .cmsl-9{font-style: oblique;}  
+.cmmi-9{font-size:81%;font-style: italic;}  
+.cmsy-9{font-size:81%;}  
+.cmti-9{font-size:81%; font-style: italic;}  
 .cmtt-10{font-size:90%;font-family: monospace;}  
 .cmtt-10{font-family: monospace;}  
 p.noindent { text-indent: 0em }  
@@ -176,6 +160,7 @@ div.thanks{text-align:left; margin-left:10%; font-size:85%; font-style:italic; }
 .quotation {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; }  
 .abstract p {margin-left:5%; margin-right:5%;}  
 div.abstract {width:100%;}  
+.figure img.graphics {margin-left:10%;}  
 /* end css.sty */  
  
  
@@ -388,7 +373,7 @@ href="#x1-190005.8" id="QQ2-1-19">Commutation
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msub><mrow 
 ><mi 
->Y</mi></mrow><mrow 
+>Y</mi> </mrow><mrow 
 ><mi 
 >i</mi></mrow></msub 
 ></math>)</a></span>
@@ -443,9 +428,9 @@ href="#x1-32000A.2" id="QQ2-1-32">Labels, sub- and super-scripts</a></span>
 <br /> <span class="subsectionToc" >A.3 <a 
 href="#x1-33000A.3" id="QQ2-1-33">Coordinate frames</a></span>
 <br /> <span class="subsectionToc" >A.4 <a 
-href="#x1-34000A.4" id="QQ2-1-35">Matrices and vectors</a></span>
+href="#x1-34000A.4" id="QQ2-1-34">Matrices and vectors</a></span>
 <br /> <span class="subsectionToc" >A.5 <a 
-href="#x1-35000A.5" id="QQ2-1-36">Miscellaneous parameters</a></span>
+href="#x1-35000A.5" id="QQ2-1-35">Miscellaneous parameters</a></span>
 </div>
 
 <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
@@ -608,7 +593,7 @@ class="array"  columnalign="center"><mi
 >q</mi><mspace width="0em" class="thinspace"/><mi 
 >j</mi><mi 
 >q</mi></mtd></mtr>
-<!--c--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
 >J</mi><mi 
@@ -657,14 +642,11 @@ display="inline" ><mi
 <!--l. 171--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->q</mi></math>
-are the labels of the two output <span 
-class="cmsl-10x-x-109">IF-channel</span>s from each
+>q</mi></math> are the labels of the two output
 <span 
+class="cmsl-10x-x-109">IF-channel</span>s from each <span 
 class="cmsl-10x-x-109">feed</span>.<span class="footnote-mark"><a 
-href="#fn1x0" id="fn1x0-bk"><!--l. 173--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>1</mn></math></a></span><a 
+href="#fn1x0" id="fn1x0-bk"><sup class="textsuperscript">1</sup></a></span><a 
  id="x1-3002f1"></a>
 </p><!--l. 179--><p class="noindent" >The ‘Stokes matrix’ <!--l. 179--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -696,7 +678,6 @@ multiplication with a <!--l. 186--><math
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>4</mn> <mo 
 class="MathClass-bin">×</mo> <mn>4</mn></math>
-
 <span 
 class="cmti-10x-x-109">Mueller matrix </span><!--l. 187--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -704,6 +685,7 @@ display="inline" ><mi
 mathvariant="bold-script">ℳ</mi><mi 
 >i</mi><mi 
 >j</mi></math>
+
 <span class="cite">[<a 
 href="#XHamaker95">2</a>]</span> <span class="cite">[<a 
 href="#XSault95">3</a>]</span>. Using equation <a 
@@ -713,7 +695,7 @@ href="#x1-3001r1">1<!--tex4ht:ref: eq:vvCoh --></a>:
 <!--l. 190--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-           <mstyle 
+         <mstyle 
    id="x1-3003r2"  class="label" ></mstyle><!--endlabel--><msup><mrow 
 ><mover 
 accent="true"><mrow 
@@ -828,17 +810,15 @@ href="#x1-70003">3<!--tex4ht:ref: FULL --></a>). The
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>4</mn> <mo 
 class="MathClass-bin">×</mo> <mn>4</mn></math> <span 
-class="cmsl-10x-x-109">interferometer</span> response matrix
-<!--l. 220--><math 
+class="cmsl-10x-x-109">interferometer</span> response
+matrix <!--l. 220--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >J</mi><mi 
 >i</mi><mi 
->j</mi></math> then consists of a ‘direct matrix
-product’<span class="footnote-mark"><a 
-href="#fn2x0" id="fn2x0-bk"><!--l. 221--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>2</mn></math></a></span><a 
+>j</mi></math> then consists of a
+‘direct matrix product’<span class="footnote-mark"><a 
+href="#fn2x0" id="fn2x0-bk"><sup class="textsuperscript">2</sup></a></span><a 
  id="x1-4001f2"></a>
 <!--l. 223--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -886,7 +866,7 @@ path:
 <!--l. 234--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-                     <mstyle 
+                   <mstyle 
    id="x1-4002r3"  class="label" ></mstyle><!--endlabel--><mi 
 >J</mi><mi 
 >i</mi><mspace width="1em" class="nbsp" /> <mo 
@@ -1216,7 +1196,7 @@ class="cmsl-10x-x-109">feed</span>s respectively:
 <!--l. 317--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-                 <mstyle 
+                <mstyle 
    id="x1-5002r5"  class="label" ></mstyle><!--endlabel--><mi 
 >J</mi><mi 
 >i</mi><mi 
@@ -1400,7 +1380,7 @@ href="#x1-3001r1">1<!--tex4ht:ref: eq:vvCoh --></a> becomes:
 <!--l. 381--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-                <mstyle 
+               <mstyle 
    id="x1-8001r6"  class="label" ></mstyle><!--endlabel--><mover 
 accent="true"><mrow 
 ><mi 
@@ -1408,7 +1388,7 @@ accent="true"><mrow
 class="MathClass-op">→</mo></mover><mi 
 >i</mi><mi 
 >j</mi><mspace width="1em" class="nbsp" /> <mo 
-class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" />   <mfrac><mrow 
+class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" />    <mfrac><mrow 
 ><mn>1</mn></mrow> 
 <mrow 
 ><mi 
@@ -1554,7 +1534,7 @@ class="cmti-10x-x-109">linear </span>over this cell, integration is not necessar
 <!--l. 408--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-                             <mstyle 
+                            <mstyle 
    id="x1-8002r7"  class="label" ></mstyle><!--endlabel--><mspace width="1em" class="nbsp" /><mover 
 accent="true"><mrow 
 ><mi 
@@ -1741,10 +1721,10 @@ accent="true"><mrow
 ><mn>0</mn><mi 
 >k</mi></mrow></msub 
 ></mrow> 
-    <mrow 
+   <mrow 
 ><mi 
 >∂</mi><mi 
->l</mi><mn>2</mn></mrow></mfrac>     <mspace width="1em" class="nbsp" /><msup><mrow 
+>l</mi><mn>2</mn></mrow></mfrac>    <mspace width="1em" class="nbsp" /><msup><mrow 
 ><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
 >Δ</mi><mi 
@@ -1762,10 +1742,10 @@ accent="true"><mrow
 ><mn>0</mn><mi 
 >k</mi></mrow></msub 
 ></mrow> 
-   <mrow 
+  <mrow 
 ><mi 
 >∂</mi><mi 
->m</mi><mn>2</mn></mrow></mfrac>    <mspace width="1em" class="nbsp" /><msup><mrow 
+>m</mi><mn>2</mn></mrow></mfrac>   <mspace width="1em" class="nbsp" /><msup><mrow 
 ><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
 >Δ</mi><mi 
@@ -1822,7 +1802,7 @@ they can be modelled:
 <!--l. 463--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-                               <mstyle 
+                             <mstyle 
    id="x1-9001r9"  class="label" ></mstyle><!--endlabel--><mspace width="1em" class="nbsp" /><mover 
 accent="true"><mrow 
 ><mi 
@@ -1898,10 +1878,10 @@ class="array"  columnalign="right"><mi
 >j</mi><mi 
 >p</mi></mtd><mtd 
 class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
-class="array"  columnalign="right">    <mn>0</mn></mtd><mtd 
+class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
 class="array"  columnalign="right">    <mn>0</mn></mtd>
 </mtr>  <mtr><mtd 
-class="array"  columnalign="right">    <mn>0</mn></mtd><mtd 
+class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
 class="array"  columnalign="right"><mi 
 >x</mi><mi 
 >i</mi><mi 
@@ -1911,8 +1891,8 @@ class="array"  columnalign="right"><mi
 class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
 class="array"  columnalign="right">    <mn>0</mn></mtd>
 </mtr>  <mtr><mtd 
-class="array"  columnalign="right">    <mn>0</mn></mtd><mtd 
-class="array"  columnalign="right">    <mn>0</mn></mtd><mtd 
+class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
+class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
 class="array"  columnalign="right"><mi 
 >x</mi><mi 
 >i</mi><mi 
@@ -1921,16 +1901,16 @@ class="array"  columnalign="right"><mi
 >p</mi></mtd><mtd 
 class="array"  columnalign="right">     <mn>0</mn></mtd>
 </mtr>  <mtr><mtd 
-class="array"  columnalign="right">    <mn>0</mn></mtd><mtd 
-class="array"  columnalign="right">    <mn>0</mn></mtd><mtd 
-class="array"  columnalign="right">    <mn>0</mn></mtd><mtd 
+class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
+class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
+class="array"  columnalign="right">     <mn>0</mn></mtd><mtd 
 class="array"  columnalign="right"><mi 
 >x</mi><mi 
 >i</mi><mi 
 >q</mi><mspace width="0em" class="thinspace"/><mi 
 >j</mi><mi 
 >q</mi></mtd></mtr>
-<!--rrrr--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--rrrr--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">≈</mo><mspace width="1em" class="nbsp" /><mi 
 >x</mi><mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">𝒰</mi><mspace width="1em" class="nbsp" />
@@ -2000,7 +1980,7 @@ class="array"  columnalign="right"><mi
 >q</mi><mspace width="0em" class="thinspace"/><mi 
 >j</mi><mi 
 >q</mi></mtd></mtr>
-<!--rrrr--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--rrrr--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">≈</mo><mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">𝒰</mi>
 </math></td><td class="eq-no">(11)</td></tr></table>
@@ -2061,7 +2041,7 @@ class="array"  columnalign="center"><mi
 >q</mi><mspace width="0em" class="thinspace"/><mi 
 >j</mi><mi 
 >q</mi></mtd></mtr>
-<!--c--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">≈</mo><mspace width="1em" class="nbsp" /><mover 
 accent="true"><mrow 
 ><mn>0</mn></mrow><mo 
@@ -2135,7 +2115,7 @@ class="array"  columnalign="center"><mi
 >v</mi><mi 
 >i</mi><mi 
 >q</mi></mtd></mtr>
-<!--c--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >J</mi><mo 
 class="MathClass-bin">+</mo>
@@ -2150,7 +2130,7 @@ class="array"  columnalign="center"><mi
 class="array"  columnalign="center"><mi 
 >e</mi><mi 
 >y</mi></mtd></mtr>
-<!--c--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mi 
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mi 
 >o</mi><mi 
 >r</mi><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mover 
 accent="true"><mrow 
@@ -2159,7 +2139,7 @@ accent="true"><mrow
 class="MathClass-op">→</mo></mover><mo 
 class="MathClass-bin">⊙</mo>
    <mi 
->i</mi>  <mspace width="1em" class="nbsp" /> <mo 
+>i</mi> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >J</mi><mo 
 class="MathClass-bin">⊙</mo>
@@ -2174,7 +2154,7 @@ class="array"  columnalign="center"><mi
 class="array"  columnalign="center"><mi 
 >e</mi><mi 
 >l</mi></mtd></mtr>
-<!--c--></mtable>                                                                                                                                                               </mrow></mfenced>
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced>
 </math></td><td class="eq-no">(13)</td></tr></table>
 <!--l. 575--><p class="nopar" >
 </p><!--l. 577--><p class="noindent" >For linear polarisation coordinates, equation <a 
@@ -2193,7 +2173,7 @@ class="MathClass-op">→</mo></mover><mo
 class="MathClass-bin">+</mo>
    <mi 
 >i</mi><mi 
->j</mi> <mspace width="1em" class="nbsp" /> <mo 
+>j</mi><mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
 >J</mi><mo 
@@ -2204,7 +2184,7 @@ class="MathClass-bin">⊗</mo><mi
 >J</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->j</mi>  <mo 
+>j</mi> <mo 
 class="MathClass-bin">∗</mo>
    </mrow><mo 
 class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><mrow ><mo 
@@ -2230,7 +2210,7 @@ class="MathClass-bin">⊗</mo><mi
 >J</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->j</mi>  <mo 
+>j</mi> <mo 
 class="MathClass-bin">∗</mo>
    </mrow><mo 
 class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /> <mfenced separators="" 
@@ -2286,7 +2266,7 @@ class="MathClass-bin">⊗</mo><mi
 >J</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->j</mi>  <mo 
+>j</mi> <mo 
 class="MathClass-bin">∗</mo>
    </mrow><mo 
 class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><mi 
@@ -2362,8 +2342,8 @@ class="MathClass-punc">,</mo><mi
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >S</mi><mo 
-class="MathClass-bin">⊙</mo></math> transforms to circular polarisation coordinates
-(<!--l. 609--><math 
+class="MathClass-bin">⊙</mo></math> transforms to circular polarisation
+coordinates (<!--l. 609--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >r</mi><mi 
@@ -2376,12 +2356,10 @@ class="MathClass-punc">,</mo><mi
 >r</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >l</mi><mi 
->l</mi></math>). Following the convention of <span class="cite">[<a 
-href="#XHamaker95c">4</a>]</span>, we
-write:<span class="footnote-mark"><a 
-href="#fn3x0" id="fn3x0-bk"><!--l. 610--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>3</mn></math></a></span><a 
+>l</mi></math>). Following the
+convention of <span class="cite">[<a 
+href="#XHamaker95c">4</a>]</span>, we write:<span class="footnote-mark"><a 
+href="#fn3x0" id="fn3x0-bk"><sup class="textsuperscript">3</sup></a></span><a 
  id="x1-10003f3"></a>
 </p>
 <table class="equation"><tr><td>
@@ -2488,7 +2466,7 @@ class="cmsl-10x-x-109">feed</span>-based parts. The two Stokes matrices are rela
 <!--l. 645--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-                        <mstyle 
+                       <mstyle 
    id="x1-10005r16"  class="label" ></mstyle><!--endlabel--><mi 
 >S</mi><mo 
 class="MathClass-bin">⊙</mo><mspace width="1em" class="nbsp" /> <mo 
@@ -2519,9 +2497,7 @@ class="MathClass-bin">⊙</mo>
 </math></td><td class="eq-no">(16)</td></tr></table>
 <!--l. 656--><p class="nopar" >
 </p><!--l. 659--><p class="noindent" >with<span class="footnote-mark"><a 
-href="#fn4x0" id="fn4x0-bk"><!--l. 659--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>4</mn></math></a></span><a 
+href="#fn4x0" id="fn4x0-bk"><sup class="textsuperscript">4</sup></a></span><a 
  id="x1-10006f4"></a>
 </p>
 <table class="equation"><tr><td>
@@ -2857,7 +2833,7 @@ class="MathClass-bin">−</mo><mi
 class="MathClass-close">)</mo></mrow></mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray"></mtext></mtd>
 </mtr><mtr><mtd 
-class="eqnarray-1"> <mi 
+class="eqnarray-1">  <mi 
 mathvariant="bold-script">ℋ</mi><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mi 
 >R</mi><mi 
 >o</mi><mi 
@@ -2883,7 +2859,7 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 >i</mi><mi 
 >o</mi><mi 
 >n</mi><mspace width="1em" class="nbsp" /><mstyle 
- xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#x1-16002r34"  class="label" ><mn>3</mn><mn>4</mn><!--tex4ht:ref: eq:mjProjC-general --></mstyle><!--endlabel-->     </mtd><mtd 
+ xlink:type="simple" xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#x1-16002r34"  class="label" ><mn>3</mn><mn>4</mn><!--tex4ht:ref: eq:mjProjC-general --></mstyle><!--endlabel-->      </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray"></mtext></mtd>
 </mtr><mtr><mtd 
 class="eqnarray-1"> <mi 
@@ -2907,10 +2883,10 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 >t</mi><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
 >α</mi></mrow><mo 
-class="MathClass-close">)</mo></mrow>            </mtd><mtd 
+class="MathClass-close">)</mo></mrow>             </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray">(22)</mtext><mtext 
    id="x1-10012r22"  class="label" ></mtext><mtext 
-class="endlabel"></mtext></mtd>                                             </mtr></mtable>
+class="endlabel"></mtext></mtd>                                           </mtr></mtable>
 </math>
 <!--l. 759--><p class="nopar" >
 </p>
@@ -2982,7 +2958,7 @@ class="MathClass-bin">−</mo><mi
 class="MathClass-close">)</mo></mrow></mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray">(23)</mtext><mtext 
    id="x1-10013r23"  class="label" ></mtext><mtext 
-class="endlabel"></mtext></mtd>                                             </mtr></mtable>
+class="endlabel"></mtext></mtd>                                           </mtr></mtable>
 </math>
 <!--l. 776--><p class="nopar" >
 </p>
@@ -3010,30 +2986,30 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 >G</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >H</mi><mi 
 >i</mi><mspace width="1em" class="nbsp" /><mi 
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >E</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
->P</mi><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
 >K</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
->T</mi><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
+>T</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mrow ><mo 
@@ -3057,14 +3033,14 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 >G</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mrow ><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
 >H</mi><mi 
 >i</mi><mspace width="1em" class="nbsp" /><mi 
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">ℋ</mi><mo 
 class="MathClass-bin">−</mo><mn>1</mn></mrow><mo 
 class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><mi 
@@ -3072,20 +3048,20 @@ mathvariant="bold-script">ℋ</mi><mspace width="1em" class="nbsp" /><mi
 >E</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
->P</mi><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
 >K</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
->T</mi><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
+>T</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mrow ><mo 
@@ -3109,29 +3085,29 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 >G</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">ℋ</mi><mspace width="1em" class="nbsp" /><mi 
 >E</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
->P</mi><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
 >K</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
->T</mi><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
+>T</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mrow ><mo 
@@ -3155,15 +3131,15 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 >G</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >E</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >P</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
@@ -3171,7 +3147,7 @@ class="MathClass-bin">⊙</mo>
 >K</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >T</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
@@ -3201,15 +3177,15 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 >G</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >E</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >P</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
@@ -3217,7 +3193,7 @@ class="MathClass-bin">⊙</mo>
 >K</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >T</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
@@ -3236,10 +3212,10 @@ class="MathClass-open">(</mo><mrow><mi
 class="MathClass-rel">=</mo> <mi 
 >S</mi><mo 
 class="MathClass-bin">⊙</mo></mrow><mo 
-class="MathClass-close">)</mo></mrow>         </mtd><mtd 
+class="MathClass-close">)</mo></mrow>          </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray">(24)</mtext><mtext 
    id="x1-10014r24"  class="label" ></mtext><mtext 
-class="endlabel"></mtext></mtd>                                   </mtr></mtable>
+class="endlabel"></mtext></mtd>                               </mtr></mtable>
 </math>
 <!--l. 844--><p class="nopar" >
 </p>
@@ -3295,7 +3271,7 @@ display="inline" ><mi
 is an element of matrix <!--l. 880--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->Y</mi></math>
+>Y</mi> </math>
 for <span 
 class="cmsl-10x-x-109">feed</span> <!--l. 880--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -3352,7 +3328,7 @@ class="MathClass-close">)</mo></mrow></math>)</h4>
 <!--l. 892--><p class="noindent" >The matrix <!--l. 892--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math>
@@ -3389,7 +3365,7 @@ href="#x1-100004">4<!--tex4ht:ref: POLCOORD --></a>). For linear polarisation co
 display="block" class="equation">
 <mstyle 
    id="x1-12001r25"  class="label" ></mstyle><!--endlabel--><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mrow ><mo 
@@ -3429,7 +3405,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >y</mi><mi 
 >y</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >R</mi><mi 
 >o</mi><mi 
@@ -3505,10 +3481,10 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >l</mi><mi 
 >l</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">ℋ</mi><mspace width="1em" class="nbsp" /><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
@@ -3525,7 +3501,8 @@ class="MathClass-op">exp</mo><!--nolimits--></mrow><mrow
 ><mi 
 >i</mi><mi 
 >χ</mi><mi 
->i</mi></mrow></msup 
+>i</mi>
+    </mrow></msup 
 ><mo 
 class="MathClass-punc">,</mo><msup><mrow 
 ><mo 
@@ -3534,7 +3511,8 @@ class="MathClass-op">exp</mo><!--nolimits--></mrow><mrow
 class="MathClass-bin">−</mo><mi 
 >i</mi><mi 
 >χ</mi><mi 
->i</mi></mrow></msup 
+>i</mi>
+      </mrow></msup 
 ></mrow><mo 
 class="MathClass-close">)</mo></mrow>
 </math></td><td class="eq-no">(26)</td></tr></table>
@@ -3612,7 +3590,7 @@ class="MathClass-close">)</mo></mrow></math>)</h4>
 <!--l. 948--><p class="noindent" >The matrix <!--l. 948--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->T</mi><mo 
+>T</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math>
@@ -3620,7 +3598,7 @@ represents complex atmospheric gain: refraction, extinction and perhaps non-isop
 <!--l. 950--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->T</mi><mo 
+>T</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math> does
@@ -3632,7 +3610,7 @@ not depend on a polarisation coordinate frame, there is only one form:
 display="block" class="equation">
 <mstyle 
    id="x1-13001r27"  class="label" ></mstyle><!--endlabel--><mi 
->T</mi><mo 
+>T</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /> <mo 
@@ -3668,7 +3646,7 @@ class="array"  columnalign="center"><mn>0</mn></mtd><mtd
 class="array"  columnalign="center"><mi 
 >t</mi><mi 
 >i</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >M</mi><mi 
 >u</mi><mi 
@@ -3805,12 +3783,12 @@ display="block" class="equation">
 >K</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /> <mo 
+>i</mi> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >K</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /> <mo 
+>i</mi> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >K</mi><mi 
 >i</mi><mrow ><mo 
@@ -3834,28 +3812,28 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >a</mi><mi 
 >a</mi></mtd><mtd 
-class="array"  columnalign="center">  <mn>0</mn>  </mtd>
+class="array"  columnalign="center">  <mn>0</mn> </mtd>
 </mtr>  <mtr><mtd 
-class="array"  columnalign="center"> <mn>0</mn> </mtd><mtd 
+class="array"  columnalign="center">  <mn>0</mn>  </mtd><mtd 
 class="array"  columnalign="center"><mi 
 >k</mi><mi 
 >i</mi><mi 
 >b</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"> <mtr><mtd 
 class="array"  columnalign="center"><mi 
 >k</mi><mi 
 >i</mi></mtd><mtd 
-class="array"  columnalign="center"><mn>0</mn></mtd>
+class="array"  columnalign="center"> <mn>0</mn></mtd>
 </mtr>  <mtr><mtd 
 class="array"  columnalign="center"><mn>0</mn></mtd><mtd 
 class="array"  columnalign="center"><mi 
 >k</mi><mi 
 >i</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >M</mi><mi 
 >u</mi><mi 
@@ -4219,7 +4197,7 @@ href="#x1-100004">4<!--tex4ht:ref: POLCOORD --></a>). For linear polarisation co
 display="block" class="equation">
 <mstyle 
    id="x1-15001r29"  class="label" ></mstyle><!--endlabel--><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /> <mo 
@@ -4247,7 +4225,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >y</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">≡</mo><mspace width="1em" class="nbsp" /><mfenced separators="" 
 open="("  close=")" ><mrow><mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"><mtr><mtd 
@@ -4273,7 +4251,7 @@ class="MathClass-op"> cos</mo><!--nolimits--><mi
 >γ</mi><mi 
 >x</mi><mi 
 >a</mi>  </mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >R</mi><mi 
 >o</mi><mi 
@@ -4300,8 +4278,8 @@ class="cmsl-10x-x-109">receptor</span> <!--l. 1069--><math
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math>
-(see also Appendix <a 
-href="#x1-33000A.3">A.3<!--tex4ht:ref: fig-coord --></a>). There is an implicit assumption here that the <span 
+(see also Appendix <span 
+class="cmbx-10x-x-109">??</span>). There is an implicit assumption here that the <span 
 class="cmsl-10x-x-109">feed</span> has <span 
 class="cmbx-10x-x-109">perpendicular</span>
 <span 
@@ -4355,10 +4333,10 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >l</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">ℋ</mi><mspace width="1em" class="nbsp" /><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
@@ -4376,7 +4354,8 @@ class="MathClass-op">exp</mo><!--nolimits--></mrow><mrow
 >i</mi><mi 
 >γ</mi><mi 
 >x</mi><mi 
->a</mi></mrow></msup 
+>a</mi>
+     </mrow></msup 
 ><mo 
 class="MathClass-punc">,</mo><msup><mrow 
 ><mo 
@@ -4386,7 +4365,8 @@ class="MathClass-bin">−</mo><mi
 >i</mi><mi 
 >γ</mi><mi 
 >x</mi><mi 
->a</mi></mrow></msup 
+>a</mi>
+        </mrow></msup 
 ></mrow><mo 
 class="MathClass-close">)</mo></mrow>
 </math></td><td class="eq-no">(30)</td></tr></table>
@@ -4571,7 +4551,7 @@ class="MathClass-rel">=</mo> <mi
 that matrix <!--l. 1122--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math> reduces
@@ -4591,7 +4571,7 @@ href="#x1-150005.4">5.4<!--tex4ht:ref: JONES-mjProj-normal --></a> above.
 </p><!--l. 1126--><p class="noindent" >For linear polarisation coordinates <!--l. 1126--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math>
@@ -4604,7 +4584,7 @@ href="#x1-15001r29">29<!--tex4ht:ref: eq:mjProjL-normal --></a> above):
 display="block" class="equation">
 <mstyle 
    id="x1-16001r32"  class="label" ></mstyle><!--endlabel--><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /> <mo 
@@ -4632,7 +4612,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >y</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">≡</mo><mspace width="1em" class="nbsp" /><mfenced separators="" 
 open="("  close=")" ><mrow><mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"><mtr><mtd 
@@ -4652,13 +4632,13 @@ class="array"  columnalign="center"><mo
 class="MathClass-op"> sin</mo><!--nolimits--><mi 
 >γ</mi><mi 
 >y</mi><mi 
->b</mi></mtd><mtd 
+>b</mi> </mtd><mtd 
 class="array"  columnalign="center">  <mo 
 class="MathClass-op"> cos</mo><!--nolimits--><mi 
 >γ</mi><mi 
 >y</mi><mi 
 >b</mi>  </mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >R</mi><mi 
 >o</mi><mi 
@@ -4712,10 +4692,10 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >l</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">ℋ</mi><mspace width="1em" class="nbsp" /><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
@@ -4725,7 +4705,7 @@ class="eqnarray-4"> <mtext class="eqnarray">(33)</mtext><mtext
    id="x1-16002r33"  class="label" ></mtext><mtext 
 class="endlabel"></mtext></mtd>
 </mtr><mtr><mtd 
-class="eqnarray-1">   </mtd><mtd 
+class="eqnarray-1">    </mtd><mtd 
 class="eqnarray-2">   <mo 
 class="MathClass-rel">=</mo></mtd><mtd 
 class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mn>0</mn><mo 
@@ -5011,7 +4991,7 @@ display="block" class="equation">
 >B</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mrow ><mo 
+>i</mi> <mrow ><mo 
 class="MathClass-open">(</mo><mrow><mover 
 accent="true"><mrow 
 ><mi 
@@ -5042,11 +5022,11 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >y</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mi 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mi 
 >B</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mrow ><mo 
+>i</mi> <mrow ><mo 
 class="MathClass-open">(</mo><mrow><mover 
 accent="true"><mrow 
 ><mi 
@@ -5077,7 +5057,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >l</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced>
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced>
 </math></td><td class="eq-no">(35)</td></tr></table>
 <!--l. 1211--><p class="nopar" >
 </p><!--l. 1213--><p class="noindent" ><span 
@@ -5263,7 +5243,7 @@ display="block" class="equation">
 >E</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mrow ><mo 
+>i</mi> <mrow ><mo 
 class="MathClass-open">(</mo><mrow><mover 
 accent="true"><mrow 
 ><mi 
@@ -5274,7 +5254,7 @@ class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi
 >E</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mrow ><mo 
+>i</mi> <mrow ><mo 
 class="MathClass-open">(</mo><mrow><mover 
 accent="true"><mrow 
 ><mi 
@@ -5314,7 +5294,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >b</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">≈</mo><mspace width="1em" class="nbsp" /><mi 
 >D</mi><mi 
 >i</mi><mi 
@@ -5339,7 +5319,7 @@ display="inline" ><mi
 >E</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  </math>
+>i</mi> </math>
 for an idealised axially symmetric gaussian beam and dipole <span 
 class="cmsl-10x-x-109">receptor</span>swould look like:</p>
 <!--tex4ht:inline--><!--l. 1270--><math 
@@ -5360,7 +5340,7 @@ class="MathClass-op">exp</mo><!--nolimits--><mo
 class="MathClass-bin">−</mo><mrow ><mo 
 class="MathClass-open">[</mo><mrow><msup><mrow 
 ><mrow ><mo 
-class="MathClass-open">(</mo><mrow>      <mfrac><mrow 
+class="MathClass-open">(</mo><mrow>     <mfrac><mrow 
 ><msup><mrow 
 ><mi 
 >l</mi></mrow><mrow 
@@ -5433,7 +5413,7 @@ class="MathClass-op">exp</mo><!--nolimits--><mo
 class="MathClass-bin">−</mo><mrow ><mo 
 class="MathClass-open">[</mo><mrow><msup><mrow 
 ><mrow ><mo 
-class="MathClass-open">(</mo><mrow>      <mfrac><mrow 
+class="MathClass-open">(</mo><mrow>     <mfrac><mrow 
 ><msup><mrow 
 ><mi 
 >l</mi></mrow><mrow 
@@ -5463,7 +5443,7 @@ class="MathClass-close">)</mo></mrow></mrow><mrow
 ><mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-bin">+</mo> <mspace width="1em" class="nbsp" /><msup><mrow 
 ><mrow ><mo 
-class="MathClass-open">(</mo><mrow>     <mfrac><mrow 
+class="MathClass-open">(</mo><mrow>    <mfrac><mrow 
 ><msup><mrow 
 ><mi 
 >m</mi></mrow><mrow 
@@ -5491,7 +5471,7 @@ class="MathClass-close">)</mo></mrow></mrow></mfrac></mrow><mo
 class="MathClass-close">)</mo></mrow></mrow><mrow 
 ><mn>2</mn></mrow></msup 
 ></mrow><mo 
-class="MathClass-close">]</mo></mrow></mtd><mtd 
+class="MathClass-close">]</mo></mrow> </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray"></mtext></mtd>
 </mtr><mtr><mtd 
 class="eqnarray-1">    </mtd><mtd 
@@ -5718,7 +5698,7 @@ class="array"  columnalign="center">    <mi
 >e</mi><mi 
 >i</mi><mi 
 >a</mi><mi 
->a</mi>      </mtd><mtd 
+>a</mi>     </mtd><mtd 
 class="array"  columnalign="center"><mi 
 >e</mi><mi 
 >i</mi><mi 
@@ -5756,15 +5736,15 @@ class="MathClass-bin">+</mo> <msup><mrow
 >i</mi><mi 
 >a</mi><mi 
 >b</mi></mtd><mtd 
-class="array"  columnalign="center">      <mi 
+class="array"  columnalign="center">     <mi 
 >e</mi><mi 
 >i</mi><mi 
 >b</mi><mi 
->b</mi>      </mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced>                                                                                                  </mtd><mtd 
+>b</mi>     </mtd></mtr>
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced>                                                                                                   </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray"></mtext></mtd>
 </mtr><mtr><mtd 
-class="eqnarray-1">       </mtd><mtd 
+class="eqnarray-1">        </mtd><mtd 
 class="eqnarray-2">   <mo 
 class="MathClass-rel">≈</mo></mtd><mtd 
 class="eqnarray-3">   <mspace width="1em" class="nbsp" /> <mfenced separators="" 
@@ -5808,7 +5788,7 @@ class="MathClass-bin">∕</mo><mi
 >i</mi><mi 
 >a</mi><mi 
 >a</mi></mtd><mtd 
-class="array"  columnalign="center">      <mn>1</mn>     </mtd></mtr>
+class="array"  columnalign="center">     <mn>1</mn>     </mtd></mtr>
 <!--cc--></mtable>                                                                                                                            </mrow></mfenced><mspace width="1em" class="nbsp" /> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"> <mtr><mtd 
@@ -5833,10 +5813,10 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >b</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced>           </mtd><mtd 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced>            </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray"></mtext></mtd>
 </mtr><mtr><mtd 
-class="eqnarray-1">       </mtd><mtd 
+class="eqnarray-1">        </mtd><mtd 
 class="eqnarray-2">   <mo 
 class="MathClass-rel">=</mo></mtd><mtd 
 class="eqnarray-3">   <mspace width="1em" class="nbsp" /> <mfenced separators="" 
@@ -5863,7 +5843,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >b</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mfenced separators="" 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"> <mtr><mtd 
 class="array"  columnalign="center"><mi 
@@ -5887,7 +5867,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >b</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >D</mi><mi 
 >i</mi><mspace width="1em" class="nbsp" /><mi 
@@ -5940,12 +5920,12 @@ display="block" class="equation">
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /> <mo 
+>i</mi> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /> <mo 
+>i</mi> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >D</mi><mi 
 >i</mi><mspace width="1em" class="nbsp" /> <mo 
@@ -5973,7 +5953,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >b</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced>
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced>
 </math></td><td class="eq-no">(39)</td></tr></table>
 <!--l. 1370--><p class="nopar" >
 </p><!--l. 1373--><p class="noindent" >But in many cases, position-independent leakage can be physically explained by deviations
@@ -6010,7 +5990,7 @@ class="eqnarray-1"> <mi
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /> <mo 
+>i</mi> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"> <mtr><mtd 
@@ -6035,7 +6015,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >b</mi><mi 
 >b</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced></mtd><mtd 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced></mtd><mtd 
 class="eqnarray-2">   <mo 
 class="MathClass-rel">=</mo></mtd><mtd 
 class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi 
@@ -6144,13 +6124,13 @@ class="eqnarray-1"> <mi
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /> <mo 
+>i</mi> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">ℋ</mi><mspace width="1em" class="nbsp" /><mi 
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 mathvariant="bold-script">ℋ</mi><mo 
 class="MathClass-bin">−</mo><mn>1</mn></mtd><mtd 
 class="eqnarray-2">   <mo 
@@ -6217,7 +6197,8 @@ class="MathClass-op">exp</mo><!--nolimits--></mrow><mrow
 >i</mi><mi 
 >ϕ</mi><mi 
 >i</mi><mi 
->a</mi></mrow></msup 
+>a</mi>
+     </mrow></msup 
 ><mo 
 class="MathClass-punc">,</mo><msup><mrow 
 ><mo 
@@ -6227,12 +6208,13 @@ class="MathClass-bin">−</mo><mi
 >i</mi><mi 
 >ϕ</mi><mi 
 >i</mi><mi 
->a</mi></mrow></msup 
+>a</mi>
+       </mrow></msup 
 ></mrow><mo 
-class="MathClass-close">)</mo></mrow>        </mtd><mtd 
+class="MathClass-close">)</mo></mrow>       </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray">(41)</mtext><mtext 
    id="x1-18004r41"  class="label" ></mtext><mtext 
-class="endlabel"></mtext></mtd>                             </mtr></mtable>
+class="endlabel"></mtext></mtd>                           </mtr></mtable>
 </math>
 <!--l. 1428--><p class="nopar" >
 </p>
@@ -6450,12 +6432,12 @@ display="block" class="equation">
 >G</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>   <mo 
+>i</mi>  <mo 
 class="MathClass-rel">=</mo> <mi 
 >G</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>   <mo 
+>i</mi>  <mo 
 class="MathClass-rel">=</mo> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"> <mtr><mtd 
@@ -6480,7 +6462,7 @@ class="array"  columnalign="center"><mi
 >i</mi><mi 
 >q</mi><mi 
 >q</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mo 
 class="MathClass-rel">≈</mo> <mfenced separators="" 
 open="("  close=")" ><mrow><mtable  align="axis" style=""  
 equalrows="false" columnlines="none" equalcolumns="false" class="array"><mtr><mtd 
@@ -6495,7 +6477,7 @@ class="array"  columnalign="center"><mi
 >g</mi><mi 
 >i</mi><mi 
 >q</mi></mtd></mtr>
-<!--cc--></mtable>                                                                                                                                                               </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+<!--cc--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >D</mi><mi 
 >i</mi><mi 
@@ -7272,7 +7254,7 @@ class="MathClass-close">)</mo></mrow></math>:</p>
 <!--l. 1704--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-           <mstyle 
+         <mstyle 
    id="x1-25001r48"  class="label" ></mstyle><!--endlabel--><mspace width="1em" class="nbsp" /><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
 >J</mi><mi 
@@ -7350,7 +7332,7 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 1723--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math></td><td  
@@ -7409,7 +7391,7 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 1727--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->T</mi><mo 
+>T</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mo 
@@ -7486,7 +7468,7 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 1734--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math></td><td  
@@ -7566,7 +7548,7 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 1738--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math></td><td  
@@ -7627,12 +7609,12 @@ display="inline" ><mi
 >E</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mo 
+>i</mi> <mo 
 class="MathClass-punc">,</mo><mi 
 >E</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  </math></td><td  
+>i</mi> </math></td><td  
 class="tabbing">= diagonal matrix <!--l. 1743--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -7708,12 +7690,12 @@ display="inline" ><mi
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mo 
+>i</mi> <mo 
 class="MathClass-punc">,</mo><mi 
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  </math></td><td  
+>i</mi> </math></td><td  
 class="tabbing"><!--l. 1750--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mo 
@@ -7744,7 +7726,7 @@ display="inline" ><mi
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  </math></td><td  
+>i</mi> </math></td><td  
 class="tabbing">= <!--l. 1755--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -7840,7 +7822,7 @@ display="inline" ><mi
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  </math></td><td  
+>i</mi> </math></td><td  
 class="tabbing">= (<!--l. 1763--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -8105,7 +8087,7 @@ display="inline" ><mi
      if it is diagonal. But <!--l. 1802--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math>
@@ -8450,7 +8432,7 @@ class="MathClass-bin">⊙</mo>
      is diagonal and <!--l. 1843--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math>
@@ -8475,7 +8457,7 @@ class="MathClass-rel">≈</mo> <mi
      <!--l. 1847--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->P</mi><mo 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  </math>
@@ -8606,7 +8588,7 @@ href="#x1-8001r6">6<!--tex4ht:ref: eq:vvCoh-full --></a>) becomes:
 <!--l. 1873--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-               <mstyle 
+              <mstyle 
    id="x1-27001r49"  class="label" ></mstyle><!--endlabel--><mover 
 accent="true"><mrow 
 ><mi 
@@ -8657,14 +8639,14 @@ class="MathClass-open">(</mo><mrow><mi
 >k</mi><mi 
 >y</mi>
 <mi 
->i</mi>     <mo 
+>i</mi>    <mo 
 class="MathClass-bin">⊗</mo> <mi 
 >J</mi><mi 
 >s</mi><mi 
 >k</mi><mi 
 >y</mi>
 <mi 
->j</mi>    <mo 
+>j</mi>   <mo 
 class="MathClass-bin">∗</mo>
     </mrow><mo 
 class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><mi 
@@ -8730,12 +8712,12 @@ class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><mi
 >D</mi><mo 
 class="MathClass-bin">+</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
->P</mi><mo 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
+>P</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mi 
->F</mi><mo 
+>F</mi> <mo 
 class="MathClass-bin">+</mo>
 <mi 
 >i</mi>  <mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mspace width="1em" class="nbsp" /><mrow ><mo 
@@ -8754,7 +8736,7 @@ class="eqnarray-4"> <mtext class="eqnarray">(50)</mtext><mtext
    id="x1-27002r50"  class="label" ></mtext><mtext 
 class="endlabel"></mtext></mtd>
 </mtr><mtr><mtd 
-class="eqnarray-1">    </mtd><mtd 
+class="eqnarray-1">     </mtd><mtd 
 class="eqnarray-2">   <mo 
 class="MathClass-rel">=</mo></mtd><mtd 
 class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi 
@@ -8774,7 +8756,7 @@ class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><mi
 >D</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
->i</mi>  <mspace width="1em" class="nbsp" /><mi 
+>i</mi> <mspace width="1em" class="nbsp" /><mi 
 >P</mi><mo 
 class="MathClass-bin">⊙</mo>
 <mi 
@@ -8811,11 +8793,11 @@ class="eqnarray-3">   <mspace width="1em" class="nbsp" /><mi
 ><mi 
 >′</mi></mrow></msup 
 >
-  <mi 
->i</mi>                         </mtd><mtd 
+   <mi 
+>i</mi>                           </mtd><mtd 
 class="eqnarray-4"> <mtext class="eqnarray">(52)</mtext><mtext 
    id="x1-27002r52"  class="label" ></mtext><mtext 
-class="endlabel"></mtext></mtd>                                             </mtr></mtable>
+class="endlabel"></mtext></mtd>                                          </mtr></mtable>
 </math>
 <!--l. 1922--><p class="nopar" >
 </p>
@@ -8832,7 +8814,7 @@ becomes:
 <!--l. 1934--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-              <mstyle 
+            <mstyle 
    id="x1-28001r53"  class="label" ></mstyle><!--endlabel--><mover 
 accent="true"><mrow 
 ><mi 
@@ -8876,7 +8858,7 @@ class="MathClass-bin">⊗</mo> <mi
 >s</mi>
 <mi 
 >j</mi><mi 
->m</mi> <mo 
+>m</mi><mo 
 class="MathClass-bin">∗</mo>
     </mrow><mo 
 class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><munder class="msub"><mrow 
@@ -8905,7 +8887,7 @@ class="MathClass-bin">⊗</mo> <mi
 >m</mi><mi 
 >k</mi><mo 
 class="MathClass-bin">∗</mo>
-    </mrow><mo 
+     </mrow><mo 
 class="MathClass-close">)</mo></mrow><mspace width="1em" class="nbsp" /><mi 
 >S</mi><mspace width="1em" class="nbsp" /><msub><mrow 
 ><mover 
@@ -8936,7 +8918,7 @@ href="#x1-28001r53">53<!--tex4ht:ref: eq:vvCoh-tied-visky --></a> can be reduced
 <!--l. 1957--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
-     <mstyle 
+   <mstyle 
    id="x1-28002r54"  class="label" ></mstyle><!--endlabel--><mover 
 accent="true"><mrow 
 ><mi 
@@ -9255,10 +9237,10 @@ class="cmti-10x-x-109">enforce </span>the use of a suitable set of conventions. 
 appendix is a hopefully useful step in that process. It proposes coordinate conventions and some
 deﬁnitions (notably the one for <span 
 class="cmsl-10x-x-109">feed</span>!), and lists symbols that have been deﬁned in a separate TeX ﬁle
-(referred to as <span class="verb"><span 
-class="cmtt-10x-x-109">\include(megi-symbols) </span>in this LaTeX document). The TeX syntax is shown in small
-print (e.g. <span class="verb"><span 
-class="cmtt-10">\FeedI</span>), for easy reference.
+(referred to as <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10x-x-109">\include(megi-symbols)</span></span></span> in this LaTeX document). The TeX syntax is shown in small
+print (e.g. <span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\FeedI</span></span></span>), for easy reference.
 </p><!--l. 2082--><p class="noindent" >
 </p>
 <h4 class="subsectionHead"><span class="titlemark">A.1   </span> <a 
@@ -9268,12 +9250,12 @@ order to emphasize that they have been deﬁned explicitly.
 </p>
      <ul class="itemize1">
      <li class="itemize">A <span 
-class="cmsl-10x-x-109">receptor</span> (<span class="verb"><span 
-class="cmtt-10">\Receptor</span>) converts the incident electric ﬁeld into a voltage.
+class="cmsl-10x-x-109">receptor</span> (<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Receptor</span></span></span>) converts the incident electric ﬁeld into a voltage.
      </li>
      <li class="itemize">An <span 
-class="cmsl-10x-x-109">IF-channel</span> (<span class="verb"><span 
-class="cmtt-10">\IFchannel</span>) is one of the two output signals of a <span 
+class="cmsl-10x-x-109">IF-channel</span> (<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\IFchannel</span></span></span>) is one of the two output signals of a <span 
 class="cmsl-10x-x-109">feed</span>, one for each
      ‘polarisation’. <span 
 class="cmti-10x-x-109">NB: The signals in a pair of </span><span 
@@ -9286,8 +9268,8 @@ class="cmsl-10x-x-109">receptor</span><span
 class="cmti-10x-x-109">s.</span>
      </li>
      <li class="itemize">A  <span 
-class="cmsl-10x-x-109">feed</span> (<span class="verb"><span 
-class="cmtt-10">\Feed</span>)  is  the  most  fundamental  concept  of  the  M.E.  formalism,  since
+class="cmsl-10x-x-109">feed</span> (<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Feed</span></span></span>)  is  the  most  fundamental  concept  of  the  M.E.  formalism,  since
      Jones-matrices are <span 
 class="cmsl-10x-x-109">feed</span>-based. Although a <span 
 class="cmsl-10x-x-109">feed</span> may sometimes have only one <span 
@@ -9308,8 +9290,8 @@ class="cmti-10x-x-109">s, e.g. for diﬀerent beams in</span>
 class="cmti-10x-x-109">a multi-beam instrument, or for diﬀerent spectral windows.</span>
      </li>
      <li class="itemize">An <span 
-class="cmsl-10x-x-109">antenna</span> (<span class="verb"><span 
-class="cmtt-10">\Antenna</span>) is a physical grouping of <span 
+class="cmsl-10x-x-109">antenna</span> (<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Antenna</span></span></span>) is a physical grouping of <span 
 class="cmsl-10x-x-109">feed</span>s. <span 
 class="cmti-10x-x-109">NB: As a concept, it tends to play</span>
      <span 
@@ -9317,8 +9299,8 @@ class="cmti-10x-x-109">a rather confusing role in the M.E. discussions.</span>
 
      </li>
      <li class="itemize">An  <span 
-class="cmsl-10x-x-109">interferometer</span> (<span class="verb"><span 
-class="cmtt-10">\Interferometer</span>)  is  the  combination  of  two  <span 
+class="cmsl-10x-x-109">interferometer</span> (<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Interferometer</span></span></span>)  is  the  combination  of  two  <span 
 class="cmsl-10x-x-109">feed</span>s.  Its  output  is
      a  <span 
 class="cmsl-10x-x-109">visibility</span> of  1-4  spectra,  depending  on  the  number  of  <span 
@@ -9336,13 +9318,13 @@ class="cmti-10x-x-109">.</span>
 class="cmti-10x-x-109">In that case, its output is a single spectrum.</span>
      </li>
      <li class="itemize">A <span 
-class="cmsl-10x-x-109">telescope</span> (<span class="verb"><span 
-class="cmtt-10">\Telescope</span>) is an entire instrument. It can be a single dish (e.g. GBT) or
+class="cmsl-10x-x-109">telescope</span> (<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Telescope</span></span></span>) is an entire instrument. It can be a single dish (e.g. GBT) or
      an aperture synthesis array (e.g. ATCA).
      </li>
      <li class="itemize">A <span 
-class="cmsl-10x-x-109">projected</span> (<span class="verb"><span 
-class="cmtt-10">\Projected</span>) angle is an angle projected on the plane perpendicular to the
+class="cmsl-10x-x-109">projected</span> (<span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\Projected</span></span></span>) angle is an angle projected on the plane perpendicular to the
      propagation direction (the <!--l. 2125--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -9369,8 +9351,8 @@ display="inline" ><mi
 >i</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >j</mi></math></td><td style="width:127;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\FeedI,\FeedJ </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\FeedI,\FeedJ</span></span></span> </td><td  
 class="tabbing"><span 
 class="cmsl-10x-x-109">feed</span> labels  </td></tr></table>
 <!--l. 2142--><p class="noindent" >                               </p><table  
@@ -9384,8 +9366,8 @@ display="inline" ><mi
 >a</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >b</mi></math></td><td style="width:127;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\RcpA,\RcpB </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\RcpA,\RcpB</span></span></span> </td><td  
 class="tabbing"><span 
 class="cmsl-10x-x-109">receptor</span> labels, two per <span 
 class="cmsl-10x-x-109">feed</span>.  </td></tr></table>
@@ -9400,8 +9382,8 @@ display="inline" ><mi
 >p</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >q</mi></math></td><td style="width:127;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\IFP,\IFQ </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\IFP,\IFQ</span></span></span> </td><td  
 class="tabbing"><span 
 class="cmsl-10x-x-109">IF-channel</span> labels,two per <span 
 class="cmsl-10x-x-109">feed</span>.  </td></tr></table>
@@ -9416,8 +9398,8 @@ display="inline" ><mi
 >r</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >l</mi></math></td><td style="width:127;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\RPol,\LPol </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\RPol,\LPol</span></span></span> </td><td  
 class="tabbing">circular polarisation (right, left)  </td></tr></table>
 <!--l. 2148--><p class="noindent" >                              </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9430,8 +9412,8 @@ display="inline" ><mi
 >x</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >y</mi></math></td><td style="width:127;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\XPol,\YPol </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\XPol,\YPol</span></span></span> </td><td  
 class="tabbing">linear polarisation (N-S, E-W)  </td></tr></table>
 <!--l. 2150--><p class="noindent" >                                                                                     </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9452,8 +9434,8 @@ class="MathClass-bin">+</mo><mo
 class="MathClass-punc">,</mo><mi 
 >A</mi><mo 
 class="MathClass-bin">⊙</mo></math></td><td style="width:127;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">A\ssLin,A\ssCir </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">A\ssLin,A\ssCir</span></span></span> </td><td  
 class="tabbing">superscripts for linear and circular polarisation  </td></tr></table>
 <!--l. 2153--><p class="noindent" >                                              </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9469,8 +9451,8 @@ class="MathClass-punc">,</mo><mi
 >A</mi><mi 
 >i</mi><mi 
 >j</mi></math></td><td style="width:127;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">A\ssI,A\ssIJ </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">A\ssI,A\ssIJ</span></span></span> </td><td  
 class="tabbing"><span 
 class="cmsl-10x-x-109">feed</span> subscripts</td></tr></table>
 <!--l. 2155--><p class="noindent" >
@@ -9485,7 +9467,7 @@ display="inline" ><mi
 element of matrix <!--l. 2158--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->Y</mi></math> for
+>Y</mi> </math> for
 <span 
 class="cmsl-10x-x-109">feed</span> <!--l. 2158--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -9582,8 +9564,8 @@ accent="true"><mrow
 ><mi 
 >r</mi></mrow><mo 
 class="MathClass-op">→</mo></mover></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvAntPos </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvAntPos</span></span></span> </td><td  
 class="tabbing">Projected <span 
 class="cmsl-10x-x-109">feed</span> (<span 
 class="cmsl-10x-x-109">receptor</span>?) position vector  </td></tr></table>
@@ -9600,8 +9582,8 @@ class="MathClass-punc">,</mo><mi
 >v</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >w</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccU,\ccV,\ccW </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccU,\ccV,\ccW</span></span></span> </td><td  
 class="tabbing">Projected baseline coordinates  </td></tr></table>
 <!--l. 2200--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9615,8 +9597,8 @@ accent="true"><mrow
 ><mi 
 >u</mi></mrow><mo 
 class="MathClass-op">→</mo></mover></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvUVW </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvUVW</span></span></span> </td><td  
 class="tabbing">Projected baseline vector <!--l. 2201--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
@@ -9654,8 +9636,8 @@ display="inline" ><mi
 >x</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >y</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccX,\ccY </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccX,\ccY</span></span></span> </td><td  
 class="tabbing">IAU electrical frame on the sky.  </td></tr></table>
 <!--l. 2206--><p class="noindent" >                    </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9666,8 +9648,8 @@ class="tabbing"><!--l. 2206--><math
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >z</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccZ </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccZ</span></span></span> </td><td  
 class="tabbing">propagation direction of incident ﬁeld.  </td></tr></table>
 <!--l. 2208--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9680,8 +9662,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >x</mi><mi 
 >y</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaXY </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaXY</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2209--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -9705,8 +9687,8 @@ display="inline" ><mi
 >x</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >y</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccXPol,\ccYPol </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccXPol,\ccYPol</span></span></span> </td><td  
 class="tabbing">linear polarisation coordinates.  </td></tr></table>
 <!--l. 2212--><p class="noindent" >                         </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9719,8 +9701,8 @@ display="inline" ><mi
 >r</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >l</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccRPol,\ccLPol </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccRPol,\ccLPol</span></span></span> </td><td  
 class="tabbing">circular polarisation coordinates.  </td></tr></table>
 <!--l. 2214--><p class="noindent" >                                                                                     </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9748,8 +9730,8 @@ class="MathClass-punc">,</mo><mi
 >m</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >n</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccL,\ccM,\ccN </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccL,\ccM,\ccN</span></span></span> </td><td  
 class="tabbing">Coordinates (direction cosines)  </td></tr></table>
 <!--l. 2218--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9763,8 +9745,8 @@ accent="true"><mrow
 ><mi 
 >ρ</mi></mrow><mo 
 class="MathClass-op">→</mo></mover></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvLMN </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvLMN</span></span></span> </td><td  
 class="tabbing">Source direction vector <!--l. 2219--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
@@ -9793,8 +9775,8 @@ class="MathClass-op">→</mo></mover>
 >f</mi><mi 
 >t</mi><mi 
 >c</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvFTC </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvFTC</span></span></span> </td><td  
 class="tabbing">Fringe Tracking Centre <!--l. 2221--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
@@ -9830,8 +9812,8 @@ class="MathClass-op">→</mo></mover>
 <mi 
 >m</mi><mi 
 >c</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvMC </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvMC</span></span></span> </td><td  
 class="tabbing">Map Centre <!--l. 2223--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
@@ -9858,8 +9840,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >l</mi><mi 
 >m</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaLM </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaLM</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2225--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -9883,8 +9865,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >l</mi><mi 
 >x</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaLX </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaLX</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2227--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -9936,8 +9918,8 @@ class="MathClass-punc">,</mo><msup><mrow
 >
 <mi 
 >i</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccLI,\ccMI </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccLI,\ccMI</span></span></span> </td><td  
 class="tabbing">Coordinates  </td></tr></table>
 <!--l. 2232--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -9952,8 +9934,8 @@ display="inline" ><mi
 class="MathClass-punc">,</mo><mi 
 >m</mi><mi 
 >i</mi><mn>0</mn></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccLIO,\ccMIO </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccLIO,\ccMIO</span></span></span> </td><td  
 class="tabbing">Origin (<!--l. 2233--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -9972,8 +9954,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >l</mi><mi 
 >i</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaLI </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaLI</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2235--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -9998,8 +9980,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >x</mi><mi 
 >i</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaXI </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaXI</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2237--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -10069,8 +10051,8 @@ class="MathClass-op">″</mo></mrow></msup
 <mi 
 >i</mi><mi 
 >a</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccLIA,\ccMIA </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccLIA,\ccMIA</span></span></span> </td><td  
 class="tabbing">Coordinates  </td></tr></table>
 <!--l. 2243--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -10097,8 +10079,8 @@ class="MathClass-punc">,</mo><msup><mrow
 <mi 
 >i</mi><mi 
 >a</mi><mn>0</mn></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccLIAO,\ccMIAO </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccLIAO,\ccMIAO</span></span></span> </td><td  
 class="tabbing">Origin (<!--l. 2244--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
@@ -10129,8 +10111,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >i</mi><mi 
 >a</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaIA </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaIA</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2246--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
@@ -10162,8 +10144,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >x</mi><mi 
 >a</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaXA </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaXA</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2248--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -10238,8 +10220,8 @@ class="MathClass-op">″</mo></mrow></msup
 <mi 
 >i</mi><mi 
 >b</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccLIB,\ccMIB </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccLIB,\ccMIB</span></span></span> </td><td  
 class="tabbing">Coordinates  </td></tr></table>
 <!--l. 2254--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -10266,8 +10248,8 @@ class="MathClass-punc">,</mo><msup><mrow
 <mi 
 >i</mi><mi 
 >b</mi><mn>0</mn></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccLIBO,\ccMIBO </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccLIBO,\ccMIBO</span></span></span> </td><td  
 class="tabbing">Origin (<!--l. 2255--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
@@ -10298,8 +10280,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >i</mi><mi 
 >b</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaIB </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaIB</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2257--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
@@ -10331,8 +10313,8 @@ display="inline" ><mi
 >γ</mi><mi 
 >y</mi><mi 
 >b</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\aaYB </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\aaYB</span></span></span> </td><td  
 class="tabbing">Angle from <!--l. 2259--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -10371,30 +10353,23 @@ class="MathClass-bin">+</mo> <mi
 <hr class="figure" /><div class="figure" 
 >
 
-<a 
- id="x1-330011"></a>
 
+<div class="center" 
+>
+<!--l. 2266--><p class="noindent" >
+</p><!--l. 2267--><p class="noindent" ><img 
+src="1850x.png" alt="PIC" class="graphics" width="455" height="341"  /><!--tex4ht:graphics  
+name="1850x.png" src="fig-coord.eps"  
+--></p></div>
 <div class="center" 
 >
 <!--l. 2269--><p class="noindent" >
-</p><!--l. 2272--><p class="noindent" ><img 
-src="1850x.png" alt="ﬁg-coord.eps"  /></p></div>
-<br /> <div class="caption" 
-><span class="id">Figure 1: </span><span  
-class="content"><span 
-class="cmr-10">Label: ﬁg-coord</span><span 
-class="cmr-10"> </span><span 
-class="cmr-10"> File: ﬁg-coord.eps</span></span></div><!--tex4ht:label?: x1-330011 -->
-<div class="center" 
->
-<!--l. 2276--><p class="noindent" >
-
-</p><!--l. 2288--><p class="noindent" ><span 
+</p><!--l. 2281--><p class="noindent" ><span 
 class="cmti-10x-x-109">A    (rather    crowded)    overview    of    the    various    coordinate    frames    for    the</span>
 <span 
 class="cmti-10x-x-109">Measurement    Equation.    See    also    the    text.    The    origin    of    the    Sky    frame</span>
 <span 
-class="cmti-10x-x-109">(</span><!--l. 2288--><math 
+class="cmti-10x-x-109">(</span><!--l. 2281--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >l</mi><mo 
@@ -10407,7 +10382,7 @@ class="cmti-10x-x-109">.    The    origin    of    the    </span><span
 class="cmsl-10x-x-109">feed</span><span 
 class="cmti-10x-x-109">-frame</span>
 <span 
-class="cmti-10x-x-109">(</span><!--l. 2288--><math 
+class="cmti-10x-x-109">(</span><!--l. 2281--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10429,7 +10404,7 @@ class="cmti-10x-x-109">)</span>
 <span 
 class="cmti-10x-x-109">is deﬁned by the pointing centre of </span><span 
 class="cmsl-10x-x-109">feed</span><span 
-class="cmti-10x-x-109"> </span><!--l. 2288--><math 
+class="cmti-10x-x-109"> </span><!--l. 2281--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >i</mi></math><span 
@@ -10438,12 +10413,12 @@ class="cmti-10x-x-109">.</span>
 class="cmti-10x-x-109">The ‘pointing centres’ of the voltage beams of </span><span 
 class="cmsl-10x-x-109">receptor</span><span 
 class="cmti-10x-x-109">s</span><span 
-class="cmti-10x-x-109"> </span><!--l. 2288--><math 
+class="cmti-10x-x-109"> </span><!--l. 2281--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math>
 <span 
-class="cmti-10x-x-109">and </span><!--l. 2288--><math 
+class="cmti-10x-x-109">and </span><!--l. 2281--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>
@@ -10452,7 +10427,7 @@ class="cmti-10x-x-109">(marked     with     a     and     b)     deﬁne     the
 class="cmsl-10x-x-109">receptor</span><span 
 class="cmti-10x-x-109">-frames</span>
 <span 
-class="cmti-10x-x-109">(</span><!--l. 2288--><math 
+class="cmti-10x-x-109">(</span><!--l. 2281--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10474,7 +10449,7 @@ class="MathClass-op">″</mo></mrow></msup
 >a</mi></math><span 
 class="cmti-10x-x-109">)</span>
 <span 
-class="cmti-10x-x-109">and (</span><!--l. 2288--><math 
+class="cmti-10x-x-109">and (</span><!--l. 2281--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10500,8 +10475,9 @@ class="cmti-10x-x-109">The shapes and position oﬀsets of these voltage beams a
 <span 
 class="cmti-10x-x-109">that they do not necessarily coincide.</span>                                                   </p></div>
 
+
 </div><hr class="endfigure" />
-<!--l. 2294--><p class="noindent" >The coordinates <!--l. 2294--><math 
+<!--l. 2287--><p class="noindent" >The coordinates <!--l. 2287--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10521,7 +10497,7 @@ class="MathClass-op">″</mo></mrow></msup
 <mi 
 >i</mi><mi 
 >a</mi></math>
-and <!--l. 2294--><math 
+and <!--l. 2287--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10542,16 +10518,16 @@ class="MathClass-op">″</mo></mrow></msup
 >i</mi><mi 
 >b</mi></math> of the frames
 of <span 
-class="cmsl-10x-x-109">receptor</span>s <!--l. 2295--><math 
+class="cmsl-10x-x-109">receptor</span>s <!--l. 2288--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math> and
-<!--l. 2295--><math 
+<!--l. 2288--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math> in equ <a 
 href="#x1-17003r37">37<!--tex4ht:ref: eq:mjBeamEl --></a> are related to the
-celestial coordinate frame <!--l. 2296--><math 
+celestial coordinate frame <!--l. 2289--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >l</mi><mo 
@@ -10559,7 +10535,7 @@ class="MathClass-punc">,</mo><mi
 >m</mi></math>
 in a two-step process. First we deﬁne an intermediate <span 
 class="cmsl-10x-x-109">feed</span>-frame
-<!--l. 2297--><math 
+<!--l. 2290--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10578,18 +10554,18 @@ class="MathClass-punc">,</mo><msup><mrow
 <mi 
 >i</mi></math> for
 <span 
-class="cmsl-10x-x-109">feed</span> <!--l. 2298--><math 
+class="cmsl-10x-x-109">feed</span> <!--l. 2291--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >i</mi></math>,
 projected on the Sky:
 </p>
 <table class="equation"><tr><td>
-<!--l. 2300--><math 
+<!--l. 2293--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
 <mstyle 
-   id="x1-33002r55"  class="label" ></mstyle><!--endlabel--> <mfenced separators="" 
+   id="x1-33001r55"  class="label" ></mstyle><!--endlabel--> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" equalcolumns="false" class="array"> <mtr><mtd 
 class="array"  columnalign="center"> <msup><mrow 
@@ -10609,7 +10585,8 @@ class="array"  columnalign="center"><msup><mrow
 >
 <mi 
 >i</mi></mtd></mtr>  <mtr><mtd 
-class="array"  columnalign="center"> </mtd></mtr><!--c--></mtable>                                                                                                                                                         </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+class="array"  columnalign="center"> </mtd></mtr>
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >R</mi><mi 
 >o</mi><mi 
@@ -10635,8 +10612,8 @@ class="MathClass-bin">−</mo> <mi
 class="array"  columnalign="center"> </mtd></mtr>
 <!--c--></mtable>                                                                                                                                                               </mrow></mfenced>
 </math></td><td class="eq-no">(55)</td></tr></table>
-<!--l. 2312--><p class="nopar" >
-</p><!--l. 2314--><p class="noindent" >in which <!--l. 2314--><math 
+<!--l. 2305--><p class="nopar" >
+</p><!--l. 2307--><p class="noindent" >in which <!--l. 2307--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mi 
@@ -10647,11 +10624,11 @@ class="MathClass-punc">,</mo><mi
 >i</mi><mn>0</mn></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> is the Pointing
 Centre of <span 
-class="cmsl-10x-x-109">feed</span> <!--l. 2315--><math 
+class="cmsl-10x-x-109">feed</span> <!--l. 2308--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >i</mi></math>, and
-<!--l. 2315--><math 
+<!--l. 2308--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi><mi 
@@ -10663,17 +10640,17 @@ class="MathClass-open">(</mo><mrow><mi
 >i</mi></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> is a rotation over the
 <span 
-class="cmsl-10x-x-109">projected</span> angle <!--l. 2316--><math 
+class="cmsl-10x-x-109">projected</span> angle <!--l. 2309--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >γ</mi><mi 
 >l</mi><mi 
 >i</mi></math> between
-the positive <!--l. 2316--><math 
+the positive <!--l. 2309--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >l</mi></math>-axis of the
-Sky frame and the <!--l. 2317--><math 
+Sky frame and the <!--l. 2310--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10685,11 +10662,11 @@ display="inline" ><msup><mrow
 >i</mi></math>-axis
 of the <span 
 class="cmsl-10x-x-109">feed</span>-frame.
-</p><!--l. 2319--><p class="noindent" >The voltage beams themselves are best modelled in a <span 
+</p><!--l. 2312--><p class="noindent" >The voltage beams themselves are best modelled in a <span 
 class="cmsl-10x-x-109">receptor</span>-frame (see equ <a 
 href="#x1-17003r37">37<!--tex4ht:ref: eq:mjBeamEl --></a>), again projected on the Sky.
 For <span 
-class="cmsl-10x-x-109">receptor</span> <!--l. 2321--><math 
+class="cmsl-10x-x-109">receptor</span> <!--l. 2314--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math>
@@ -10697,11 +10674,11 @@ we have:
 </p>
 <table class="equation"><tr><td>
 
-<!--l. 2323--><math 
+<!--l. 2316--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
 <mstyle 
-   id="x1-33003r56"  class="label" ></mstyle><!--endlabel--> <mfenced separators="" 
+   id="x1-33002r56"  class="label" ></mstyle><!--endlabel--> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" equalcolumns="false" class="array"> <mtr><mtd 
 class="array"  columnalign="center"> <msup><mrow 
@@ -10723,7 +10700,8 @@ class="MathClass-op">″</mo></mrow></msup
 <mi 
 >i</mi><mi 
 >a</mi></mtd></mtr>  <mtr><mtd 
-class="array"  columnalign="center"> </mtd></mtr><!--c--></mtable>                                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+class="array"  columnalign="center"> </mtd></mtr>
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >R</mi><mi 
 >o</mi><mi 
@@ -10773,8 +10751,8 @@ class="MathClass-bin">−</mo> <msup><mrow
 class="array"  columnalign="center"> </mtd></mtr>
 <!--c--></mtable>                                                                                                                                                               </mrow></mfenced>
 </math></td><td class="eq-no">(56)</td></tr></table>
-<!--l. 2335--><p class="nopar" >
-</p><!--l. 2337--><p class="noindent" >The matrix <!--l. 2338--><math 
+<!--l. 2328--><p class="nopar" >
+</p><!--l. 2330--><p class="noindent" >The matrix <!--l. 2331--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi><mi 
@@ -10785,13 +10763,13 @@ class="MathClass-open">(</mo><mrow><mi
 >i</mi><mi 
 >a</mi></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> represents a rotation
-over the angle <!--l. 2338--><math 
+over the angle <!--l. 2331--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >γ</mi><mi 
 >i</mi><mi 
 >a</mi></math> between the
-positive <!--l. 2339--><math 
+positive <!--l. 2332--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10802,7 +10780,7 @@ display="inline" ><msup><mrow
 <mi 
 >i</mi></math>-axis of the <span 
 class="cmsl-10x-x-109">feed</span>-frame
-and the <!--l. 2340--><math 
+and the <!--l. 2333--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -10815,17 +10793,17 @@ class="MathClass-op">″</mo></mrow></msup
 >a</mi></math>-axis of the relevant
 <span 
 class="cmsl-10x-x-109">receptor</span>-frame. For <span 
-class="cmsl-10x-x-109">receptor</span> <!--l. 2341--><math 
+class="cmsl-10x-x-109">receptor</span> <!--l. 2334--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>:
 </p>
 <table class="equation"><tr><td>
-<!--l. 2343--><math 
+<!--l. 2336--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
 <mstyle 
-   id="x1-33004r57"  class="label" ></mstyle><!--endlabel--> <mfenced separators="" 
+   id="x1-33003r57"  class="label" ></mstyle><!--endlabel--> <mfenced separators="" 
 open="("  close=")" ><mrow> <mtable  align="axis" style=""  
 equalrows="false" equalcolumns="false" class="array"> <mtr><mtd 
 class="array"  columnalign="center"> <msup><mrow 
@@ -10847,7 +10825,8 @@ class="MathClass-op">″</mo></mrow></msup
 <mi 
 >i</mi><mi 
 >b</mi></mtd></mtr>  <mtr><mtd 
-class="array"  columnalign="center"> </mtd></mtr><!--c--></mtable>                                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
+class="array"  columnalign="center"> </mtd></mtr>
+<!--c--></mtable>                                                                                                                                       </mrow></mfenced> <mspace width="1em" class="nbsp" /> <mo 
 class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /><mi 
 >R</mi><mi 
 >o</mi><mi 
@@ -10897,8 +10876,8 @@ class="MathClass-bin">−</mo> <msup><mrow
 class="array"  columnalign="center"> </mtd></mtr>
 <!--c--></mtable>                                                                                                                                                               </mrow></mfenced>
 </math></td><td class="eq-no">(57)</td></tr></table>
-<!--l. 2355--><p class="nopar" >
-</p><!--l. 2358--><p class="noindent" ><!--l. 2358--><math 
+<!--l. 2348--><p class="nopar" >
+</p><!--l. 2351--><p class="noindent" ><!--l. 2351--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mrow ><mo 
 class="MathClass-open">(</mo><mrow><msup><mrow 
@@ -10920,7 +10899,7 @@ class="MathClass-punc">,</mo><msup><mrow
 >i</mi><mi 
 >a</mi><mn>0</mn></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> and
-<!--l. 2359--><math 
+<!--l. 2352--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mrow ><mo 
 class="MathClass-open">(</mo><mrow><msup><mrow 
@@ -10943,11 +10922,11 @@ class="MathClass-punc">,</mo><msup><mrow
 >b</mi><mn>0</mn></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> represent pointing
 oﬀsets of <span 
-class="cmsl-10x-x-109">receptor</span> <!--l. 2360--><math 
+class="cmsl-10x-x-109">receptor</span> <!--l. 2353--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math>
-and <!--l. 2360--><math 
+and <!--l. 2353--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>
@@ -10956,7 +10935,7 @@ class="cmsl-10x-x-109">feed</span>s that are not axially symmetric.
 </p>
 <h4 class="subsectionHead"><span class="titlemark">A.4   </span> <a 
  id="x1-34000A.4"></a>Matrices and vectors</h4>
-<!--l. 2369--><p class="noindent" >The following matrices and vectors play a role in the Measurement Equation:</p>
+<!--l. 2362--><p class="noindent" >The following matrices and vectors play a role in the Measurement Equation:</p>
 
 <table  
 cellpadding="0" border="0" cellspacing="0" 
@@ -10964,27 +10943,27 @@ class="tabbing"><tr
 style="vertical-align:baseline;" class="tabbing"><td  
 class="tabbing"> 
 </td></tr></table>
-<!--l. 2376--><p class="noindent" >                    </p><table  
+<!--l. 2369--><p class="noindent" >                    </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2376--><math 
+class="tabbing"><!--l. 2369--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
 accent="true"><mrow 
 ><mi 
 >I</mi></mrow><mo 
 class="MathClass-op">→</mo></mover></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvIQUV </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvIQUV</span></span></span> </td><td  
 class="tabbing">Stokes vector of the source (I,Q,U,V).  </td></tr></table>
-<!--l. 2378--><p class="noindent" >                </p><table  
+<!--l. 2371--><p class="noindent" >                </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2378--><math 
+class="tabbing"><!--l. 2371--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
 accent="true"><mrow 
@@ -10993,9 +10972,53 @@ accent="true"><mrow
 class="MathClass-op">→</mo></mover><mo 
 class="MathClass-punc">,</mo><mi 
 >v</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvCoh,\vvCohEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvCoh,\vvCohEl</span></span></span> </td><td  
 class="tabbing">Coherency vector, and one of its elements.  </td></tr></table>
+<!--l. 2373--><p class="noindent" >                                                                                     </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td  
+class="tabbing"> </td></tr></table>
+<!--l. 2374--><p class="noindent" >  </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2374--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>S</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmStokes</span></span></span> </td><td  
+class="tabbing">Stokes matrix, conversion between polarisation representations.  </td></tr></table>
+<!--l. 2376--><p class="noindent" >                      </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2376--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>S</mi><mo 
+class="MathClass-bin">+</mo></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmStokes\ssLin</span></span></span> </td><td  
+class="tabbing">Conversion to linear representation.  </td></tr></table>
+<!--l. 2378--><p class="noindent" >                     </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2378--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>S</mi><mo 
+class="MathClass-bin">⊙</mo></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmStokes\ssCir</span></span></span> </td><td  
+class="tabbing">Conversion to circular representation.  </td></tr></table>
 <!--l. 2380--><p class="noindent" >                                                                                     </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
@@ -11010,101 +11033,57 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2381--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->S</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmStokes </span></td><td  
-class="tabbing">Stokes matrix, conversion between polarisation representations.  </td></tr></table>
-<!--l. 2383--><p class="noindent" >                      </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2383--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->S</mi><mo 
-class="MathClass-bin">+</mo></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmStokes\ssLin </span></td><td  
-class="tabbing">Conversion to linear representation.  </td></tr></table>
-<!--l. 2385--><p class="noindent" >                     </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2385--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->S</mi><mo 
-class="MathClass-bin">⊙</mo></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmStokes\ssCir </span></td><td  
-class="tabbing">Conversion to circular representation.  </td></tr></table>
-<!--l. 2387--><p class="noindent" >                                                                                     </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td  
-class="tabbing"> </td></tr></table>
-<!--l. 2388--><p class="noindent" >  </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2388--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
 mathvariant="bold-script">ℳ</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmMueller </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmMueller</span></span></span> </td><td  
 class="tabbing">Mueller matrix: Stokes to Stokes through optical ‘element’  </td></tr></table>
-<!--l. 2390--><p class="noindent" >                                                                                     </p><table  
+<!--l. 2383--><p class="noindent" >                                                                                     </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td  
 class="tabbing"> </td></tr></table>
-<!--l. 2391--><p class="noindent" >  </p><table  
+<!--l. 2384--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2391--><math 
+class="tabbing"><!--l. 2384--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >X</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >x</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmXifr,\mmXifrEl </span></td><td  
-class="tabbing">Correlator matrix (<!--l. 2392--><math 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmXifr,\mmXifrEl</span></span></span> </td><td  
+class="tabbing">Correlator matrix (<!--l. 2385--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>4</mn> <mo 
 class="MathClass-bin">×</mo> <mn>4</mn></math>).  </td></tr></table>
-<!--l. 2393--><p class="noindent" >  </p><table  
+<!--l. 2386--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2393--><math 
+class="tabbing"><!--l. 2386--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >M</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >m</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmMifr,\mmMifrEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmMifr,\mmMifrEl</span></span></span> </td><td  
 class="tabbing">Multiplicative <span 
-class="cmsl-10x-x-109">interferometer</span>-based gain matrix (<!--l. 2394--><math 
+class="cmsl-10x-x-109">interferometer</span>-based gain matrix (<!--l. 2387--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mn>4</mn> <mo 
 class="MathClass-bin">×</mo> <mn>4</mn></math>).  </td></tr></table>
-<!--l. 2395--><p class="noindent" >                  </p><table  
+<!--l. 2388--><p class="noindent" >                  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2395--><math 
+class="tabbing"><!--l. 2388--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
 accent="true"><mrow 
@@ -11113,13 +11092,13 @@ accent="true"><mrow
 class="MathClass-op">→</mo></mover><mo 
 class="MathClass-punc">,</mo><mi 
 >a</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvAifr,\vvAifrEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvAifr,\vvAifrEl</span></span></span> </td><td  
 class="tabbing">Additive <span 
 class="cmsl-10x-x-109">interferometer</span>-based gain vector.</td></tr></table>
-<!--l. 2397--><p class="noindent" >
-</p><!--l. 2400--><p class="noindent" >The following <span 
-class="cmsl-10x-x-109">feed</span>-based Jones matrices <!--l. 2400--><math 
+<!--l. 2390--><p class="noindent" >
+</p><!--l. 2393--><p class="noindent" >The following <span 
+class="cmsl-10x-x-109">feed</span>-based Jones matrices <!--l. 2393--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mrow ><mo 
 class="MathClass-open">(</mo><mrow><mn>2</mn> <mo 
@@ -11132,7 +11111,55 @@ class="tabbing"><tr
 style="vertical-align:baseline;" class="tabbing"><td  
 class="tabbing"> 
 </td></tr></table>
-<!--l. 2407--><p class="noindent" >                    </p><table  
+<!--l. 2400--><p class="noindent" >                    </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2400--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>J</mi><mo 
+class="MathClass-punc">,</mo><mi 
+>j</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjJones,\mjJonesEl</span></span></span> </td><td  
+class="tabbing">Jones matrix, and one of its elements.  </td></tr></table>
+<!--l. 2402--><p class="noindent" >                                                                                     </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td  
+class="tabbing"> </td></tr></table>
+<!--l. 2403--><p class="noindent" >              </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2403--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>F</mi><mo 
+class="MathClass-punc">,</mo><mi 
+>f</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjFrot,\mjFrotEl</span></span></span> </td><td  
+class="tabbing">Faraday rotation (of the plane of linear pol.)  </td></tr></table>
+<!--l. 2405--><p class="noindent" >                 </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2405--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>T</mi><mo 
+class="MathClass-punc">,</mo><mi 
+>t</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjTrop,\mjTropEl</span></span></span> </td><td  
+class="tabbing">Atmospheric gain (refraction, extinction).  </td></tr></table>
+<!--l. 2407--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
@@ -11140,33 +11167,41 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2407--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->J</mi><mo 
+>P</mi><mo 
 class="MathClass-punc">,</mo><mi 
->j</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjJones,\mjJonesEl </span></td><td  
-class="tabbing">Jones matrix, and one of its elements.  </td></tr></table>
-<!--l. 2409--><p class="noindent" >                                                                                     </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td  
-class="tabbing"> </td></tr></table>
-<!--l. 2410--><p class="noindent" >              </p><table  
+>p</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjProj,\mjProjEl</span></span></span> </td><td  
+class="tabbing">Projected <span 
+class="cmsl-10x-x-109">receptor</span> angle(s) w.r.t. <!--l. 2408--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>x</mi><mo 
+class="MathClass-punc">,</mo> <mi 
+>y</mi></math> frame  </td></tr></table>
+<!--l. 2409--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2410--><math 
+class="tabbing"><!--l. 2409--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->F</mi><mo 
+>B</mi><mo 
 class="MathClass-punc">,</mo><mi 
->f</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjFrot,\mjFrotEl </span></td><td  
-class="tabbing">Faraday rotation (of the plane of linear pol.)  </td></tr></table>
-<!--l. 2412--><p class="noindent" >                 </p><table  
+>b</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjBtot,\mjBtotEl</span></span></span> </td><td  
+class="tabbing">Total <span 
+class="cmsl-10x-x-109">feed</span> voltage pattern (i.e. <!--l. 2411--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>B</mi><mspace width="1em" class="nbsp" /> <mo 
+class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /> <mi 
+>D</mi><mspace width="1em" class="nbsp" /><mi 
+>E</mi><mspace width="1em" class="nbsp" /><mi 
+>P</mi></math>.  </td></tr></table>
+<!--l. 2412--><p class="noindent" >                           </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
@@ -11174,13 +11209,14 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2412--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->T</mi><mo 
+>E</mi><mo 
 class="MathClass-punc">,</mo><mi 
->t</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjTrop,\mjTropEl </span></td><td  
-class="tabbing">Atmospheric gain (refraction, extinction).  </td></tr></table>
-<!--l. 2414--><p class="noindent" >  </p><table  
+>e</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjBeam,\mjBeamEl</span></span></span> </td><td  
+class="tabbing">Traditional <span 
+class="cmsl-10x-x-109">feed</span> voltage beam.  </td></tr></table>
+<!--l. 2414--><p class="noindent" >                           </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
@@ -11188,18 +11224,12 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2414--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->P</mi><mo 
+>C</mi><mo 
 class="MathClass-punc">,</mo><mi 
->p</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjProj,\mjProjEl </span></td><td  
-class="tabbing">Projected <span 
-class="cmsl-10x-x-109">receptor</span> angle(s) w.r.t. <!--l. 2415--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->x</mi><mo 
-class="MathClass-punc">,</mo> <mi 
->y</mi></math> frame  </td></tr></table>
+>c</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjConf,\mjConfEl</span></span></span> </td><td  
+class="tabbing">Feed conﬁguration matrix (...).  </td></tr></table>
 <!--l. 2416--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
@@ -11208,134 +11238,83 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2416--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->B</mi><mo 
-class="MathClass-punc">,</mo><mi 
->b</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjBtot,\mjBtotEl </span></td><td  
-class="tabbing">Total <span 
-class="cmsl-10x-x-109">feed</span> voltage pattern (i.e. <!--l. 2418--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->B</mi><mspace width="1em" class="nbsp" /> <mo 
-class="MathClass-rel">=</mo> <mspace width="1em" class="nbsp" /> <mi 
->D</mi><mspace width="1em" class="nbsp" /><mi 
->E</mi><mspace width="1em" class="nbsp" /><mi 
->P</mi></math>.  </td></tr></table>
-<!--l. 2419--><p class="noindent" >                           </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2419--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->E</mi><mo 
-class="MathClass-punc">,</mo><mi 
->e</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjBeam,\mjBeamEl </span></td><td  
-class="tabbing">Traditional <span 
-class="cmsl-10x-x-109">feed</span> voltage beam.  </td></tr></table>
-<!--l. 2421--><p class="noindent" >                           </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2421--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->C</mi><mo 
-class="MathClass-punc">,</mo><mi 
->c</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjConf,\mjConfEl </span></td><td  
-class="tabbing">Feed conﬁguration matrix (...).  </td></tr></table>
-<!--l. 2423--><p class="noindent" >  </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2423--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
 >D</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >d</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjDrcp,\mjDrcpEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjDrcp,\mjDrcpEl</span></span></span> </td><td  
 class="tabbing">Leakage between <span 
-class="cmsl-10x-x-109">receptor</span>s <!--l. 2424--><math 
+class="cmsl-10x-x-109">receptor</span>s <!--l. 2417--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->a</mi></math> and <!--l. 2424--><math 
+>a</mi></math> and <!--l. 2417--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >b</mi></math>.  </td></tr></table>
-<!--l. 2425--><p class="noindent" >                </p><table  
+<!--l. 2418--><p class="noindent" >                </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2425--><math 
+class="tabbing"><!--l. 2418--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >H</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >h</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjHybr,\mjHybrEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjHybr,\mjHybrEl</span></span></span> </td><td  
 class="tabbing">Hybrid network, to convert to circular pol.  </td></tr></table>
-<!--l. 2427--><p class="noindent" >                               </p><table  
+<!--l. 2420--><p class="noindent" >                               </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2427--><math 
+class="tabbing"><!--l. 2420--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >G</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >g</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjGrec,\mjGrecEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjGrec,\mjGrecEl</span></span></span> </td><td  
 class="tabbing"><span 
 class="cmsl-10x-x-109">feed</span>-based electronic gain.  </td></tr></table>
-<!--l. 2429--><p class="noindent" >          </p><table  
+<!--l. 2422--><p class="noindent" >          </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2429--><math 
+class="tabbing"><!--l. 2422--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >K</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >k</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjKern,\mjKernEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjKern,\mjKernEl</span></span></span> </td><td  
 class="tabbing">Fourier Transform Kernel (baseline phase weight)  </td></tr></table>
-<!--l. 2431--><p class="noindent" >                  </p><table  
+<!--l. 2424--><p class="noindent" >                  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2431--><math 
+class="tabbing"><!--l. 2424--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >K</mi><mn>0</mn><mo 
 class="MathClass-punc">,</mo><mi 
 >k</mi><mn>0</mn></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjKref,\mjKrefEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjKref,\mjKrefEl</span></span></span> </td><td  
 class="tabbing">FT kernel for the fringe-stopping centre.  </td></tr></table>
 
-<!--l. 2433--><p class="noindent" >           </p><table  
+<!--l. 2426--><p class="noindent" >           </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2433--><math 
+class="tabbing"><!--l. 2426--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><msup><mrow 
 ><mi 
@@ -11343,7 +11322,7 @@ display="inline" ><msup><mrow
 ><mi 
 >′</mi></mrow></msup 
 >
-  <mo 
+   <mo 
 class="MathClass-punc">,</mo><msup><mrow 
 ><mi 
 >k</mi></mrow><mrow 
@@ -11351,83 +11330,83 @@ class="MathClass-punc">,</mo><msup><mrow
 >′</mi></mrow></msup 
 >
   </math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjKoff,\mjKoffEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjKoff,\mjKoffEl</span></span></span> </td><td  
 class="tabbing">FT kernel relative to the fringe-stopping centre.  </td></tr></table>
-<!--l. 2435--><p class="noindent" >          </p><table  
+<!--l. 2428--><p class="noindent" >          </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2435--><math 
+class="tabbing"><!--l. 2428--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >Q</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >q</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjQsum,\mjQsumEl </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjQsum,\mjQsumEl</span></span></span> </td><td  
 class="tabbing">Electronic gain of tied-array <span 
 class="cmsl-10x-x-109">feed</span> after summing.  </td></tr></table>
-<!--l. 2437--><p class="noindent" >                                                                                     </p><table  
+<!--l. 2430--><p class="noindent" >                                                                                     </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td  
 class="tabbing"> </td></tr></table>
-<!--l. 2438--><p class="noindent" >                                                     </p><table  
+<!--l. 2431--><p class="noindent" >                                                     </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td  
 class="tabbing">Some special matrices and vectors:  </td></tr></table>
-<!--l. 2439--><p class="noindent" >                                            </p><table  
+<!--l. 2432--><p class="noindent" >                                            </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2439--><math 
+class="tabbing"><!--l. 2432--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >Z</mi><mi 
 >e</mi><mi 
 >r</mi><mi 
 >o</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmZero </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmZero</span></span></span> </td><td  
 class="tabbing">Zero matrix  </td></tr></table>
-<!--l. 2441--><p class="noindent" >                                             </p><table  
+<!--l. 2434--><p class="noindent" >                                             </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2441--><math 
+class="tabbing"><!--l. 2434--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mover 
 accent="true"><mrow 
 ><mn>0</mn></mrow><mo 
 class="MathClass-op">→</mo></mover></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\vvZero </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\vvZero</span></span></span> </td><td  
 class="tabbing">Zero vector  </td></tr></table>
-<!--l. 2443--><p class="noindent" >                                            </p><table  
+<!--l. 2436--><p class="noindent" >                                            </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2443--><math 
+class="tabbing"><!--l. 2436--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 mathvariant="bold-script">𝒰</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mmUnit </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mmUnit</span></span></span> </td><td  
 class="tabbing">Unit matrix  </td></tr></table>
-<!--l. 2446--><p class="noindent" >  </p><table  
+<!--l. 2439--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2446--><math 
+class="tabbing"><!--l. 2439--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >D</mi><mi 
@@ -11439,20 +11418,20 @@ class="MathClass-open">(</mo><mrow><mi
 class="MathClass-punc">,</mo><mi 
 >b</mi></mrow><mo 
 class="MathClass-close">)</mo></mrow></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjDiag </span></td><td  
-class="tabbing">Diagonal matrix with elements <!--l. 2447--><math 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjDiag</span></span></span> </td><td  
+class="tabbing">Diagonal matrix with elements <!--l. 2440--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi><mo 
 class="MathClass-punc">,</mo> <mi 
 >b</mi></math>  </td></tr></table>
-<!--l. 2448--><p class="noindent" >  </p><table  
+<!--l. 2441--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2448--><math 
+class="tabbing"><!--l. 2441--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >M</mi><mi 
@@ -11462,18 +11441,18 @@ display="inline" ><mi
 class="MathClass-open">(</mo><mrow><mi 
 >a</mi></mrow><mo 
 class="MathClass-close">)</mo></mrow></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjMult </span></td><td  
-class="tabbing">Multiplication with factor <!--l. 2449--><math 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjMult</span></span></span> </td><td  
+class="tabbing">Multiplication with factor <!--l. 2442--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >a</mi></math>  </td></tr></table>
-<!--l. 2450--><p class="noindent" >  </p><table  
+<!--l. 2443--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2450--><math 
+class="tabbing"><!--l. 2443--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi><mi 
@@ -11486,21 +11465,21 @@ class="MathClass-punc">,</mo><mi
 >β</mi></mrow><mo 
 class="MathClass-close">]</mo></mrow></mrow><mo 
 class="MathClass-close">)</mo></mrow></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjRot </span></td><td  
-class="tabbing">[pseudo] Rotation over an angle <!--l. 2451--><math 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjRot</span></span></span> </td><td  
+class="tabbing">[pseudo] Rotation over an angle <!--l. 2444--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->α</mi></math>, <!--l. 2451--><math 
+>α</mi></math>, <!--l. 2444--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >β</mi></math>  </td></tr></table>
-<!--l. 2452--><p class="noindent" >  </p><table  
+<!--l. 2445--><p class="noindent" >  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2452--><math 
+class="tabbing"><!--l. 2445--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >E</mi><mi 
@@ -11513,45 +11492,45 @@ class="MathClass-punc">,</mo><mi
 >β</mi></mrow><mo 
 class="MathClass-close">]</mo></mrow></mrow><mo 
 class="MathClass-close">)</mo></mrow></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjEll </span></td><td  
-class="tabbing">Ellipticity angle[s] <!--l. 2453--><math 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjEll</span></span></span> </td><td  
+class="tabbing">Ellipticity angle[s] <!--l. 2446--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->α</mi></math>, <!--l. 2453--><math 
+>α</mi></math>, <!--l. 2446--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >β</mi></math>  </td></tr></table>
-<!--l. 2454--><p class="noindent" >                  </p><table  
+<!--l. 2447--><p class="noindent" >                  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2454--><math 
+class="tabbing"><!--l. 2447--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 mathvariant="bold-script">ℋ</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjLtoC </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjLtoC</span></span></span> </td><td  
 class="tabbing">Signal conversion from linear to circular.  </td></tr></table>
-<!--l. 2456--><p class="noindent" >                    </p><table  
+<!--l. 2449--><p class="noindent" >                    </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2456--><math 
+class="tabbing"><!--l. 2449--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 mathvariant="bold-script">ℋ</mi><mo 
 class="MathClass-bin">−</mo><mn>1</mn></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\mjCtoL </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\mjCtoL</span></span></span> </td><td  
 class="tabbing">Signal conversion from circular to linear.</td></tr></table>
-<!--l. 2458--><p class="noindent" >
-</p><!--l. 2460--><p class="noindent" >Deﬁnitions of some special matrices:
+<!--l. 2451--><p class="noindent" >
+</p><!--l. 2453--><p class="noindent" >Deﬁnitions of some special matrices:
 </p>
 <table class="equation"><tr><td>
-<!--l. 2462--><math 
+<!--l. 2455--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
 <mstyle 
@@ -11602,8 +11581,8 @@ class="array"  columnalign="center"><mn>0</mn></mtd> <mtd
 class="array"  columnalign="center"><mn>1</mn></mtd></mtr>
 <!--cc--></mtable>                                                                                                                            </mrow></mfenced>
 </math></td><td class="eq-no">(58)</td></tr></table>
-<!--l. 2473--><p class="nopar" >
-</p><!--l. 2475--><p class="noindent" >A ‘pure’ rotation <!--l. 2475--><math 
+<!--l. 2466--><p class="nopar" >
+</p><!--l. 2468--><p class="noindent" >A ‘pure’ rotation <!--l. 2468--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi><mi 
@@ -11612,7 +11591,7 @@ display="inline" ><mi
 class="MathClass-open">(</mo><mrow><mi 
 >α</mi></mrow><mo 
 class="MathClass-close">)</mo></mrow></math> is a special
-case of a ‘pseudo rotation’ <!--l. 2476--><math 
+case of a ‘pseudo rotation’ <!--l. 2469--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >R</mi><mi 
@@ -11626,7 +11605,7 @@ class="MathClass-close">)</mo></mrow></math>:
 </p>
 <table class="equation"><tr><td>
 
-<!--l. 2478--><math 
+<!--l. 2471--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
 <mstyle 
@@ -11690,11 +11669,11 @@ class="array"  columnalign="center"> <mo
 class="MathClass-op">cos</mo><!--nolimits--><mi 
 >α</mi> </mtd></mtr><!--cc--></mtable>                                                                                         </mrow></mfenced>
 </math></td><td class="eq-no">(59)</td></tr></table>
-<!--l. 2489--><p class="nopar" >
-</p><!--l. 2491--><p class="noindent" >Ellipticity:
+<!--l. 2482--><p class="nopar" >
+</p><!--l. 2484--><p class="noindent" >Ellipticity:
 </p>
 <table class="equation"><tr><td>
-<!--l. 2493--><math 
+<!--l. 2486--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="block" class="equation">
 <mstyle 
@@ -11761,8 +11740,8 @@ class="MathClass-op"> cos</mo> <!--nolimits--> <mi
 >α</mi></mtd></mtr>
 <!--cc--></mtable>                                                                                                         </mrow></mfenced>
 </math></td><td class="eq-no">(60)</td></tr></table>
-<!--l. 2504--><p class="nopar" >
-</p><!--l. 2508--><p class="noindent" >
+<!--l. 2497--><p class="nopar" >
+</p><!--l. 2501--><p class="noindent" >
 </p>
 <h4 class="subsectionHead"><span class="titlemark">A.5   </span> <a 
  id="x1-35000A.5"></a>Miscellaneous parameters</h4>
@@ -11772,32 +11751,80 @@ class="tabbing"><tr
 style="vertical-align:baseline;" class="tabbing"><td  
 class="tabbing"> 
 </td></tr></table>
-<!--l. 2515--><p class="noindent" >               </p><table  
+<!--l. 2508--><p class="noindent" >               </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2515--><math 
+class="tabbing"><!--l. 2508--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >β</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppParall </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppParall</span></span></span> </td><td  
 class="tabbing">Parallactic angle, form North pole to zenith  </td></tr></table>
-<!--l. 2517--><p class="noindent" >                                            </p><table  
+<!--l. 2510--><p class="noindent" >                                            </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2517--><math 
+class="tabbing"><!--l. 2510--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >H</mi><mi 
 >A</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppHA </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppHA</span></span></span> </td><td  
 class="tabbing">Hour Angle  </td></tr></table>
-<!--l. 2519--><p class="noindent" >                                        </p><table  
+<!--l. 2512--><p class="noindent" >                                        </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2512--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>R</mi><mi 
+>A</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppRA</span></span></span> </td><td  
+class="tabbing">Right Ascension  </td></tr></table>
+<!--l. 2514--><p class="noindent" >                                             </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2514--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>D</mi><mi 
+>E</mi><mi 
+>C</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppDEC</span></span></span> </td><td  
+class="tabbing">Declination  </td></tr></table>
+<!--l. 2516--><p class="noindent" >                                      </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2516--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>L</mi><mi 
+>A</mi><mi 
+>T</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppLAT</span></span></span> </td><td  
+class="tabbing">Latitude on Earth  </td></tr></table>
+
+<!--l. 2518--><p class="noindent" >                                                                                     </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td  
+class="tabbing"> </td></tr></table>
+<!--l. 2519--><p class="noindent" >                                                  </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
@@ -11805,12 +11832,11 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2519--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->R</mi><mi 
->A</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppRA </span></td><td  
-class="tabbing">Right Ascension  </td></tr></table>
-<!--l. 2521--><p class="noindent" >                                             </p><table  
+>t</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccT</span></span></span> </td><td  
+class="tabbing">Time  </td></tr></table>
+<!--l. 2521--><p class="noindent" >                                              </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
@@ -11818,64 +11844,53 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2521--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->D</mi><mi 
->E</mi><mi 
->C</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppDEC </span></td><td  
-class="tabbing">Declination  </td></tr></table>
-<!--l. 2523--><p class="noindent" >                                      </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2523--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->L</mi><mi 
->A</mi><mi 
->T</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppLAT </span></td><td  
-class="tabbing">Latitude on Earth  </td></tr></table>
-
-<!--l. 2525--><p class="noindent" >                                                                                     </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td  
-class="tabbing"> </td></tr></table>
-<!--l. 2526--><p class="noindent" >                                                  </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2526--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->t</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccT </span></td><td  
-class="tabbing">Time  </td></tr></table>
-<!--l. 2528--><p class="noindent" >                                              </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2528--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
 >f</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ccF </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ccF</span></span></span> </td><td  
 class="tabbing">Frequency  </td></tr></table>
-<!--l. 2530--><p class="noindent" >                                                                                     </p><table  
+<!--l. 2523--><p class="noindent" >                                                                                     </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td  
 class="tabbing"> </td></tr></table>
-<!--l. 2531--><p class="noindent" >                                  </p><table  
+<!--l. 2524--><p class="noindent" >                                  </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2524--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>χ</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppFarad</span></span></span> </td><td  
+class="tabbing">Faraday rotation angle  </td></tr></table>
+<!--l. 2527--><p class="noindent" >                                             </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2527--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>a</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppAmpl</span></span></span> </td><td  
+class="tabbing">Amplitude  </td></tr></table>
+<!--l. 2529--><p class="noindent" >                                                  </p><table  
+cellpadding="0" border="0" cellspacing="0" 
+class="tabbing"><tr  
+style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
+class="tabbing"></td><td style="width:76;" 
+class="tabbing"><!--l. 2529--><math 
+ xmlns="http://www.w3.org/1998/Math/MathML"  
+display="inline" ><mi 
+>ψ</mi></math></td><td style="width:153;" 
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppPhase</span></span></span> </td><td  
+class="tabbing">Phase  </td></tr></table>
+<!--l. 2531--><p class="noindent" >                                             </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
@@ -11883,77 +11898,39 @@ class="tabbing"></td><td style="width:76;"
 class="tabbing"><!--l. 2531--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
->χ</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppFarad </span></td><td  
-class="tabbing">Faraday rotation angle  </td></tr></table>
-<!--l. 2534--><p class="noindent" >                                             </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2534--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->a</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppAmpl </span></td><td  
-class="tabbing">Amplitude  </td></tr></table>
-<!--l. 2536--><p class="noindent" >                                                  </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2536--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
->ψ</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppPhase </span></td><td  
-class="tabbing">Phase  </td></tr></table>
-<!--l. 2538--><p class="noindent" >                                             </p><table  
-cellpadding="0" border="0" cellspacing="0" 
-class="tabbing"><tr  
-style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
-class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2538--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mi 
 >ζ</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppPhaseZero </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppPhaseZero</span></span></span> </td><td  
 class="tabbing">Phase zero  </td></tr></table>
-<!--l. 2540--><p class="noindent" >                               </p><table  
+<!--l. 2533--><p class="noindent" >                               </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2540--><math 
+class="tabbing"><!--l. 2533--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >ϕ</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppRcpPosDev </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppRcpPosDev</span></span></span> </td><td  
 class="tabbing">Dipole position angle error  </td></tr></table>
-<!--l. 2542--><p class="noindent" >                                        </p><table  
+<!--l. 2535--><p class="noindent" >                                        </p><table  
 cellpadding="0" border="0" cellspacing="0" 
 class="tabbing"><tr  
 style="vertical-align:baseline;" class="tabbing"><td style="width:12;" 
 class="tabbing"></td><td style="width:76;" 
-class="tabbing"><!--l. 2542--><math 
+class="tabbing"><!--l. 2535--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
 >𝜃</mi></math></td><td style="width:153;" 
-class="tabbing"><span class="verb"><span 
-class="cmtt-10">\ppRcpEllDev </span></td><td  
+class="tabbing"><span class="obeylines-h"><span class="verb"><span 
+class="cmtt-10">\ppRcpEllDev</span></span></span> </td><td  
 class="tabbing"><span 
 class="cmsl-10x-x-109">receptor</span> ellipticity</td></tr></table>
-<!--l. 2545--><p class="noindent" >
+<!--l. 2538--><p class="noindent" >
 </p>
 <div class="footnotes"><!--l. 177--><p class="noindent" ><span class="footnote-mark"><a 
-href="#fn1x0-bk" id="fn1x0"><!--l. 177--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>1</mn></math></a></span><span 
+href="#fn1x0-bk" id="fn1x0"><sup class="textsuperscript">1</sup></a></span><span 
 class="cmr-9">The generic </span><span 
 class="cmsl-9">IF-channel </span><span 
 class="cmr-9">labels </span><!--l. 177--><math 
@@ -12011,9 +11988,7 @@ class="cmr-9"> may be a linear combination of the </span><span
 class="cmsl-9">receptor</span><span 
 class="cmr-9"> signals.</span></p>
 <!--l. 222--><p class="noindent" ><span class="footnote-mark"><a 
-href="#fn2x0-bk" id="fn2x0"><!--l. 222--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>2</mn></math></a></span><span 
+href="#fn2x0-bk" id="fn2x0"><sup class="textsuperscript">2</sup></a></span><span 
 class="cmr-9">Also called the outer matrix product, or tensor product, or Kronecker product. See </span><span class="cite"><span 
 class="cmr-9">[</span><a 
 href="#XHamaker95"><span 
@@ -12021,9 +11996,7 @@ class="cmr-9">2</span></a><span
 class="cmr-9">]</span></span><span 
 class="cmr-9">.</span></p>
 <!--l. 614--><p class="noindent" ><span class="footnote-mark"><a 
-href="#fn3x0-bk" id="fn3x0"><!--l. 614--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>3</mn></math></a></span><span 
+href="#fn3x0-bk" id="fn3x0"><sup class="textsuperscript">3</sup></a></span><span 
 class="cmr-9">In one inﬂuential book </span><span class="cite"><span 
 class="cmr-9">[</span><a 
 href="#XThompson86"><span 
@@ -12045,9 +12018,7 @@ class="cmr-9">This is clearly incorrect, since a single receptor can never measu
 <span 
 class="cmr-9">source.</span></p>
 <!--l. 676--><p class="noindent" ><span class="footnote-mark"><a 
-href="#fn4x0-bk" id="fn4x0"><!--l. 676--><math 
- xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mn>4</mn></math></a></span><span 
+href="#fn4x0-bk" id="fn4x0"><sup class="textsuperscript">4</sup></a></span><span 
 class="cmr-9">One might argue that a more consistent form of </span><!--l. 676--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" ><mi 
@@ -12056,7 +12027,7 @@ mathvariant="bold-script">ℋ</mi></math>
 class="cmr-9">would be an expression in terms of the </span><!--l. 676--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-bin">±</mo><mi 
+class="MathClass-bin">±</mo> <mi 
 >π</mi><mo 
 class="MathClass-bin">∕</mo><mn>4</mn></math>
 <span 

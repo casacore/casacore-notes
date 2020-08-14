@@ -1,8 +1,8 @@
  
+
+\documentclass[11pt]{article}			% default is [10pt]
 	      \def\ThisFile{~/aips++/nfra/185.latex}
 	      \def\SymbFile{~/aips++/nfra/megi-symbols}
-
-\documentstyle[11pt]{article}			% default is [10pt]
 \setlength{\unitlength}{1mm}
 \setlength{\parindent}{0mm}
 \setlength{\parskip}{\medskipamount}
@@ -22,7 +22,7 @@
 \setlength{\evensidemargin}{0.15in}
 \setlength{\marginparwidth}{0.5in}
 
-\input epsf              % For encapsulated PostScript figures
+\usepackage{graphicx}
 
 \pagestyle{plain}        % only a page number at the foot
 %\pagestyle{headings}                    
@@ -2263,16 +2263,9 @@ sky.}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %=========================================================== figure ====
   \begin{figure}[htbp]			% begin figure environment
-    \def\epsfile{fig-coord}             % eps-file name (without .eps)
-    \def\figlbl{\epsfile}              % figure LaTeX label name
-    \label{\figlbl}			% for reference: See \ref{fig-...}
     \begin{center}
-      \epsfxsize=16truecm              % eps width   (12)
-      \epsfysize=12truecm              % eps height   (8)
-      \leavevmode \epsfbox{\epsfile.eps}   % add .eps extension
+    \includegraphics[width=16cm,height=12cm]{fig-coord}
     \end{center}
-    \caption[...]{			% [...] text for listoffigures
-    {\small Label: \figlbl  ~~File: \epsfile.eps}}	% short caption 
     \begin{center}\parbox{0.99\textwidth}{\it % long caption begin 
   A (rather crowded) overview of the various coordinate frames for
 the Measurement Equation. See also the text. The origin of the Sky
