@@ -30,23 +30,24 @@
 \newcommand{\defline}[1]{\cline{1-5}
 \multicolumn{5}{|l|}{#1} \\
 \cline{1-5}}
-\newcommand{\definetable}[2]
+\newcommand{\definetable}[3][]
 {
-	\vfill\newpage
-	\subsection{#1}
-        \vspace{0.15in}
-        \small
-	\begin{tabular}{|l|p{1.25in}|l|p{.9in}|p{1.4in}|}
-	\hline
-	\multicolumn{5}{|c|}{\bf #1}\\ 
-	\cline{1-5}
-        \multicolumn{1}{|c|}{Name}&\multicolumn{1}{|c|}{Format}&
-        \multicolumn{1}{|c|}{Units}&\multicolumn{1}{|c|}{Measure}&
-        \multicolumn{1}{|c|}{Comments}\\
-        \cline{1-5}
-        #2
-        \hline
-	\end{tabular}
+  \vfill\newpage
+  \subsection{#2}
+  \label{tbl:#1}
+  \vspace{0.15in}
+  \small
+  \begin{tabular}{|l|p{1.25in}|l|p{.9in}|p{1.4in}|}
+  \hline
+  \multicolumn{5}{|c|}{\bf #1}\\
+  \cline{1-5}
+  \multicolumn{1}{|c|}{Name}&\multicolumn{1}{|c|}{Format}&
+  \multicolumn{1}{|c|}{Units}&\multicolumn{1}{|c|}{Measure}&
+  \multicolumn{1}{|c|}{Comments}\\
+  \cline{1-5}
+  #3
+  \hline
+  \end{tabular}
 }
 
 
@@ -57,7 +58,7 @@
 \author{ MS v3.0 working group:\\
   Dijkema T.J., Golap K., Hiriart R., Nakazato T., Pokorny M., Pouzols F., Raba,R., van Diepen G.
 }
-\date{July, 2019}
+\date{November, 2020}
 \maketitle
 
 \ifpdf
@@ -65,7 +66,7 @@
 \href{264.pdf}{A pdf version of this note is available.}
 \fi
 
-\tableofcontents 
+\tableofcontents
 
 
 
@@ -83,13 +84,13 @@ structure was defined to help with efficiency issues that was forseen
 revision we try to not do that. We realize that a given data structure
 can be implemented in different ways in software to achieve maximum
 efficiency or speed. This is the reason why we have tried to keep the
-information redundancy to a minimum and focussed on
-completeness(although we may attach an addendum in the future, to this
+information redundancy to a minimum and focused on
+completeness(although we may attach an addendum in the future to this
 document, to describe implementation choices especially with regards
 to IO rates and large data issues) .
 
 The changes are not backward compatible; so converters will be needed
-between v2.0 and v3.0 and vice versa. Some of the changes are to help
+between v2.0 and v3.0 and vice versa. Some of the changes help
 common needs and complaints like column versioning (removing the need
 of CORRECTED\_DATA or FLAG\_VERSION) others are expansion for VLBI and
 non-dish arrays (e.g LOFAR).
@@ -110,7 +111,7 @@ Here are some of the major changes from MS V2.0 to MS V3.0:
   an MS without the need to reindex the data in the main table or any
   subtables.}
 
-\item{{\bf Single-dish processing:} FLOAT\_DATA is 
+\item{{\bf Single-dish processing:} FLOAT\_DATA is
   replaced by DATA unifying it with interferometer. It is left to the
   software column implementation to store floats efficiently rather
   than have multiple columns defined for different data types. We
@@ -155,6 +156,10 @@ Here are some of the major changes from MS V2.0 to MS V3.0:
   subtables are referred to but were not defined. Here we explicitly
   define these optional subtables.}
 
+\item{{\bf Baseline dependent averaging (BDA)}. MS V3.0 extends the
+SPECTRAL\_WINDOW table and introduces new subtables for describing BDA data.
+See \url{https://confluence.skatelescope.org/display/SE/BDA+keywords+draft}
+for more information regarding BDA support.}
 
 \end{itemize}
 
@@ -195,11 +200,11 @@ Some features and reasons for some changes made and not made:
 \end{itemize}
 
 
-\section{Summary of changes}
+\section{Changes to existing tables.}
 
 This section contains a description of the changes proposed for each
-table in the MS definition. A full definition of the v3.0 MS format is
-given in Section 5.
+table in the MS definition. Section 5 gives a full definition of the v3.0 MS
+format.
 
 All the subtables not mentioned here will have an explicit ID column;
 in v3.0 implicit row number being an ID is no longer valid. For
@@ -209,21 +214,17 @@ example ANTENNA subtable will have a ANTENNA\_ID column added as a key.
 
 \begin{itemize}
 
-
-\item{{\bf removal of FLAG\_CATEGORY}
-
-
+\item{{\bf Removal of FLAG\_CATEGORY}
     This column has not been used effectively. With the versioning of
-    FLAG below it is redundant.
+    FLAG below it is redundant. }
 
-}
 \item{{\bf Removal of SIGMA} WEIGHT being always considered to be
     $\frac{1}{\sigma^2}$ this a redundant column.}
 
-
 \item{{\bf Removal of FLAG\_ROW}
-The purpose of this column was to avoid having to renumber rows when e.g. removing an antenna. This is not necessary with explicit row numbers anymore.
-}
+    The purpose of this column was to avoid having to renumber rows when e.g.
+    removing an antenna. This is not necessary with explicit row numbers
+    anymore. }
 
 \item{{\bf Redefinition of WEIGHT to be WEIGHT\_SPECTRUM} With most of
     contemporary inteferometers being spectral machines with
@@ -240,9 +241,7 @@ The purpose of this column was to avoid having to renumber rows when e.g. removi
     and FLAG1) will refer to the to WEIGHT0 and FLAG0 respectively. We
     leave it to the software to implement these in the most optimal
     fashion without making duplicate copies. This removes the need for
-    non-standard column like CORRECTED\_DATA or FLAG\_VERSION etc.
-
-}
+    non-standard column like CORRECTED\_DATA or FLAG\_VERSION etc. }
 
 \item{{\bf Merging of DATA and FLOAT\_DATA} It is unnecessary to have
     explicit DATA and FLOAT\_DATA. The software implementation can do
@@ -256,11 +255,7 @@ The purpose of this column was to avoid having to renumber rows when e.g. removi
     SPECTRAL\_WINDOW subtables directly. DATA\_DESC\_ID column is
     removed.}
 
-
 \end{itemize}
-
-
-
 
 
 \subsection{ARRAY table}
@@ -269,7 +264,6 @@ The purpose of this column was to avoid having to renumber rows when e.g. removi
 \begin{itemize}
 
 \item {{\bf ARRAY\_ID} An explicit ID column is newly defined}.
-
 
 \item{{\bf ARRAY\_CENTER} A new column which will give the full
     Measures position of where the array center is assumed for each
@@ -285,28 +279,22 @@ An explicit FIELD\_ID
 \subsubsection{Direction information}
 
 The PHASE\_DIR information is to be derived from the ephemeris subtable
-if the EPHEMERIS\_ID is not -1. 
+if the EPHEMERIS\_ID is not -1.
 
 A new column optional DURATION column is added; when present in
 combination with TIME (time origin) it defines the time range for when
 the information for direction for a given FIELD\_ID. In this fashion
 step function phasecentering that happens in some correlators
 
-
 \subsection{FLAG\_CMD}
 
-FLAG\_CMD table is made an optional subtable.
-
+The FLAG\_CMD table is made an optional subtable.
 
 \subsection{OBSERVATION table}
 
 Apart from the explicit OBSERVATION\_ID column version 3.0 adds the
 {\bf ARRAY\_CENTER}: A new column which will give the full Measures
 position of where the array center is assumed for each ARRAY\_ID
-
-
-
-
 
 \subsection{SOURCE table}
 
@@ -316,46 +304,45 @@ it can take a URL which will point to catalogue style source list or
 even images representing the model associated with a SOURCE\_ID and
 SPECTRAL\_WINDOW\_ID.
 
-
 \subsection{SPECTRAL\_WINDOW table}
 
-Apart from the explicit SPECTRAL\_WINDOW\_ID column; an optional column
-LO\_FREQUENCY which (can be vector of frequencies) gives the Local
+\begin{itemize}
+\item Add an explicit SPECTRAL\_WINDOW\_ID column.
+\item Add an optional LO\_FREQUENCY column
+which contains a vector of frequencies. These frequencies are the Local
 Oscillator frequencies in the chain of frequency conversion.
-
+\item Add an optional BDA\_SPECTRAL\_WINDOW\_ID column, which links spectral
+windows that cover the same spectral window but use different BDA strategies.
+\end{itemize}
 
 \section{New sub-tables}
 
-New sub-tables added to MS v3.0 are included in this Section.
+New subtables added to MS v3.0 are included in this Section.
 
-\subsubsection{BEAM subtable}
-This table was proposed in v2.0 but we explicitly define it here. It is referenced from the FEED table or from the newly proposed PHASED\_ARRAY table here.
+\subsection{BEAM}
+This subtable was proposed in v2.0 but we explicitly define it here.
+It is referenced from the FEED table or from the newly proposed
+PHASED\_ARRAY table here.
 
-\subsubsection{EPHEMERIDES}
-This optional table is explicitly defined and is referred to from the FIELD table via the EPHEMERIS\_ID column.
+\subsection{EPHEMERIDES}
+This optional subtable is explicitly defined and is referred to from the
+FIELD table via the EPHEMERIS\_ID column.
 
 \subsection{INTERFEROMETER\_MODEL}
 This optional subtable contains information necessary for VLBI arrays
 
-\subsubsection{Multi element station based antenna (PHASED\_ARRAY subtable)}
+\subsection{PHASED\_ARRAY}
+For multi element station based antennas, this subtable contains information
+about elements that makes a station antenna, combination scheme etc
 
-Information about elements that makes a station antenna, combination scheme etc
-
-
-\subsubsection{SCAN subtable}
-
-This will carry the information about the scan intent and information
+\subsection{SCAN subtable}
+This subtable carries the information about the scan intent and information
 necessary to tie back information from the online system
 
-
-
-
-\subsubsection{Associated tables (CAL\_TABLES)}
-
+\subsection{CAL\_TABLES (Associated tables)}
 A lot of data processing or online correction information are carried as
-non standard subtables. The formal existance of calibration tables associated with a given MS will 
-satisfy the needs of many of the non-standard subtables.
-
+non standard subtables. The formal existance of calibration tables associated
+with a given MS will satisfy the needs of many of the non-standard subtables.
 
 
 \section{MS v3.0 layout}
@@ -378,7 +365,7 @@ FIELD  &         Field position & FIELD\_ID  \\
 ({\it FREQ\_OFFSET}) & Frequency offset information & FEED\_ID, ANTENNA$n$, FEED\_ID, TIME, SPECTRAL\_WINDOW\_ID \\
 HISTORY  & History information & OBSERVATION\_ID, TIME \\
 ({\it INTERFEROMETER\_MODEL}) &  Information for VLBI observations &  ANTENNA\_ID, FIELD\_ID, SPECTRAL\_WINDOW\_ID, TIME \\
-OBSERVATION  &Observer, Schedule, etc & OBSERVATION\_ID \\ 
+OBSERVATION  &Observer, Schedule, etc & OBSERVATION\_ID \\
 ({\it PHASED\_ARRAY}) & phased array stations information & PHASED\_ARRAY\_ID, ANTENNA\_ID \\
 POINTING & Pointing information & ANTENNA\_ID, TIME \\
 POLARIZATION &Polarization setup & POLARIZATION\_ID \\
@@ -399,7 +386,7 @@ STATE   & State information & STATE\_ID \\
 
 Note that all optional columns are indicated in italics and in parentheses.
 
-\definetable{MAIN table: Data, coordinates and flags}
+\definetable[main]{MAIN table: Data, coordinates and flags}
 {
 \defline{\bf Columns}
 \defline{\em Keywords}
@@ -423,8 +410,8 @@ INTERVAL  &      Double &       s  &      & Sampling interval \\
 EXPOSURE  &      Double &       s  &      & The effective integration time \\
 TIME\_CENTROID & Double &       s  &    EPOCH & Time centroid \\
 {\it (PULSAR\_BIN)} & Int &          &      & Pulsar bin number \\
-{\it (PULSAR\_GATE\_ID)} & Int &         &      & Pulsar gate id. \\   
-SCAN\_NUMBER  &   Int   &          &      & Scan number  \\ 
+{\it (PULSAR\_GATE\_ID)} & Int &         &      & Pulsar gate id. \\
+SCAN\_NUMBER  &   Int   &          &      & Scan number  \\
 ARRAY\_ID  &      Int   &          &      & Subarray number\\
 OBSERVATION\_ID  & Int   &          &     & Observation id.\\
 STATE\_ID & Int   &          &              & State id.\\
@@ -441,19 +428,18 @@ UVW       &   Double(3) &      m   & UVW  & UVW coordinates \\
 matrix (synthesis arrays)\\
 {\it (VIDEO\_POINT)} & Complex(\nc) & & & Video point \\
 {\it (LAG\_DATA)} & Complex(\nc, \nl) & & & Correlation function \\
-WEIGHT   &    Float(\nc, \nfs) &  & & Weight for each channel\\ 
+WEIGHT   &    Float(\nc, \nfs) &  & & Weight for each channel\\
 \defline{\em Flag information}
-FLAG    &    Bool(\nc, \nfs) &  &   &  Cumulative data flags \\ 
+FLAG    &    Bool(\nc, \nfs) &  &   &  Cumulative data flags \\
 }
 \begin{description}
 \item[Notes:]
 
-\item Note that \nl = number of lags, \nc = number of correlators, 
+\item Note that \nl = number of lags, \nc = number of correlators,
 \nf = number of frequency channels, and \ncat = number of flag categories.
 
 \item[MS\_VERSION] The MeasurementSet format revision number,
 expressed as $major\_revision.minor\_revision$. This version is 2.0.
-
 
 \item[SORT\_ORDER] Sort order as either "ASCENDING" or "DESCENDING".
 
@@ -477,7 +463,7 @@ a direct key index into the POLARIZATION sub-table.
 \item[PROCESSOR\_ID] Processor indentifier ($\geq 0$), and a direct
 key index into the PROCESSOR sub-table.
 
-\item[PHASE\_ID] Switching phase identifier ($\geq 0$) 
+\item[PHASE\_ID] Switching phase identifier ($\geq 0$)
 
 \item[FIELD\_ID] Field identifier ($\geq 0$) a direct key index into the FIELD sub-table.
 
@@ -494,7 +480,7 @@ phase bins are described in the PULSAR sub-table and indexed by this
 bin number.
 
 \item[PULSAR\_GATE\_ID] Pulsar gate identifier ($\geq 0)$, and a direct
-index into the PULSAR\_GATE sub-table $rownr$. 
+index into the PULSAR\_GATE sub-table $rownr$.
 
 \item[SCAN\_NUMBER] Arbitrary scan number to identify data taken in
   the same logical scan. Not required to be unique; ($\geq 0$) a
@@ -551,10 +537,8 @@ flux density units or correlation coefficients.
 \item[VIDEO\_POINT] The video point for the spectrum, to allow the
 full reverse transform.
 
-
-
 \item[WEIGHT] The weight for each channel, with the same shape as DATA,
- as assigned by the correlator or processor. 
+ as assigned by the correlator or processor.
 
 \item[FLAG] An array of Boolean values with the same shape as DATA
 (see the DATA item above) representing the cumulative flags applying
@@ -615,11 +599,11 @@ effective diameter.
 ANTENNA\_TYPE is "SPACE\_BASED".
 
 \item[MEAN\_ORBIT] Mean Keplerian orbital elements, using the
-standard convention (Flatters 1998): 
+standard convention (Flatters 1998):
 \begin{itemize}
    \item{{\bf 0:} Semi-major axis of orbit ($a$) in $m$.}
    \item{{\bf 1:} Ellipticity of orbit ($e$).}
-   \item{{\bf 2:} Inclination of orbit to the celestial equator ($i$) 
+   \item{{\bf 2:} Inclination of orbit to the celestial equator ($i$)
                   in $deg.$}
    \item{{\bf 3:} Right ascension of the ascending node ($\Omega$) in $deg.$}
    \item{{\bf 4:} Argument of perigee ($\omega$) in $deg.$}
@@ -631,6 +615,120 @@ PHASED\_ARRAY sub-table which points back to multiple entries in the
 ANTENNA sub-table and contains information on how they are combined.
 
 \end{description}
+
+\definetable[bda-time-axis]{BDA\_TIME\_AXIS: Metadata for time table}{
+\defline{\bf Columns}
+\defline{\em Keywords}
+BDA\_TIME\_AXIS\_VERSION & String & & & Version tag.\\
+\defline{\em Key}
+BDA\_TIME\_AXIS\_ID & Int & & & Unique row id.\\
+FIELD\_ID & Int & & & Field id.\\
+BDA\_SPECTRAL\_WINDOW\_ID & Int & & & Spectral window id.\\
+\defline{\em Data}
+IS\_BDA\_APPLIED & Bool & & & BDA is applied.\\
+({\it SINGLE\_FACTOR\_PER\_BASELINE}) Bool & & &
+Baselines have a single averaging factor.\\
+({\it MAX\_TIME\_INTERVAL}) & Double & s & & Maximum time interval.\\
+({\it MIN\_TIME\_INTERVAL}) & Double & s & & Minimum time interval.\\
+({\it UNIT\_TIME\_INTERVAL}) & Double & s & & Unit time interval.\\
+({\it INTEGER\_INTERVAL\_FACTORS}) & Bool & & & Interval factors are integers.\\
+({\it HAS\_BDA\_ORDERING}) & Bool & & & Data is ordered.\\
+}
+
+\begin{description}
+
+\item[BDA\_TIME\_AXIS\_ID] Unique id for the row.
+
+\item[FIELD\_ID] Field identiﬁer ($\ge 0$).
+
+\item[BDA\_SPECTRAL\_WINDOW\_ID]
+Spectral window identifier ($\ge 0$). Together with the field identifier,
+this key uniquely identifies a row.
+The BDA\_SPECTRAL\_WINDOW\_ID values in the
+\hyperref[tbl:spectral-window]{SPECTRAL\_WINDOW} table refer to this key.
+
+\item[IS\_BDA\_APPLIED] BDA has been applied to the time axis.
+
+\item[SINGLE\_FACTOR\_PER\_BASELINE]
+For every baseline, the averaging factor is constant in time.
+If a specific baseline is averaged to 10 seconds for one timestep, it will be
+averaged to 10 seconds for every timestep over the selected data range.
+We expect this property to be true in the normal BDA cases.
+
+\item[MAX\_TIME\_INTERVAL]
+Maximum TIME\_INTERVAL over this subset.
+With BDA applied, it normally is the time interval of the smallest baselines.
+This value, together with ordering properties (discussed below), helps a
+software tool by telling it how long a baseline might have a contribution to
+an interval.
+
+\item[MIN\_TIME\_INTERVAL] Minimum TIME\_INTERVAL over this subset.
+
+\item[UNIT\_TIME\_INTERVAL]
+This value is basically the original TIME\_INTERVAL. If BDA is applied and the
+shortest baseline has not been averaged down, this value will be equal to
+MIN\_TIME\_INTERVAL. If a high-time resolution measurement set is averaged
+down immediately with BDA, it might be that the shortest baseline is averaged
+and the longest baseline is not an integer factor of the shortest baseline
+averaging factor (and thus MIN\_TIME\_INTERVAL), whereas all baselines are
+still a multiple of some underlying time interval.
+
+\item[INTEGER\_INTERVAL\_FACTORS]
+
+The TIME\_INTERVAL - and therefore also the distance
+(difference between two TIMEs) between two consecutive timesteps - is
+always an integer multiple of the UNIT\_TIME\_INTERVAL value.
+This restriction implies that for all baselines,
+the first intervals starts at the same time, i.e. there is no offset.
+
+\item[HAS\_BDA\_ORDERING]
+If a row starts at $T_0$ (where $T_0$ = TIME - 0.5 * TIME\_INTERVAL) then all
+visibilities that end before $T_0$ are before this row.
+In other words, only overlapping intervals are allowed to not obey time
+ordering: non-overlapping intervals are strictly ordered.
+
+\end{description}
+
+\definetable[bda-factors]{BDA\_FACTORS}{
+\defline{\bf Columns}
+\defline{\em Key}
+BDA\_TIME\_AXIS\_ID & Int & & &
+Reference to \hyperref[tbl:bda-time-axis]{BDA\_TIME\_AXIS}.\\
+SPECTRAL\_WINDOW\_ID Int & & &
+Reference to \hyperref[tbl:spectral-window]{SPECTRAL\_WINDOW}.\\
+ANTENNA1 & Int & & & Antenna 1.\\
+ANTENNA2 & Int & & & Antenna 2.\\
+({\it ANTENNA3}) & Int & & & Antenna 3.\\
+\defline{\em Data}
+TIME\_FACTOR & Int & & & Time averaging factor.\\
+}
+
+\begin{description}
+
+\item[BDA\_TIME\_AXIS\_ID]
+Refers to a row in the \hyperref[tbl:bda-time-axis]{BDA\_TIME\_AXIS} table,
+since a single baseline may have different fields. The BDA\_TIME\_AXIS row
+contains the
+FIELD\_ID and common values for multiple baselines regarding time averaging.
+
+\item[SPECTRAL\_WINDOW\_ID]
+Refers to a row in the \hyperref[tbl:spectral-window]{SPECTRAL\_WINDOW} table,
+since a single baseline may have multiple spectral windows.
+
+\item[ANTENNAn]
+Antenna identiﬁer, as indexed from ANTENNAn in \hyperref[tbl:main]{MAIN}.
+Together, the antenna identifiers determine the baseline.
+
+\item[TIME\_FACTOR]
+Time averaging factor for the given baseline,
+field (via the \hyperref[tbl:bda-time-axis]{BDA\_TIME\_AXIS} table) and
+spectral window.
+The effective time interval for the baseline is this TIME\_FACTOR times the
+UNIT\_TIME\_INTERVAL value in the \hyperref[tbl:bda-time-axis]{BDA\_TIME\_AXIS}
+table.
+
+\end{description}
+
 
 \definetable{BEAM: Beam  information}{
 \defline{\bf Columns}
@@ -678,7 +776,7 @@ VELDEF & Double & m/s & Doppler & Velocity definition of Doppler shift.\\
 }
 \begin{description}
 
-\item[Notes:] This sub-table contains frame information 
+\item[Notes:] This sub-table contains frame information
 for different Doppler tracking modes. It is indexed from the
 SPECTRAL\_WINDOW\_ID sub-table (with SOURCE\_ID as a secondary index)
 and thus allows the specification of a source-dependent Doppler
@@ -717,10 +815,10 @@ RADIAL\_VELOCITY & Double & m/s & & Radial velocity of source \\
 }
 \begin{description}
 
-\item[Notes:] This sub-table contains ephemeris  information as referred to 
+\item[Notes:] This sub-table contains ephemeris  information as referred to
 from FIELD table.
- 
-Either multiple rows of information for a given EPHEMERIS\_ID is given in this table with time or 
+
+Either multiple rows of information for a given EPHEMERIS\_ID is given in this table with time or
 a URL is provided to get an ephemeris table of known format (e.g the one used by Measures in casacore)
 
 \item[EPHEMERIS\_ID] identifier referenced in FIELD table
@@ -765,7 +863,7 @@ single horn, that shares joint physical properties and makes sense to
 calibrate as a single entity. It is an abstraction of a generic
 antenna feed and is considered to have one or more RECEPTORs that
 respond to different polarization states. A FEED may have a
-time-variable beam and polarization response. 
+time-variable beam and polarization response.
 Feeds are numbered from 0 on each separate antenna for each
 SPECTRAL\_WINDOW\_ID. Consequently, FEED\_ID should be non-zero only
 in the case of feed arrays, i.e. multiple, simultaneous beams on the
@@ -783,7 +881,7 @@ indicates the row is valid for all spectral windows.
 in this row are valid. The same Measure reference used for the TIME
 column in MAIN must be used.
 
-\item[INTERVAL] Time interval. 
+\item[INTERVAL] Time interval.
 
 \item[NUM\_RECEPTORS] Number of receptors on this feed. See
 POLARIZATION\_TYPE for further information.
@@ -801,7 +899,7 @@ of the antenna.
 \item[PHASED\_FEED\_ID] Phased feed identifier. Points to a
 PHASED\_FEED sub-table which in turn points back to multiple entries
 in the FEED table, and specifies the manner in which they are
-combined. 
+combined.
 
 \item[POLARIZATION\_TYPE] Polarization type to which each receptor
 responds (e.g. "R","L","X" or "Y"). This is the receptor polarization
@@ -823,8 +921,8 @@ parallactic angle in the sky domain.
 \definetable{FIELD: Field positions for each source}{
 \defline{\bf Columns}
 \defline{\em Key}
-FIELD\_ID & Int & & & Field id. \\ 
-\defline{\em Data}  
+FIELD\_ID & Int & & & Field id. \\
+\defline{\em Data}
 NAME &       String &    &      & Name of field \\
 CODE &       String &    &      & Special characteristics of field \\
 TIME &   Double  &      s  & EPOCH & Time origin for the directions and rates\\
@@ -847,7 +945,7 @@ this is the nominal pointing direction.
 \item[CODE] Field code indicating special characteristics of the
 field; user specified.
 
-\item[TIME] Time reference for the directions and rates. Required to 
+\item[TIME] Time reference for the directions and rates. Required to
 use the same TIME Measure reference as in MAIN.
 
 \item[NUM\_POLY] Series order for the *\_DIR columns.
@@ -881,7 +979,7 @@ for moving, near-field objects, where the ephemeris may be revised over time.
 \defline{\em Key}
 TIME      &    Double   &   s  &  EPOCH & Mid-point of interval \\
 INTERVAL  &    Double   &   s  &        & Time interval \\
-\defline{\em Data}  
+\defline{\em Data}
 TYPE      &    String   &      &        & FLAG or UNFLAG\\
 REASON    &    String   &      &        & Flag reason\\
 LEVEL     &    Int      &      &        & Flag level\\
@@ -963,7 +1061,7 @@ CHAN\_FREQ in that table.
 \defline{\em Key}
 TIME & Double & s &              EPOCH  & Time-stamp for message\\
 OBSERVATION\_ID  & Int   &          &        & Points to OBSERVATION table\\
-\defline{\em Data}  
+\defline{\em Data}
 MESSAGE  & String &    &      & Log message\\
 PRIORITY & String & & & Message priority\\
 ORIGIN   & String & & & Code origin\\
@@ -1007,7 +1105,7 @@ TIME & Double & s &              EPOCH  & Time-stamp for message\\
 ANTENNA\_ID & Int &  &  & Antenna id.\\
 FIELD\_ID  & Int   &          &        & field id.\\
 SPECTRAL\_WINDOW\_ID & Int & & & Spectral window id.\\
-\defline{\em Data}  
+\defline{\em Data}
 PHASE\_DELAY & Double(\nr, num\_poly) &  s  &      & Phase delay polynomial for each receptor\\
 GROUP\_DELAY & Double(\nr, num\_poly) & s & & Group delay polynomial for each receptor\\
 PHASE\_RATE  & Double(\nr, num\_poly) &  &  & Rate of change of phase delay\\
@@ -1022,7 +1120,7 @@ CLOCK\_ERROR\_RATE & Double(\nr, num\_poly) &  &  & Rate of clock error modelled
 }
 \begin{description}
 
-\item[Notes:] This sub-table contains information associated for VLBI 
+\item[Notes:] This sub-table contains information associated for VLBI
 
 \item[TIME] Time-stamp as origin for all time based polynomials model.
 
@@ -1053,7 +1151,7 @@ CLOCK\_ERROR\_RATE & Double(\nr, num\_poly) &  &  & Rate of clock error modelled
 \defline{\bf Columns}
 \defline{\em Key}
 OBSERVATION\_ID & Int & & & Observation id. \\
-\defline{\em Data}  
+\defline{\em Data}
 TELESCOPE\_NAME &      String &    &      & Telescope name\\
 ARRAY\_CENTER & Double(3)  & m & POSITION & Reference position for array \\
 TIME\_RANGE       &     Double(2) & s & EPOCH & Start, end times\\
@@ -1107,20 +1205,20 @@ ELEMENT\_FLAG & Bool(\na) &  & & Flag of elements in array\\
 }
 \begin{description}
 
-\item[Notes:] The table contains information about phased array information. It refers to antenna ids in ANTENNA table, FEED\_ID for feed  used in forming this phased array.  
+\item[Notes:] The table contains information about phased array information. It refers to antenna ids in ANTENNA table, FEED\_ID for feed  used in forming this phased array.
 
 \item[ANTENNA\_ID] Index into the ANTENNA table to show to which ANTENNA this phased array belongs. Note that this is an n-to-1 mapping: one ANTENNA can consist of multiple PHASED\_ARRAYs.
 
 \item[POSITION] Position of the antenna field in absolute ITRF coordinates
 
 \item[COORDINATE\_SYSTEM] (cartesian) direction vectors in ITRF (or measure defined) describing the
-local field coordinate system. This defines the antenna field plane, and the 'up' direction, the normal direction to the antenna field plane. Note that in general this is not the zenith direction. The coordinate system is necessary to evaluate the beam pattern directions. The coordinate system can also be used for describing polarization alignment.  
+local field coordinate system. This defines the antenna field plane, and the 'up' direction, the normal direction to the antenna field plane. Note that in general this is not the zenith direction. The coordinate system is necessary to evaluate the beam pattern directions. The coordinate system can also be used for describing polarization alignment.
 
 \item[ELEMENT\_OFFSET] Relative offsets of each element from POSITION
 
 \item[ELEMENT\_FLAG] flag for invalid antennas in array not used.
 
-\item[BEAM\_ID] Beam id as defined in BEAM table. 
+\item[BEAM\_ID] Beam id as defined in BEAM table.
 
 
 \end{description}
@@ -1139,7 +1237,7 @@ INTERVAL     &  Double & s &       & Time interval\\
 NAME     &   String & & & Pointing position desc.\\
 NUM\_POLY & Int & & & Series order \\
 TIME\_ORIGIN & Double & s & EPOCH & Origin for the polynomial\\
-DIRECTION & Double(2, NUM\_POLY+1) & rad & DIRECTION & 
+DIRECTION & Double(2, NUM\_POLY+1) & rad & DIRECTION &
   Antenna pointing direction\\
 TARGET & Double(2, NUM\_POLY+1) & rad & DIRECTION & Target direction \\
 {\it (POINTING\_OFFSET)} & Double(2, NUM\_POLY+1) & rad & DIRECTION &
@@ -1175,7 +1273,7 @@ DIRECTION and POINTING\_OFFSET.
 
 \item[DIRECTION] Antenna pointing direction, optionally expressed as
 polynomial coefficients. The final result is interpreted as a
-Direction Measure using the specified Measure reference. 
+Direction Measure using the specified Measure reference.
 
 \item[TARGET] Target pointing direction, optionally expressed as
 polynomial coefficients. The final result is interpreted as a
@@ -1207,9 +1305,9 @@ the source, i.e. offset-pointing is not being used.
 \defline{\bf Columns}
 \defline{\em Data description columns}
 NUM\_CORR   &     Int  &           &        & \# correlations\\
-\defline{\em Data}  
+\defline{\em Data}
 CORR\_TYPE & Int(NUM\_CORR) & & & Polarization of correlation \\
-CORR\_PRODUCT &  Int(2, NUM\_CORR) &  & & Receptor cross-products \\  
+CORR\_PRODUCT &  Int(2, NUM\_CORR) &  & & Receptor cross-products \\
 }
 \begin{description}
 
@@ -1280,7 +1378,7 @@ table containing pass information.
 \defline{\em Key}
 SCAN\_NUMBER & Int &  &        & Scan number id; referred from the Main table\\
 
-\defline{\em Data}  
+\defline{\em Data}
 SCAN\_INTENT  & String &    &      & Fixed set of string defining the intent of the scan \\
 ({\it EXECBLOCK\_ID}) & Int & & & Execution block id\\
 ({\it TIME})   & Double & s & EPOCH & start time of scan\\
@@ -1292,7 +1390,7 @@ SCAN\_INTENT  & String &    &      & Fixed set of string defining the intent of 
 \item[Notes:] This sub-table contains associated scan information
 for the MS.
 \item[SCAN\_NUMBER] Scan number as referred from main table
-\item[SCAN\_INTENT] Intent for the scan (an scan number may have multiple intents). Fixed set of string for a telescope e.g CAL\_POINTING or TARGET 
+\item[SCAN\_INTENT] Intent for the scan (an scan number may have multiple intents). Fixed set of string for a telescope e.g CAL\_POINTING or TARGET
 \item[EXECBLOCK\_ID] A number that is unique to the observation execution block. Used to get more info from the online system of some telescopes.
 
 \item[TIME]  Time of start for that scan
@@ -1312,7 +1410,7 @@ INTERVAL &       Double & s &               & Interval\\
 SPECTRAL\_WINDOW\_ID &   Int &    &      & Spectral Window id\\
 \defline{\em Data description}
 NUM\_LINES &  Int & & & Number of spectral lines\\
-\defline{\em Data}  
+\defline{\em Data}
 NAME &       String &    &      & Name of source as given during observations\\
 CALIBRATION\_GROUP &      Int &    &      & \# grouping for calibration purpose\\
 CODE &       String &    &      & Special characteristics of source, e.g. Bandpass calibrator\\
@@ -1376,36 +1474,35 @@ further pulsar-specific properties if the source is a pulsar.
 
 \end{description}
 
-\definetable{SPECTRAL\_WINDOW: Spectral window description}{
+\definetable[spectral-window]{SPECTRAL\_WINDOW: Spectral window description}{
 \defline{\bf Columns}
 \defline{\em Key}
-SPECTRAL\_WINDOW\_ID &      Int &    &      & Spectral window id\\
+SPECTRAL\_WINDOW\_ID & Int & & & Spectral window id\\
 \defline{\em Data description columns}
-NUM\_CHAN   &     Int  &           &        & \# spectral channels \\
-\defline{\em Data}  
-NAME & String & & & Spectral window name\\
-REF\_FREQUENCY     &   Double       &               Hz  &   FREQUENCY&        The reference frequency.\\
-CHAN\_FREQ  &   Double(NUM\_CHAN)    &           Hz    &    FREQUENCY& Center frequencies for each channel in the data matrix.\\
-CHAN\_WIDTH &   Double(NUM\_CHAN)    &           Hz    &    & Channel width for each channel in the data matrix.\\
-MEAS\_FREQ\_REF & Int      & & & FREQUENCY Measure ref.\\
-EFFECTIVE\_BW   &     Double(NUM\_CHAN)         &      Hz      &  &
-The effective noise bandwidth of each spectral channel\\
-RESOLUTION   &     Double(NUM\_CHAN)         &      Hz      &  &
-The effective spectral resolution of each channel\\
-TOTAL\_BANDWIDTH & Double & Hz &  & total bandwidth for this window \\
-NET\_SIDEBAND & Int & & & Net sideband\\
+NUM\_CHAN & Int & & & \# spectral channels.\\
+\defline{\em Data}
+NAME & String & & & Spectral window name.\\
+REF\_FREQUENCY & Double & Hz & FREQUENCY & The reference frequency.\\
+CHAN\_FREQ  & Double(NUM\_CHAN) & Hz & FREQUENCY & Center frequencies for each channel in the data matrix.\\
+CHAN\_WIDTH & Double(NUM\_CHAN) & Hz & & Channel width for each channel in the data matrix.\\
+MEAS\_FREQ\_REF & Int & & & FREQUENCY Measure ref.\\
+EFFECTIVE\_BW & Double(NUM\_CHAN) & Hz & & The effective noise bandwidth of each spectral channel.\\
+RESOLUTION & Double(NUM\_CHAN) & Hz & & The effective spectral resolution of each channel.\\
+TOTAL\_BANDWIDTH & Double & Hz & & The total bandwidth for this window.\\
+NET\_SIDEBAND & Int & & & Net sideband.\\
 {\it (BBC\_NO)} & Int & & & Baseband converter no.\\
-{\it (BBC\_SIDEBAND)} & Int & & & BBC sideband\\
-IF\_CONV\_CHAIN & Int & & & The IF conversion chain \\
-{\it (RECEIVER\_ID)}    & Int & & & Receiver id.\\
-{\it (LO\_FREQUENCY)}    & Double & & & LO frequency \\
-FREQ\_GROUP & Int & & & Frequency group\\
-FREQ\_GROUP\_NAME & String & & & Freq. group name \\
+{\it (BBC\_SIDEBAND)} & Int & & & BBC sideband.\\
+IF\_CONV\_CHAIN & Int & & & The IF conversion chain.\\
+{\it (RECEIVER\_ID)} & Int & & & Receiver id.\\
+{\it (LO\_FREQUENCY)} & Double & & & LO frequency.\\
+FREQ\_GROUP & Int & & & Frequency group.\\
+FREQ\_GROUP\_NAME & String & & & Frequency group name. \\
 {\it (DOPPLER\_ID)} & Int & & & Doppler id.\\
 {\it (ASSOC\_SPW\_ID)} & Int(*) & & & Associated spw\_id.\\
-{\it (ASSOC\_NATURE)} & String(*) & & & Nature of association\\
+{\it (ASSOC\_NATURE)} & String(*) & & & Nature of association.\\
+{\it (BDA\_SPECTRAL\_WINDOW\_ID)} & Int & & & BDA set id.\\
 
-} 
+}
 \begin{description}
 
  \item[Notes:] This table describes properties for each defined
@@ -1478,13 +1575,20 @@ reserved keywords are ("CHANNEL-ZERO" - channel zero;
 "EQUAL-FREQUENCY" - same frequency labels; "SUBSET" - narrow-band
 subset).
 
+\item[BDA\_SPECTRAL\_WINDOW\_ID] An id that links a set of spectral windows
+that cover the same (true/original) spectral window. It is the equal for all
+spectral windows where the only difference is the amount of frequency averaging.
+This id refers to the BDA\_SPECTRAL\_WINDOW\_ID in the
+\hyperref[tbl:bda-time-axis]{BDA\_TIME\_AXIS} table,
+which contains information regarding the time averaging for the spectral window.
+
 \end{description}
 
 \definetable{STATE: State information}{
 \defline{\bf Columns}
 \defline{\em Key}
 STATE\_ID   &     Int  &           &        & State id key \\
-\defline{\em Data}  
+\defline{\em Data}
 SIG   &     Bool  &           &        & Signal \\
 REF   &     Bool  &           &        & Reference \\
 CAL   &     Double &   K      &        & Noise calibration \\
@@ -1525,7 +1629,7 @@ FEED\_ID &        Int &    &      & Feed id\\
 SPECTRAL\_WINDOW\_ID &   Int &    &      & Spectral window id\\
 TIME      &   Double  &      s  & EPOCH & Midpoint of time for which this set of parameters is accurate\\
 INTERVAL &       Double  &      s     &   & Interval\\
-\defline{\em Data}  
+\defline{\em Data}
 {\it (PHASE\_DIFF)} &  Float & rad &    & Phase difference between receptor 0 and receptor 1\\
 {\it (TCAL)} &       Float (\nr)  &      K &  & Calibration temp\\
 {\it (TRX)}  &       Float (\nr)  &      K &  & Receiver temperature\\
@@ -1615,9 +1719,9 @@ temperature spectrum.
 \defline{\bf Columns}
 \defline{\em Key}
 ANTENNA\_ID &        Int &    &      & Antenna number\\
-TIME &  Double  &   s  & EPOCH  & Mid-point of interval\\ 
+TIME &  Double  &   s  & EPOCH  & Mid-point of interval\\
 INTERVAL &       Double &        s  &      & Interval over which data is relevant\\
-\defline{\em Data}  
+\defline{\em Data}
 {\it (H2O)} &        Float    &     $m^{-2}$  &      & Average column density of water\\
 {\it (IONOS\_ELECTRON)} & Float & $m^{-2}$    &      & Average column density of electrons\\
 {\it (PRESSURE)} &       Float & hPa  &      & Ambient atmospheric pressure\\
@@ -1665,7 +1769,7 @@ MAIN.
 \defline{\bf Column keywords}
 QuantumUnits &        String Vector &    &      & Units of the data in the column\\
 MEASINFO &  Record  &     &   & subfields defining the unit\\
-\defline{\em Subfields of MEASINFO}  
+\defline{\em Subfields of MEASINFO}
 type &        String    &      &      & lowercase name of the Measure type (e.g., frequency)\\
 {\it Ref} & String &     &      & Uppercase name of the frame (e.g., LSRK)\\
 {\it VarRefCol} & String &     &      & Name of the column containing the frames\\
@@ -1695,7 +1799,7 @@ containing the frame. The column can contain strings giving the frame
 name or can contain integers giving the frame codes. If integers are
 used, the following two fields (VarRefTypes and VarRefCodes) can be
 defined to make the stored frame codes resilient to possible future
-changes. 
+changes.
 
 \item[VarRefTypes and VarRefCodes] These fields can be used if
 VarRefCol is defined. They contain a vector of
@@ -1721,4 +1825,3 @@ can be listed using the TaQL command {\tt 'show meastypes'}.
 
 
 \end{document}
-
