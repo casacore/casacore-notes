@@ -12,11 +12,11 @@ functions. User defined functions written in C++ or Python are
 supported, which is used to support coordinate conversions in TaQL.
 TaQL also makes sorting and column selection possible.
 Furthermore, TaQL has commands to update, add or delete rows and columns
-in a table and to create a new table.
+in a table and to create, restructure or delete a table.
 
 The first sections of this document explain the syntax and show the options.
 The last sections give several examples and show the interface to TaQL
-using Python or C++. 
+using Python, C++ or the program \texttt{taql}. 
 The Python interface makes it possible to embed Python
 variables and expressions in a TaQL command.
 
@@ -45,11 +45,11 @@ support of maximum string distance (Levensthein (aka Edit) distance).
 \item Specific operators and functions for cone searching
 (i.e., spatial searching with a search radius).
 \item An advanced way of specifying intervals.
+\item Many aggregate functions that can be used with GROUPBY.
 \item No support of indices, thus a linear table search is done.
 Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
 \item Limited support for joins (only implicit joins on row number).
-\item Many aggregate functions that can be used with GROUPBY.
 \item The COUNT command exists to count the occurrences of column
   values. Although it can still be used, this command is obsolete now 
   GROUPBY is fully supported.
@@ -118,7 +118,7 @@ for more information on subqueries).
 It can be used to update data in (a subset of) the first table in the
 first table list. 
 
-\item addition
+\item row addition
 \begin{verbatim}
   INSERT INTO table_list SET column=expr, column=expr, ...
 or
@@ -130,7 +130,7 @@ or
 It can be used to add and fill new rows in the first table in the
 table list.
 
-\item deletion
+\item row deletion
 \begin{verbatim}
   DELETE FROM table_list
     [WHERE ...] [ORDERBY ...] [LIMIT ...] [OFFSET ...]
@@ -158,7 +158,8 @@ in a table can be used. It returns a list of values instead of a table.
 \item table creation
 \begin{verbatim}
   CREATE TABLE table [AS options]
-    [column_spec]
+    [LIKE table [DROP COLUMN column_list]]
+    [[ADD COLUMN] column_specs]
     [LIMIT ...]
     [DMINFO datamanagers]
 \end{verbatim}
@@ -166,11 +167,17 @@ It can be used to create a new table with the given columns and number
 of rows.
 Optionally specific table and data manager info can be given.
 
+\item table removal
+\begin{verbatim}
+  DROP TABLE table-list
+\end{verbatim}
+It can be used to drop (delete) one or more tables.
+
 \item table structure modification
 \begin{verbatim}
   ALTER TABLE table
     [ADD COLUMN [column_specs] [DMINFO datamanagers]]
-    [COPY COLUMN col TO colnew [colattr] [SET [expr]], ...]
+    [COPY COLUMN colnew=col, colnew=col, ... [DMINFO datamanagers]]
     [RENAME COLUMN column_pair_list]
     [DROP COLUMN column_list]
     [SET KEYWORD key=value, key=value, ...]
@@ -179,8 +186,11 @@ Optionally specific table and data manager info can be given.
     [DROP KEYWORD keyword_list]
     [ADD ROW nrow]
 \end{verbatim}
-The subcommands of the ALTER TABLE command can be used
-to add, rename, and remove columns and keywords and to add rows.
+The subcommands of the ALTER TABLE command can be used to
+\begin{itemize}
+  \item add, copy, rename, and remove columns and keywords
+  \item add rows (that have to be filled later)
+\end{itemize}
 Multiple such subcommands can be given, separated by white space.
 
 \end{itemize}
@@ -212,6 +222,8 @@ information about each command and the available functions.
 \htmlref{Section \ref{TAQL:MODIFYING} (Modifying a table)}{TAQL:MODIFYING} 
 \\The CREATE TABLE command is explained in 
 \htmlref{section \ref{TAQL:CREATETABLE} (Creating a  table)}{TAQL:CREATETABLE}
+\\The DROP TABLE command is explained in 
+\htmlref{section \ref{TAQL:DROPTABLE} (Removing a  table)}{TAQL:DROPTABLE}
 \\The ALTER TABLE command is explained in 
 \htmlref{section \ref{TAQL:ALTERTABLE} (Modifying the table structure)}{TAQL:ALTERTABLE}.
 \\The CALC command is explained in
@@ -277,7 +289,7 @@ easier (i.e., less typing) to specify user defined functions.
 by TaQL as well as the synonym \texttt{py} for \texttt{pytaql}.
 
 \subsubsection{Tracing}
-It is possible to get tracing output during the execution of a TaQL
+It is possible to get some tracing output during the execution of a TaQL
 command by using the case-insensitive value \texttt{TRACE} in the
 \texttt{using style} command. It can be useful for debugging purposes.
 
@@ -302,7 +314,7 @@ shows the time to do the where part (i.e., row selection on FLAG),
 projection (selection of columns), and distinct (unique column values).
 
 \subsection{\label{TAQL:RESERVEDWORDS}Reserved words}
-TaQL uses the following words as part of its language.
+TaQL uses the following reserved words as part of its language.
 \begin{verbatim}
   ALL           AND      AS        ASC
   BETWEEN 
@@ -325,8 +337,16 @@ TaQL uses the following words as part of its language.
   WHERE         WITH
   XOR
 \end{verbatim}
-These words are reserved. Note that the words in the TaQL vocabulary
-are case insensitive, 
+Furthermore, some word combinations are reserved.
+\begin{verbatim}
+  ADDCOLUMN     ADDROW
+  COPYCOLUMN    COPYKEYWORD
+  DELETECOLUMN  DELETEKEYWORD
+  DROPCOLUMN    DROPKEYWORD    DROPTABLE
+  RENAMECOLUMN  RENAMEKEYWORD
+                SETKEYWORD
+\end{verbatim}
+Note that the words in the TaQL vocabulary are case insensitive, 
 thus the lowercase (or any mixed case) versions are also reserved.
 
 The reserved words cannot directly be used as
@@ -616,7 +636,13 @@ of the unmasked elements; MM contains the resulting mask.
 \subsection{\label{TAQL:INTO}INTO [table] [AS options]}
 This indicates that the ultimate result of the SELECT command should be
 written to a table (with the given name). This table can be a
-reference table, a plain table, or a memory table.
+reference table, a plain table, or a memory table. It can also be a
+subtable of an existing table using the :: notation. For example:
+\begin{verbatim}
+  INTO my.tab::SUBTAB
+\end{verbatim}
+creates subtable SUBTAB in parent table 'my.tab'. It also defines the keyword
+SUBTAB in the parent table to refer to the subtable.
 
 The {\em table} argument gives the name of the resulting table. It can be
 omitted if a memory table is created.
@@ -678,6 +704,17 @@ detailed data manager info for the result table using the DMINFO clause.
 See \htmlref{section \ref{TAQL:DMINFO}}{TAQL:DMINFO} 
 how the data manager info can be specified.
 
+It is also possible to store the result in a subtable of another table
+using the :: notation, which is similar to specifying an
+\htmlref{input subtable}{TAQL:TABLE_LIST} as described in the next
+subsection. This will also create the keyword in the main table
+referring the subtable.
+For example:
+\begin{verbatim}
+  GIVING my.ms::NEWSUB
+\end{verbatim}
+will create subtable \texttt{NEWSUB} of table \texttt{my.ms} and define
+keyword \texttt{NEWSUB} to refer to the subtable.
 
 \subsection{\label{TAQL:TABLE_LIST}FROM table\_list}
 The FROM part defines the tables used in the query.
@@ -770,10 +807,6 @@ the current query level and proceeds outwards (i.e., up to the
 main query level). If a shorthand is given, only tables with
 that shorthand are taken into account. If no shorthand is
 given, only primary tables are taken into account.
-\begin{verbatim}
-  SELECT FROM mytable, :: subtab
-    WHERE col1 > subtab.key1
-\end{verbatim}
 
 \item
 In a way similar to above, two colons can be used to denote the latest table
@@ -800,7 +833,7 @@ Similar to OQL it is possible to use a
 \htmlref{nested query}{TAQL:SUBQUERIES}
 command in the FROM clause. This is a normal query command
 enclosed in square brackets or parentheses. Besides the SELECT command
-the COUNT and CREATE TABLE command can also be used.
+the COUNT, CREATE TABLE and ALTER TABLE commands can also be used.
 The table created can thereafter be used in the rest of the
 query command by using the shorthand (alias) given to that table. It can also
 be used in the remainder of the table\_list, thus using it as a backreference.
@@ -825,7 +858,7 @@ before reading the rest of this note.
 Note, however, that the command uses the shorthand \texttt{TIMESEL}
 to be able to use the temporary table in the subqueries.
 \\Also note the use of :: in the second line which refers to \texttt{my.ms}.
-\\Finally note that the new \htmlref{\ref{TAQL:WITH}}{WITH clause} 
+\\Finally note that the new \htmlref{WITH clause}{TAQL:WITH} 
  is an easier way to use temporary tables.
 
 \item
@@ -3841,7 +3874,7 @@ It may happen that a subquery has to be executed twice because
                                && time <=
       [SELECT endtime FROM othertable WHERE windspeed < 5])
 \end{verbatim}
-In this case the other table contains the time range for each windspeed.
+In this case \texttt{othertable} contains the time range for each windspeed.
 For big tables it is expensive to execute the subquery twice.
 A better solution
 is to store the result of the subquery in a temporary table and reuse it.
@@ -4210,7 +4243,7 @@ contents of a table using the UPDATE, INSERT, or DELETE command.
 Note that a table has to be writable, otherwise those commands
 exit with an error message.
 
-\subsection{UPDATE}
+\subsection{\label{TAQL:UPDATE}UPDATE}
 \begin{verbatim}
   UPDATE table SET update_list [FROM table_list]
                                [WHERE ...] [ORDERBY ...]
@@ -4438,15 +4471,29 @@ TaQL can be used to create a new table. The data managers to be used
 can be given in full detail.
 The syntax is:
 \begin{verbatim}
-  CREATE TABLE tablename AS options colspecs LIMIT nrows DMINFO datamanagers
+  CREATE TABLE tablename AS options
+     LIKE othertable AS shorthand DROP COLUMN columnlist
+     ADD COLUMN colspecs
+     LIMIT nrows
+     DMINFO datamanagers
 \end{verbatim}
-The command consists of 4 parts, all of them optional.
+The command consists of 5 parts, all of them optional.
 \begin{itemize}
   \item The table name and options can be given in the same way as in the
-    \htmlref{GIVING}{TAQL:INTO} clause.
-  \item The columns are defined in the \texttt{colspecs} part. If not given, a
+    \htmlref{GIVING}{TAQL:INTO} clause. Thus it is also possible to
+    create a subtable of an existing table. If no table name is given, a
+    temporary table is created.
+  \item The LIKE part can be used to create the new table with the
+    same description as \texttt{othertable}. It is possible to drop some
+    columns using the optional DROP COLUMN part. The \texttt{columnlist}
+    consists of column names separated by commas. Of course,
+    columns can be added using the ADD COLUMN part. Note that the
+    shorthand of \texttt{othertable} can be used in the ADD COLUMN part.
+  \item The columns to add are defined in the \texttt{colspecs} part. If not given, a
     table without any column is created. Below column specification is
-    described in more detail. 
+    described in more detail.
+    The words ADD COLUMN can be omitted if the LIKE part is not used,
+    which makes it SQL-compatible.
   \item An expression giving the number of rows can be specified in
     the LIMIT part. If not given, it defaults to 0.
   \item  For expert users data managers can be defined in the optional
@@ -4471,15 +4518,29 @@ brackets or parentheses (for SQL compatibility).
 It is a comma separated list of column specifications.
 Each specification looks like:
 \begin{verbatim}
-  columnname datatype [NDIM=n, SHAPE=[d1,d2,...], DIRECT=0/1, UNIT='s',
+  columnname LIKE othercolumn
+             datatype [NDIM=n, SHAPE=[d1,d2,...], DIRECT=0/1, UNIT='s',
                        DMTYPE='s', DMGROUP='s', COMMENT='s']
 \end{verbatim}
-The possible data type strings are given in
-\htmlref{section \ref{TAQL:DATATYPESTRING}}{TAQL:DATATYPESTRING}.
-The part enclosed in square brackets is optional. Zero or more of
-these keywords can be used. It makes it possible
-to define array columns and/or default data manager to be used.
-The square brackets are optional if only one such keyword is used.
+A column specification describes the column and consists of various parts.
+\begin{itemize}
+\item \texttt{columnname} gives the (alphanumerical) name of the column.
+\item The optional LIKE part can be used to tell that the default column
+  description must be copied from \texttt{othercolumn}. If
+  \texttt{t.othercolumn} is given, the \texttt{othercolumn} is taken from the
+  table with shorthand 't' as given in the WITH part. It is possible to
+  override parts of the description by giving properties using the
+  following parts.
+\item The data type must be given if 'LIKE othercolumn' is not used,
+  otherwise it can be given to override the data type taken from the
+  \texttt{othercolumn}.
+  The possible data type strings are given in
+  \htmlref{section \ref{TAQL:DATATYPESTRING}}{TAQL:DATATYPESTRING}.
+\item The last part (enclosed in square brackets) can be used to
+  define other properties of the column. Zero or more of
+  these keywords can be used. It makes it possible
+  to define units, array columns and/or default data manager to be used.
+  The square brackets are optional if only one such keyword is used.
 \begin{itemize}
 \item \texttt{NDIM=n} defines if the column contains scalars or arrays.
 \\A negative value means a scalar, which is the default (unless shape is also given).
@@ -4492,15 +4553,17 @@ array shape.
   stored directly. The default is 0.
 \item \texttt{UNIT='s'} defines the unit to be used for the column.
 \\It can be any valid unit (simple or compound). It is a string,
-thus must always be enclosed in quotes. 
+thus must be enclosed in quotes. 
 \item \texttt{COMMENT} defines comments for the column.
 \\It has a string value, thus quotes
 have to be used.
-\item \texttt{DMTYPE, DMGROUP} are rather specific and are for the expert user.
+\item \texttt{DMTYPE, DMGROUP} are rather specific and are for the
+  expert user to specify data managers.
 \\They have a string value, thus quotes
 have to be used.
 \end{itemize}
-
+\end{itemize}
+ 
 \subsection{\label{TAQL:DMINFO}Data manager specification}
 The \texttt{datamanagers} part makes it possible for the expert user to
 define the data managers to be used by columns. It is a comma separated
@@ -4526,6 +4589,21 @@ thus in Fortran order. TaQL has no knowledge about these internals.
 have to be bound to the data manager.
 
 
+\section{\label{TAQL:DROPTABLE}Removing a new table}
+TaQL can be used to remove one or more tables. If a plain table is removed, its
+subtables are removed as well.
+The syntax is:
+\begin{verbatim}
+  DROP TABLE table-list
+\end{verbatim}
+The table-list is a comma separated list of table names, which can
+also use :: to denote subtables.
+\begin{verbatim}
+  DROP TABLE my.ms, that.ms::EXTRA
+\end{verbatim}
+removes the table 'my.ms' and subtable EXTRA of 'that.ms'.
+
+
 \section{\label{TAQL:ALTERTABLE}Modifying the table structure}
 TaQL can be used to modify the table structure, i.e., to add, rename,
 and remove columns and keywords. It is also possible to add rows.
@@ -4542,11 +4620,11 @@ The following subcommands can be given. They are explained in
 the next subsections.
 \begin{verbatim}
   ADD COLUMN colspecs DMINFO datamanagers
-   future: COPY COLUMN col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
+  COPY COLUMN new=col, new=col, ... DMINFO datamanagers
   RENAME COLUMN old TO new, old TO new, ...
   DELETE COLUMN column_list
-  SET KEYWORD name=value AS dtype, ...
-  COPY KEYWORD name=name AS dtype, ...
+  SET KEYWORD key=value AS dtype, ...
+  COPY KEYWORD new=key AS dtype, ...
   RENAME KEYWORD old TO new, old TO new
   DELETE KEYWORD keyword_list
   ADD ROW nrows
@@ -4582,27 +4660,32 @@ adds two columns, a 4-byte floating point scalar column and an 8-byte
 floating point 3-dim array column. They will be stored with StandardStMan.
 
 \subsection{COPY COLUMN}
-{\bf NOTE:} This subcommand cannot be used yet and will give a parser
-error when used.
 \begin{verbatim}
-  COPY COLUMN spec1, spec2, ...
+  COPY COLUMN newcola=cola, newcolb=colb, ... DMINFO datamanagers
 \end{verbatim}
-makes it possible to copy columns, where each column specification
-looks like:
+makes it possible to copy the data in a column to a new
+column, that may not exist yet. If residing in different tables,
+they must have the same number of rows.
+The new column gets its description from the input column.
+The optional DMINFO part can be used to define the datamanager(s) for
+the new columns.
+\\Note that copying to existing columns can be done with the
+\htmlref{UPDATE}{TAQL:UPDATE} command. 
+For example:
 \begin{verbatim}
-  col TO new [AS [dtype] [tileshape=...]] [SET [expr]]
+  ALTER TABLE mytab COPY COLUMN NCol1=Col1
+  ALTER TABLE mytab FROM othertab t COPY COLUMN NCol1=t.Col1
+  UPDATE mytab NCol1 SET NCol1=Col1
 \end{verbatim}
-The new column gets the same description, but it is possible to define
-a new data type and/or tile shape. If the \texttt{SET} keyword is
-given values are written into the new column. If given, the value of an expression is
-stored in the new column, otherwise the contents of the input column.
-In its simplest form it copies a column to another column in the table.
-
-{\bf Note} that copying a column to a new table can be done like:
-\begin{verbatim}
-  select COL from a.tab giving new.tab as plain
-\end{verbatim}
-The 'as plain' part takes care that a true copy is made (thus no references).
+The first example creates column \texttt{NCol1} taking its
+description from \texttt{Col1}; thereafter the contents of
+\texttt{Col1} are copied into it.
+\\The second example is similar, but takes \texttt{Col1} from the table with
+shorthand 't', which is given in the FROM part.
+Because the data are copied, \texttt{mytab} and \texttt{othertab} must
+have the same number of rows.
+\\The third example is similar to the first one, but has to be used if
+\texttt{NCol1} already exists.
 
 \subsection{RENAME COLUMN}
 \begin{verbatim}
@@ -4626,6 +4709,7 @@ to be removed at the same time. Thus in that case
   DELETE COLUMN col1, DELETE COLUMN col2
 \end{verbatim}
 are not the same, because the second example might fail.
+\\DROP is a synonym for DELETE.
 
 \subsection{SET KEYWORD}
 \begin{verbatim}
@@ -4718,6 +4802,7 @@ keyword KEYS.
   DELETE KEYWORD key1, key2, ...
 \end{verbatim}
 removes one or more table or column keywords.
+\\DROP is a synonym for DELETE.
 
 \subsection{ADD ROW}
 adds the given number of rows to the table.
@@ -4898,7 +4983,18 @@ common case when using TaQL.
      \texttt{ FROM some.ms GROUPBY ANTENNA1,ANTENNA2 }
      \\finds the 10 longest baselines. It groups by ANTENNA1 and
      ANTENNA2 to get the unique baselines. UVW[:2] denotes the U and V
-     coordinate giving the baseline length.
+     coordinate giving the projected baseline length.
+
+   \item[] \texttt{ select NAME, sqrt(sumsqrs([select POSITION from my.ms/ANTENNA] -}
+    \\\verb=    =
+    \texttt{      resize(POSITION,[[select gcount() from my.ms/ANTENNA][0],3],1), 1))}
+    \\\verb=    =
+    \texttt{ from my.ms/ANTENNA}
+    \\yields a matrix of the lengths of all baselines in \texttt{my.ms}.
+     \\- The first inner select gets the POSITION of all antennae from
+     which the POSITION in each row is subtracted (giving all baselines for each antenna).
+     \\- The second inner select gets the numbe r of antennae. It is used in the resize function (using mode 1 to copy the values) to make the arrays in the subtraction the same shape. TaQL does not do axes broadcasting as numpy does.
+     \\- The sumsqrs function calculates x**2+y**2+z**2 for each baseline (it collapses axes 1), whereafter sqrt gives their lengths.
 
   \item[] \texttt{ select from MY.MS where DATA\_DESC\_ID in
       [select from ::DATA\_DESCRIPTION where}
@@ -5402,7 +5498,8 @@ form the programmer interface.
     \\If a command is not recognized, it is assumed an expression is
     given with an implicit SELECT. In this way it is easily possible to calculate expressions. Note
     that multiple expressions (separated by a comma) can be given,
-    because it is the very same as selecting multiple column expressions in TaQL.
+    because it is the very same as selecting multiple column
+    expressions in TaQL's SELECT command.
   \item \texttt{?} shows the varnames.
   \item \texttt{varname=} without a further command removes the
     temporary result.
@@ -5423,8 +5520,8 @@ form the programmer interface.
     settings and used for all subsequent TaQL commands.
   \item A TaQL command can be preceded by options to override the
     global settings for that TaQL command only. However, when only
-    giving options on a command line, the are persistent, thus get
-    new global settings.
+    giving options on a command line, they are persistent, thus
+    new global settings are defined.
   \item The options usage in a TaQL command file behaves in a similar
     way. The initial option values are the settings of the level above
     which can be overridden temporarily or permanently by options on

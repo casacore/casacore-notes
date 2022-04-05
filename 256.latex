@@ -10,10 +10,23 @@
 
 \begin{document}
 
-\title{NOTE 256 --AIPS++ Table Locking}
+\title{NOTE 256 --Casacore Table Locking}
 \author {Ger van Diepen, ASTRON Dwingeloo}
-\date {2003 February 10}
+\date {2020 March 3}
 \maketitle
+\begin{abstract}
+The Casacore Table Data System (CTDS) supports single writer and
+multiple readers by means of table locking (which uses the OS file
+locking).
+However, if the OS has no or limited support of file locking, it
+is possible to disable table locking.
+\end{abstract}
+
+\begin{tabular}{lll}
+  1.0 & 2003 Feb 10 & Original version \\
+  2.0 & 2020 Mar 3 & Describe nolocking modes \\
+\end{tabular}
+
 %%---------------------------------------------------------------------------
 \ifpdf
 \else

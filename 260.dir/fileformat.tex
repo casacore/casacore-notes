@@ -105,7 +105,7 @@ CTDS makes heavily use of the AipsIO class to store its meta
 data. Therefore a brief description of the AipsIO format is given.
 \\AipsIO is basically a mechanism to serialize a C++ object into a
 stream of bytes and to read it back. The format consists of a header followed
-by the object's data. The objects can be nested arbitrarily deeply. The maximum
+by the object's data. The objects can be nested arbitrary deeply. The maximum
 total size is 4 GBytes.
 \\The header contains the following fields:
 
@@ -1120,5 +1120,145 @@ that file is stored by the storage managers.
 
 \section{ConcatTable}
 
-\section{\label{CTDS:MULTIFILE}MultiFile}
+\section{\label{CTDS:MULTIFILE}MultiFile Format}
+The MultiFile format has been designed to reduce the number of
+files. CTDS uses one or more files per storage manager which can
+result in quite a large number of files for a table.
+In particular a MeasurementSet and its subtables can consist of dozens
+of files.
+The MultiFile format has bveen designed to combine all these files into a single
+container file. Furthermore, MultiFile has the option to store a CRC
+value for each block to ensure data are read back correctly.
+
+The MultiFile format comes in 2 flavours:
+\\1. The MultiFile which is a regular file with an header to denote all
+individual files in it.
+\\2. The MultiHDF5 which is an HDF5 file containing a dataset per
+individual file. 
+\\They are described in more detail below.
+
+\subsection{MultiFile}
+A MultiFile is a binary file divided into blocks of equal size. Each CTDS
+file is stored in one or more of these blocks. The header contains an index telling the name
+of the CTDS files and the blocks containing their data. The header also
+contains a list of free blocks which can arise when a CTDS file is
+deleted.
+The Header is stored in the first block of the MultiFile with possible
+continuation blocks elsewhere in the MultiFile. 
+
+\subsubsection{MultiFile version 1}
+Version 1 of the MultiFile can only contain multiple CTDS files. It
+does not support nested MultiFiles as version 2 does. Neither does it
+support CRC values.
+The header is stored as follows:
+
+\vspace{0.15in}
+\begin{tabular}{|l|p{13cm}|} \hline
+  Data Type & Description \\ \hline\hline
+  Int64 & header size in bytes \\
+  Int64 & block size in bytes \\
+  Int64 & counter keeping track how often the header was written. It
+          is used to know if changes have been made by another process
+          requiring the header to be reread. \\
+  AipsIO & AipsIO structure containing the entire MultiFile index \\
+  \hline
+\end{tabular}
+\vspace{0.15in}
+
+The entire MultiFile index is serialized in the following AipsIO structure.
+
+\vspace{0.15in}
+\begin{tabular}{|l|p{13cm}|} \hline
+  Data Type & Description \\ \hline\hline
+  AipsIO header & MultiFile (version 1) \\
+  Int64 & Total number of blocks used in the MultiFile \\
+  C-array of FileInfo &  Vector of objects containing the info of each
+                        CTDS file in the MultiFile \\
+  C-array of Int64 & Vector of free blocks \\
+  \hline
+\end{tabular}
+\vspace{0.15in}
+
+Each FileInfo entry looks as:
+
+\vspace{0.15in}
+\begin{tabular}{|l|p{13cm}|} \hline
+  Data Type & Description \\ \hline\hline
+  String & CTDS file name \\
+  C-array of Int64 & Vector of MultiFile block numbers used for the CTDS file \\
+  Int64 & Total size in bytes of the CTDS file \\
+  \hline
+\end{tabular}
+\vspace{0.15in}
+
+If the entire header does not fit in the first block, the remainder is
+written into a separate file with the extra extension \texttt{\_hdrext}.
+
+\subsubsection{MultiFile version 2}
+Version 2 of the MultiFile can contain multiple CTDS files (as version
+1 does), but it also
+supports nested MultiFiles. Nested MultiFiles are used to store
+subtables in the MultiFile of the parent table. The nested MultiFile
+is treated as an ordinary file in the parent MultiFile. It has its own header. 
+
+The header is stored as follows:
+
+\vspace{0.15in}
+\begin{tabular}{|l|p{13cm}|} \hline
+  Offset & Data Type & Description \\ \hline\hline
+  0 & Int64 & 0  (to make it different from version 1) \\
+  8 & Int64 & blocknr of first continuation header block (0 = no continuation) \\
+  16 & Int32 & version (=2) \\
+  20 & uInt32 & CRC of entire header \\
+  24 & Int64 & header size in bytes \\
+  32 & Int64 & block size in bytes \\
+  40 & Int64 & counter keeping track how often the header was written. It
+          is used to know if changes have been made by another process
+          requiring the header to be reread. \\
+  48 & Int64 & Total number of blocks used in the MultiFile \\
+  56 & AipsIO & AipsIO structure containing the MultiFile index \\
+       & nfile*FileInfo & general info per file \\
+       & nfile*Index & packed index per file \\
+       & Index & packed index of free blocks \\
+       & Int64 & nCRC (0 if CRCs are not used) \\
+       & nCRC*uInt32 & CRC value per block \\
+       & Int64 & number of block of first header continuation \\
+       & n*Int64 & block numbers used for first header continuation \\
+       & Int64 & number of block of second header continuation \\
+       & n*Int64 & block numbers used for second header continuation \\
+  \hline
+\end{tabular}
+\vspace{0.15in}
+
+The MultiFile index is serialized in the following AipsIO structure.
+
+\vspace{0.15in}
+\begin{tabular}{|l|p{13cm}|} \hline
+  Data Type & Description \\ \hline\hline
+  AipsIO header & MultiFile (version 1) \\
+  C-array of FileInfo &  Vector of objects containing the info of each
+                        CTDS file in the MultiFile \\
+  \hline
+\end{tabular}
+\vspace{0.15in}
+
+Each FileInfo entry looks as:
+
+\vspace{0.15in}
+\begin{tabular}{|l|p{13cm}|} \hline
+  Data Type & Description \\ \hline\hline
+  String & CTDS file name \\
+  Int64 & Total size in bytes of the CTDS file \\
+  Bool & Is this file a nested MultiFile? \\
+  \hline
+\end{tabular}
+\vspace{0.15in}
+
+A packed index is a compressed form of the index telling which blocks
+are used by a file. It is compressed by storing a repeat count for
+consecutive block numbers. The repeat count is a negative value to
+make it different from the block numbers. For example:
+\begin{verbatim}
+    10,-3,17   means block   10,11,12,17
+\end{verbatim}
 

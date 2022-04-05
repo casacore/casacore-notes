@@ -10,10 +10,21 @@
 \begin{document}
 
 \title{NOTE 255 --
-AIPS++ Table System Revisited}
+Casacore Table Data System}
 \author {Ger van Diepen, ASTRON Dwingeloo}
-\date {2003 February 3}
+\date {2020 March 3}
 \maketitle
+\begin{abstract}
+The Casacore Table Data System (CTDS) is a database-like system to
+store scientific data in a columnar way. It comes with a versatile
+SQL-like query language.
+\end{abstract}
+
+\begin{tabular}{lll}
+  1.0 & 2003 Feb 3 & Original version \\
+  2.0 & 2020 Mar 3 & Added links and descriptions of new options \\
+\end{tabular}
+
 %%---------------------------------------------------------------------------
 \ifpdf
 \else
