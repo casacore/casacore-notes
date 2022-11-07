@@ -1,4 +1,3 @@
-
 %%\externallabels{../../user/Refman}{../../user/Refman/labels.pl}
 
 \section{Introduction}
@@ -212,18 +211,20 @@ possible, an IPosition is still stored as version 1 if all elements in
 the shape have a value fitting in a 32-bit integer.
 
 
-\subsection{\label{CTDS:SIMORDMAP}SimpleOrderedMap object}
-The SimpleOrderedMap$<$K,V$>$ class is similar to the std::map$<$K,V$>$ class.
-The class was developed as part of Casacore long before std::map came
-into existence.
-A SimpleOrderedMap object is stored in AipsIO as follows.
+\subsection{\label{CTDS:MAP}std::map object}
+Casacore had its own SimpleOrderedMap class before the C++ standard
+library with its std::map class was developed. Nowadays Casacore only
+uses std::map, but for backward compatibility an std::map object is
+serialized in AipsIO in the old SimpleOrderedMap way.
+\\A std::map object is stored in AipsIO as follows.
 
 \vspace{0.15in}
 \begin{tabular}{|l|p{13cm}|} \hline
   header & SimpleOrderedMap (version 1) \\
-  V & default value \\
+  V & default value; not used\\
   uInt & nentries (number of key-value pairs) \\
-  uInt & increment (number of entries to add when the map is extended) \\
+  uInt & increment (number of entries to add when the map is
+         extended); not used \\
   KV[nentries] & nentries key-value pairs (first the key, then the value) \\
   \hline
 \end{tabular}
@@ -831,7 +832,7 @@ A string (array) is stored in the heap buckets depending on its type.
 \item A fixed shaped array of strings is stored as a string of
   bytes. Each string is stored as a length-value pair. The length is a
   32-bit integer and a value is the formed by the string characters.
-Note that the shapoe of the array is known in the table description,
+Note that the shape of the array is known in the table description,
 thus does not need to be stored.
 \item A variable shaped array of string is stored in the same way as the fixed
   shaped array, but is preceeded by the shape and a boolean flag.
@@ -856,7 +857,7 @@ removed rows.
 An index also contains information about free space in the data
   buckets due to removed columns because that space can possibly be
   reused when a column is added later. The map consists of a
-  \htmlref{\texttt{SimpleOrderedMap$<$Int,Int$>$}}{CTDS:SIMORDMAP} object telling the offset and
+  \htmlref{\texttt{std::map$<$Int,Int$>$}}{CTDS:MAP} object telling the offset and
   length of each free space part in a data bucket. Note it is the
   same for each data bucket described by the index. 
 
@@ -887,7 +888,7 @@ The indices are serialized in the following AipsIO structure. Note
   uInt & Number of index entries \\
   uInt & Number of rows fitting in a bucket \\
   Int & Number of columns served by this index \\
-  SimpleOrderedMap$<$Int,Int$>$ & Free space map \\
+  std::map$<$Int,Int$>$ & Free space map \\
   Block$<$uInt$>$ or Block$<$Int64$>$ & Last row in each bucket; Int64 for version $>$1 \\
   \hline
 \end{tabular}
@@ -992,7 +993,7 @@ The data part contains the values of all columns bound to this storage
 manager. Scalars and fixed shaped arrays of all data types (including
 strings) can be stored. However, a string cannot span buckets. 
 Variable sized arrays are stored in the
-\htmlref{indirect array file}{CTDS::ARRAYFILE}; their offsets in that file are
+\htmlref{indirect array file}{CTDS:ARRAYFILE}; their offsets in that file are
 stored in the bucket's data part. 
 
 All values in the data part are stored consecutively. Bool arrays are
@@ -1038,7 +1039,7 @@ the offset value at the beginning of the bucket tells if it is 32 or 64 bits.
 \\Note that until 2018 Casacore stored the row numbers always as 32 bits.
 The new way of storing them as 32 or 64 bits is fully backwards
 compatible since the high byte of the offset was always 0.
-\begin{itemize}
+\end{itemize}
 
 \paragraph{Bucket Index\\}
 The bucket index defines which rows are contained in each bucket.
@@ -1125,8 +1126,9 @@ The MultiFile format has been designed to reduce the number of
 files. CTDS uses one or more files per storage manager which can
 result in quite a large number of files for a table.
 In particular a MeasurementSet and its subtables can consist of dozens
-of files.
-The MultiFile format has bveen designed to combine all these files into a single
+of files. Often these files are quite small mapping poorly to more
+modern file systems such as Lustre, which use large IO blocks.
+\\The MultiFile format has been designed to combine all these files into a single
 container file. Furthermore, MultiFile has the option to store a CRC
 value for each block to ensure data are read back correctly.
 
@@ -1138,19 +1140,28 @@ individual file.
 \\They are described in more detail below.
 
 \subsection{MultiFile}
-A MultiFile is a binary file divided into blocks of equal size. Each CTDS
-file is stored in one or more of these blocks. The header contains an index telling the name
-of the CTDS files and the blocks containing their data. The header also
-contains a list of free blocks which can arise when a CTDS file is
-deleted.
-The Header is stored in the first block of the MultiFile with possible
-continuation blocks elsewhere in the MultiFile. 
+A MultiFile is a binary file divided into (large) blocks of equal size. Each CTDS
+file is stored as a virtual file in one or more blocks in the MultiFIle.
+A header describes the MultiFile layout and the virtual files. It contains an index telling
+the name of the CTDS files and the block numbers containing their data.
+The header also contains a list of free blocks which arise when a CTDS file is
+deleted or truncated.
+
+The MultiFile concept has evolved over time. The second version is
+more powerful and more robust than the first version.
+In both versions the header is maintained in memory and occasionally
+flushed to disk.
+It makes use of the AipsIO mechanism to serialize the header and to store
+it in the first block of the MultiFile. Continuation blocks are used if it is
+too large for a single block.  
 
 \subsubsection{MultiFile version 1}
-Version 1 of the MultiFile can only contain multiple CTDS files. It
-does not support nested MultiFiles as version 2 does. Neither does it
-support CRC values.
-The header is stored as follows:
+Version 1 of the MultiFile can contain the files of a single CTDS table.
+It does not support nested MultiFiles as version 2 does. Neither does it
+support CRC values. Header continuation blocks are not stored in the
+MultiFile itself, but in a small separate file with the extra
+extension \texttt{\_hdrext} in its file name.
+\\The header is stored as follows:
 
 \vspace{0.15in}
 \begin{tabular}{|l|p{13cm}|} \hline
@@ -1165,13 +1176,13 @@ The header is stored as follows:
 \end{tabular}
 \vspace{0.15in}
 
-The entire MultiFile index is serialized in the following AipsIO structure.
+The MultiFile index is serialized in the following AipsIO structure.
 
 \vspace{0.15in}
 \begin{tabular}{|l|p{13cm}|} \hline
   Data Type & Description \\ \hline\hline
   AipsIO header & MultiFile (version 1) \\
-  Int64 & Total number of blocks used in the MultiFile \\
+  Int64 & Total number of blocks used in the MultiFile (including free blocks) \\
   C-array of FileInfo &  Vector of objects containing the info of each
                         CTDS file in the MultiFile \\
   C-array of Int64 & Vector of free blocks \\
@@ -1179,37 +1190,37 @@ The entire MultiFile index is serialized in the following AipsIO structure.
 \end{tabular}
 \vspace{0.15in}
 
-Each FileInfo entry looks as:
+Each FileInfo entry contains:
 
 \vspace{0.15in}
 \begin{tabular}{|l|p{13cm}|} \hline
   Data Type & Description \\ \hline\hline
   String & CTDS file name \\
-  C-array of Int64 & Vector of MultiFile block numbers used for the CTDS file \\
+  C-array of Int64 & Vector of MultiFile block numbers used for this CTDS file \\
   Int64 & Total size in bytes of the CTDS file \\
   \hline
 \end{tabular}
 \vspace{0.15in}
 
-If the entire header does not fit in the first block, the remainder is
-written into a separate file with the extra extension \texttt{\_hdrext}.
 
 \subsubsection{MultiFile version 2}
 Version 2 of the MultiFile can contain multiple CTDS files (as version
 1 does), but it also
 supports nested MultiFiles. Nested MultiFiles are used to store
-subtables in the MultiFile of the parent table. The nested MultiFile
-is treated as an ordinary file in the parent MultiFile. It has its own header. 
-
-The header is stored as follows:
+subtables in the MultiFile of the parent table to achieve that an
+entire MeasurementSet is stored in a single file. A nested MultiFile is
+the same as any other MultiFile, thus having its own header, index,
+block size, etc.  It is stored as a single file in the parent MultiFile.
+However, a nested MultiFile does not have CRC values.
+\\The header is stored as follows:
 
 \vspace{0.15in}
-\begin{tabular}{|l|p{13cm}|} \hline
+\begin{tabular}{|r|l|p{12cm}|} \hline
   Offset & Data Type & Description \\ \hline\hline
   0 & Int64 & 0  (to make it different from version 1) \\
   8 & Int64 & blocknr of first continuation header block (0 = no continuation) \\
   16 & Int32 & version (=2) \\
-  20 & uInt32 & CRC of entire header \\
+  20 & uInt32 & CRC of entire header (using 0 for this CRC value) \\
   24 & Int64 & header size in bytes \\
   32 & Int64 & block size in bytes \\
   40 & Int64 & counter keeping track how often the header was written. It
@@ -1222,15 +1233,24 @@ The header is stored as follows:
        & Index & packed index of free blocks \\
        & Int64 & nCRC (0 if CRCs are not used) \\
        & nCRC*uInt32 & CRC value per block \\
-       & Int64 & number of block of first header continuation \\
-       & n*Int64 & block numbers used for first header continuation \\
-       & Int64 & number of block of second header continuation \\
-       & n*Int64 & block numbers used for second header continuation \\
+       & Int64 & number of blocks of first header continuation \\
+       & n*Int64 & block numbers available for first header continuation \\
+       & Int64 & number of blocks of second header continuation \\
+       & n*Int64 & block numbers available for second header continuation \\
   \hline
 \end{tabular}
 \vspace{0.15in}
 
-The MultiFile index is serialized in the following AipsIO structure.
+There are two header continuation blocks to improve robustness. They
+are used alternately when the header is flushed to disk. The first
+block (at offset 0 of the file) it written last. This ensures there is
+always a valid header in case of a crash.
+Note that new continuation blocks are added as needed. When added, the
+header is serialized again to contain those new block numbers. In case
+fewer continuation blocks are needed than there are available, the
+superfluous blocks are not  added to the free list but are kept
+available. 
+\\The MultiFile index is serialized in the following AipsIO structure.
 
 \vspace{0.15in}
 \begin{tabular}{|l|p{13cm}|} \hline
@@ -1262,3 +1282,5 @@ make it different from the block numbers. For example:
     10,-3,17   means block   10,11,12,17
 \end{verbatim}
 
+
+\subsection{MultiHDF5}
