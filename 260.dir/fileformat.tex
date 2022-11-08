@@ -211,12 +211,32 @@ possible, an IPosition is still stored as version 1 if all elements in
 the shape have a value fitting in a 32-bit integer.
 
 
+\subsection{Block and std::vector object}
+The templated Casacore Block class is basically the same as the std::vector
+class.
+Both are stored in the same way in AipsIO, thus a Block can be read
+back as a std::vector and vice versa. 
+
+\vspace{0.15in}
+\begin{tabular}{|l|p{13cm}|} \hline
+  header & Block (version 1) \\
+  uInt & number of elements \\
+  T[n] & the elements \\
+  \hline
+\end{tabular}
+\vspace{0.15in}
+
+Note that the number of elements is written as an unsigned 32 bit
+number.
+This is sufficient since an AipsIO object cannot exceed 4 GB.
+
+
 \subsection{\label{CTDS:MAP}std::map object}
 Casacore had its own SimpleOrderedMap class before the C++ standard
 library with its std::map class was developed. Nowadays Casacore only
 uses std::map, but for backward compatibility an std::map object is
 serialized in AipsIO in the old SimpleOrderedMap way.
-\\A std::map object is stored in AipsIO as follows.
+\\A std::map<K,V> object is stored in AipsIO as follows.
 
 \vspace{0.15in}
 \begin{tabular}{|l|p{13cm}|} \hline
@@ -1219,24 +1239,27 @@ However, a nested MultiFile does not have CRC values.
   Offset & Data Type & Description \\ \hline\hline
   0 & Int64 & 0  (to make it different from version 1) \\
   8 & Int64 & blocknr of first continuation header block (0 = no continuation) \\
-  16 & Int32 & version (=2) \\
-  20 & uInt32 & CRC of entire header (using 0 for this CRC value) \\
-  24 & Int64 & header size in bytes \\
-  32 & Int64 & block size in bytes \\
-  40 & Int64 & counter keeping track how often the header was written. It
+  16 & Int64 & counter keeping track how often the header was written. It
           is used to know if changes have been made by another process
           requiring the header to be reread. \\
+  24 & Int32 & version (=2) \\
+  28 & uInt32 & CRC of entire header (using 0 for this CRC value) \\
+  32 & Int64 & header size in bytes \\
+  40 & Int64 & block size in bytes \\
   48 & Int64 & Total number of blocks used in the MultiFile \\
-  56 & AipsIO & AipsIO structure containing the MultiFile index \\
+  56 & char & use CRC? \\
+  57 & char[7] & spare \\
+  64 & AipsIO & AipsIO structure containing the MultiFile index \\
        & nfile*FileInfo & general info per file \\
        & nfile*Index & packed index per file \\
        & Index & packed index of free blocks \\
        & Int64 & nCRC (0 if CRCs are not used) \\
        & nCRC*uInt32 & CRC value per block \\
-       & Int64 & number of blocks of first header continuation \\
+       & Int64 & number of available blocks of first header continuation \\
        & n*Int64 & block numbers available for first header continuation \\
-       & Int64 & number of blocks of second header continuation \\
+       & Int64 & number of available blocks of second header continuation \\
        & n*Int64 & block numbers available for second header continuation \\
+       & 2*Int64 & number of block actually used for first and second continuation \\
   \hline
 \end{tabular}
 \vspace{0.15in}
