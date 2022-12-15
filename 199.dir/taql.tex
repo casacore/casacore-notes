@@ -8,17 +8,15 @@ data in Casacore tables. It makes it possible to get information
 from the data content in the
 columns and keywords of arbitrary tables. It supports arbitrary complex
 expressions including units, extended regular expressions, and many
-functions. User defined functions written in C++ or Python are
+functions. User defined functions written in C++ are
 supported, which is used to support coordinate conversions in TaQL.
 TaQL also makes sorting and column selection possible.
-Furthermore, TaQL has commands to update, add or delete rows and columns
-in a table and to create, restructure or delete a table.
+Furthermore, TaQL has commands to update, add or delete rows, columns
+and keywords in a table and to create, restructure or delete a table.
 
 The first sections of this document explain the syntax and show the options.
 The last sections give several examples and show the interface to TaQL
-using Python, C++ or the program \texttt{taql}. 
-The Python interface makes it possible to embed Python
-variables and expressions in a TaQL command.
+using C++ or the program \texttt{taql}. 
 
 \subsection{TaQL vs SQL}
 TaQL is modeled after SQL and contains a subset of SQL's
@@ -49,7 +47,9 @@ support of maximum string distance (Levensthein (aka Edit) distance).
 \item No support of indices, thus a linear table search is done.
 Because data are stored column-wise, a linear search is usually very
  fast, even for very large tables.
-\item Limited support for joins (only implicit joins on row number).
+\item Only support for left joins with a single match. Multiple tables
+  in a clause are not fully joined (as SQL does), but 
+  joined on rowid. Hence they must have the same size.
 \item The COUNT command exists to count the occurrences of column
   values. Although it can still be used, this command is obsolete now 
   GROUPBY is fully supported.
@@ -62,9 +62,10 @@ desk calculator.
 example the order of array axes. Therefore it is possible to set the
 language style to be used.
 \item The language can be extended by means of User Defined
-  Functions, possibly implemented in Python.
+  Functions.
   Some standard UDFs exist to deal with MeasurementSets and to do
-  measure conversions (for directions, epochs, positions, and stokes).
+  measure conversions (for direction, epoch, position, stokes,
+  frequency, doppler, radialvelocity and earthmagnetic).
 \item In the WITH clause the order of the table and alias is reversed
   compared to SQL. In this way they have the same order as the table
   specifications in the FROM clause.
@@ -97,6 +98,7 @@ HELP is a synonym for SHOW.
   SELECT [[DISTINCT] expression_list]
     [INTO table [AS options]]
     [FROM table_list]
+    [JOIN table_list ON expression [JOIN table_list ON expression ...]]
     [WHERE expression]
     [GROUPBY expression_list]
     [HAVING expression]
@@ -207,11 +209,11 @@ All TaQL commands, except SHOW, can be preceded by the clause
   WITH table_list
 \end{verbatim}
 which can be used to create one or more temporary tables to be used in
-the subsequent command. 
+the subsequent clauses. 
 \htmlref{Section \ref{TAQL:WITH}}{TAQL:WITH} 
 contains a detailed description of this clause.
 \paragraph*{}
-The commands and verbs in the commands are
+The clauses and verbs in the commands are
 case-insensitive, but case is important in string values and
 in names of columns and keywords. Whitespace (blanks and tabs) can
 be used at will. The HELP command can be used to obtain brief
@@ -291,13 +293,13 @@ by TaQL as well as the synonym \texttt{py} for \texttt{pytaql}.
 \subsubsection{Tracing}
 It is possible to get some tracing output during the execution of a TaQL
 command by using the case-insensitive value \texttt{TRACE} in the
-\texttt{using style} command. It can be useful for debugging purposes.
+\texttt{using style} clause. It can be useful for debugging purposes.
 
 \subsubsection{Timing}
 It is possible to time a TaQL command by using the case-insensitive
-value \texttt{TIME} in the \texttt{using style} command. 
+value \texttt{TIME} in the \texttt{using style} clause. 
 For historical reasons it is also possible to use the the case-insensitive
-keyword \texttt{TIME} before or after the optional style command.
+keyword \texttt{TIME} before or after the optional style clause.
 
 Timing shows the total execution time and the times needed for various parts of the
 TaQL command on stdout. For example:
@@ -316,7 +318,7 @@ projection (selection of columns), and distinct (unique column values).
 \subsection{\label{TAQL:RESERVEDWORDS}Reserved words}
 TaQL uses the following reserved words as part of its language.
 \begin{verbatim}
-  ALL           AND      AS        ASC
+  ALL           AND      AROUND    AS        ASC
   BETWEEN 
   CALC          CREATETABLE
   DELETE        DESC     DISTINCT  DMINFO
@@ -387,11 +389,11 @@ and {\tt rowid} make variable output possible. Clauses
 like ORDERBY can be given. The GIVING (or
 INTO) might be useful to store the result in a table.
 
-There is no explicit JOIN clause, but it is possible to
-equi-join tables on row number.
-Such tables must have the same number of rows.
-One can also join, for example, the main table of a
-MeasurementSet with a subtable like the ANTENNA table using a
+The JOIN clause can be used to left join a table with another table.
+It also is possible to join tables on row number, where
+the tables involved must have the same number of rows.
+One can also join on row number the main table of a
+MeasurementSet with a subtable such as the ANTENNA table using a
 \htmlref{subquery}{TAQL:SUBQUERIES}.
 Joins are explained further in
 \htmlref{section \ref{TAQL:JOIN}}{TAQL:JOIN}.
@@ -405,6 +407,7 @@ parts are shown in square brackets.
   SELECT [[DISTINCT] column_list]
     [INTO table [AS options]]
     [FROM table_list]
+    [JOIN table_list ON condition [JOIN table_list ON condition ...]]
     [WHERE expression]
     [GROUPBY expression_list]
     [HAVING expression]
@@ -416,7 +419,8 @@ parts are shown in square brackets.
 The clauses are executed in a somewhat different order.
 \begin{enumerate}
 \item WITH to create the temporary tables to be used.
-\item FROM to define the tables to be used.
+\item FROM to define the main tables to be used.
+\item JOIN to combine main tables with other tables.
 \item WHERE to select the rows.
 \item GROUPBY to group selected rows.
 \item SELECT to fill select columns used in HAVING or ORDERBY.
@@ -446,7 +450,7 @@ columns are used, that part of the SELECT is executed before HAVING.
 TaQL uses the following lookup scheme for column/keyword names.
 \begin{enumerate}
 \item If preceded by a shorthand (like in \texttt{t0.DATA}), the name
-  is looked up in the corresponding table given in the FROM clause.
+  is looked up in the corresponding table given in the FROM or JOIN clause.
 \item If not preceded by a shorthand, a name is first looked up in
   the select columns. If not found, the name is looked up in the first
   table given in FROM.
@@ -501,7 +505,7 @@ Columns to be selected can be given as
 a comma-separated list with names of columns that have to be
 selected from the tables in the table\_list (see below).
 If no column\_list is given, all columns of the first table will be selected.
-It results in a so-called reference table. Optionally a
+A selection results in a so-called reference table. Optionally a
 selected column can be given another name in the reference
 table using \texttt{AS name} (where AS is optional).
 For example:
@@ -510,8 +514,8 @@ For example:
   select TIME,ANTENNA1,ANTENNA2,MODEL_DATA AS DATA from 3C343.MS
 \end{verbatim}
 It is possible to precede a column name with a table shorthand
-indicating which table in the FROM clause has to be used. If not
-given, a column will be looked up in the first table. Note that if
+indicating which table in the FROM or JOIN clause has to be used. If not
+given, a column will be looked up in the first FROM table. Note that if
 equally named columns from different tables are used, one has to get a
 new name, otherwise a 'duplicate name' error will occur.
 For example:
@@ -589,7 +593,7 @@ For example:
   select MODEL_DATA AS DATA FCOMPLEX from 3C343.MS
 \end{verbatim}
 
-Note that for subqueries the GIVING clause offers a
+Note that for subqueries the \htmlref{GIVING}{TAQL:GIVING} clause offers a
 better (faster) way of specifying a result expression. It also makes it
 possible to use intervals.
 
@@ -759,7 +763,8 @@ are used.
 The FROM clause can be omitted, in which case the input is a virtual
 table with no columns. The number of rows in it is defined by the
 LIMIT and OFFSET value; it defaults to 1 row. It makes it possible to select
-column-independent expressions in the SELECT command. Note that these
+column-independent expressions (such as function random) 
+in the SELECT command. Note that these
 expressions do not need to be constant. For example
 \begin{verbatim}
   SELECT rowid() LIMIT 31
@@ -821,7 +826,7 @@ The colons refer to the latest table used, thus \texttt{my.ms}.
 \item
 Opening a subtable using a path name like \texttt{my.ms/ANTENNA}
 will fail if \texttt{my.ms} is a reference table instead of the
-original table.
+original table. It also fails if a table is stored in the MultiFile format.
 Therefore the path of a subtable should be given using two colons instead of
 a slash like \texttt{my.ms::ANTENNA} which is a slight extension of
 specifying table names in the previous bullets.
@@ -831,7 +836,7 @@ specifying table names in the previous bullets.
 \label{TAQL:BACKREF}
 Similar to OQL it is possible to use a
 \htmlref{nested query}{TAQL:SUBQUERIES}
-command in the FROM clause. This is a normal query command
+command in the FROM or JOIN clause. This is a normal query command
 enclosed in square brackets or parentheses. Besides the SELECT command
 the COUNT, CREATE TABLE and ALTER TABLE commands can also be used.
 The table created can thereafter be used in the rest of the
@@ -912,7 +917,7 @@ the SUBTABLES keyword. For example:
   SELECT FROM [ms.part1, ms.part2 SUBTABLES SYSCAL,POINTING]
 \end{verbatim}
 
-Usually the result of a TaQL query references the table given in the FROM.
+Usually the result of a TaQL query references the first table given in the FROM.
 In this example the FROM table is the concatenation, which is
 only known during the query. In such a case the concatenation must be made
 persistent, which can be done by using a GIVING (or INTO) inside the
@@ -931,6 +936,179 @@ persistent, the second one is the query result of the query
 matching rows in the persistent concatenation {\em ms.conc} which in
 its turn references the original parts.
 \end{enumerate}
+
+\subsection{\label{TAQL:JOIN}Joining tables}
+TaQL has various ways of joining tables which are described in the
+next sections.
+\begin{itemize}
+\item
+The JOIN clause it the most versatile way and can be used to perform
+left joins, where the rows in the main table are matched against a row
+in the join table on one or more columns. If multiple rows in the join
+table match, the first one is taken.
+Joins are explained in more detail in \htmladdnormallink{this article}
+{https://learnsql.com/blog/sql-joins-types-explained}.
+\item
+Multiple tables can be given in the FROM or JOIN clause. They are
+implicitly joined on row number. if a column is used from them. Hence
+they must have the same size.
+If only a keyword is used from a table, that table is not joined.
+\item
+A value vector, returned by  a subquery, can be indexed. In this way
+the ANTENNA1 column in a MeasurementSet can be used as index in the
+vector of antenna names.
+\item
+The special \htmlref{\texttt{derivedmscal}}{TAQL:MSCAL} functions make it easy to
+obtain information from the subtables of a MeasurementSet or
+Calibration Table.
+\end{itemize}
+
+\subsubsection{JOIN clause}
+The JOIN clause can be used to left join tables in order to find (meta)
+data. For example, a MeasurementSet can be joined with its ANTENNA
+subtable to find the name or position of the antenna in each row in
+the MeasurementSet. Columns from the join table can be used in any
+other clause (e.g., WHERE) in a TaQL command.
+\\TaQL only supports left joins. These are joins where the rows in the
+left (the main) table are matched against a single row in
+the joined table. If no matching row is found, 'none' values are used
+if data from the join table is used. If multiple rows match, the first
+matching row is used. Other types of joins (such as full join)
+are not supported.
+
+The full  syntax is:
+\begin{verbatim}
+  JOIN table-list ON join-expression
+\end{verbatim}
+Multiple JOIN clauses can be given to join with multiple tables. It is
+also possible to join a joined table with another table. This is shown
+in an example below.
+
+The table-list is similar to that in the FROM clause, thus one or more
+table names followed by a shorthand. If multiple tables are given,
+they must have the same number of rows. The tables are used in
+the join expression, so usually a shorthand is needed.
+\\The join-expression tells how to join tables. It is an expression
+consisting of one or more subexpressions separated by AND.
+Each subexpression compares a column in one table with a column (or
+the row number)  in the join table. 
+For example for MSv3:
+\begin{verbatim}
+  FROM my.ms t1 JOIN ::ANTENNA t2 ON t1.ANTENNA1=t2.ANTENNA_ID
+\end{verbatim}
+For each row in \texttt{my.ms} it finds the row in the ANTENNA subtable
+matching ANTENNA1. In the SELECT clause \texttt{t2.NAME} can be used
+to get, for instance, the name of the antenna like:
+\begin{verbatim}
+  SELECT t1.ANTENNA1, t2.NAME FROM my.ms t1
+    JOIN ::ANTENNA t2 ON t1.ANTENNA1=t2.ANTENNA_ID
+\end{verbatim}
+Another join can be used to get the name for ANTENNA2.
+\begin{verbatim}
+  SELECT t1.ANTENNA1, t2.NAME as ANTNAME1,
+         t1.ANTENNA2, t3.NAME as ANTNAME2 FROM my.ms t1
+    JOIN ::ANTENNA t2 ON t1.ANTENNA1=t2.ANTENNA_ID
+    JOIN ::ANTENNA t3 ON t1.ANTENNA2=t3.ANTENNA_ID
+\end{verbatim}
+
+In MSv2 quite often the row number is used as an implicit id. This can also
+be used in a join like:
+\begin{verbatim}
+  SELECT t1.ANTENNA1, t2.NAME FROM my.ms t1
+    JOIN ::ANTENNA t2 ON t1.ANTENNA1=t2.rownumber()
+\end{verbatim}
+
+In MSv3 an explicit ANTENNA\_ID is used instead of a row number.
+To make it possible to use the same query for an MSv2 and MSv3,
+the \texttt{MSID} function can be used for a column in a table.
+It takes a column name as argument.
+If the column exists, it will be used. Otherwise the
+\texttt{rownumber} function is used. A shorthand can be given before
+the column name. For example:
+\begin{verbatim}
+  SELECT t1.ANTENNA1, t2.NAME FROM my.ms t1
+    JOIN ::ANTENNA t2 ON t1.ANTENNA1=msid(t2.ANTENNA_ID)
+\end{verbatim}
+
+Besides joining using the equality operator, it is also possible to
+join using an interval in the join table. For example:
+\begin{verbatim}
+  FROM my.ms t1
+    JOIN ::SYSCAL t2 ON t1.TIME AROUND t2.TIME IN t2.INTERVAL
+\end{verbatim}
+In this example the SYSCAL subtable contains information for time
+intervals defined by its center and width. The AROUND/IN interval
+specification can be used to find the matching row for each TIME in
+the main table of the MS.
+
+Alas, finding SYSCAL information is not as easy as shown here, because
+it also depends on antenna and spectral window. So the full join is
+more complex. For MSv2 it should look like:
+\begin{verbatim}
+  FROM my.ms ms
+    JOIN ::DATA_DESCRIPTION dd ON ms.DATA_DESC_ID=dd.rownumber()
+    JOIN ::SYSCAL sc ON dd.SPECTRAL_WINDOW=sc.SPECTRAL_WINDOW_ID
+                    AND ms.ANTENNA1=sc.ANTENNA_ID
+                    AND ms.TIME AROUND sc.TIME IN tsc.INTERVAL
+\end{verbatim}
+First a join with the DATA\_DESCRIPTION subtable is done to find the
+spectral window. Thereafter a join with the SYSCAL subtable is done
+using the antenna, spectral window and time.
+ 
+\subsubsection{Join on row number}
+Multiple tables can be given in the FROM or JOIN clause. They are
+implicitly joined on row number as long as a column is used from such
+a table. Hence they must have the same size.
+If only a keyword is used from a table, that table is not joined.
+\begin{verbatim}
+  SELECT FROM mytable t1,othertable t2
+    WHERE not all(t1.DATA ~= t2.DATA)
+\end{verbatim}
+This command can be used to check if the data in \texttt{mytable} is about
+equal to the data in \texttt{othertable}. Both tables have to have the
+same number of rows.
+\\The join is done on row number, thus the data in 
+corresponding rows are compared.
+
+\subsubsection{Join using an indexed subquery}
+\begin{verbatim}
+  SELECT [SELECT NAME FROM ::ANTENNA][ANTENNA1]
+         FROM ~/GER1.MS 
+\end{verbatim}
+This example shows how a subquery is used to join the main table of a
+MeasurementSet with its ANTENNA subtable. The subquery returns a list
+with the names of all antennae, which subsequently is indexed with the
+antenna number to get the antenna name for each row in the main table.
+\\The join is done using the ANTENNA1 column which gives the row
+number in the subtable, thus the index in the subquery result.
+
+\subsubsection{Join using a subquery set}
+\begin{verbatim}
+  SELECT FROM ~/GER1.MS WHERE ANTENNA1 IN
+         [SELECT ROWID() FROM ::ANTENNA WHERE NAME ~ p/CS*/]
+\end{verbatim}
+This example shows another way to use a subquery for a  join of the
+main table of a MeasurementSet with its ANTENNA subtable. 
+It selects all baselines for which the first station is a core station.
+The subquery returns a set containing the ids of the core stations,
+which is used to select the correct stations in the main table.
+
+\subsubsection{\label{TAQL:MSCAL}Join using derivedmscal}
+Several \htmlref{UDF's in the \texttt{derivedmscal} library}{TAQL:MSFUNC} make it possible to
+easily join a MeasuementSet or CASA Calibration Table with a subtable like
+ANTENNA or SPECTRAL\_WINDOW. These functions know which columns to use
+making the join straightforward like in
+\begin{verbatim}
+  SELECT mscal.ant1name(), mscal.ant2name() from ~/GER1.MS
+\end{verbatim}
+The library also contain the more general SUBCOL function making it
+possible to join any table with a subtable. For example:
+\begin{verbatim}
+  SELECT mscal.subcol('NAMES','NAME',NAMEID) from obs.parmdb
+\end{verbatim}
+to get the parameter name for a LOFAR ParmDB table. A ParmDB table has
+a subtable NAMES containing the NAME and other info of a
+parameter. The column NAME\_ID is used to reference that subtable.
 
 \subsection{\label{TAQL:WHERE}WHERE expression}
 It defines the selection expression which must have a boolean
@@ -1062,7 +1240,7 @@ Each element can be a single value, range and/or interval as
 long as all elements have the same data type.
 The parts of each element have to be expressions resulting in a scalar.
 
-In the main query and in a query in the FROM command the
+In the main query and in a query in the FROM or JOIN clause the
 GIVING clause can only result in a table and not in a set.
 \\To be compliant with SQL dialects, the word SAVETO can be
 used instead of GIVING. Whitespace can be given between SAVE and TO.
@@ -1601,7 +1779,7 @@ fields, but thereafter an error message will be given.
 
 \subsubsection{Referring to SELECT columns}
 Usually a column used in an expression will be a column in one of
-the tables specified in the FROM clause. However, it is possible to
+the tables specified in the FROM or JOIN clause. However, it is possible to
 use a column created in the SELECT clause, in expressions given in
 the HAVING or ORDERBY clause.
 In fact, a column name not preceded by a table shorthand, is first
@@ -1651,7 +1829,7 @@ The operator precedence order is:
   &
   ^
   |
-  == != >  >= <  <=  ~= !~= IN INCONE BETWEEN EXISTS (I)LIKE  ~  !~
+  == != >  >= <  <=  ~= !~= IN INCONE BETWEEN AROUND EXISTS (I)LIKE  ~  !~
   &&
   ||
 \end{verbatim}
@@ -1722,7 +1900,11 @@ that can be used with them.
   NOT IN & all & negation of IN \\
   BETWEEN & no bool & \texttt{x BETWEEN b AND c} is similar to
   \texttt{x>=b AND x<=c} and \texttt{x IN [b=:=c]} \\
-  NOT BETWEEN & no bool & \texttt{a NOT BETWEEN b AND c} is negation
+  NOT BETWEEN & no bool & \texttt{x NOT BETWEEN b AND c} is the negation
+  of above. \\
+  AROUND & real,datetime & \texttt{x AROUND mid IN width} is similar to
+  \texttt{x>=mid-width/2 AND x<=mid+width/2} and \texttt{x IN [mid<:>width]} \\
+  NOT AROUND & no bool & \texttt{x NOT AROUND mid IN width} is the negation
   of above. \\
   INCONE & & cone search. (See the discussion of
        \htmlref{cone search functions}{TAQL:CONESEARCH}). \\
@@ -1776,11 +1958,12 @@ element in the lefthand operand if it is found in the righthand
 operand.
 
 An element in a set can be more complicated than a single value.
-It can define multiple values and intervals. The possible forms of
-a set element are:
+It can define multiple discrete values and a continuous interval. 
+The possible forms of a set element are:
 \begin{enumerate}
 \item A single value as shown in the example above.
-\item \texttt{start:end:incr}. This is similar to the
+\item \texttt{start:end:incr}. This specifies multiple discrete values
+and is similar to the
 way an array index is specified. Incr defaults to 1.
 End defaults to an open end (i.e., no upper bound) and results
 in an unbounded set. Start and end can be an integer, a real or a datetime.
@@ -1824,9 +2007,38 @@ not the case, the result is an empty interval.
   :=5  {,5}  <,5}   means x<=5      right-bounded closed
   :<5  {,5>  <,5>   means x<5       right-bounded open
 \end{verbatim}
+\item Continuous real and datetime intervals can also be specified as
+\texttt{mid<:>width}, thus
+  by giving the middle and the width of an interval. Such an interval
+  is bounded and closed on both sides. For a datetime
+  interval the middle must be given as a datetime and the interval as
+  a real with a possible unit which defaults to d (days).
+  If the width is zero, the interval is unlimited, thus basically
+  -infinity till +infinity.
+  This way of specifying an interval is useful
+  because the intervals in a MeasurementSet are defined that way.
+For example:
+\begin{verbatim}
+  23.5<:>5          means 21<=x<=26
+  19Apr2022<:>10    means 14Apr<=x<=24Apr2022
+\end{verbatim}
+\item Intervals in a set can also be given using BETWEEN/AND and
+  AROUND/IN. For example:
+\begin{verbatim}
+  column IN [BETWEEN 10 AND 20, AROUND 35 WIDTH 10]
+\end{verbatim}
+which is equal to
+\begin{verbatim}
+  column IN [10=:=20, 35<:>10]
+and
+  column BETWEEN 10 AND 20 OR column AROUND 35 IN 10
+\end{verbatim}
+Thus the BETWEEN/AND and AROUND/IN syntax can be used directly to define a
+single interval or be used to define intervals in a set.
+
 \end{enumerate}
 It is very important to note that the 2nd form of set specification results in
-discrete values, while the 3rd form results in a continuous interval.
+discrete values, while the 3rd and later forms result in continuous intervals.
 
 Each element in a set can have its own form, i.e., one element can
 be a single value while another can be an interval.
@@ -2261,7 +2473,7 @@ it is prettyfied as 1 or 0.
   formatted separately, so such a format string needs to contain a
   format specifier for
   both parts. See \htmladdnormallink{printf reference}
-  {http://www.cplusplus.com/reference/cstdio/printf} for possible
+  {https://www.cplusplus.com/reference/cstdio/printf} for possible
   format specifiers.
   For example:
 \begin{verbatim}
@@ -3956,20 +4168,18 @@ values in the measurement set.
 \item
 Select if any channel has a UV distance $<$ 100 wavelengths.
 \begin{verbatim}
-  select from MY.MS where any(sqrt(sumsqr(UVW[:2])) / c() *
-      [select CHAN_FREQ from ::SPECTRAL_WINDOW][DATA_DESC_ID,]
-         < 100)
+  select from MY.MS t1
+    JOIN ::DATA_DESCRIPTION t2 ON t1.DATA_DESC_ID=t2.rownumber()
+    JOIN ::SPECTRAL_WINDOW t3 ON t2.SPECTRAL_WINDOW=t3.rownumber()
+  where any(sqrt(sumsqr(UVW[:2])) / c() * t3.CHAN_FREQ < 100)
 \end{verbatim}
 In a MeasurementSet the UVW coordinates are stored in meters, so they
 have to be multiplied with the frequency and divided by speed of light
 to get them in wavelengths.
-\\Because TaQL has no proper join operation, it is not possible to
-select directly on the DATA\_DESC\_ID. However, using a nested query and
-indexing the result with the DATA\_DESC\_ID has the same effect. It only
-requires that CHAN\_FREQ has the same length in all rows in the
-subtable.
-\\Using the new \htmlref{derivedmscal}{TAQL:MSFUNC} functions, below a
-much nicer solution is given.
+\\The first join finds the SPECTRAL\_WINDOW\_ID for each row; the second
+join finds the channel frequencies.
+\\A \htmlref{derivedmscal}{TAQL:MSFUNC} function can be used for an
+easier solution as shown below.
 
 \item
 \begin{verbatim}
@@ -4070,61 +4280,6 @@ the SELECT. However, it is an error if both are omitted.
 
 
 \section{Some further remarks}
-\subsection{\label{TAQL:JOIN}Joining tables}
-As discussed in some previous sections it is possible to join tables
-on row number. Two examples show how to do it.
-
-\subsubsection{Join on row number}
-\begin{verbatim}
-  SELECT FROM mytable t1,othertable t2
-    WHERE not all(t1.DATA ~= t2.DATA)
-\end{verbatim}
-This command can be used to check if the data in \texttt{mytable} is about
-equal to the data in \texttt{othertable}. Both tables have to have the
-same number of rows.
-\\The join is done on row number, thus the data in 
-corresponding rows are compared.
-
-\subsubsection{Join using an indexed subquery}
-\begin{verbatim}
-  SELECT [SELECT NAME FROM ::ANTENNA][ANTENNA1]
-         FROM ~/GER1.MS 
-\end{verbatim}
-This example shows how a subquery is used to join the main table of a
-MeasurementSet with its ANTENNA subtable. The subquery returns a list
-with the names of all antennae, which subsequently is indexed with the
-antenna number to get the antenna name for each row in the main table.
-\\The join is done using the ANTENNA1 column which gives the row
-number in the subtable, thus the index in the subquery result.
-
-\subsubsection{Join using a subquery set}
-\begin{verbatim}
-  SELECT FROM ~/GER1.MS WHERE ANTENNA1 IN
-         [SELECT ROWID() FROM ::ANTENNA WHERE NAME ~ p/CS*/]
-\end{verbatim}
-This example shows another way to use a subquery for a  join of the
-main table of a MeasurementSet with its ANTENNA subtable. 
-It selects all baselines for which the first station is a core station.
-The subquery returns a set containing the ids of the core stations,
-which is used to select the correct stations in the main table.
-
-\subsubsection{Join using derivedmscal}
-Several UDFs in the \texttt{derivedmscal} library make it possible to
-easily join a MeasuementSet or CASA Calibration Table with a subtable like
-ANTENNA or SPECTRAL\_WINDOW. These functions know which columns to use
-making the join straightforward like in
-\begin{verbatim}
-  SELECT mscal.ant1name(), mscal.ant2name() from ~/GER1.MS
-\end{verbatim}
-The library also contain the more general SUBCOL function making it
-possible to join any table with a subtable. For example:
-\begin{verbatim}
-  SELECT mscal.subcol('NAMES','NAME',NAMEID) from obs.parmdb
-\end{verbatim}
-to get the parameter name for a LOFAR ParmDB table. A ParmDB table has
-a subtable NAMES containing the NAME and other info of a
-parameter. The column NAME\_ID is used to reference that subtable.
-
 
 \subsection{Optimization}
 A lot of development work could be done to improve the query optimization.

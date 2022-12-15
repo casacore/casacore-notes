@@ -17,7 +17,7 @@
 \title{NOTE 199 --
 Table Query Language}
 \author {Ger van Diepen, ASTRON Dwingeloo}
-\date {2022 Jan 25}
+\date {2022 Dec 20}
 \maketitle
 \begin{abstract}
 The Table Query Language (TaQL) is an SQL-like high level language to
@@ -29,7 +29,7 @@ and astronomical coordinates.
 It has a very rich set of functions (such as cone search and
 array reduction) making it very suitable for astronomical
 applications. User defined functions can be added easily.
-It also has full support of grouping/aggregation and nested queries.
+It also has full support of equi-join, grouping/aggregation and nested queries.
 An operation that can be expressed in a single command is the
 matching of two sky catalogues.
 \\It can be used from C++, Python, and the Casacore program \texttt{taql}.
@@ -42,8 +42,9 @@ matching of two sky catalogues.
   3.1 & 2016 Apr 4 & Masked arrays; ALTER TABLE and SHOW commands\\
   3.2 & 2018 Feb 14 & WITH clause\\
   3.3 & 2018 Jun 10 & Meas support for frequency, doppler, radialvelocity, earthmagnetic\\
-  3.4 & 2022 Jan 25 & Added LIKE clause in table or column creation,
-  COPY COLUMN and DROP TABLE
+  3.4 & 2022 Jan 25 & LIKE clause in table or column creation, COPY COLUMN and DROP TABLE\\
+  3.5 & 2022 Sep 20 & AROUND/IN intervals\\
+  3.6 & 2022 Dec 20 & JOIN clause
 \end{tabular}
 
 %%---------------------------------------------------------------------------
