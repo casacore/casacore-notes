@@ -1,0 +1,259 @@
+\documentclass{article}
+\include{aips2defs}
+\usepackage[colorlinks]{hyperref}
+\usepackage{epsf}
+\setlength{\textwidth}{6.5in}
+
+\usepackage{titlesec}
+
+\setcounter{secnumdepth}{4}
+
+\titleformat{\paragraph}
+{\normalfont\normalsize\bfseries}{\theparagraph}{1em}{}
+\titlespacing*{\paragraph}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\setlength{\evensidemargin}{0.0in}
+\setlength{\oddsidemargin}{0.0in}
+\parskip=5truept
+\newcommand{\nc}{$N_c$}
+\newcommand{\nr}{$N_r$}
+\newcommand{\nf}{$N_f$}
+\newcommand{\nfs}{$N_f^*$}
+\newcommand{\nl}{$N_l$}
+\newcommand{\ncat}{$N_{cat}$}
+\newcommand{\na}{$N_{ant}$}
+\newcommand{\defline}[1]{\cline{1-5}
+\multicolumn{5}{|l|}{#1} \\
+\cline{1-5}}
+\newcommand{\definetable}[2]
+{
+	\vfill\newpage
+	\subsection{#1}
+        \vspace{0.15in}
+        \small
+	\begin{tabular}{|l|p{1.25in}|l|p{.9in}|p{1.4in}|}
+	\hline
+	\multicolumn{5}{|c|}{\bf #1}\\ 
+	\cline{1-5}
+        \multicolumn{1}{|c|}{Name}&\multicolumn{1}{|c|}{Format}&
+        \multicolumn{1}{|c|}{Units}&\multicolumn{1}{|c|}{Measure}&
+        \multicolumn{1}{|c|}{Comments}\\
+        \cline{1-5}
+        #2
+        \hline
+	\end{tabular}
+}
+
+
+\begin{document}
+
+\title{MeasurementSet VLBI extensions}
+
+\author{Kettenis M.M.}
+\date{November, 2023}
+\maketitle
+
+\ifpdf
+\else
+\href{265.pdf}{A pdf version of this note is available.}
+\fi
+
+\tableofcontents 
+
+
+
+\section{Introduction}
+
+The MeasurementSet (MS) defines a format in which interferometer
+visibilities and single-dish data are stored.  It is implemented in
+software packages using casacore code.  Version 2.0 (Note 229; Kemball
+and Wieringa 2000) of the MeasurementSet has been in use since 2000 in
+different packages and at different telescopes.
+
+Recent developments to add VLBI capabilities to CASA revealed some
+gaps in the metadata provided by MS V2.0.  To fill these gaps
+additional tables have been defined and implemented in casacore.
+These extension tables are filled by the code that implements the
+conversion from FITS-IDI to MS.  This follows the existing practice
+established by the code that converts from ASDM to MS that is provided
+in CASA where several ASDM-specific tables are stored in MS form with
+names wit an ASDM\_ prefix.
+
+The following new tables are defined:
+
+\begin{itemize}
+
+\item{{\bf GAIN\_CURVE:} Antenna gain curves}
+
+\item{{\bf PHASE\_CAL:} Phase calibration measurements}
+
+\item{{\bf EARTH\_ORIENTATION:} Earth Orientation Parameters}
+
+\end{itemize}
+
+
+\section{VLBI metadata tables}
+
+This section contains a description of the VLBI metadata tables.
+These tables are stored as subtables of the MS and like the standard
+subtables these are stored as keywords of the MS.  All these subtables
+are optional.
+
+\definetable{GAIN\_CURVE: Antenna gain curves}
+{
+\defline{\bf Columns}
+\defline{\bf Keys}
+ANTENNA\_ID & Int        &      &       & Antenna id.\\
+FEED\_ID    & Int        &      &       & Feed id.\\
+SPECTRAL\_WINDOW\_ID & Int &    &       & Spectral window id.\\
+TIME        & Double     & s    & EPOCH & Interval midpoint \\
+INTERVAL    & Double     & s    &       & Time interval\\
+\defline{\em Data description}
+TYPE        & String     &      &       & Gain curve type \\
+NUM\_POLY   & Int        &      &       & \# Series order\\
+\defline{\em Data}
+GAIN        & Float(\nr, num\_poly) & & & Gain\\
+SENSITIVITY & Float(\nr) & K/Jy &       & Sensitivity\\
+}
+
+\begin{description}
+
+\item[Notes:] This sub-table contains antenna gain curves.\\
+  For further discussion of this table see casacore
+  \htmladdnormallink{Issue
+    1029}{https://github.com/casacore/casacore/issues/1039}.
+
+\item[ANTENNA\_ID] Antenna identifier, as indexed by ANTENNA$n$ from MAIN.
+
+\item[FEED\_ID] Feed identifier, as indexed from FEED$n$ in MAIN. A
+  value of -1 indicates the row is valid for all feeds.
+
+\item[SPECTRAL\_WINDOW\_ID] Spectral window identifier. A value of -1
+  indicates the row is valid for all spectral windows.
+
+\item[TIME] Mid-point of the time interval over which the data in the
+  row are valid. Required to use the same TIME Measure reference as in
+  MAIN.
+
+\item[INTERVAL] Time interval.
+
+\item[TYPE] Gain curve type. Reserved keywords include:
+  ("POWER(EL)" - Power as a function of elevation; "POWER(ZA)" - Power
+  as a function of zenith angle; "VOLTAGE(EL)" - Voltage as a function
+  of elevation; "VOLTAGE(ZA)" - Voltage as a function of zenith
+  angle).
+
+\item[NUM\_POLY] Series order for the GAIN column (number of terms in
+  the gain curve polynomial).
+
+\item[GAIN] Coefficients of the polynomial that describes the (power
+  or voltage) gain.
+
+\item[SENSITIVITY] Sensitivity of the antenna expressed in K/Jy. This
+  is what AIPS calls ``DPFU''.
+  
+\end{description}
+
+\definetable{PHASE\_CAL: Phase calibration measurements}
+{
+\defline{\bf Columns}
+\defline{\bf Keys}
+ANTENNA\_ID & Int         &      &       & Antenna id.\\
+FEED\_ID    & Int         &      &       & Feed id.\\
+SPECTRAL\_WINDOW\_ID & Int &     &       & Spectral window id.\\
+TIME        & Double      & s    & EPOCH & Interval midpoint \\
+INTERVAL    & Double      & s    &       & Time interval\\
+\defline{\em Data description}
+NUM\_TONES  & Int         &      &       & \# phase calibration tones\\
+TONE\_FREQUENCY & Double(num\_tones) & Hz & & Tone frequencies\\
+\defline{\em Data}
+PHASE\_CAL  & Float(\nr, num\_tones) & & & Phase-Cal tone measurements\\
+CABLE\_CAL  & Double(\nr) & s    &       & Cable delay\\
+}
+\begin{description}
+
+\item[Notes:] This sub-table contains signal chain phase calibration
+  measurements.\\
+  For further discussion of this table see casacore
+  \htmladdnormallink{Issue
+    1165}{https://github.com/casacore/casacore/issues/1165}.
+
+\item[ANTENNA\_ID] Antenna identifier, as indexed by ANTENNA$n$ from MAIN.
+
+\item[FEED\_ID] Feed identifier, as indexed from FEED$n$ in MAIN. A
+  value of -1 indicates the row is valid for all feeds.
+
+\item[SPECTRAL\_WINDOW\_ID] Spectral window identifier. A value of -1
+  indicates the row is valid for all spectral windows.
+
+\item[TIME] Mid-point of the time interval over which the data in the
+  row are valid. Required to use the same TIME Measure reference as in
+  MAIN.
+
+\item[INTERVAL] Time interval.
+
+\item[NUM\_TONES] Number of phase-cal tones that are measured. This
+  number may vary by antenna, and may vary by spectral window as well,
+  especially if spectral windows of varying widths are supported.
+
+\item[TONE\_FREQUENCY] The sky frequencies of each measured phase-cal tone.
+
+\item[PHASE\_CAL] Phase calibration measurements. These are provided
+  as complex values that represent both the phase and amplitude for a
+  measured phase-cal tone. Measurements are provided as a
+  two-dimensional array such that separate measurements can be
+  provided for each receptor of a feed (so separate values for each
+  polarization) for each of the measured tones.
+
+\item[CABLE\_CAL] Cable calibration measurement. This is a measurement
+  of the delay in the cable that provides the reference signal to the
+  receiver. There should be only a single reference signal per feed
+  (even if that feed has multiple receptors) so this is provided as a
+  simple scalar.
+
+\end{description}
+
+\definetable{EARTH\_ORIENTATION: Earth orientation parameters}
+{
+\defline{\bf Columns}
+\defline{\bf Keys}
+TIME        & Double    & s    & EPOCH & Time-stamp for values\\
+OBSERVATION\_ID & Int   &      &       & Points to OBSERVATION table\\
+\defline{\em Data}
+UT1\_UTC    & Double    & s    &       & UT1 - UTC\\
+PM          & Double(2) & rad  &       & Celestial pole position\\
+TYPE        & String    &      &       & Type of EOP value\\
+}
+\begin{description}
+
+\item[Notes:] This sub-table contains the earth orientation parameters
+  that were used to generate the correlator model.\\
+  For further discussion of this table see casacore
+  \htmladdnormallink{Issue
+    1307}{https://github.com/casacore/casacore/issues/1307}.
+
+\item[TIME] Timestamp of the EOP values; this is expected to be the
+  UTC time although some sources use TAI instead.
+
+\item[OBSERVATION\_ID] Observation identifier (see the OBSERVATION table)
+
+\item[UT1\_UTC] Difference between UT1 and UTC (UT1 - UTC) in seconds.
+
+\item[PM] Position of celestial pole; these are provided as X and Y
+  components (in that order) in radians.
+
+\item[TYPE] Type of the EOP value; Reserved keywords include:
+  ("PREDICTED" - for predicted parameter values; "PRELIMINARY" - for
+  measured parameter values that are subject to further revision in
+  the future; "FINAL" - for final parameter values).  If the type is
+  not know this should be an empty string.
+
+\end{description}
+
+
+\section{References}
+
+\noindent Kemball, A.J., Wieringa, M.H., 2000, casacore Note 229.
+
+\end{document}
