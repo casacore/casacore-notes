@@ -5,8 +5,8 @@
 > 
 <head><title>MeasurementSet deﬁnition version 3.0β</title> 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" /> 
-<meta name="generator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
-<meta name="originator" content="TeX4ht (http://www.tug.org/tex4ht/)" /> 
+<meta name="generator" content="TeX4ht (https://tug.org/tex4ht/)" /> 
+<meta name="originator" content="TeX4ht (https://tug.org/tex4ht/)" /> 
 <!-- xhtml,mathml,fn-in,css-in,charset=utf-8,html --> 
 <meta name="src" content="264.tex" /> 
  
@@ -38,21 +38,23 @@
 .cmr-6{font-size:60%;}  
 .cmmi-6{font-size:60%;font-style: italic;}  
 .cmsy-6{font-size:60%;}  
-.cmtt-10{font-family: monospace;}  
-.cmtt-10{font-family: monospace;}  
+.cmtt-10{font-family: monospace,monospace;}  
+.cmtt-10{font-family: monospace,monospace;}  
 .cmti-10{ font-style: italic;}  
 .cmr-9{font-size:90%;}  
 .cmmi-9{font-size:90%;font-style: italic;}  
 .cmsy-9{font-size:90%;}  
-.cmtt-9{font-size:90%;font-family: monospace;}  
-.cmtt-9{font-family: monospace;}  
+.cmtt-9{font-size:90%;font-family: monospace,monospace;}  
+.cmtt-9{font-family: monospace,monospace;}  
 .cmbx-9{font-size:90%; font-weight: bold;}  
 .cmbx-9{ font-weight: bold;}  
 .cmti-9{font-size:90%; font-style: italic;}  
-p.noindent { text-indent: 0em }  
-td p.noindent { text-indent: 0em; margin-top:0em; }  
-p.nopar { text-indent: 0em; }  
-p.indent{ text-indent: 1.5em }  
+p{margin-top:0;margin-bottom:0}  
+p.indent{text-indent:0;}  
+p + p{margin-top:1em;}  
+p + div, p + pre {margin-top:1em;}  
+div + p, pre + p {margin-top:1em;}  
+a { overflow-wrap: break-word; word-wrap: break-word; word-break: break-word; hyphens: auto; }  
 @media print {div.crosslinks {visibility:hidden;}}  
 a img { border-top: 0; border-left: 0; border-right: 0; }  
 center { margin-top:1em; margin-bottom:1em; }  
@@ -75,7 +77,7 @@ div.obeylines-v p { margin-top:0; margin-bottom:0; }
 td.displaylines {text-align:center; white-space:nowrap;}  
 .centerline {text-align:center;}  
 .rightline {text-align:right;}  
-div.verbatim {font-family: monospace; white-space: nowrap; text-align:left; clear:both; }  
+pre.verbatim {font-family: monospace,monospace; text-align:left; clear:both; }  
 .fbox {padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
 div.fbox {display:table}  
 div.center div.fbox {text-align:center; clear:both; padding-left:3.0pt; padding-right:3.0pt; text-indent:0pt; border:solid black 0.4pt; }  
@@ -110,18 +112,16 @@ td.td01{ padding-left:0pt; padding-right:5pt; }
 td.td10{ padding-left:5pt; padding-right:0pt; }  
 td.td11{ padding-left:5pt; padding-right:5pt; }  
 table[rules] {border-left:solid black 0.4pt; border-right:solid black 0.4pt; }  
-.hline hr, .cline hr{ height : 1px; margin:0px; }  
+.hline hr, .cline hr{ height : 0px; margin:0px; }  
+.hline td, .cline td{ padding: 0; }  
+.hline hr, .cline hr{border:none;border-top:1px solid black;}  
 .tabbing-right {text-align:right;}  
-span.TEX {letter-spacing: -0.125em; }  
-span.TEX span.E{ position:relative;top:0.5ex;left:-0.0417em;}  
-a span.TEX span.E {text-decoration: none; }  
-span.LATEX span.A{ position:relative; top:-0.5ex; left:-0.4em; font-size:85%;}  
-span.LATEX span.TEX{ position:relative; left: -0.4em; }  
 div.float, div.figure {margin-left: auto; margin-right: auto;}  
 div.float img {text-align:center;}  
 div.figure img {text-align:center;}  
-.marginpar {width:20%; float:right; text-align:left; margin-left:auto; margin-top:0.5em; font-size:85%; text-decoration:underline;}  
-.marginpar p{margin-top:0.4em; margin-bottom:0.4em;}  
+.marginpar,.reversemarginpar {width:20%; float:right; text-align:left; margin-left:auto; margin-top:0.5em; font-size:85%; text-decoration:underline;}  
+.marginpar p,.reversemarginpar p{margin-top:0.4em; margin-bottom:0.4em;}  
+.reversemarginpar{float:left;}  
 .equation td{text-align:center; vertical-align:middle; }  
 td.eq-no{ width:5%; }  
 table.equation { width:100%; }  
@@ -135,9 +135,10 @@ math .textsf { font-family: sans-serif; }
 math .textbf { font-weight: bold; }  
 mo.MathClass-op + mi{margin-left:0.3em}  
 mi + mo.MathClass-op{margin-left:0.3em}  
-math mi[mathvariant="bold"] { font-weight: bold; font-style: normal; }  
-math mi[mathvariant="normal"] { font-weight: normal; font-style: normal; }  
+math mstyle[mathvariant="bold"] { font-weight: bold; font-style: normal; }  
+math mstyle[mathvariant="normal"] { font-weight: normal; font-style: normal; }  
 .partToc a, .partToc, .likepartToc a, .likepartToc {line-height: 200%; font-weight:bold; font-size:110%;}  
+.chapterToc a, .chapterToc, .likechapterToc a, .likechapterToc, .appendixToc a, .appendixToc {line-height: 200%; font-weight:bold;}  
 .index-item, .index-subitem, .index-subsubitem {display:block}  
 div.caption {text-indent:-2em; margin-left:3em; margin-right:1em; text-align:left;}  
 div.caption span.id{font-weight: bold; white-space: nowrap; }  
@@ -146,16 +147,15 @@ p.bibitem { text-indent: -2em; margin-left: 2em; margin-top:0.6em; margin-bottom
 p.bibitem-p { text-indent: 0em; margin-left: 2em; margin-top:0.6em; margin-bottom:0.6em; }  
 .paragraphHead, .likeparagraphHead { margin-top:2em; font-weight: bold;}  
 .subparagraphHead, .likesubparagraphHead { font-weight: bold;}  
-.quote {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; margin-right:1em; text-align:justify;}  
 .verse{white-space:nowrap; margin-left:2em}  
 div.maketitle {text-align:center;}  
 h2.titleHead{text-align:center;}  
 div.maketitle{ margin-bottom: 2em; }  
 div.author, div.date {text-align:center;}  
 div.thanks{text-align:left; margin-left:10%; font-size:85%; font-style:italic; }  
-.quotation {margin-bottom:0.25em; margin-top:0.25em; margin-left:1em; }  
-.abstract p {margin-left:5%; margin-right:5%;}  
+div.abstract p {margin-left:5%; margin-right:5%;}  
 div.abstract {width:100%;}  
+.abstracttitle{text-align:center;margin-bottom:1em;}  
 /* end css.sty */  
  
  
@@ -186,116 +186,102 @@ class="cmr-12">July, 2019</span></div>
    </div>
 <!--l. 65--><p class="indent" >   <a 
 href="264.pdf" >A pdf version of this note is available.</a>
-<a 
- id="Q1-1-1"></a>
 </p>
-<h3 class="likesectionHead"><a 
+   <h3 class="likesectionHead"><a 
  id="x1-1000"></a>Contents</h3>
    <div class="tableofcontents">
-   <span class="sectionToc" >1 <a 
-href="#x1-20001" id="QQ2-1-3">Introduction</a></span>
-<br />   <span class="sectionToc" >2 <a 
-href="#x1-30002" id="QQ2-1-4">Summary of changes</a></span>
-<br />    <span class="subsectionToc" >2.1 <a 
-href="#x1-40001" id="QQ2-1-5">MAIN table</a></span>
-<br />    <span class="subsectionToc" >2.2 <a 
-href="#x1-50002" id="QQ2-1-6">ARRAY table</a></span>
-<br />    <span class="subsectionToc" >2.3 <a 
-href="#x1-60003" id="QQ2-1-7">FIELD table</a></span>
-<br />     <span class="subsubsectionToc" >2.3.1 <a 
-href="#x1-70001" id="QQ2-1-8">Direction information</a></span>
-<br />    <span class="subsectionToc" >2.4 <a 
-href="#x1-80004" id="QQ2-1-9">FLAG_CMD</a></span>
-<br />    <span class="subsectionToc" >2.5 <a 
-href="#x1-90005" id="QQ2-1-10">OBSERVATION table</a></span>
-<br />    <span class="subsectionToc" >2.6 <a 
-href="#x1-100006" id="QQ2-1-11">SOURCE table</a></span>
-<br />    <span class="subsectionToc" >2.7 <a 
-href="#x1-110007" id="QQ2-1-12">SPECTRAL_WINDOW table</a></span>
-<br />   <span class="sectionToc" >3 <a 
-href="#x1-120003" id="QQ2-1-13">New sub-tables</a></span>
-<br />     <span class="subsubsectionToc" >3.0.1 <a 
-href="#x1-130001" id="QQ2-1-14">BEAM subtable</a></span>
+    <span class="sectionToc" >1 <a 
+href="#x1-20001" id="QQ2-1-2">Introduction</a></span>
+<br />    <span class="sectionToc" >2 <a 
+href="#x1-30002" id="QQ2-1-3">Summary of changes</a></span>
+<br />     <span class="subsectionToc" >2.1 <a 
+href="#x1-40001" id="QQ2-1-4">MAIN table</a></span>
+<br />     <span class="subsectionToc" >2.2 <a 
+href="#x1-50002" id="QQ2-1-5">ARRAY table</a></span>
+<br />     <span class="subsectionToc" >2.3 <a 
+href="#x1-60003" id="QQ2-1-6">FIELD table</a></span>
+<br />     <span class="subsectionToc" >2.4 <a 
+href="#x1-80004" id="QQ2-1-8">FLAG_CMD</a></span>
+<br />     <span class="subsectionToc" >2.5 <a 
+href="#x1-90005" id="QQ2-1-9">OBSERVATION table</a></span>
+<br />     <span class="subsectionToc" >2.6 <a 
+href="#x1-100006" id="QQ2-1-10">SOURCE table</a></span>
+<br />     <span class="subsectionToc" >2.7 <a 
+href="#x1-110007" id="QQ2-1-11">SPECTRAL_WINDOW table</a></span>
+<br />    <span class="sectionToc" >3 <a 
+href="#x1-120003" id="QQ2-1-12">New sub-tables</a></span>
+<br />     <span class="subsectionToc" >3.1 <a 
+href="#x1-150001" id="QQ2-1-15">INTERFEROMETER_MODEL</a></span>
+<br />    <span class="sectionToc" >4 <a 
+href="#x1-190004" id="QQ2-1-19">MS v3.0 layout</a></span>
+<br />     <span class="subsectionToc" >4.1 <a 
+href="#x1-200001" id="QQ2-1-20">MAIN table: Data, coordinates and ﬂags</a></span>
                                                                                          
 
                                                                                          
-<br />     <span class="subsubsectionToc" >3.0.2 <a 
-href="#x1-140002" id="QQ2-1-15">EPHEMERIDES</a></span>
-<br />    <span class="subsectionToc" >3.1 <a 
-href="#x1-150001" id="QQ2-1-16">INTERFEROMETER_MODEL</a></span>
-<br />     <span class="subsubsectionToc" >3.1.1 <a 
-href="#x1-160001" id="QQ2-1-17">Multi element station based antenna (PHASED_ARRAY subtable)</a></span>
-<br />     <span class="subsubsectionToc" >3.1.2 <a 
-href="#x1-170002" id="QQ2-1-18">SCAN subtable</a></span>
-<br />     <span class="subsubsectionToc" >3.1.3 <a 
-href="#x1-180003" id="QQ2-1-19">Associated tables (CAL_TABLES)</a></span>
-<br />   <span class="sectionToc" >4 <a 
-href="#x1-190004" id="QQ2-1-20">MS v3.0 layout</a></span>
-<br />    <span class="subsectionToc" >4.1 <a 
-href="#x1-200001" id="QQ2-1-21">MAIN table: Data, coordinates and ﬂags</a></span>
-<br />    <span class="subsectionToc" >4.2 <a 
-href="#x1-210002" id="QQ2-1-22">MAIN table: continued</a></span>
-<br />    <span class="subsectionToc" >4.3 <a 
-href="#x1-220003" id="QQ2-1-23">ANTENNA: Antenna characteristics</a></span>
-<br />    <span class="subsectionToc" >4.4 <a 
-href="#x1-230004" id="QQ2-1-24">BEAM: Beam information</a></span>
-<br />    <span class="subsectionToc" >4.5 <a 
-href="#x1-240005" id="QQ2-1-25">CORRELATOR_TYPE: Doppler tracking information</a></span>
-<br />    <span class="subsectionToc" >4.6 <a 
-href="#x1-250006" id="QQ2-1-26">DOPPLER: Doppler tracking information</a></span>
-<br />    <span class="subsectionToc" >4.7 <a 
-href="#x1-260007" id="QQ2-1-27">EPHEMERIDES: Ephemerides information</a></span>
-<br />    <span class="subsectionToc" >4.8 <a 
-href="#x1-270008" id="QQ2-1-28">FEED: Feed characteristics</a></span>
-<br />    <span class="subsectionToc" >4.9 <a 
-href="#x1-280009" id="QQ2-1-29">FIELD: Field positions for each source</a></span>
-<br />    <span class="subsectionToc" >4.10 <a 
-href="#x1-2900010" id="QQ2-1-30">FLAG_CMD: Flag commands</a></span>
-<br />    <span class="subsectionToc" >4.11 <a 
-href="#x1-3000011" id="QQ2-1-31">FREQ_OFFSET: Frequency oﬀset information</a></span>
-<br />    <span class="subsectionToc" >4.12 <a 
-href="#x1-3100012" id="QQ2-1-32">HISTORY: History information</a></span>
-<br />    <span class="subsectionToc" >4.13 <a 
-href="#x1-3200013" id="QQ2-1-33">INTERFEROMETER_MODEL: VLBI Interferometer information</a></span>
-<br />    <span class="subsectionToc" >4.14 <a 
-href="#x1-3300014" id="QQ2-1-34">OBSERVATION: Observation information</a></span>
-<br />    <span class="subsectionToc" >4.15 <a 
-href="#x1-3400015" id="QQ2-1-35">PHASED_ARRAY: phased array station information</a></span>
-<br />    <span class="subsectionToc" >4.16 <a 
-href="#x1-3500016" id="QQ2-1-36">POINTING: Antenna pointing information</a></span>
-<br />    <span class="subsectionToc" >4.17 <a 
-href="#x1-3600017" id="QQ2-1-37">POLARIZATION: Polarization setup information</a></span>
-<br />    <span class="subsectionToc" >4.18 <a 
-href="#x1-3700018" id="QQ2-1-38">PROCESSOR: Processor information</a></span>
-<br />    <span class="subsectionToc" >4.19 <a 
-href="#x1-3800019" id="QQ2-1-39">SCAN: Scan information</a></span>
-<br />    <span class="subsectionToc" >4.20 <a 
-href="#x1-3900020" id="QQ2-1-40">SOURCE: Source information</a></span>
-<br />    <span class="subsectionToc" >4.21 <a 
-href="#x1-4000021" id="QQ2-1-41">SPECTRAL_WINDOW: Spectral window description</a></span>
-<br />    <span class="subsectionToc" >4.22 <a 
-href="#x1-4100022" id="QQ2-1-42">STATE: State information</a></span>
-<br />    <span class="subsectionToc" >4.23 <a 
-href="#x1-4200023" id="QQ2-1-43">SYSCAL: System calibration</a></span>
-<br />    <span class="subsectionToc" >4.24 <a 
-href="#x1-4300024" id="QQ2-1-44">WEATHER: weather station information</a></span>
-<br />   <span class="sectionToc" >5 <a 
-href="#x1-440005" id="QQ2-1-45">Units and Measures</a></span>
-<br />    <span class="subsectionToc" >5.1 <a 
-href="#x1-450001" id="QQ2-1-46">Units and Measures</a></span>
-                                                                                         
-
-                                                                                         
-<br />   <span class="sectionToc" >6 <a 
-href="#x1-460006" id="QQ2-1-47">References</a></span>
+<br />     <span class="subsectionToc" >4.2 <a 
+href="#x1-210002" id="QQ2-1-21">MAIN table: continued</a></span>
+<br />     <span class="subsectionToc" >4.3 <a 
+href="#x1-220003" id="QQ2-1-22">ANTENNA: Antenna characteristics</a></span>
+<br />     <span class="subsectionToc" >4.4 <a 
+href="#x1-230004" id="QQ2-1-23">BEAM: Beam information</a></span>
+<br />     <span class="subsectionToc" >4.5 <a 
+href="#x1-240005" id="QQ2-1-24">CORRELATOR_TYPE: Doppler tracking information</a></span>
+<br />     <span class="subsectionToc" >4.6 <a 
+href="#x1-250006" id="QQ2-1-25">DOPPLER: Doppler tracking information</a></span>
+<br />     <span class="subsectionToc" >4.7 <a 
+href="#x1-260007" id="QQ2-1-26">EPHEMERIDES: Ephemerides information</a></span>
+<br />     <span class="subsectionToc" >4.8 <a 
+href="#x1-270008" id="QQ2-1-27">FEED: Feed characteristics</a></span>
+<br />     <span class="subsectionToc" >4.9 <a 
+href="#x1-280009" id="QQ2-1-28">FIELD: Field positions for each source</a></span>
+<br />     <span class="subsectionToc" >4.10 <a 
+href="#x1-2900010" id="QQ2-1-29">FLAG_CMD: Flag commands</a></span>
+<br />     <span class="subsectionToc" >4.11 <a 
+href="#x1-3000011" id="QQ2-1-30">FREQ_OFFSET: Frequency oﬀset information</a></span>
+<br />     <span class="subsectionToc" >4.12 <a 
+href="#x1-3100012" id="QQ2-1-31">HISTORY: History information</a></span>
+<br />     <span class="subsectionToc" >4.13 <a 
+href="#x1-3200013" id="QQ2-1-32">INTERFEROMETER_MODEL: VLBI Interferometer information</a></span>
+<br />     <span class="subsectionToc" >4.14 <a 
+href="#x1-3300014" id="QQ2-1-33">OBSERVATION: Observation information</a></span>
+<br />     <span class="subsectionToc" >4.15 <a 
+href="#x1-3400015" id="QQ2-1-34">PHASED_ARRAY: phased array station information</a></span>
+<br />     <span class="subsectionToc" >4.16 <a 
+href="#x1-3500016" id="QQ2-1-35">POINTING: Antenna pointing information</a></span>
+<br />     <span class="subsectionToc" >4.17 <a 
+href="#x1-3600017" id="QQ2-1-36">POLARIZATION: Polarization setup information</a></span>
+<br />     <span class="subsectionToc" >4.18 <a 
+href="#x1-3700018" id="QQ2-1-37">PROCESSOR: Processor information</a></span>
+<br />     <span class="subsectionToc" >4.19 <a 
+href="#x1-3800019" id="QQ2-1-38">SCAN: Scan information</a></span>
+<br />     <span class="subsectionToc" >4.20 <a 
+href="#x1-3900020" id="QQ2-1-39">SOURCE: Source information</a></span>
+<br />     <span class="subsectionToc" >4.21 <a 
+href="#x1-4000021" id="QQ2-1-40">SPECTRAL_WINDOW: Spectral window description</a></span>
+<br />     <span class="subsectionToc" >4.22 <a 
+href="#x1-4100022" id="QQ2-1-41">STATE: State information</a></span>
+<br />     <span class="subsectionToc" >4.23 <a 
+href="#x1-4200023" id="QQ2-1-42">SYSCAL: System calibration</a></span>
+<br />     <span class="subsectionToc" >4.24 <a 
+href="#x1-4300024" id="QQ2-1-43">WEATHER: weather station information</a></span>
+<br />    <span class="sectionToc" >5 <a 
+href="#x1-440005" id="QQ2-1-44">Units and Measures</a></span>
+<br />     <span class="subsectionToc" >5.1 <a 
+href="#x1-450001" id="QQ2-1-45">Units and Measures</a></span>
+<br />    <span class="sectionToc" >6 <a 
+href="#x1-460006" id="QQ2-1-46">References</a></span>
    </div>
 <a 
  id="x1-1001r1"></a>
-<h3 class="sectionHead"><span class="titlemark">1   </span> <a 
+   <h3 class="sectionHead"><span class="titlemark">1   </span> <a 
  id="x1-20001"></a>Introduction</h3>
 <!--l. 74--><p class="noindent" >The MeasurementSet (MS) deﬁnes a format in which interferometer visibilities and single-dish data are stored. It is
 implemented in software packages using casa/casacore code. Version 2.0 (Note 229; Kemball and Wieringa 2000) of
 the MeasurementSet has been in use since 2000 in diﬀerent packages and at diﬀerent telescopes. This revision is to
+                                                                                         
+
+                                                                                         
 correct or help in common usages by adding missing data that was felt needed for data reduction. In V2.0 we
 feel that sometimes schema structure was deﬁned to help with eﬃciency issues that was forseen (e.g
 deﬁnition of a FLOAT_DATA column for single dish). In this revision we try to not do that. We realize
@@ -332,9 +318,6 @@ class="cmbx-10">Synthesis calibration: </span>The need for calibrations table as
      </li>
      <li class="itemize"><span 
 class="cmbx-10">Data,weight, ﬂag versioning </span>Non standard columns (e.g CORRECTED_DATA) or kludges have
-                                                                                         
-
-                                                                                         
      been used by casa (for e.g) to deal with having version of data, ﬂag or weight. These three columns
      have the same shapes in every row of an MS V3.0. Whenever changes are made, e.g. in ﬂagging or
      calibration, and a new version is needed a new triplet of columns will be made. It is left to software
@@ -346,6 +329,9 @@ class="cmbx-10">Data,weight, ﬂag versioning </span>Non standard columns (e.g C
 class="cmbx-10">Data Description</span>The concept of data description is being deprecated. It saved a column of integers
      but  users  found  it  confusing.  SPECTRAL_WINDOW_ID  and  POLARIZATION_ID  are  explicit
      columns in the main table.
+                                                                                         
+
+                                                                                         
      </li>
      <li class="itemize"><span 
 class="cmbx-10">VLBI data reduction: </span>From v2.0 added an optional subtable INTERFEROMETER_MODEL
@@ -381,9 +367,6 @@ class="cmbx-10">Calibration information: </span>Many of the direct and periphera
      <li class="itemize"><span 
 class="cmbx-10">Storage: </span>A future document will provide results and suggestion for data storage structures for some
      commonly used access patterns and storage system in use.
-                                                                                         
-
-                                                                                         
      </li>
      <li class="itemize"><span 
 class="cmbx-10">Multi measurement sets: </span>The reason for Multi Measurement Sets (MMS) was to bypass an issue in
@@ -392,18 +375,21 @@ class="cmbx-10">Multi measurement sets: </span>The reason for Multi Measurement 
      is do-able.
      </li></ul>
 <a 
- id="x1-2001r3"></a>
-<h3 class="sectionHead"><span class="titlemark">2   </span> <a 
+ id="x1-2001r2"></a>
+   <h3 class="sectionHead"><span class="titlemark">2   </span> <a 
  id="x1-30002"></a>Summary of changes</h3>
 <!--l. 200--><p class="noindent" >This section contains a description of the changes proposed for each table in the MS deﬁnition. A full deﬁnition of
 the v3.0 MS format is given in Section 5.
+                                                                                         
+
+                                                                                         
 </p><!--l. 204--><p class="indent" >   All the subtables not mentioned here will have an explicit ID column; in v3.0 implicit row number being an ID is
 no longer valid. For example ANTENNA subtable will have a ANTENNA_ID column added as a
 key.
 <a 
  id="x1-3001r1"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
+   <h4 class="subsectionHead"><span class="titlemark">2.1   </span> <a 
  id="x1-40001"></a>MAIN table</h4>
      <ul class="itemize1">
      <li class="itemize"><span 
@@ -444,9 +430,6 @@ class="cmbx-10">Versioning of (DATA, WEIGHT, FLAG) triplet </span>These three co
      (thus WEIGHT1 and FLAG1) will refer to the to WEIGHT0 and FLAG0 respectively. We leave it to
      the software to implement these in the most optimal fashion without making duplicate copies. This
      removes the need for non-standard column like CORRECTED_DATA or FLAG_VERSION etc.
-                                                                                         
-
-                                                                                         
      </li>
      <li class="itemize"><span 
 class="cmbx-10">Merging  of  DATA  and  FLOAT</span><span 
@@ -463,8 +446,11 @@ class="cmbx-10">_ID </span>This unique ID has caused more confusion than the ext
      subtables directly. DATA_DESC_ID column is removed.
      </li></ul>
 <a 
- id="x1-4001r5"></a>
-<h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
+ id="x1-4001r4"></a>
+                                                                                         
+
+                                                                                         
+   <h4 class="subsectionHead"><span class="titlemark">2.2   </span> <a 
  id="x1-50002"></a>ARRAY table</h4>
      <ul class="itemize1">
      <li class="itemize"><span 
@@ -477,15 +463,15 @@ class="cmbx-10">_CENTER </span>A new column which will give the full Measures po
      center is assumed for each ARRAY_ID
      </li></ul>
 <a 
- id="x1-5001r6"></a>
-<h4 class="subsectionHead"><span class="titlemark">2.3   </span> <a 
+ id="x1-5001r5"></a>
+   <h4 class="subsectionHead"><span class="titlemark">2.3   </span> <a 
  id="x1-60003"></a>FIELD table</h4>
 <!--l. 282--><p class="noindent" >Changes applicable to the FIELD table are discussed in this section.
 </p><!--l. 284--><p class="indent" >   An explicit FIELD_ID
 <a 
  id="x1-6001r1"></a>
 </p>
-<h5 class="subsubsectionHead"><span class="titlemark">2.3.1   </span> <a 
+   <h5 class="subsubsectionHead"><span class="titlemark">2.3.1   </span> <a 
  id="x1-70001"></a>Direction information</h5>
 <!--l. 287--><p class="noindent" >The PHASE_DIR information is to be derived from the ephemeris subtable if the EPHEMERIS_ID is not
 -1.
@@ -493,18 +479,15 @@ class="cmbx-10">_CENTER </span>A new column which will give the full Measures po
 deﬁnes the time range for when the information for direction for a given FIELD_ID. In this fashion step function
 phasecentering that happens in some correlators
 <a 
- id="x1-7001r7"></a>
+ id="x1-7001r6"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark">2.4   </span> <a 
+   <h4 class="subsectionHead"><span class="titlemark">2.4   </span> <a 
  id="x1-80004"></a>FLAG_CMD</h4>
 <!--l. 298--><p class="noindent" >FLAG_CMD table is made an optional subtable.
 <a 
- id="x1-8001r9"></a>
+ id="x1-8001r8"></a>
 </p>
-                                                                                         
-
-                                                                                         
-<h4 class="subsectionHead"><span class="titlemark">2.5   </span> <a 
+   <h4 class="subsectionHead"><span class="titlemark">2.5   </span> <a 
  id="x1-90005"></a>OBSERVATION table</h4>
 <!--l. 303--><p class="noindent" >Apart from the explicit OBSERVATION_ID column version 3.0 adds the <span 
 class="cmbx-10">ARRAY</span><span 
@@ -512,75 +495,78 @@ class="cmbx-10">_CENTER</span>: A
 new column which will give the full Measures position of where the array center is assumed for each
 ARRAY_ID
 <a 
- id="x1-9001r10"></a>
+ id="x1-9001r9"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark">2.6   </span> <a 
+   <h4 class="subsectionHead"><span class="titlemark">2.6   </span> <a 
  id="x1-100006"></a>SOURCE table</h4>
 <!--l. 313--><p class="noindent" >The SOURCE table already had a SOURCE_ID column. In this version it it proposed to generalize the
 SOURCE_MODEL. Apart from a TableRecord it can take a URL which will point to catalogue style source list or
 even images representing the model associated with a SOURCE_ID and SPECTRAL_WINDOW_ID.
+                                                                                         
+
+                                                                                         
 <a 
- id="x1-10001r11"></a>
+ id="x1-10001r10"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark">2.7   </span> <a 
+   <h4 class="subsectionHead"><span class="titlemark">2.7   </span> <a 
  id="x1-110007"></a>SPECTRAL_WINDOW table</h4>
 <!--l. 322--><p class="noindent" >Apart from the explicit SPECTRAL_WINDOW_ID column; an optional column LO_FREQUENCY
 which (can be vector of frequencies) gives the Local Oscillator frequencies in the chain of frequency
 conversion.
 <a 
- id="x1-11001r4"></a>
+ id="x1-11001r3"></a>
 </p>
-<h3 class="sectionHead"><span class="titlemark">3   </span> <a 
+   <h3 class="sectionHead"><span class="titlemark">3   </span> <a 
  id="x1-120003"></a>New sub-tables</h3>
 <!--l. 329--><p class="noindent" >New sub-tables added to MS v3.0 are included in this Section.
 <a 
- id="x1-12001r8"></a>
+ id="x1-12001r7"></a>
 </p>
-<h5 class="subsubsectionHead"><span class="titlemark">3.0.1   </span> <a 
+   <h5 class="subsubsectionHead"><span class="titlemark">3.0.1   </span> <a 
  id="x1-130001"></a>BEAM subtable</h5>
 <!--l. 332--><p class="noindent" >This table was proposed in v2.0 but we explicitly deﬁne it here. It is referenced from the FEED table or from the
 newly proposed PHASED_ARRAY table here.
 <a 
- id="x1-13001r14"></a>
+ id="x1-13001r13"></a>
 </p>
-<h5 class="subsubsectionHead"><span class="titlemark">3.0.2   </span> <a 
+   <h5 class="subsubsectionHead"><span class="titlemark">3.0.2   </span> <a 
  id="x1-140002"></a>EPHEMERIDES</h5>
 <!--l. 335--><p class="noindent" >This optional table is explicitly deﬁned and is referred to from the FIELD table via the EPHEMERIS_ID
 column.
 <a 
- id="x1-14001r12"></a>
+ id="x1-14001r11"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
+   <h4 class="subsectionHead"><span class="titlemark">3.1   </span> <a 
  id="x1-150001"></a>INTERFEROMETER_MODEL</h4>
 <!--l. 338--><p class="noindent" >This optional subtable contains information necessary for VLBI arrays
 <a 
- id="x1-15001r15"></a>
+ id="x1-15001r14"></a>
 </p>
-                                                                                         
-
-                                                                                         
-<h5 class="subsubsectionHead"><span class="titlemark">3.1.1   </span> <a 
+   <h5 class="subsubsectionHead"><span class="titlemark">3.1.1   </span> <a 
  id="x1-160001"></a>Multi element station based antenna (PHASED_ARRAY subtable)</h5>
 <!--l. 342--><p class="noindent" >Information about elements that makes a station antenna, combination scheme etc
 <a 
- id="x1-16001r17"></a>
+ id="x1-16001r16"></a>
 </p>
-<h5 class="subsubsectionHead"><span class="titlemark">3.1.2   </span> <a 
+   <h5 class="subsubsectionHead"><span class="titlemark">3.1.2   </span> <a 
  id="x1-170002"></a>SCAN subtable</h5>
 <!--l. 347--><p class="noindent" >This will carry the information about the scan intent and information necessary to tie back information from the
 online system
 <a 
- id="x1-17001r18"></a>
+ id="x1-17001r17"></a>
 </p>
-<h5 class="subsubsectionHead"><span class="titlemark">3.1.3   </span> <a 
+                                                                                         
+
+                                                                                         
+   <h5 class="subsubsectionHead"><span class="titlemark">3.1.3   </span> <a 
  id="x1-180003"></a>Associated tables (CAL_TABLES)</h5>
 <!--l. 355--><p class="noindent" >A lot of data processing or online correction information are carried as non standard subtables. The formal existance
 of calibration tables associated with a given MS will satisfy the needs of many of the non-standard
 subtables.
 <a 
- id="x1-18001r13"></a>
+ id="x1-18001r12"></a>
 </p>
-<h3 class="sectionHead"><span class="titlemark">4   </span> <a 
+   <h3 class="sectionHead"><span class="titlemark">4   </span> <a 
  id="x1-190004"></a>MS v3.0 layout</h3>
 <!--l. 363--><p class="noindent" >There is a MAIN table containing a number of data columns and keys into various subtables. There is at most one
 of each subtable. The subtables are stored as keywords of the MS, and all deﬁned sub-tables are tabulated below.
@@ -590,7 +576,7 @@ Optional sub-tables are shown in italics.
 
                                                                                          
    <div class="tabular"> <table id="TBL-2" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-2-1g"><col 
 id="TBL-2-1" /></colgroup><colgroup id="TBL-2-2g"><col 
 id="TBL-2-2" /></colgroup><colgroup id="TBL-2-3g"><col 
@@ -785,12 +771,12 @@ class="td11">                                   </td> </tr></table>
 
                                                                                          
 <a 
- id="x1-19001r16"></a>
+ id="x1-19001r15"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
+   <h4 class="subsectionHead"><span class="titlemark">4.1   </span> <a 
  id="x1-200001"></a>MAIN table: Data, coordinates and ﬂags</h4>
    <div class="tabular"> <table id="TBL-3" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-3-1g"><col 
 id="TBL-3-1" /></colgroup><colgroup id="TBL-3-2g"><col 
 id="TBL-3-2" /></colgroup><colgroup id="TBL-3-3g"><col 
@@ -1134,14 +1120,14 @@ class="td11">                        </td> </tr></table>
 
                                                                                          
 <a 
- id="x1-20001r21"></a>
+ id="x1-20001r20"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.2   </span></span> <a 
  id="x1-210002"></a><span 
 class="cmr-9">MAIN table: continued</span></h4>
    <div class="tabular"> <table id="TBL-4" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-4-1g"><col 
 id="TBL-4-1" /></colgroup><colgroup id="TBL-4-2g"><col 
 id="TBL-4-2" /></colgroup><colgroup id="TBL-4-3g"><col 
@@ -1520,8 +1506,8 @@ class="description"><span
 class="cmr-9">Pulsar gate identiﬁer (</span><!--l. 496--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">≥</mo> <mn>0</mn></mrow><mo 
-class="MathClass-close">)</mo></mrow></math><span 
+class="MathClass-rel">≥</mo> <mn>0</mn><mo 
+class="MathClass-close">)</mo></math><span 
 class="cmr-9">,</span>
      <span 
 class="cmr-9">and a direct index into the PULSAR</span><span 
@@ -1555,10 +1541,10 @@ class="cmbx-9">_ID</span> </dt><dd
 class="description"><span 
 class="cmr-9">Subarray identiﬁer </span><!--l. 503--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">(</mo><mrow><mo 
-class="MathClass-rel">≥</mo> <mn>0</mn></mrow><mo 
-class="MathClass-close">)</mo></mrow></math><span 
+display="inline" ><mo 
+class="MathClass-open">(</mo><mo 
+class="MathClass-rel">≥</mo> <mn>0</mn><mo 
+class="MathClass-close">)</mo></math><span 
 class="cmr-9">,</span>
      <span 
 class="cmr-9">which identiﬁes data in separate subarrays, as deﬁned in Section 3.3.</span>
@@ -1569,10 +1555,10 @@ class="cmbx-9">_ID</span> </dt><dd
 class="description"><span 
 class="cmr-9">Observation identiﬁer </span><!--l. 506--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">(</mo><mrow><mo 
-class="MathClass-rel">≥</mo> <mn>0</mn></mrow><mo 
-class="MathClass-close">)</mo></mrow></math><span 
+display="inline" ><mo 
+class="MathClass-open">(</mo><mo 
+class="MathClass-rel">≥</mo> <mn>0</mn><mo 
+class="MathClass-close">)</mo></math><span 
 class="cmr-9">,</span>
      <span 
 class="cmr-9">which identiﬁes data from separate observations, as deﬁned in Section 3.3.</span>
@@ -1583,10 +1569,10 @@ class="cmbx-9">_ID</span> </dt><dd
 class="description"><span 
 class="cmr-9">State identiﬁer </span><!--l. 509--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">(</mo><mrow><mo 
-class="MathClass-rel">≥</mo> <mn>0</mn></mrow><mo 
-class="MathClass-close">)</mo></mrow></math><span 
+display="inline" ><mo 
+class="MathClass-open">(</mo><mo 
+class="MathClass-rel">≥</mo> <mn>0</mn><mo 
+class="MathClass-close">)</mo></math><span 
 class="cmr-9">,</span>
      <span 
 class="cmr-9">as deﬁned in Section 3.1.5.</span>
@@ -1737,14 +1723,14 @@ class="cmr-9">cumulative ﬂags applying to this data matrix. Data are ﬂagged 
 
                                                                                          
 <a 
- id="x1-21001r22"></a>
+ id="x1-21001r21"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.3   </span></span> <a 
  id="x1-220003"></a><span 
 class="cmr-9">ANTENNA: Antenna characteristics</span></h4>
    <div class="tabular"> <table id="TBL-5" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-5-1g"><col 
 id="TBL-5-1" /></colgroup><colgroup id="TBL-5-2g"><col 
 id="TBL-5-2" /></colgroup><colgroup id="TBL-5-3g"><col 
@@ -2105,14 +2091,14 @@ class="cmr-9">entries in the ANTENNA sub-table and contains information on how t
 
                                                                                          
 <a 
- id="x1-22001r23"></a>
+ id="x1-22001r22"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.4   </span></span> <a 
  id="x1-230004"></a><span 
 class="cmr-9">BEAM: Beam information</span></h4>
    <div class="tabular"> <table id="TBL-6" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-6-1g"><col 
 id="TBL-6-1" /></colgroup><colgroup id="TBL-6-2g"><col 
 id="TBL-6-2" /></colgroup><colgroup id="TBL-6-3g"><col 
@@ -2280,15 +2266,15 @@ class="cmr-9">archive for e.g).</span>
 
                                                                                          
 <a 
- id="x1-23001r24"></a>
+ id="x1-23001r23"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.5   </span></span> <a 
  id="x1-240005"></a><span 
 class="cmr-9">CORRELATOR</span><span 
 class="cmr-9">_TYPE: Doppler tracking information</span></h4>
    <div class="tabular"> <table id="TBL-7" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-7-1g"><col 
 id="TBL-7-1" /></colgroup><colgroup id="TBL-7-2g"><col 
 id="TBL-7-2" /></colgroup><colgroup id="TBL-7-3g"><col 
@@ -2330,14 +2316,14 @@ class="cmr-9">This optional sub-table contains correlator information referred t
 
                                                                                          
 <a 
- id="x1-24001r25"></a>
+ id="x1-24001r24"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.6   </span></span> <a 
  id="x1-250006"></a><span 
 class="cmr-9">DOPPLER: Doppler tracking information</span></h4>
    <div class="tabular"> <table id="TBL-8" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-8-1g"><col 
 id="TBL-8-1" /></colgroup><colgroup id="TBL-8-2g"><col 
 id="TBL-8-2" /></colgroup><colgroup id="TBL-8-3g"><col 
@@ -2481,14 +2467,14 @@ class="cmr-9">Velocity deﬁnition of the Doppler shift, e.g., RADIO or OPTICAL 
 
                                                                                          
 <a 
- id="x1-25001r26"></a>
+ id="x1-25001r25"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.7   </span></span> <a 
  id="x1-260007"></a><span 
 class="cmr-9">EPHEMERIDES: Ephemerides information</span></h4>
    <div class="tabular"> <table id="TBL-9" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-9-1g"><col 
 id="TBL-9-1" /></colgroup><colgroup id="TBL-9-2g"><col 
 id="TBL-9-2" /></colgroup><colgroup id="TBL-9-3g"><col 
@@ -2705,14 +2691,14 @@ class="cmr-9">Location of a ephemeris table in documented format.</span>
 
                                                                                          
 <a 
- id="x1-26001r27"></a>
+ id="x1-26001r26"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.8   </span></span> <a 
  id="x1-270008"></a><span 
 class="cmr-9">FEED: Feed characteristics</span></h4>
    <div class="tabular"> <table id="TBL-10" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-10-1g"><col 
 id="TBL-10-1" /></colgroup><colgroup id="TBL-10-2g"><col 
 id="TBL-10-2" /></colgroup><colgroup id="TBL-10-3g"><col 
@@ -3073,13 +3059,12 @@ class="cmr-9">Polarization response at the center of the beam for this feed. Exp
      <span 
 class="cmr-9">basis </span><!--l. 812--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">(</mo><mrow><msub><mrow 
+display="inline" ><mo 
+class="MathClass-open">(</mo><msub><mrow 
 ><mover 
 accent="true"><mrow 
 ><mi 
->e</mi></mrow><mo 
-class="MathClass-op">→</mo></mover></mrow><mrow 
+>e</mi></mrow><mo accent="true">→</mo></mover></mrow><mrow 
 ><mi 
 >x</mi></mrow></msub 
 ><mo 
@@ -3087,12 +3072,11 @@ class="MathClass-punc">,</mo><msub><mrow
 ><mover 
 accent="true"><mrow 
 ><mi 
->e</mi></mrow><mo 
-class="MathClass-op">→</mo></mover></mrow><mrow 
+>e</mi></mrow><mo accent="true">→</mo></mover></mrow><mrow 
 ><mi 
 >y</mi></mrow></msub 
-></mrow><mo 
-class="MathClass-close">)</mo></mrow></math>
+><mo 
+class="MathClass-close">)</mo></math>
      <span 
 class="cmr-9">using the IEEE convention.</span>
      </dd><dt class="description">
@@ -3112,14 +3096,14 @@ class="cmr-9">Polarization reference angle. Converts into parallactic angle in t
 
                                                                                          
 <a 
- id="x1-27001r28"></a>
+ id="x1-27001r27"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.9   </span></span> <a 
  id="x1-280009"></a><span 
 class="cmr-9">FIELD: Field positions for each source</span></h4>
    <div class="tabular"> <table id="TBL-11" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-11-1g"><col 
 id="TBL-11-1" /></colgroup><colgroup id="TBL-11-2g"><col 
 id="TBL-11-2" /></colgroup><colgroup id="TBL-11-3g"><col 
@@ -3387,15 +3371,15 @@ class="cmr-9">the ﬁeld position. Useful for moving, near-ﬁeld objects, where
 
                                                                                          
 <a 
- id="x1-28001r29"></a>
+ id="x1-28001r28"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.10   </span></span> <a 
  id="x1-2900010"></a><span 
 class="cmr-9">FLAG</span><span 
 class="cmr-9">_CMD: Flag commands</span></h4>
    <div class="tabular"> <table id="TBL-12" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-12-1g"><col 
 id="TBL-12-1" /></colgroup><colgroup id="TBL-12-2g"><col 
 id="TBL-12-2" /></colgroup><colgroup id="TBL-12-3g"><col 
@@ -3560,10 +3544,10 @@ class="cmbx-9">LEVEL</span> </dt><dd
 class="description"><span 
 class="cmr-9">Flag level </span><!--l. 908--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">(</mo><mrow><mo 
-class="MathClass-rel">≥</mo> <mn>0</mn></mrow><mo 
-class="MathClass-close">)</mo></mrow></math><span 
+display="inline" ><mo 
+class="MathClass-open">(</mo><mo 
+class="MathClass-rel">≥</mo> <mn>0</mn><mo 
+class="MathClass-close">)</mo></math><span 
 class="cmr-9">;</span>
      <span 
 class="cmr-9">reﬂects diﬀerent revisions of ﬂags which have the same REASON.</span>
@@ -3593,15 +3577,15 @@ class="cmr-9">project as a whole.</span>
 
                                                                                          
 <a 
- id="x1-29001r30"></a>
+ id="x1-29001r29"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.11   </span></span> <a 
  id="x1-3000011"></a><span 
 class="cmr-9">FREQ</span><span 
 class="cmr-9">_OFFSET: Frequency oﬀset information</span></h4>
    <div class="tabular"> <table id="TBL-13" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-13-1g"><col 
 id="TBL-13-1" /></colgroup><colgroup id="TBL-13-2g"><col 
 id="TBL-13-2" /></colgroup><colgroup id="TBL-13-3g"><col 
@@ -3796,14 +3780,14 @@ class="cmr-9">in that table.</span>
 
                                                                                          
 <a 
- id="x1-30001r31"></a>
+ id="x1-30001r30"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.12   </span></span> <a 
  id="x1-3100012"></a><span 
 class="cmr-9">HISTORY: History information</span></h4>
    <div class="tabular"> <table id="TBL-14" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-14-1g"><col 
 id="TBL-14-1" /></colgroup><colgroup id="TBL-14-2g"><col 
 id="TBL-14-2" /></colgroup><colgroup id="TBL-14-3g"><col 
@@ -4007,15 +3991,15 @@ class="cmr-9">Application parameter values, in the adopted project-wide format.<
 
                                                                                          
 <a 
- id="x1-31001r32"></a>
+ id="x1-31001r31"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.13   </span></span> <a 
  id="x1-3200013"></a><span 
 class="cmr-9">INTERFEROMETER</span><span 
 class="cmr-9">_MODEL: VLBI Interferometer information</span></h4>
    <div class="tabular"> <table id="TBL-15" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-15-1g"><col 
 id="TBL-15-1" /></colgroup><colgroup id="TBL-15-2g"><col 
 id="TBL-15-2" /></colgroup><colgroup id="TBL-15-3g"><col 
@@ -4364,14 +4348,14 @@ class="description">
 
                                                                                          
 <a 
- id="x1-32001r33"></a>
+ id="x1-32001r32"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.14   </span></span> <a 
  id="x1-3300014"></a><span 
 class="cmr-9">OBSERVATION: Observation information</span></h4>
    <div class="tabular"> <table id="TBL-16" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-16-1g"><col 
 id="TBL-16-1" /></colgroup><colgroup id="TBL-16-2g"><col 
 id="TBL-16-2" /></colgroup><colgroup id="TBL-16-3g"><col 
@@ -4607,15 +4591,15 @@ class="cmr-9">Project release date. This is the date on which the data may becom
 
                                                                                          
 <a 
- id="x1-33001r34"></a>
+ id="x1-33001r33"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.15   </span></span> <a 
  id="x1-3400015"></a><span 
 class="cmr-9">PHASED</span><span 
 class="cmr-9">_ARRAY: phased array station information</span></h4>
    <div class="tabular"> <table id="TBL-17" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-17-1g"><col 
 id="TBL-17-1" /></colgroup><colgroup id="TBL-17-2g"><col 
 id="TBL-17-2" /></colgroup><colgroup id="TBL-17-3g"><col 
@@ -4624,14 +4608,14 @@ id="TBL-17-4" /></colgroup><colgroup id="TBL-17-5g"><col
 id="TBL-17-5" /></colgroup><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-17-1-"><td colspan="5" style="text-align:center; white-space:nowrap;" id="TBL-17-1-1"  
-class="td11">                  <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="td11">                 <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
 class="cmbx-9">PHASED</span><span 
 class="cmbx-9">_ARRAY: phased array station information</span></div>
 </td></tr><tr 
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-17-3-"><td  style="text-align:center; white-space:nowrap;" id="TBL-17-3-1"  
-class="td11">         <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
-class="cmr-9">Name</span></div>              </td><td  style="text-align:center; white-space:nowrap;" id="TBL-17-3-2"  
+class="td11">        <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
+class="cmr-9">Name</span></div>            </td><td  style="text-align:center; white-space:nowrap;" id="TBL-17-3-2"  
 class="td11">      <div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
 class="cmr-9">Format</span></div>          </td><td  style="text-align:center; white-space:nowrap;" id="TBL-17-3-3"  
 class="td11"><div class="multicolumn"  style="text-align:center; white-space:nowrap;"><span 
@@ -4656,7 +4640,7 @@ class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><h
  style="vertical-align:baseline;" id="TBL-17-11-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-11-1"  
 class="td11"><span 
 class="cmr-9">ANTENNA</span><span 
-class="cmr-9">_ID               </span></td><td  style="text-align:left;" id="TBL-17-11-2"  
+class="cmr-9">_ID          </span></td><td  style="text-align:left;" id="TBL-17-11-2"  
 class="td11"><!--l. 1107--><p class="noindent" ><span 
 class="cmr-9">Int</span>                         </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-11-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-17-11-4"  
@@ -4668,7 +4652,7 @@ class="cmr-9">Antenna ID.</span>                </p></td>
 class="td11"><span 
 class="cmr-9">PHASED</span><span 
 class="cmr-9">_ARRAY</span><span 
-class="cmr-9">_ID     </span></td><td  style="text-align:left;" id="TBL-17-12-2"  
+class="cmr-9">_ID </span></td><td  style="text-align:left;" id="TBL-17-12-2"  
 class="td11"><!--l. 1107--><p class="noindent" ><span 
 class="cmr-9">Int</span>                         </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-12-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-17-12-4"  
@@ -4684,7 +4668,7 @@ class="cmti-9">Data</span></div>
 class="cline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-17-16-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-16-1"  
 class="td11"><span 
-class="cmr-9">POSITION                    </span></td><td  style="text-align:left;" id="TBL-17-16-2"  
+class="cmr-9">POSITION                </span></td><td  style="text-align:left;" id="TBL-17-16-2"  
 class="td11"><!--l. 1107--><p class="noindent" ><span 
 class="cmr-9">Double(3)</span>                </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-16-3"  
 class="td11"><span 
@@ -4697,7 +4681,7 @@ class="cmr-9">Position of antenna ﬁeld</span> </p></td>
  style="vertical-align:baseline;" id="TBL-17-17-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-17-1"  
 class="td11"><span 
 class="cmr-9">COORDINATE</span><span 
-class="cmr-9">_SYSTEM</span></td><td  style="text-align:left;" id="TBL-17-17-2"  
+class="cmr-9">_AXES</span></td><td  style="text-align:left;" id="TBL-17-17-2"  
 class="td11"><!--l. 1107--><p class="noindent" ><span 
 class="cmr-9">Double(3,3)</span>              </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-17-3"  
 class="td11"><span 
@@ -4710,7 +4694,7 @@ class="cmr-9">Local coordinate system</span> </p></td>
  style="vertical-align:baseline;" id="TBL-17-18-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-18-1"  
 class="td11"><span 
 class="cmr-9">ELEMENT</span><span 
-class="cmr-9">_OFFSET      </span></td><td  style="text-align:left;" id="TBL-17-18-2"  
+class="cmr-9">_OFFSET  </span></td><td  style="text-align:left;" id="TBL-17-18-2"  
 class="td11"><!--l. 1107--><p class="noindent" ><span 
 class="cmr-9">Double(3,</span>
 <!--l. 1107--><math 
@@ -4733,7 +4717,7 @@ class="td11"><span
 class="cmr-9">(</span><span 
 class="cmti-9">BEAM</span><span 
 class="cmti-9">_ID</span><span 
-class="cmr-9">)                   </span></td><td  style="text-align:left;" id="TBL-17-19-2"  
+class="cmr-9">)              </span></td><td  style="text-align:left;" id="TBL-17-19-2"  
 class="td11"><!--l. 1107--><p class="noindent" ><span 
 class="cmr-9">Int</span>                         </p></td><td  style="text-align:left; white-space:nowrap;" id="TBL-17-19-3"  
 class="td11">     </td><td  style="text-align:left;" id="TBL-17-19-4"  
@@ -4744,7 +4728,7 @@ class="cmr-9">Beam id.</span>                     </p></td>
  style="vertical-align:baseline;" id="TBL-17-20-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-20-1"  
 class="td11"><span 
 class="cmr-9">ELEMENT</span><span 
-class="cmr-9">_FLAG          </span></td><td  style="text-align:left;" id="TBL-17-20-2"  
+class="cmr-9">_FLAG      </span></td><td  style="text-align:left;" id="TBL-17-20-2"  
 class="td11"><!--l. 1107--><p class="noindent" ><span 
 class="cmr-9">Bool(</span><!--l. 1107--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
@@ -4761,7 +4745,7 @@ class="cmr-9">Flag of elements in array</span></p></td>
 </tr><tr 
 class="hline"><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td><td><hr /></td></tr><tr  
  style="vertical-align:baseline;" id="TBL-17-21-"><td  style="text-align:left; white-space:nowrap;" id="TBL-17-21-1"  
-class="td11">                       </td> </tr></table>
+class="td11">                    </td> </tr></table>
 </div>
      <dl class="description"><dt class="description">
 <span 
@@ -4788,9 +4772,9 @@ class="cmr-9">Position of the antenna ﬁeld in absolute ITRF coordinates</span>
      </dd><dt class="description">
 <span 
 class="cmbx-9">COORDINATE</span><span 
-class="cmbx-9">_SYSTEM</span> </dt><dd 
+class="cmbx-9">_AXES</span> </dt><dd 
 class="description"><span 
-class="cmr-9">(cartesian) direction vectors in ITRF (or measure deﬁned) describing the local ﬁeld</span>
+class="cmr-9">(cartesian)  direction  vectors  in  ITRF  (or  measure  deﬁned)  describing  the  local  ﬁeld</span>
      <span 
 class="cmr-9">coordinate system. This deﬁnes the antenna ﬁeld plane, and the ’up’ direction, the normal direction to the</span>
      <span 
@@ -4823,14 +4807,14 @@ class="cmr-9">Beam id as deﬁned in BEAM table.</span>
 
                                                                                          
 <a 
- id="x1-34001r35"></a>
+ id="x1-34001r34"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.16   </span></span> <a 
  id="x1-3500016"></a><span 
 class="cmr-9">POINTING: Antenna pointing information</span></h4>
    <div class="tabular"> <table id="TBL-18" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-18-1g"><col 
 id="TBL-18-1" /></colgroup><colgroup id="TBL-18-2g"><col 
 id="TBL-18-2" /></colgroup><colgroup id="TBL-18-3g"><col 
@@ -5110,14 +5094,14 @@ class="description"><span
 class="cmr-9">Series order for the polynomial expressions in DIRECTION and POINTING</span><span 
 class="cmr-9">_OFFSET.</span>
      </dd><dt class="description">
-                                                                                         
-
-                                                                                         
 <span 
 class="cmbx-9">TIME</span><span 
 class="cmbx-9">_ORIGIN</span> </dt><dd 
 class="description"><span 
 class="cmr-9">Time origin for the polynomial expansions.</span>
+                                                                                         
+
+                                                                                         
      </dd><dt class="description">
 <span 
 class="cmbx-9">DIRECTION</span> </dt><dd 
@@ -5179,14 +5163,14 @@ class="cmr-9">True if the antenna was driven to this position ”over the top”
 
                                                                                          
 <a 
- id="x1-35001r36"></a>
+ id="x1-35001r35"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.17   </span></span> <a 
  id="x1-3600017"></a><span 
 class="cmr-9">POLARIZATION: Polarization setup information</span></h4>
    <div class="tabular"> <table id="TBL-19" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-19-1g"><col 
 id="TBL-19-1" /></colgroup><colgroup id="TBL-19-2g"><col 
 id="TBL-19-2" /></colgroup><colgroup id="TBL-19-3g"><col 
@@ -5311,14 +5295,14 @@ class="cmr-9">An example would be (0,0), (0,1), (1,0), (1,1) to specify all corr
 
                                                                                          
 <a 
- id="x1-36001r37"></a>
+ id="x1-36001r36"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.18   </span></span> <a 
  id="x1-3700018"></a><span 
 class="cmr-9">PROCESSOR: Processor information</span></h4>
    <div class="tabular"> <table id="TBL-20" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-20-1g"><col 
 id="TBL-20-1" /></colgroup><colgroup id="TBL-20-2g"><col 
 id="TBL-20-2" /></colgroup><colgroup id="TBL-20-3g"><col 
@@ -5511,14 +5495,14 @@ class="cmr-9">pass information.</span>
 
                                                                                          
 <a 
- id="x1-37001r38"></a>
+ id="x1-37001r37"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.19   </span></span> <a 
  id="x1-3800019"></a><span 
 class="cmr-9">SCAN: Scan information</span></h4>
    <div class="tabular"> <table id="TBL-21" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-21-1g"><col 
 id="TBL-21-1" /></colgroup><colgroup id="TBL-21-2g"><col 
 id="TBL-21-2" /></colgroup><colgroup id="TBL-21-3g"><col 
@@ -5679,14 +5663,14 @@ class="cmr-9">interval for which this scan is observed from TIME</span>
 
                                                                                          
 <a 
- id="x1-38001r39"></a>
+ id="x1-38001r38"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.20   </span></span> <a 
  id="x1-3900020"></a><span 
 class="cmr-9">SOURCE: Source information</span></h4>
    <div class="tabular"> <table id="TBL-22" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-22-1g"><col 
 id="TBL-22-1" /></colgroup><colgroup id="TBL-22-2g"><col 
 id="TBL-22-2" /></colgroup><colgroup id="TBL-22-3g"><col 
@@ -5953,8 +5937,8 @@ class="description"><span
 class="cmr-9">Source identiﬁer (</span><!--l. 1333--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
 display="inline" > <mo 
-class="MathClass-rel">≥</mo> <mn>0</mn></mrow><mo 
-class="MathClass-close">)</mo></mrow></math><span 
+class="MathClass-rel">≥</mo> <mn>0</mn><mo 
+class="MathClass-close">)</mo></math><span 
 class="cmr-9">,</span>
      <span 
 class="cmr-9">as speciﬁed in the FIELD sub-table.</span>
@@ -6017,14 +6001,14 @@ class="cmbx-9">POSITION</span> </dt><dd
 class="description"><span 
 class="cmr-9">Source position </span><!--l. 1359--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">(</mo><mrow><mi 
+display="inline" ><mo 
+class="MathClass-open">(</mo><mi 
 >x</mi><mo 
 class="MathClass-punc">,</mo><mi 
 >y</mi><mo 
 class="MathClass-punc">,</mo><mi 
->z</mi></mrow><mo 
-class="MathClass-close">)</mo></mrow></math>
+>z</mi><mo 
+class="MathClass-close">)</mo></math>
      <span 
 class="cmr-9">at this TIME (for near-ﬁeld objects).</span>
      </dd><dt class="description">
@@ -6069,15 +6053,15 @@ class="cmr-9">a pulsar.</span>
 
                                                                                          
 <a 
- id="x1-39001r40"></a>
+ id="x1-39001r39"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.21   </span></span> <a 
  id="x1-4000021"></a><span 
 class="cmr-9">SPECTRAL</span><span 
 class="cmr-9">_WINDOW: Spectral window description</span></h4>
    <div class="tabular"> <table id="TBL-23" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-23-1g"><col 
 id="TBL-23-1" /></colgroup><colgroup id="TBL-23-2g"><col 
 id="TBL-23-2" /></colgroup><colgroup id="TBL-23-3g"><col 
@@ -6574,14 +6558,14 @@ class="cmr-9">- channel zero; ”EQUAL-FREQUENCY” - same frequency labels; ”
 
                                                                                          
 <a 
- id="x1-40001r41"></a>
+ id="x1-40001r40"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.22   </span></span> <a 
  id="x1-4100022"></a><span 
 class="cmr-9">STATE: State information</span></h4>
    <div class="tabular"> <table id="TBL-24" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-24-1g"><col 
 id="TBL-24-1" /></colgroup><colgroup id="TBL-24-2g"><col 
 id="TBL-24-2" /></colgroup><colgroup id="TBL-24-3g"><col 
@@ -6737,10 +6721,10 @@ class="cmbx-9">_SCAN</span> </dt><dd
 class="description"><span 
 class="cmr-9">Sub-scan number </span><!--l. 1511--><math 
  xmlns="http://www.w3.org/1998/Math/MathML"  
-display="inline" ><mrow ><mo 
-class="MathClass-open">(</mo><mrow><mo 
-class="MathClass-rel">≥</mo> <mn>0</mn></mrow><mo 
-class="MathClass-close">)</mo></mrow></math><span 
+display="inline" ><mo 
+class="MathClass-open">(</mo><mo 
+class="MathClass-rel">≥</mo> <mn>0</mn><mo 
+class="MathClass-close">)</mo></math><span 
 class="cmr-9">,</span>
      <span 
 class="cmr-9">relative to the SCAN</span><span 
@@ -6759,17 +6743,17 @@ class="cmr-9">(e.g. ”OFF-SPECTRUM”). Used to deﬁne the schedule strategy.<
 
                                                                                          
 <a 
- id="x1-41001r42"></a>
+ id="x1-41001r41"></a>
 </p>
                                                                                          
 
                                                                                          
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.23   </span></span> <a 
  id="x1-4200023"></a><span 
 class="cmr-9">SYSCAL: System calibration</span></h4>
    <div class="tabular"> <table id="TBL-25" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-25-1g"><col 
 id="TBL-25-1" /></colgroup><colgroup id="TBL-25-2g"><col 
 id="TBL-25-2" /></colgroup><colgroup id="TBL-25-3g"><col 
@@ -7478,14 +7462,14 @@ class="cmr-9">_TSYS ﬂagged.</span>
 
                                                                                          
 <a 
- id="x1-42001r43"></a>
+ id="x1-42001r42"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">4.24   </span></span> <a 
  id="x1-4300024"></a><span 
 class="cmr-9">WEATHER: weather station information</span></h4>
    <div class="tabular"> <table id="TBL-26" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-26-1g"><col 
 id="TBL-26-1" /></colgroup><colgroup id="TBL-26-2g"><col 
 id="TBL-26-2" /></colgroup><colgroup id="TBL-26-3g"><col 
@@ -7759,8 +7743,8 @@ class="description"><span
 class="cmr-9">Average wind speed.</span>
      </dd></dl>
 <a 
- id="x1-43001r20"></a>
-<h3 class="sectionHead"><span class="titlemark"><span 
+ id="x1-43001r19"></a>
+   <h3 class="sectionHead"><span class="titlemark"><span 
 class="cmr-9">5   </span></span> <a 
  id="x1-440005"></a><span 
 class="cmr-9">Units and Measures</span></h3>
@@ -7769,14 +7753,14 @@ class="cmr-9">Units and Measures</span></h3>
 
                                                                                          
 <a 
- id="x1-44001r44"></a>
+ id="x1-44001r43"></a>
 </p>
-<h4 class="subsectionHead"><span class="titlemark"><span 
+   <h4 class="subsectionHead"><span class="titlemark"><span 
 class="cmr-9">5.1   </span></span> <a 
  id="x1-450001"></a><span 
 class="cmr-9">Units and Measures</span></h4>
    <div class="tabular"> <table id="TBL-27" class="tabular" 
-cellspacing="0" cellpadding="0" rules="groups" 
+rules="groups" 
 ><colgroup id="TBL-27-1g"><col 
 id="TBL-27-1" /></colgroup><colgroup id="TBL-27-2g"><col 
 id="TBL-27-2" /></colgroup><colgroup id="TBL-27-3g"><col 
@@ -7970,8 +7954,8 @@ class="cmtt-9">’show meastypes’</span><span
 class="cmr-9">.</span>
      </dd></dl>
 <a 
- id="x1-45001r45"></a>
-<h3 class="sectionHead"><span class="titlemark"><span 
+ id="x1-45001r44"></a>
+   <h3 class="sectionHead"><span class="titlemark"><span 
 class="cmr-9">6   </span></span> <a 
  id="x1-460006"></a><span 
 class="cmr-9">References</span></h3>

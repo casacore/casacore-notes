@@ -1100,7 +1100,7 @@ ANTENNA\_ID & Int & & & Antenna ID. \\
 PHASED\_ARRAY\_ID & Int & & & phased array id.\\
 \defline{\em Data}
 POSITION & Double(3) & m & POSITION & Position of antenna field \\
-COORDINATE\_SYSTEM & Double(3,3) & m & DIRECTION & Local coordinate system \\
+COORDINATE\_AXES & Double(3,3) & m & DIRECTION & Local coordinate system \\
 ELEMENT\_OFFSET & Double(3, \na) & m & POSITION & Offset per element \\
 ({\it BEAM\_ID}) & Int &  &  & Beam id.\\
 ELEMENT\_FLAG & Bool(\na) &  & & Flag of elements in array\\
@@ -1113,7 +1113,7 @@ ELEMENT\_FLAG & Bool(\na) &  & & Flag of elements in array\\
 
 \item[POSITION] Position of the antenna field in absolute ITRF coordinates
 
-\item[COORDINATE\_SYSTEM] (cartesian) direction vectors in ITRF (or measure defined) describing the
+\item[COORDINATE\_AXES] (cartesian) direction vectors in ITRF (or measure defined) describing the
 local field coordinate system. This defines the antenna field plane, and the 'up' direction, the normal direction to the antenna field plane. Note that in general this is not the zenith direction. The coordinate system is necessary to evaluate the beam pattern directions. The coordinate system can also be used for describing polarization alignment.  
 
 \item[ELEMENT\_OFFSET] Relative offsets of each element from POSITION
