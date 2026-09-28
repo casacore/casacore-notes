@@ -379,7 +379,7 @@ FIELD  &         Field position & FIELD\_ID  \\
 HISTORY  & History information & OBSERVATION\_ID, TIME \\
 ({\it INTERFEROMETER\_MODEL}) &  Information for VLBI observations &  ANTENNA\_ID, FIELD\_ID, SPECTRAL\_WINDOW\_ID, TIME \\
 OBSERVATION  &Observer, Schedule, etc & OBSERVATION\_ID \\ 
-({\it PHASED\_ARRAY}) & phased array stations information & PHASED\_ARRAY\_ID, ANTENNA\_ID \\
+({\it PHASED\_ARRAY}) & phased array stations information & ANTENNA\_ID \\
 POINTING & Pointing information & ANTENNA\_ID, TIME \\
 POLARIZATION &Polarization setup & POLARIZATION\_ID \\
 PROCESSOR & Processor information & PROCESSOR\_ID  \\
@@ -579,7 +579,6 @@ OFFSET & Double(3)  &   m &     POSITION & Axes offset of mount to FEED REFERENC
 DISH\_DIAMETER &  Double &  m  &      & Diameter of dish\\
 {\it (ORBIT\_ID)}    &    Int & & &  Orbit id. \\
 {\it (MEAN\_ORBIT)}  &    Double(6) & & & Mean Keplerian elements\\
-{\it (PHASED\_ARRAY\_ID)} & Int   &  & &   Phased array id.\\
 }
 \begin{description}
 
@@ -625,10 +624,6 @@ standard convention (Flatters 1998):
    \item{{\bf 4:} Argument of perigee ($\omega$) in $deg.$}
    \item{{\bf 5:} Mean anomaly ($M$) in $deg.$}
 \end{itemize}
-
-\item[PHASED\_ARRAY\_ID] Phased array identifier. Points to a
-PHASED\_ARRAY sub-table which points back to multiple entries in the
-ANTENNA sub-table and contains information on how they are combined.
 
 \end{description}
 
@@ -1097,7 +1092,6 @@ the data may become public.
 \defline{\bf Columns}
 \defline{\em Key}
 ANTENNA\_ID & Int & & & Antenna ID. \\
-PHASED\_ARRAY\_ID & Int & & & phased array id.\\
 \defline{\em Data}
 POSITION & Double(3) & m & POSITION & Position of antenna field \\
 COORDINATE\_AXES & Double(3,3) & m & DIRECTION & Local coordinate system \\
@@ -1109,7 +1103,7 @@ ELEMENT\_FLAG & Bool(\na, NUM\_POL) &  & & Flag of elements in array, for each p
 
 \item[Notes:] The table contains information about phased array information. It refers to antenna ids in ANTENNA table, FEED\_ID for feed  used in forming this phased array.  
 
-\item[ANTENNA\_ID] Index into the ANTENNA table to show to which ANTENNA this phased array belongs. Note that this is an n-to-1 mapping: one ANTENNA can consist of multiple PHASED\_ARRAYs.
+\item[ANTENNA\_ID] Index into the ANTENNA table to show to which ANTENNA this phased array belongs. Note that this is an 1-to-1 mapping.
 
 \item[POSITION] Position of the antenna field in absolute ITRF coordinates
 
